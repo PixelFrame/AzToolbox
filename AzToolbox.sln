@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzToolbox", "AzToolbox\AzToolbox.csproj", "{CCB8EDE5-BD78-471B-B9A2-6574A36629A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileXMLBuilder.Lib", "..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj", "{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCB8EDE5-BD78-471B-B9A2-6574A36629A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB8EDE5-BD78-471B-B9A2-6574A36629A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB8EDE5-BD78-471B-B9A2-6574A36629A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB8EDE5-BD78-471B-B9A2-6574A36629A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {242FDAA3-86BF-4E9F-8514-E2E064FD188E}
+	EndGlobalSection
+EndGlobal

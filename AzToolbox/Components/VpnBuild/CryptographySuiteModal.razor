@@ -1,0 +1,118 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field>
+        <Switch TValue="bool" @bind-Checked="@Enabled">Enabled</Switch>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>AuthenticationTransformConstants</FieldLabel>
+        <SelectList Disabled="@(!Enabled)"
+                    TItem="AuthenticationTransformConstants"
+                    TValue="AuthenticationTransformConstants"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<AuthenticationTransformConstants>())"
+                    @bind-SelectedValue="@AuthenticationTransformConstants" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>CipherTransformConstants</FieldLabel>
+        <SelectList Disabled="@(!Enabled)"
+                    TItem="CipherTransformConstants"
+                    TValue="CipherTransformConstants"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<CipherTransformConstants>())"
+                    @bind-SelectedValue="@CipherTransformConstants" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>DHGroup</FieldLabel>
+        <SelectList Disabled="@(!Enabled)"
+                    TItem="DHGroup"
+                    TValue="DHGroup"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<DHGroup>())"
+                    @bind-SelectedValue="@DHGroup" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>EncryptionMethod</FieldLabel>
+        <SelectList Disabled="@(!Enabled)"
+                    TItem="EncryptionMethod"
+                    TValue="EncryptionMethod"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<EncryptionMethod>())"
+                    @bind-SelectedValue="@EncryptionMethod" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>IntegrityCheckMethod</FieldLabel>
+        <SelectList Disabled="@(!Enabled)"
+                    TItem="IntegrityCheckMethod"
+                    TValue="IntegrityCheckMethod"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<IntegrityCheckMethod>())"
+                    @bind-SelectedValue="@IntegrityCheckMethod" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>PfsGroup</FieldLabel>
+        <SelectList Disabled="@(!Enabled)"
+                    TItem="PfsGroup"
+                    TValue="PfsGroup"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<PfsGroup>())"
+                    @bind-SelectedValue="@PfsGroup" />
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="SetCryptographySuite">OK</Button>
+</ModalFooter>
+
+@code {
+    bool Enabled = false;
+    AuthenticationTransformConstants AuthenticationTransformConstants;
+    CipherTransformConstants CipherTransformConstants;
+    DHGroup DHGroup;
+    EncryptionMethod EncryptionMethod;
+    IntegrityCheckMethod IntegrityCheckMethod;
+    PfsGroup PfsGroup;
+
+    protected override void OnInitialized()
+    {
+        if (svc.CryptographySuite != null)
+        {
+            Enabled = true;
+            AuthenticationTransformConstants = Enum.Parse<AuthenticationTransformConstants>(svc.CryptographySuite.AuthenticationTransformConstants!);
+            CipherTransformConstants = Enum.Parse<CipherTransformConstants>(svc.CryptographySuite.CipherTransformConstants!);
+            DHGroup = Enum.Parse<DHGroup>(svc.CryptographySuite.DHGroup!);
+            EncryptionMethod = Enum.Parse<EncryptionMethod>(svc.CryptographySuite.EncryptionMethod!);
+            IntegrityCheckMethod = Enum.Parse<IntegrityCheckMethod>(svc.CryptographySuite.IntegrityCheckMethod!);
+            PfsGroup = Enum.Parse<PfsGroup>(svc.CryptographySuite.PfsGroup!);
+        }
+        base.OnInitialized();
+    }
+
+    private async Task SetCryptographySuite()
+    {
+        if (Enabled)
+        {
+            svc.CryptographySuite = new()
+                {
+                    AuthenticationTransformConstants = AuthenticationTransformConstants.ToString(),
+                    CipherTransformConstants = CipherTransformConstants.ToString(),
+                    DHGroup = DHGroup.ToString(),
+                    EncryptionMethod = EncryptionMethod.ToString(),
+                    IntegrityCheckMethod = IntegrityCheckMethod.ToString(),
+                    PfsGroup = PfsGroup.ToString()
+                };
+        }
+        else
+        {
+            svc.CryptographySuite = null;
+        }
+        await ModalService.Hide();
+    }
+}

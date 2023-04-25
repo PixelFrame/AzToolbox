@@ -1,0 +1,47 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<Button Color="Color.Info" Clicked="ShowNrptAdd">Add</Button>
+<Button Color="Color.Danger" Clicked="RemoveNrpt">Remove</Button>
+<DataGrid TItem="DomainNameInformation"
+          Data="@svc.Nrpt"
+          @bind-SelectedRow="@selected"
+          Responsive>
+    <DataGridCommandColumn />
+    <DataGridColumn Field="@nameof(DomainNameInformation.DomainName)" Caption="Domain Name" />
+    <DataGridColumn Field="@nameof(DomainNameInformation.DnsServers)" Caption="DNS Servers" />
+    <DataGridColumn Field="@nameof(DomainNameInformation.WebProxyServers)" Caption="Web Proxy Servers" />
+    <DataGridColumn Field="@nameof(DomainNameInformation.AutoTrigger)" Caption="Auto Trigger" />
+    <DataGridColumn Field="@nameof(DomainNameInformation.Persistent)" Caption="Persistent" />
+</DataGrid>
+
+@code {
+    DomainNameInformation? selected;
+
+    private Task ShowNrptAdd()
+    {
+        ModalService.Show<NrptAddModal>("New NRPT Entry",
+            x =>
+            {
+                x.Add(x => x.OnNewNrpt, NrptAdded);
+            },
+            new ModalInstanceOptions()
+                {
+                    Size = ModalSize.Large
+                });
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task NrptAdded()
+    {
+        return InvokeAsync(StateHasChanged);
+    }
+
+    private Task RemoveNrpt()
+    {
+        if (selected != null) svc.Nrpt.Remove(selected);
+        return InvokeAsync(StateHasChanged);
+    }
+}

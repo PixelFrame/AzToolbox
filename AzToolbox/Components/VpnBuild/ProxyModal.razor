@@ -1,0 +1,60 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field>
+        <Switch TValue="bool" @bind-Checked="@Enabled">Enabled</Switch>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>AutoConfigUrl</FieldLabel>
+        <TextEdit @bind-Text="@AutoConfigUrl"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>ManualProxy</FieldLabel>
+        <TextEdit @bind-Text="@ManualProxy"></TextEdit>
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="SetProxy">OK</Button>
+</ModalFooter>
+
+@code {
+    bool Enabled = false;
+    string? AutoConfigUrl = null;
+    string? ManualProxy = null;
+
+    protected override void OnInitialized()
+    {
+        if (svc.Proxy != null)
+        {
+            Enabled = true;
+            AutoConfigUrl = svc.Proxy.AutoConfigUrl;
+            ManualProxy = svc.Proxy.Manual?.Server;
+        }
+        base.OnInitialized();
+    }
+
+    private async Task SetProxy()
+    {
+        if (Enabled)
+        {
+            svc.Proxy = new Proxy
+                {
+                    AutoConfigUrl = AutoConfigUrl
+                };
+            if (ManualProxy != null)
+            {
+                svc.Proxy.Manual = new()
+                    {
+                        Server = ManualProxy
+                    };
+            }
+        }
+        else
+        {
+            svc.Proxy = null;
+        }
+        await ModalService.Hide();
+    }
+}

@@ -1,0 +1,126 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field Horizontal>
+        <FieldLabel>Domain Name</FieldLabel>
+        <TextEdit @bind-Text="@DomainName"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>DNS Servers</FieldLabel>
+        <TextEdit @bind-Text="@DnsServers"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Web Proxy Servers</FieldLabel>
+        <TextEdit @bind-Text="@WebProxyServers"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Auto Trigger</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValueChanged="AutoTriggerChanged" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Persistent</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValueChanged="PersistentChanged" />
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="NewNrpt">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    string DomainName = "";
+    string? dnsServers = "";
+    string? DnsServers
+    {
+        get => dnsServers;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) dnsServers = null;
+            else dnsServers = value;
+        }
+    }
+    string? webProxyServers = "";
+    string? WebProxyServers
+    {
+        get => webProxyServers;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) webProxyServers = null;
+            else webProxyServers = value;
+        }
+    }
+    bool? AutoTrigger = null;
+    bool? Persistent = null;
+
+    private static Dictionary<string, int> BooleanDic = new()
+    {
+        {"Undefined", 0},
+        {"True", 1},
+        {"False", 2}
+    };
+
+    private void AutoTriggerChanged(int value)
+    {
+        switch (value)
+        {
+            case 1: AutoTrigger = true; break;
+            case 2: AutoTrigger = false; break;
+            default: AutoTrigger = null; break;
+        }
+    }
+
+    private void PersistentChanged(int value)
+    {
+        switch (value)
+        {
+            case 1: Persistent = true; break;
+            case 2: Persistent = false; break;
+            default: Persistent = null; break;
+        }
+    }
+
+    Snackbar? notification;
+    string notificationMessage = "";
+
+    [Parameter] public Func<Task>? OnNewNrpt { get; set; }
+
+    private async Task NewNrpt()
+    {
+        try
+        {
+            var nrpt = new DomainNameInformation()
+                {
+                    DomainName = DomainName,
+                    DnsServers = DnsServers,
+                    WebProxyServers = WebProxyServers,
+                    AutoTrigger = AutoTrigger,
+                    Persistent = Persistent
+                };
+            svc.Nrpt.Add(nrpt);
+            if (OnNewNrpt != null) await OnNewNrpt.Invoke();
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
+}

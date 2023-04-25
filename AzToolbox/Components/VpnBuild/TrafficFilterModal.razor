@@ -1,0 +1,51 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<Button Color="Color.Info" Clicked="ShowTrafficFiltersAdd">Add</Button>
+<Button Color="Color.Danger" Clicked="RemoveTrafficFilter">Remove</Button>
+<DataGrid TItem="TrafficFilter"
+          Data="@svc.TrafficFilters"
+          @bind-SelectedRow="@selected"
+          Responsive>
+    <DataGridCommandColumn />
+    <DataGridColumn Field="@nameof(TrafficFilter.App)" Caption="App ID" />
+    <DataGridColumn Field="@nameof(TrafficFilter.Claims)" Caption="Claims" />
+    <DataGridColumn Field="@nameof(TrafficFilter.Protocol)" Caption="Protocol" />
+    <DataGridColumn Field="@nameof(TrafficFilter.LocalPortRanges)" Caption="Local Port Ranges" />
+    <DataGridColumn Field="@nameof(TrafficFilter.RemotePortRanges)" Caption="Remote Port Ranges" />
+    <DataGridColumn Field="@nameof(TrafficFilter.LocalAddressRanges)" Caption="Local Address Ranges" />
+    <DataGridColumn Field="@nameof(TrafficFilter.RemoteAddressRanges)" Caption="Remote Address Ranges" />
+    <DataGridColumn Field="@nameof(TrafficFilter.RoutingPolicyType)" Caption="Routing Policy Type" />
+    <DataGridColumn Field="@nameof(TrafficFilter.Direction)" Caption="Direction" />
+</DataGrid>
+
+@code {
+    TrafficFilter? selected;
+
+    private Task ShowTrafficFiltersAdd()
+    {
+        ModalService.Show<TrafficFilterAddModal>("New Traffic Filter",
+            x =>
+            {
+                x.Add(x => x.OnNewTrafficFilter, TrafficFilterAdded);
+            },
+            new ModalInstanceOptions()
+                {
+                    Size = ModalSize.Large
+                });
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task TrafficFilterAdded()
+    {
+        return InvokeAsync(StateHasChanged);
+    }
+
+    private Task RemoveTrafficFilter()
+    {
+        if (selected != null) svc.TrafficFilters.Remove(selected);
+        return InvokeAsync(StateHasChanged);
+    }
+}

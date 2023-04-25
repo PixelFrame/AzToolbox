@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+<Layout>
+    <LayoutHeader>
+        <Bar Breakpoint="Breakpoint.Desktop"
+             Background="Background.Light"
+             ThemeContrast="ThemeContrast.Light">
+            <BarBrand>
+                AzToolbox
+            </BarBrand>
+            <BarToggler />
+            <BarMenu>
+                <BarStart>
+                    <BarItem>
+                        <BarLink To="/">Home</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarDropdown>
+                            <BarDropdownToggle>ToolSet</BarDropdownToggle>
+                            <BarDropdownMenu>
+                                <BarDropdownItem To="/VpnBuild">VPN ProfileXML Builder</BarDropdownItem>
+                            </BarDropdownMenu>
+                        </BarDropdown>
+                    </BarItem>
+                </BarStart>
+            </BarMenu>
+        </Bar>
+    </LayoutHeader>
+    <LayoutContent Margin="Margin.Is3">
+        @Body
+    </LayoutContent>
+    <LayoutFooter>
+        <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small">
+            &copy; 2023 AzToolbox <br/>
+            Powered by Blazor, .NET 6 and Blazorise
+        </Paragraph>
+    </LayoutFooter>
+</Layout>

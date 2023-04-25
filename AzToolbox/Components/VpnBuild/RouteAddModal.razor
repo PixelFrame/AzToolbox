@@ -1,0 +1,87 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field Horizontal>
+        <FieldLabel>Address</FieldLabel>
+        <TextEdit @bind-Text="@Address"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>PrefixSize</FieldLabel>
+        <NumericEdit TValue="byte" @bind-Value="@PrefixSize"></NumericEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>ExclusionRoute</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValueChanged="ExclusionRouteChanged" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Metric</FieldLabel>
+        <NumericEdit TValue="uint?" @bind-Value="@Metric"></NumericEdit>
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="NewRoute">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    string Address = "";
+    byte PrefixSize = 32;
+    bool? ExclusionRoute = null;
+    uint? Metric = null;
+
+    private static Dictionary<string, int> BooleanDic = new()
+    {
+        {"Undefined", 0},
+        {"True", 1},
+        {"False", 2}
+    };
+
+    private void ExclusionRouteChanged(int value)
+    {
+        switch (value)
+        {
+            case 1: ExclusionRoute = true; break;
+            case 2: ExclusionRoute = false; break;
+            default: ExclusionRoute = null; break;
+        }
+    }
+
+    Snackbar? notification;
+    string notificationMessage = "";
+
+    [Parameter] public Func<Task>? OnNewRoute { get; set; }
+
+    private async Task NewRoute()
+    {
+        try
+        {
+            var route = new Route()
+                {
+                    Address = Address,
+                    PrefixSize = PrefixSize,
+                    ExclusionRoute = ExclusionRoute,
+                    Metric = Metric
+                };
+            svc.Routes.Add(route);
+            if (OnNewRoute != null) await OnNewRoute.Invoke();
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
+}

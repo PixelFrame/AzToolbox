@@ -1,0 +1,233 @@
+﻿@page "/VpnBuild"
+
+@using ProfileXMLBuilder.Lib
+@using AzToolbox.Components.VpnBuild
+
+@inject INotificationService NotificationService
+@inject IModalService ModalService
+@inject IJSRuntime JSRuntime
+@inject VpnBuildService svc
+
+<Row>
+    <Column ColumnSize="ColumnSize.IsHalf">
+        <Field>
+            <Switch TValue="bool" @bind-Checked="@svc.UserTunnel">User Tunnel</Switch>
+        </Field>
+        <Field>
+            <FieldLabel>Server Address</FieldLabel>
+            <TextEdit @bind-Text="@svc.VpnServer" />
+        </Field>
+        <Tooltip Text="For DnsSuffix, TrustedNetworkDetection and NRPT." Placement="TooltipPlacement.Right">
+            <Field>
+                <FieldLabel>Domain DNS Suffix</FieldLabel>
+                <TextEdit @bind-Text="@svc.DomainDnsSuffix" />
+            </Field>
+        </Tooltip>
+        @if (svc.UserTunnel)
+        {
+            <Div ElementId="ut-fields">
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.ForceTunnel">Force Tunnel</Switch>
+                </Field>
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.Tls">TLS</Switch>
+                </Field>
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.Peap">PEAP</Switch>
+                </Field>
+                <Field>
+                    <FieldLabel>Tunnel Protocol</FieldLabel>
+                    <SelectList TItem="NativeProtocolType"
+                            TValue="NativeProtocolType"
+                            TextField="@(t=>t.ToString())"
+                            ValueField="@(t=>t)"
+                            Data="@(Enum.GetValues<NativeProtocolType>())"
+                            @bind-SelectedValue="@svc.TunnelProtocol" />
+                </Field>
+                @if (svc.TunnelProtocol == NativeProtocolType.ProtocolList)
+                {
+                    <Tooltip Text="Comma separated protocol list, e.g. SSTP,IKEv2,L2TP" Placement="TooltipPlacement.Right">
+                        <Field>
+                            <FieldLabel>Protocol List</FieldLabel>
+                            <TextEdit @bind-Text="@svc.ProtocolListString" />
+                        </Field>
+                    </Tooltip>
+                }
+                @if (svc.Tls || svc.Peap)
+                {
+                    <Field>
+                        <FieldLabel>RADIUS Server Name</FieldLabel>
+                        <TextEdit @bind-Text="@svc.RadiusServerName" />
+                    </Field>
+                    <Tooltip Text="Comma separated hash list, e.g. abcdef123456,654321fedcba." Placement="TooltipPlacement.Right">
+                        <Field>
+                            <FieldLabel>Root CA Hash</FieldLabel>
+                            <TextEdit @bind-Text="@svc.RootCAHash" />
+                        </Field>
+                    </Tooltip>
+                }
+                <Tooltip Text="Comma separated IP address list, e.g. 10.1.1.1,10.1.2.2. For NRPT." Placement="TooltipPlacement.Right">
+                    <Field>
+                        <FieldLabel>DNS Servers</FieldLabel>
+                        <TextEdit @bind-Text="@svc.DnsServers" />
+                    </Field>
+                </Tooltip>
+                @if (!svc.ForceTunnel)
+                {
+                    <Tooltip Text="Comma separated subnet list, e.g. 10.1.1.0/24,10.1.2.0/24. For Route." Placement="TooltipPlacement.Right">
+                        <Field>
+                            <FieldLabel>Domain Subnets</FieldLabel>
+                            <TextEdit @bind-Text="@svc.DomainSubnets" />
+                        </Field>
+                    </Tooltip>
+                }
+            </Div>
+        }
+        else
+        {
+            <Div ElementId="dt-fields">
+                <Tooltip Text="Comma separated IPv4 address list, e.g. 10.1.1.1,10.1.2.2. For Route." Placement="TooltipPlacement.Right">
+                    <Field>
+                        <FieldLabel>Domain Controller Addresses</FieldLabel>
+                        <TextEdit @bind-Text="@svc.DomainControllerAddresses" />
+                    </Field>
+                </Tooltip>
+                <Field>
+                    <Switch TValue="bool" Checked="false" Disabled="true">Force Tunnel</Switch>
+                </Field>
+                <Field>
+                    <FieldLabel>Tunnel Protocol</FieldLabel>
+                    <SelectList TItem="NativeProtocolType"
+                            TValue="NativeProtocolType"
+                            TextField="@(t=>t.ToString())"
+                            ValueField="@(t=>t)"
+                            Data="@(Enum.GetValues<NativeProtocolType>())"
+                            SelectedValue="NativeProtocolType.IKEv2"
+                            Disabled="true" />
+                </Field>
+            </Div>
+        }
+        @if (svc.UserTunnel)
+        {
+            <Button Color="Color.Info" Clicked="ShowNrpt">NRPT</Button>
+            <Button Color="Color.Info" Clicked="ShowTrafficFilters">Traffic Filters</Button>
+            <Button Color="Color.Info" Clicked="ShowRoutes">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowProxy">Proxy</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowExtraSettings">Extra Settings</Button>
+        }
+        else
+        {
+            <Button Color="Color.Info" Clicked="ShowTrafficFilters">Traffic Filters</Button>
+            <Button Color="Color.Info">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowExtraSettings">Extra Settings</Button>
+        }
+    </Column>
+    <Column ColumnSize="ColumnSize.IsHalf">
+        <Button Color="Color.Primary" Clicked="@Build" Style="width:100%">Build</Button>
+        <Row HorizontalGutter="8" Margin="Margin.Is2.FromTop">
+            <Column ColumnSize="ColumnSize.Is6">
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@CopyToClipboard" Style="width:100%">Copy to Clipboard</Button>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@Download" Style="width:100%">Download</Button>
+            </Column>
+        </Row>
+        <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is2.FromTop">
+            <AlertMessage>Windows 11 ONLY</AlertMessage>
+            <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <a target="_blank" href="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</a> for more info.</AlertDescription>
+        </Alert>
+        <MemoEdit @bind-Text="@svc.ProfileXml"
+                  Style="font-family:'Cascadia Code',Consolas,'Courier New',monospace;font-size:small"
+                  Margin="Margin.Is2.FromTop"
+                  AutoSize ReadOnly />
+    </Column>
+</Row>
+
+@code {
+    bool built = false;
+    private Task Build()
+    {
+        try
+        {
+            svc.Build();
+            built = true;
+            return InvokeAsync(StateHasChanged);
+        }
+        catch (Exception e)
+        {
+            return NotificationService.Error(e.Message, "Build Failed");
+        }
+    }
+
+    private Task ShowTrafficFilters()
+    {
+        return ModalService.Show<TrafficFilterModal>("Traffic Filters", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private Task ShowNrpt()
+    {
+        return ModalService.Show<NrptModal>("NRPT", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private Task ShowRoutes()
+    {
+        return ModalService.Show<RouteModal>("Routes", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private Task ShowCryptographySuite()
+    {
+        return ModalService.Show<CryptographySuiteModal>("Cryptography Suite", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private Task ShowProxy()
+    {
+        return ModalService.Show<ProxyModal>("Proxy", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private Task ShowExtraSettings()
+    {
+        return ModalService.Show<ExtraSettingsModal>("Extra Settings", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private async Task CopyToClipboard()
+    {
+        var message = await JSRuntime.InvokeAsync<string>("copyTextToClipboard", svc.ProfileXml);
+        if (message == "Success")
+        {
+            await NotificationService.Success("ProfileXML copied!");
+        }
+        else
+        {
+            await NotificationService.Error(message, "Copy Failed");
+        }
+    }
+
+    private async Task Download()
+    {
+        var jsparams = new object[]        
+        {
+            "VPNProfile.XML", "text/xml", svc.ProfileXml
+        };
+        await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
+    }
+}

@@ -1,0 +1,46 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<Button Color="Color.Info" Clicked="ShowRouteAdd">Add</Button>
+<Button Color="Color.Danger" Clicked="RemoveRoute">Remove</Button>
+<DataGrid TItem="Route"
+          Data="@svc.Routes"
+          @bind-SelectedRow="@selected"
+          Responsive>
+    <DataGridCommandColumn />
+    <DataGridColumn Field="@nameof(Route.Address)" Caption="Address" />
+    <DataGridColumn Field="@nameof(Route.PrefixSize)" Caption="Prefix Size" />
+    <DataGridColumn Field="@nameof(Route.ExclusionRoute)" Caption="Exclusion Route" />
+    <DataGridColumn Field="@nameof(Route.Metric)" Caption="Metric" />
+</DataGrid>
+
+@code {
+    Route? selected;
+
+    private Task ShowRouteAdd()
+    {
+        ModalService.Show<RouteAddModal>("New Route",
+            x =>
+            {
+                x.Add(x => x.OnNewRoute, RouteAdded);
+            },
+            new ModalInstanceOptions()
+                {
+                    Size = ModalSize.Large
+                });
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task RouteAdded()
+    {
+        return InvokeAsync(StateHasChanged);
+    }
+
+    private Task RemoveRoute()
+    {
+        if(selected != null) svc.Routes.Remove(selected);
+        return InvokeAsync(StateHasChanged);
+    }
+}

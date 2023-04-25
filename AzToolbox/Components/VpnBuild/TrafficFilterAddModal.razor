@@ -1,0 +1,208 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field Horizontal>
+        <FieldLabel>App</FieldLabel>
+        <TextEdit @bind-Text="@AppId"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Claims</FieldLabel>
+        <TextEdit @bind-Text="@Claims"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Protocol</FieldLabel>
+        <TextEdit @bind-Text="@Protocol"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>LocalPortRanges</FieldLabel>
+        <TextEdit @bind-Text="@LocalPortRanges"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>RemotePortRanges</FieldLabel>
+        <TextEdit @bind-Text="@RemotePortRanges"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>LocalAddressRanges</FieldLabel>
+        <TextEdit @bind-Text="@LocalAddressRanges"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>RemoteAddressRanges</FieldLabel>
+        <TextEdit @bind-Text="@RemoteAddressRanges"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>RoutingPolicyType</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@RoutingPolicyTypeDic"
+                    SelectedValueChanged="RoutingPolicyTypeChanged" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Direction</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@DirectionDic"
+                    SelectedValueChanged="DirectionChanged" />
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="NewTrafficFilter">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    string? appId = null;
+    string? AppId
+    {
+        get => appId;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) appId = null;
+            else appId = value;
+        }
+    }
+    string? claims = null;
+    string? Claims
+    {
+        get => claims;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) claims = null;
+            else claims = value;
+        }
+    }
+    string? protocol = null;
+    string? Protocol
+    {
+        get => protocol;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) protocol = null;
+            else protocol = value;
+        }
+    }
+    string? localPortRanges = null;
+    string? LocalPortRanges
+    {
+        get => localPortRanges;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) localPortRanges = null;
+            else localPortRanges = value;
+        }
+    }
+    string? remotePortRanges = null;
+    string? RemotePortRanges
+    {
+        get => remotePortRanges;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) remotePortRanges = null;
+            else remotePortRanges = value;
+        }
+    }
+    string? localAddressRanges = null;
+    string? LocalAddressRanges
+    {
+        get => localAddressRanges;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) localAddressRanges = null;
+            else localAddressRanges = value;
+        }
+    }
+    string? remoteAddressRanges = null;
+    string? RemoteAddressRanges
+    {
+        get => remoteAddressRanges;
+        set
+        {
+            if (string.IsNullOrEmpty(value)) remoteAddressRanges = null;
+            else remoteAddressRanges = value;
+        }
+    }
+    RoutingPolicyType? RoutingPolicyType = null;
+    TrafficDirection? Direction = null;
+    Snackbar? notification;
+    string notificationMessage = "";
+
+    private static Dictionary<string, int> RoutingPolicyTypeDic = new()
+    {
+        {"Undefined", 0 },
+        {"SplitTunnel", 1 },
+        {"ForceTunnel", 2 },
+    };
+
+    private static Dictionary<string, int> DirectionDic = new()
+    {
+        {"Undefined", 0 },
+        {"Inbound", 1 },
+        {"Outbound", 2 },
+    };
+
+    private void RoutingPolicyTypeChanged(int value)
+    {
+        if (value == 0) RoutingPolicyType = null;
+        else RoutingPolicyType = (RoutingPolicyType)value - 1;
+    }
+
+    private void DirectionChanged(int value)
+    {
+        if (value == 0) Direction = null;
+        else Direction = (TrafficDirection)value - 1;
+    }
+
+    [Parameter] public Func<Task>? OnNewTrafficFilter { get; set; }
+
+    private async Task NewTrafficFilter()
+    {
+        if (AppId == null && Claims == null && Protocol == null
+            && LocalPortRanges == null && RemotePortRanges == null
+            && LocalAddressRanges == null && RemoteAddressRanges == null
+            && RoutingPolicyType == null && Direction == null)
+        {
+            notificationMessage = "No parameter set!";
+            await notification!.Show();
+            return;
+        }
+        try
+        {
+            TrafficFilter trafficFilter = new()
+                {
+                    Claims = Claims,
+                    Protocol = Protocol,
+                    LocalPortRanges = LocalPortRanges,
+                    RemotePortRanges = RemotePortRanges,
+                    LocalAddressRanges = LocalAddressRanges,
+                    RemoteAddressRanges = RemoteAddressRanges,
+                    RoutingPolicyType = RoutingPolicyType?.ToString(),
+                    Direction = Direction?.ToString(),
+                };
+            if (!string.IsNullOrEmpty(AppId?.Trim()))
+            {
+                trafficFilter.App = new()
+                    {
+                        Id = AppId.Trim()
+                    };
+            }
+            svc.TrafficFilters.Add(trafficFilter);
+            if (OnNewTrafficFilter != null) await OnNewTrafficFilter();
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
+}

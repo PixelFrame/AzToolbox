@@ -1,0 +1,160 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    @if (svc.TunnelProtocol == NativeProtocolType.ProtocolList)
+    {
+        <Field Horizontal>
+        <FieldLabel>ProtocolList/RetryTimeInHours</FieldLabel>
+        <NumericEdit TValue="int?" @bind-Value="@svc.RetryTimeInHours" />
+    </Field>
+    }
+    <Field Horizontal>
+        <FieldLabel>IPv4InterfaceMetric</FieldLabel>
+        <NumericEdit TValue="int?" @bind-Value="@svc.IPv4InterfaceMetric" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>IPv6InterfaceMetric</FieldLabel>
+        <NumericEdit TValue="int?" @bind-Value="@svc.IPv6InterfaceMetric" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>NetworkOutageTime</FieldLabel>
+        <NumericEdit TValue="uint?" @bind-Value="@svc.NetworkOutageTime" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>RegisterDNS</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.RegisterDNS))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "RegisterDNS"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>DisableAdvancedOptionsEditButton</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.DisableAdvancedOptionsEditButton))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "DisableAdvancedOptionsEditButton"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>DisableDisconnectButton</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.DisableDisconnectButton))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "DisableDisconnectButton"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>DisableIKEv2Fragmentation</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.DisableIKEv2Fragmentation))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "DisableIKEv2Fragmentation"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>UseRasCredential</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.UseRasCredential))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "UseRasCredential"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>PrivateNetwork</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.PrivateNetwork))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "PrivateNetwork"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>PlumbIKEv2TSAsRoutes</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.PlumbIKEv2TSAsRoutes))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "PlumbIKEv2TSAsRoutes"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>DataEncryption</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@DataEncryptionDic"
+                    SelectedValue="@(EnumPropToInt((int?)svc.DataEncryption))"
+                    SelectedValueChanged="@DataEncryptionChanged" />
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="CloseModal">OK</Button>
+</ModalFooter>
+
+@code {
+    private async Task CloseModal()
+    {
+        await ModalService.Hide();
+    }
+
+    private static Dictionary<string, int> BooleanDic = new()
+    {
+        {"Undefined", 0},
+        {"True", 1},
+        {"False", 2}
+    };
+
+    private static Dictionary<string, int> DataEncryptionDic = new()
+    {
+        {"Undefined", 0},
+        {"None", 1},
+        {"Required", 2},
+        {"Max", 3},
+        {"Optional", 4}
+    };
+
+    private int BooleanPropToInt(bool? propValue)
+    {
+        if (propValue == null) return 0;
+        return (bool)propValue ? 1 : 2;
+    }
+
+    private int EnumPropToInt(int? propValue)
+    {
+        if (propValue == null) return 0;
+        return (int)propValue + 1;
+    }
+
+    private void BooleanPropChanged(int value, string propName)
+    {
+        var prop = svc.GetType().GetProperty(propName)!;
+        switch (value)
+        {
+            case 1: prop.SetValue(svc, true); break;
+            case 2: prop.SetValue(svc, false); break;
+            default: prop.SetValue(svc, null); break;
+        }
+    }
+
+    private void DataEncryptionChanged(int value)
+    {
+        if (value == 0) svc.DataEncryption = null;
+        else svc.DataEncryption = (DataEncryptionLevel)value - 1;
+    }
+}
