@@ -7,10 +7,15 @@ namespace AzToolbox.Services
         public bool Win11Profile = false;
         public bool UserTunnel = true;
         public bool ForceTunnel = false;
+        public bool DomainNRPT = true;
+        public bool SimpleRoute = true;
+        public bool CertSelectUseRadiusCA = true;
         public string VpnServer = "";
         public string DomainDnsSuffix = "";
+        public string TrustedNetworkDetection = "";
         public string RadiusServerName = "";
         public string RootCAHash = "";
+        public string CertSelectCAHash = "";
         public string DnsServers = "";
         public string DomainSubnets = "";
         public string DomainControllerAddresses = "";
@@ -24,6 +29,7 @@ namespace AzToolbox.Services
         public bool? RegisterDNS { get; set; } = true;
         public bool? BypassForLocal { get; set; } = null;
         public DataEncryptionLevel? DataEncryption { get; set; } = null;
+        public bool? AlwaysOnActive { get; set; } = null;
         public bool? DisableAdvancedOptionsEditButton { get; set; } = null;
         public bool? DisableDisconnectButton { get; set; } = null;
         public bool? DisableIKEv2Fragmentation { get; set; } = null;
@@ -33,6 +39,8 @@ namespace AzToolbox.Services
         public bool? PrivateNetwork { get; set; } = null;
         public bool? UseRasCredential { get; set; } = null;
         public bool? PlumbIKEv2TSAsRoutes { get; set; } = null;
+        public bool DisableServerValidationPrompt { get; set; } = true;
+        public bool? AllPurposeEnabled { get; set; } = null;
 
         public List<TrafficFilter> TrafficFilters = new();
         public List<DomainNameInformation> Nrpt = new();
@@ -41,6 +49,7 @@ namespace AzToolbox.Services
         public CryptographySuite? CryptographySuite = null;
         public DeviceCompliance? DeviceCompliance = null;
         public Proxy? Proxy = null;
+        public List<Eku> EkuMapping = new();
 
         public bool NotIKEv2
         {
@@ -53,8 +62,8 @@ namespace AzToolbox.Services
             builder.SetAlwaysOn(true)
                 .SetDnsSuffix(DomainDnsSuffix)
                 .SetServers(VpnServer)
-                .SetTrustedNetworkDetection(DomainDnsSuffix);
-            
+                .SetTrustedNetworkDetection(TrustedNetworkDetection);
+
             if (UserTunnel)
             {
                 AuthenticationMethod auth;
@@ -68,22 +77,32 @@ namespace AzToolbox.Services
                     if (Tls) auth = AuthenticationMethod.UserEapTls;
                     else auth = AuthenticationMethod.UserEapMschapv2;
                 }
+                if (CertSelectUseRadiusCA)
+                {
+                    CertSelectCAHash = RootCAHash;
+                }
                 builder.SetDeviceTunnel(false)
                     .SetDisableClassBasedDefaultRoute(true)
                     .SetAuthentication(auth,
                         RadiusServerName,
                         new List<string>(RootCAHash.Split(',')),
-                        false,
-                        new List<string>(RootCAHash.Split(',')),
-                        true,
-                        null)
+                        DisableServerValidationPrompt,
+                        new List<string>(CertSelectCAHash.Split(',')),
+                        AllPurposeEnabled,
+                        (EkuMapping.Count == 0) ? null : EkuMapping)
                     .AddDomainNameInformation(VpnServer, null, null, null, null)
-                    .AddDomainNameInformation(DomainDnsSuffix, DnsServers, null, null, null)
-                    .AddDomainNameInformation($".{DomainDnsSuffix}", DnsServers, null, null, null)
                     .AddDomainNameInformation(Nrpt.ToArray())
                     .AddTrafficFilters(TrafficFilters.ToArray())
-                    .AddRoutes(Routes.ToArray())
                     .SetProxy(Proxy);
+
+                if (DomainNRPT)
+                {
+                    foreach (var suffix in DomainDnsSuffix.Split(','))
+                    {
+                        builder.AddDomainNameInformation(suffix.Trim(), DnsServers, null, null, null)
+                            .AddDomainNameInformation($".{suffix.Trim()}", DnsServers, null, null, null);
+                    }
+                }
 
                 if (TunnelProtocol == NativeProtocolType.ProtocolList)
                 {
@@ -92,7 +111,7 @@ namespace AzToolbox.Services
                     foreach (var protocol in protocols)
                     {
                         var _ = Enum.TryParse<NativeProtocolListType>(protocol.Trim(), true, out var p);
-                        if(_)
+                        if (_)
                         {
                             pl.Add(p);
                         }
@@ -110,11 +129,15 @@ namespace AzToolbox.Services
 
                 if (!ForceTunnel)
                 {
-                    builder.SetRoutingPolicyType(RoutingPolicyType.SplitTunnel);
-                    foreach (var subnet in DomainSubnets.Split(','))
+                    builder.SetRoutingPolicyType(RoutingPolicyType.SplitTunnel)
+                        .AddRoutes(Routes.ToArray());
+                    if (SimpleRoute)
                     {
-                        var subnetParts = subnet.Split('/');
-                        builder.AddRoute(subnetParts[0], byte.Parse(subnetParts[1]), null, null);
+                        foreach (var subnet in DomainSubnets.Split(','))
+                        {
+                            var subnetParts = subnet.Split('/');
+                            builder.AddRoute(subnetParts[0], byte.Parse(subnetParts[1]), null, null);
+                        }
                     }
                 }
                 else
@@ -137,16 +160,19 @@ namespace AzToolbox.Services
                     .AddTrafficFilters(TrafficFilters.ToArray())
                     .AddRoutes(Routes.ToArray())
                     .SetCryptographySuite(CryptographySuite);
-
-                foreach (var dc in DomainControllerAddresses.Split(','))
+                if (SimpleRoute)
                 {
-                    builder.AddRoute(dc, 32, null, null);
+                    foreach (var dc in DomainControllerAddresses.Split(','))
+                    {
+                        builder.AddRoute(dc, 32, null, null);
+                    }
                 }
             }
 
             builder
                 .SetRegisterDNS(RegisterDNS)
                 .SetByPassForLocal(BypassForLocal)
+                .SetAlwaysOnActive(AlwaysOnActive)
                 .SetDataEncryption(DataEncryption)
                 .SetDisableAdvancedOptionsEditButton(DisableAdvancedOptionsEditButton)
                 .SetDisableDisconnectButton(DisableDisconnectButton)

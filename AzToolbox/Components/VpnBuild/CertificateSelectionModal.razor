@@ -1,0 +1,94 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field>
+        <Switch TValue="bool" @bind-Checked="@svc.CertSelectUseRadiusCA">Use RADIUS server CA hash</Switch>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>Issuer Hash</FieldLabel>
+        <TextEdit @bind-Text="@svc.CertSelectCAHash" Disabled="@svc.CertSelectUseRadiusCA"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>AllPurposeEnabled</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.AllPurposeEnabled))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "AllPurposeEnabled"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>EKU Mapping</FieldLabel>
+        <DataGrid TItem="Eku"
+                  Data="@svc.EkuMapping"
+                  Editable
+                  EditMode="DataGridEditMode.Inline"
+                  Responsive>
+            <DataGridColumn Field="@nameof(Eku.Name)" Caption="Name" Editable />
+            <DataGridColumn Field="@nameof(Eku.OID)" Caption="OID" Editable />
+            <DataGridCommandColumn>
+                <NewCommandTemplate>
+                    <Button Color="@Color.Info" Outline Clicked="@context.Clicked">Add</Button>
+                </NewCommandTemplate>
+                <SaveCommandTemplate>
+                    <Button Color="@Color.Info" Outline Clicked="@context.Clicked">Save</Button>
+                </SaveCommandTemplate>
+                <CancelCommandTemplate>
+                    <Button Color="@Color.Danger" Outline Clicked="@context.Clicked">Cancel</Button>
+                </CancelCommandTemplate>
+                <EditCommandTemplate>
+                    <Button Color="@Color.Info" Outline Clicked="@context.Clicked">Edit</Button>
+                </EditCommandTemplate>
+                <DeleteCommandTemplate>
+                    <Button Color="@Color.Danger" Outline Clicked="@context.Clicked">Delete</Button>
+                </DeleteCommandTemplate>
+            </DataGridCommandColumn>
+        </DataGrid>
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="SetCertificateSelection">OK</Button>
+</ModalFooter>
+
+@code {
+    protected override void OnInitialized()
+    {
+        if (svc.CertSelectUseRadiusCA)
+        {
+            svc.CertSelectCAHash = svc.RootCAHash;
+        }
+        base.OnInitialized();
+    }
+
+    private static Dictionary<string, int> BooleanDic = new()
+    {
+        {"Undefined", 0},
+        {"True", 1},
+        {"False", 2}
+    };
+
+    private int BooleanPropToInt(bool? propValue)
+    {
+        if (propValue == null) return 0;
+        return (bool)propValue ? 1 : 2;
+    }
+
+    private void BooleanPropChanged(int value, string propName)
+    {
+        var prop = svc.GetType().GetProperty(propName)!;
+        switch (value)
+        {
+            case 1: prop.SetValue(svc, true); break;
+            case 2: prop.SetValue(svc, false); break;
+            default: prop.SetValue(svc, null); break;
+        }
+    }
+
+    private async Task SetCertificateSelection()
+    {
+        await ModalService.Hide();
+    }
+}

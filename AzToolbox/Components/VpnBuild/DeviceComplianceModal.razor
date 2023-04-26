@@ -1,0 +1,75 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field>
+        <Switch TValue="bool" @bind-Checked="@Enabled">Enabled</Switch>
+    </Field>
+    <Field>
+        <Switch TValue="bool" @bind-Checked="@SsoEnabled" Disabled="@(!Enabled)">SSO Enabled</Switch>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>SSO EKU</FieldLabel>
+        <TextEdit @bind-Text="@Eku" Disabled="@(!Enabled || !SsoEnabled)"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>SSO Issuer Hash</FieldLabel>
+        <TextEdit @bind-Text="@IssuerHash" Disabled="@(!Enabled || !SsoEnabled)"></TextEdit>
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="SetDeviceCompliance">OK</Button>
+</ModalFooter>
+
+@code {
+    bool Enabled = false;
+    bool SsoEnabled = false;
+    string? Eku = null;
+    string? IssuerHash = null;
+
+
+    protected override void OnInitialized()
+    {
+        if (svc.DeviceCompliance != null)
+        {
+            Enabled = true;
+            if (svc.DeviceCompliance.Sso != null)
+            {
+                SsoEnabled = true;
+                Eku = svc.DeviceCompliance.Sso.Eku;
+                IssuerHash = svc.DeviceCompliance.Sso.IssuerHash;
+            }
+        }
+        base.OnInitialized();
+    }
+
+    private async Task SetDeviceCompliance()
+    {
+        if (Enabled)
+        {
+            svc.DeviceCompliance = new DeviceCompliance
+                {
+                    Enabled = true,
+                };
+            if (SsoEnabled)
+            {
+                svc.DeviceCompliance.Sso = new()
+                    {
+                        Enabled = true,
+                        Eku = Eku,
+                        IssuerHash = IssuerHash
+                    };
+            }
+            else
+            {
+                svc.DeviceCompliance.Sso = null;
+            }
+        }
+        else
+        {
+            svc.DeviceCompliance = null;
+        }
+        await ModalService.Hide();
+    }
+}

@@ -62,3 +62,8 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.button-margin-Y {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+}

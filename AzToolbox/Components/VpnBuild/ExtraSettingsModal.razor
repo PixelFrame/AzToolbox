@@ -33,6 +33,26 @@
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "RegisterDNS"))" />
     </Field>
     <Field Horizontal>
+        <FieldLabel>AlwaysOnActive</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.AlwaysOnActive))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "AlwaysOnActive"))" />
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>BypassForLocal</FieldLabel>
+        <SelectList TItem="KeyValuePair<string, int>"
+                    TValue="int"
+                    TextField="@(t=>t.Key)"
+                    ValueField="@(t=>t.Value)"
+                    Data="@BooleanDic"
+                    SelectedValue="@(BooleanPropToInt(svc.BypassForLocal))"
+                    SelectedValueChanged="@((v) => BooleanPropChanged(v, "BypassForLocal"))" />
+    </Field>
+    <Field Horizontal>
         <FieldLabel>DisableAdvancedOptionsEditButton</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"

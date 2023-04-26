@@ -1,4 +1,5 @@
 ﻿@page "/VpnBuild"
+<PageTitle>VPN ProfileXML Builder - AzToolbox</PageTitle>
 
 @using ProfileXMLBuilder.Lib
 @using AzToolbox.Components.VpnBuild
@@ -17,24 +18,37 @@
             <FieldLabel>Server Address</FieldLabel>
             <TextEdit @bind-Text="@svc.VpnServer" />
         </Field>
-        <Tooltip Text="For DnsSuffix, TrustedNetworkDetection and NRPT." Placement="TooltipPlacement.Right">
+        <Divider DividerType="DividerType.TextContent" Text="DNS Settings" />
+        <Tooltip Text="Comma separated DNS suffix list." Placement="TooltipPlacement.Right">
             <Field>
                 <FieldLabel>Domain DNS Suffix</FieldLabel>
                 <TextEdit @bind-Text="@svc.DomainDnsSuffix" />
             </Field>
         </Tooltip>
+        <Tooltip Text="Comma separated name list." Placement="TooltipPlacement.Right">
+            <Field>
+                <FieldLabel>Trusted Network Detection</FieldLabel>
+                <TextEdit @bind-Text="@svc.TrustedNetworkDetection" />
+            </Field>
+        </Tooltip>
         @if (svc.UserTunnel)
         {
             <Div ElementId="ut-fields">
-                <Field>
-                    <Switch TValue="bool" @bind-Checked="@svc.ForceTunnel">Force Tunnel</Switch>
-                </Field>
-                <Field>
-                    <Switch TValue="bool" @bind-Checked="@svc.Tls">TLS</Switch>
-                </Field>
-                <Field>
-                    <Switch TValue="bool" @bind-Checked="@svc.Peap">PEAP</Switch>
-                </Field>
+                <Tooltip Text="Generate NRPT rules according to domain DNS suffix." Placement="TooltipPlacement.Right">
+                    <Field>
+                        <Switch TValue="bool" @bind-Checked="@svc.DomainNRPT">Domain NRPT Generataion</Switch>
+                    </Field>
+                </Tooltip>
+                @if (svc.DomainNRPT)
+                {
+                    <Tooltip Text="Comma separated IP address list, e.g. 10.1.1.1,10.1.2.2. For NRPT." Placement="TooltipPlacement.Right">
+                        <Field>
+                            <FieldLabel>DNS Servers</FieldLabel>
+                            <TextEdit @bind-Text="@svc.DnsServers" />
+                        </Field>
+                    </Tooltip>
+                }
+                <Divider DividerType="DividerType.TextContent" Text="Tunnel Settings" />
                 <Field>
                     <FieldLabel>Tunnel Protocol</FieldLabel>
                     <SelectList TItem="NativeProtocolType"
@@ -53,48 +67,54 @@
                         </Field>
                     </Tooltip>
                 }
+                <Divider DividerType="DividerType.TextContent" Text="Authentication Settings" />
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.Tls">TLS</Switch>
+                </Field>
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.Peap">PEAP</Switch>
+                </Field>
                 @if (svc.Tls || svc.Peap)
                 {
+                    <Field>
+                        <Switch TValue="bool" @bind-Checked="@svc.DisableServerValidationPrompt">Disable RADIUS Server Validation Prompt</Switch>
+                    </Field>
                     <Field>
                         <FieldLabel>RADIUS Server Name</FieldLabel>
                         <TextEdit @bind-Text="@svc.RadiusServerName" />
                     </Field>
                     <Tooltip Text="Comma separated hash list, e.g. abcdef123456,654321fedcba." Placement="TooltipPlacement.Right">
                         <Field>
-                            <FieldLabel>Root CA Hash</FieldLabel>
+                            <FieldLabel>RADIUS Server Root CA Hash</FieldLabel>
                             <TextEdit @bind-Text="@svc.RootCAHash" />
                         </Field>
                     </Tooltip>
                 }
-                <Tooltip Text="Comma separated IP address list, e.g. 10.1.1.1,10.1.2.2. For NRPT." Placement="TooltipPlacement.Right">
-                    <Field>
-                        <FieldLabel>DNS Servers</FieldLabel>
-                        <TextEdit @bind-Text="@svc.DnsServers" />
-                    </Field>
-                </Tooltip>
+                <Divider DividerType="DividerType.TextContent" Text="Routing Settings" />
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.ForceTunnel">Force Tunnel</Switch>
+                </Field>
                 @if (!svc.ForceTunnel)
                 {
-                    <Tooltip Text="Comma separated subnet list, e.g. 10.1.1.0/24,10.1.2.0/24. For Route." Placement="TooltipPlacement.Right">
-                        <Field>
-                            <FieldLabel>Domain Subnets</FieldLabel>
-                            <TextEdit @bind-Text="@svc.DomainSubnets" />
-                        </Field>
-                    </Tooltip>
+                    <Field>
+                        <Switch TValue="bool" @bind-Checked="@svc.SimpleRoute">Simple Route Generation</Switch>
+                    </Field>
+                    @if (svc.SimpleRoute)
+                    {
+                        <Tooltip Text="Comma separated subnet list, e.g. 10.1.1.0/24,10.1.2.0/24." Placement="TooltipPlacement.Right">
+                            <Field>
+                                <FieldLabel>Domain Subnets</FieldLabel>
+                                <TextEdit @bind-Text="@svc.DomainSubnets" />
+                            </Field>
+                        </Tooltip>
+                    }
                 }
             </Div>
         }
         else
         {
             <Div ElementId="dt-fields">
-                <Tooltip Text="Comma separated IPv4 address list, e.g. 10.1.1.1,10.1.2.2. For Route." Placement="TooltipPlacement.Right">
-                    <Field>
-                        <FieldLabel>Domain Controller Addresses</FieldLabel>
-                        <TextEdit @bind-Text="@svc.DomainControllerAddresses" />
-                    </Field>
-                </Tooltip>
-                <Field>
-                    <Switch TValue="bool" Checked="false" Disabled="true">Force Tunnel</Switch>
-                </Field>
+                <Divider DividerType="DividerType.TextContent" Text="Tunnel Settings" />
                 <Field>
                     <FieldLabel>Tunnel Protocol</FieldLabel>
                     <SelectList TItem="NativeProtocolType"
@@ -105,33 +125,51 @@
                             SelectedValue="NativeProtocolType.IKEv2"
                             Disabled="true" />
                 </Field>
+                <Divider DividerType="DividerType.TextContent" Text="Routing Settings" />
+                <Field>
+                    <Switch TValue="bool" Checked="false" Disabled="true">Force Tunnel</Switch>
+                </Field>
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.SimpleRoute">Simple Route Generation</Switch>
+                </Field>
+                @if (svc.SimpleRoute)
+                {
+                    <Tooltip Text="Comma separated IPv4 address list, e.g. 10.1.1.1,10.1.2.2." Placement="TooltipPlacement.Right">
+                        <Field>
+                            <FieldLabel>Domain Controller Addresses</FieldLabel>
+                            <TextEdit @bind-Text="@svc.DomainControllerAddresses" />
+                        </Field>
+                    </Tooltip>
+                }
             </Div>
         }
         @if (svc.UserTunnel)
         {
-            <Button Color="Color.Info" Clicked="ShowNrpt">NRPT</Button>
-            <Button Color="Color.Info" Clicked="ShowTrafficFilters">Traffic Filters</Button>
-            <Button Color="Color.Info" Clicked="ShowRoutes">Routes</Button>
-            <Button Color="Color.Info" Clicked="ShowProxy">Proxy</Button>
-            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2">IPsec Policy</Button>
-            <Button Color="Color.Info" Clicked="ShowExtraSettings">Extra Settings</Button>
+            <Button Color="Color.Info" Clicked="ShowNrpt" Class="button-margin-Y">NRPT</Button>
+            <Button Color="Color.Info" Clicked="ShowTrafficFilters" Class="button-margin-Y">Traffic Filters</Button>
+            <Button Color="Color.Info" Clicked="ShowRoutes" Class="button-margin-Y">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowProxy" Class="button-margin-Y">Proxy</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2" Class="button-margin-Y">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowDeviceCompliance" Disabled="@(!svc.Tls)" Class="button-margin-Y">Device Compliance</Button>
+            <Button Color="Color.Info" Clicked="ShowCertificateSelection" Disabled="@(!svc.Tls)" Class="button-margin-Y">Certificate Selection</Button>
+            <Button Color="Color.Info" Clicked="ShowExtraSettings" Class="button-margin-Y">Extra Settings</Button>
         }
         else
         {
-            <Button Color="Color.Info" Clicked="ShowTrafficFilters">Traffic Filters</Button>
-            <Button Color="Color.Info">Routes</Button>
-            <Button Color="Color.Info" Clicked="ShowCryptographySuite">IPsec Policy</Button>
-            <Button Color="Color.Info" Clicked="ShowExtraSettings">Extra Settings</Button>
+            <Button Color="Color.Info" Clicked="ShowTrafficFilters" Class="button-margin-Y">Traffic Filters</Button>
+            <Button Color="Color.Info" Class="button-margin-Y">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Class="button-margin-Y">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowExtraSettings" Class="button-margin-Y">Extra Settings</Button>
         }
     </Column>
     <Column ColumnSize="ColumnSize.IsHalf">
-        <Button Color="Color.Primary" Clicked="@Build" Style="width:100%">Build</Button>
+        <Button Color="Color.Primary" Clicked="@Build" Block>Build</Button>
         <Row HorizontalGutter="8" Margin="Margin.Is2.FromTop">
             <Column ColumnSize="ColumnSize.Is6">
-                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@CopyToClipboard" Style="width:100%">Copy to Clipboard</Button>
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy to Clipboard</Button>
             </Column>
             <Column ColumnSize="ColumnSize.Is6">
-                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@Download" Style="width:100%">Download</Button>
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@Download" Block>Download</Button>
             </Column>
         </Row>
         <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is2.FromTop">
@@ -201,6 +239,22 @@
             });
     }
 
+    private Task ShowDeviceCompliance()
+    {
+        return ModalService.Show<DeviceComplianceModal>("Device Compliance", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+    
+    private Task ShowCertificateSelection()
+    {
+        return ModalService.Show<CertificateSelectionModal>("Certificate Selection", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
     private Task ShowExtraSettings()
     {
         return ModalService.Show<ExtraSettingsModal>("Extra Settings", new ModalInstanceOptions()
@@ -224,7 +278,7 @@
 
     private async Task Download()
     {
-        var jsparams = new object[]        
+        var jsparams = new object[]
         {
             "VPNProfile.XML", "text/xml", svc.ProfileXml
         };

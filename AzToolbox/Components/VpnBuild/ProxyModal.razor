@@ -8,11 +8,11 @@
     </Field>
     <Field Horizontal>
         <FieldLabel>AutoConfigUrl</FieldLabel>
-        <TextEdit @bind-Text="@AutoConfigUrl"></TextEdit>
+        <TextEdit @bind-Text="@AutoConfigUrl" Disabled="@(!Enabled)"></TextEdit>
     </Field>
     <Field Horizontal>
         <FieldLabel>ManualProxy</FieldLabel>
-        <TextEdit @bind-Text="@ManualProxy"></TextEdit>
+        <TextEdit @bind-Text="@ManualProxy" Disabled="@(!Enabled)"></TextEdit>
     </Field>
 </ModalBody>
 <ModalFooter>
