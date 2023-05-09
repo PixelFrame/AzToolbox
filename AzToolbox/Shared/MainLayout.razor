@@ -1,41 +1,71 @@
 ﻿@inherits LayoutComponentBase
+<CascadingValue Value="this">
+    <Layout>
+        @if (ShowHeader)
+        {
+            <LayoutHeader>
+                <Bar Breakpoint="Breakpoint.Desktop"
+                 Background="Background.Dark"
+                 ThemeContrast="ThemeContrast.Dark">
+                    <BarBrand>
+                        <Figure Size="FigureSize.Is48x48" Margin="Margin.Is0">
+                            <FigureImage Source="icon-192.png" />
+                        </Figure>
+                        AzToolbox
+                    </BarBrand>
+                    <BarToggler />
+                    <BarMenu>
+                        <BarStart>
+                            <BarItem>
+                                <BarLink To="/">Home</BarLink>
+                            </BarItem>
+                            <BarItem>
+                                <BarDropdown>
+                                    <BarDropdownToggle>ToolSet</BarDropdownToggle>
+                                    <BarDropdownMenu>
+                                        <BarDropdownItem To="/VpnBuild">VPN ProfileXML Builder</BarDropdownItem>
+                                    </BarDropdownMenu>
+                                </BarDropdown>
+                            </BarItem>
+                        </BarStart>
+                    </BarMenu>
+                </Bar>
+            </LayoutHeader>
+        }
+        <LayoutContent Margin="Margin.Is3">
+            @Body
+        </LayoutContent>
+        @if (ShowFooter)
+        {
+            <LayoutFooter>
+                <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small">
+                    &copy; 2023 AzToolbox <br />
+                    Powered by Blazor, .NET 6 and Blazorise
+                </Paragraph>
+            </LayoutFooter>
+        }
+    </Layout>
+</CascadingValue>
 
-<Layout>
-    <LayoutHeader>
-        <Bar Breakpoint="Breakpoint.Desktop"
-             Background="Background.Dark"
-             ThemeContrast="ThemeContrast.Dark">
-            <BarBrand>
-                <Figure Size="FigureSize.Is48x48" Margin="Margin.Is0">
-                    <FigureImage Source="icon-192.png" />
-                </Figure>
-                AzToolbox
-            </BarBrand>
-            <BarToggler />
-            <BarMenu>
-                <BarStart>
-                    <BarItem>
-                        <BarLink To="/">Home</BarLink>
-                    </BarItem>
-                    <BarItem>
-                        <BarDropdown>
-                            <BarDropdownToggle>ToolSet</BarDropdownToggle>
-                            <BarDropdownMenu>
-                                <BarDropdownItem To="/VpnBuild">VPN ProfileXML Builder</BarDropdownItem>
-                            </BarDropdownMenu>
-                        </BarDropdown>
-                    </BarItem>
-                </BarStart>
-            </BarMenu>
-        </Bar>
-    </LayoutHeader>
-    <LayoutContent Margin="Margin.Is3">
-        @Body
-    </LayoutContent>
-    <LayoutFooter>
-        <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small">
-            &copy; 2023 AzToolbox <br />
-            Powered by Blazor, .NET 6 and Blazorise
-        </Paragraph>
-    </LayoutFooter>
-</Layout>
+@code {
+    public bool showHeader = true;
+    public bool ShowHeader
+    {
+        get => showHeader;
+        set
+        {
+            showHeader = value;
+            StateHasChanged();
+        }
+    }
+    public bool showFooter = true;
+    public bool ShowFooter
+    {
+        get => showFooter;
+        set
+        {
+            showFooter = value;
+            StateHasChanged();
+        }
+    }
+}

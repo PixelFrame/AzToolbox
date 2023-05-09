@@ -4,6 +4,7 @@
 @using ProfileXMLBuilder.Lib
 @using AzToolbox.Components.VpnBuild
 
+@inject NavigationManager NavMan
 @inject INotificationService NotificationService
 @inject IModalService ModalService
 @inject IJSRuntime JSRuntime
@@ -184,7 +185,25 @@
 </Row>
 
 @code {
+    [CascadingParameter]
+    public MainLayout? Layout { get; set; }
+
     bool built = false;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public bool? Compact { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && true == Compact)
+        {
+            Layout!.ShowHeader = false;
+            Layout!.ShowFooter = false;
+        }
+        base.OnAfterRender(firstRender);
+    }
+
     private Task Build()
     {
         try
@@ -246,7 +265,7 @@
                 Size = ModalSize.ExtraLarge
             });
     }
-    
+
     private Task ShowCertificateSelection()
     {
         return ModalService.Show<CertificateSelectionModal>("Certificate Selection", new ModalInstanceOptions()
