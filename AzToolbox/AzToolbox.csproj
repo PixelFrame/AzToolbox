@@ -5,11 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-    <WasmEnableThreads>true</WasmEnableThreads>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.SeekableStream" Version="1.0.1" />
     <PackageReference Include="Blazorise.Animate" Version="1.2.4" />
     <PackageReference Include="Blazorise.Bootstrap" Version="1.2.4" />
     <PackageReference Include="Blazorise.Components" Version="1.2.4" />
@@ -18,9 +16,9 @@
     <PackageReference Include="Blazorise.LoadingIndicator" Version="1.2.4" />
     <PackageReference Include="Blazorise.Snackbar" Version="1.2.4" />
     <PackageReference Include="Blazorise.SpinKit" Version="1.2.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.7" PrivateAssets="all" />
-    <PackageReference Include="SharpCompress" Version="0.33.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.8" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.WebAssembly.Threading" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
