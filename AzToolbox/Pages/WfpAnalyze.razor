@@ -5,6 +5,7 @@
 @using AzToolbox.Components.WfpAnalyze;
 
 @inject ILoadingIndicatorService ApplicationLoadingIndicatorService
+@inject INotificationService NotificationService
 
 @if (!ShowResult)
 {
@@ -31,38 +32,17 @@
     {
         <Card Style="margin: 0 100px 0 100px">
             <CardBody>
-                <Heading Size="HeadingSize.Is5">@($"Parsing {wfpdiag.CurrentItem}") </Heading>
+                <Heading Size="HeadingSize.Is5">@($"Parsing XML") </Heading>
                 <Divider />
-                <Progress Value="@wfpdiag.CurrentCount" Max="@wfpdiag.CurrentMax" />
+                <Progress Value="@wfpdiag.CurrentCount" Max="@wfpdiag.CurrentMax" ShowValue /> <!-- Won't work due to WASM limitation -->
             </CardBody>
         </Card>
     }
 }
 else
 {
-    <Button Clicked="@(()=>ShowResult = false)" Color="Color.Primary"><Icon Name="IconName.ArrowLeft" />Select Another File</Button>
-    <Tabs SelectedTab="netevents">
-        <Items>
-            <Tab Name="netevents">Drop Events</Tab>
-            <Tab Name="initfilters">Initial Filters</Tab>
-            <Tab Name="addedfilters">Added Filters</Tab>
-            <Tab Name="providers">Providers</Tab>
-        </Items>
-        <Content>
-            <TabPanel Name="netevents">
-                <NetEventClassifyDropDataGrid NetEvents="wfpdiag.NetEventsClassifyDrop" />
-            </TabPanel>
-            <TabPanel Name="initfilters">
-                <FilterDataGrid Filters="wfpdiag.InitialFilters" />
-            </TabPanel>
-            <TabPanel Name="addedfilters">
-                <FilterDataGrid Filters="wfpdiag.AddedFilters" />
-            </TabPanel>
-            <TabPanel Name="providers">
-                <ProviderDataGrid Providers="wfpdiag.Providers" />
-            </TabPanel>
-        </Content>
-    </Tabs>
+    <Button Clicked="@(()=>ShowResult = false)" Color="Color.Primary"><Icon Name="IconName.ArrowLeft" /> Select Another File</Button>
+    @resultFragment;
 }
 
 @code {
@@ -70,6 +50,9 @@ else
     bool ShowParsingProgress = false;
     FilePicker filePickerCustom = new();
     WfpDiag wfpdiag = new();
+    WfpState wfpstate = new();
+    NetEvents netevents = new();
+    RenderFragment? resultFragment;
 
     async Task OnFileSelected(FileUploadEventArgs e)
     {
@@ -79,7 +62,6 @@ else
         using var fileStream = file.OpenReadStream(104857600);
         using var memStream = new MemoryStream();
         await fileStream.CopyToAsync(memStream);
-        Console.WriteLine($"{DateTime.Now:yyyyMMddTHHmmss.ffffff}: File Read");
 
         var enc = new System.Text.UTF8Encoding();
         var xml = enc.GetString(memStream.ToArray());
@@ -88,17 +70,36 @@ else
         {
             xml = xml.Remove(0, _byteOrderMarkUtf8.Length);
         }
-        Console.WriteLine($"{DateTime.Now:yyyyMMddTHHmmss.ffffff}: String Parsed");
         ShowParsingProgress = true;
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
 
         try
         {
-            wfpdiag.Load(xml);
+            if (xml.Contains("<wfpstate"))
+            {
+                await Task.Run(() => wfpstate.Load(xml));
+                resultFragment = @<WfpStateTabView Filters="@wfpstate.Filters" Providers="@wfpstate.Providers" />;
+            }
+            else if (xml.Contains("<wfpdiag"))
+            {
+                await Task.Run(() => wfpdiag.Load(xml));
+                resultFragment = @<WfpDiagTabView NetEvents="@wfpdiag.NetEventsClassifyDrop" InitialFilters="@wfpdiag.InitialFilters" AddedFilters="@wfpdiag.AddedFilters" Providers="@wfpdiag.Providers" />;
+            }
+            else if (xml.Contains("<netEvents"))
+            {
+                await Task.Run(() => netevents.Load(xml));
+                resultFragment = @<NetEventClassifyDropDataGrid NetEvents="@netevents.NetEventsClassifyDrop" />;
+            }
+            else
+            {
+                throw new InvalidDataException("Invalid XML file");
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            await NotificationService.Error(ex.Message);
+            resultFragment = @<Heading Size="HeadingSize.Is5">@ex.GetType().ToString()</Heading>;
+            resultFragment += @<Paragraph>@ex.Message</Paragraph>;
         }
         ShowParsingProgress = false;
         ShowResult = true;

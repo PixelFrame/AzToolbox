@@ -1,0 +1,35 @@
+﻿@using WfpXmlHelper
+
+<Tabs SelectedTab="netevents">
+    <Items>
+        <Tab Name="netevents">Drop Events</Tab>
+        <Tab Name="initfilters">Initial Filters</Tab>
+        <Tab Name="addedfilters">Added Filters</Tab>
+        <Tab Name="providers">Providers</Tab>
+    </Items>
+    <Content>
+        <TabPanel Name="netevents">
+            <NetEventClassifyDropDataGrid NetEvents="NetEvents" />
+        </TabPanel>
+        <TabPanel Name="initfilters">
+            <FilterDataGrid Filters="InitialFilters" />
+        </TabPanel>
+        <TabPanel Name="addedfilters">
+            <FilterDataGrid Filters="AddedFilters" />
+        </TabPanel>
+        <TabPanel Name="providers">
+            <ProviderDataGrid Providers="Providers" />
+        </TabPanel>
+    </Content>
+</Tabs>
+
+@code {
+    [Parameter]
+    public IEnumerable<NetEventClassifyDrop> NetEvents { get; set; } = Array.Empty<NetEventClassifyDrop>();
+    [Parameter]
+    public IEnumerable<Filter> InitialFilters { get; set; } = Array.Empty<Filter>();
+    [Parameter]
+    public IEnumerable<Filter> AddedFilters { get; set; } = Array.Empty<Filter>();
+    [Parameter]
+    public IEnumerable<Provider> Providers { get; set; } = Array.Empty<Provider>();
+}
