@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzToolbox", "AzToolbox\AzTo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileXMLBuilder.Lib", "..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj", "{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WfpXmlHelper", "..\WfpXmlHelper\WfpXmlHelper.csproj", "{D2927C58-E349-48DB-9B25-D09E12C8FA1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

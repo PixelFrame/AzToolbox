@@ -1,0 +1,38 @@
+﻿@using WfpXmlHelper;
+
+<DataGrid TItem="Provider"
+          Data="@Providers"
+          DetailRowStartsVisible="false"
+          Filterable="true"
+          FilterMethod="DataGridFilterMethod.Contains"
+          ShowPager="true"
+          ShowPageSizes="true"
+          PageSize="25"
+          Responsive="true">
+    <DataGridColumns>
+        <DataGridColumn Field="@nameof(Provider.Key)" Caption="ProviderKey" Sortable="true" />
+        <DataGridColumn Field="@nameof(Provider.Name)" Caption="Name" Sortable="false" />
+        <DataGridColumn Field="@nameof(Provider.ServiceName)" Caption="Service Name" Sortable="false" />
+    </DataGridColumns>
+    <DetailRowTemplate>
+        @{
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Description</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@context.Description" Disabled AutoSize />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                </FieldBody>
+            </Field>
+        }
+    </DetailRowTemplate>
+</DataGrid>
+
+@code {
+    [Parameter]
+    public IEnumerable<Provider> Providers { get; set; } = Array.Empty<Provider>();
+}

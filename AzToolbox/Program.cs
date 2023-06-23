@@ -5,6 +5,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using AzToolbox.Services;
+using Blazorise.LoadingIndicator;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,9 +16,10 @@ builder.Services
     .AddBlazorise(options =>
     {
         options.Immediate = true;
-    })
-    .AddBootstrapProviders()
-    .AddFontAwesomeIcons();
+    });
+builder.Services.AddBootstrapProviders();
+builder.Services.AddFontAwesomeIcons();
+builder.Services.AddLoadingIndicator();
 
 builder.Services.AddSingleton<VpnBuildService>();
 

@@ -1,0 +1,56 @@
+﻿@using WfpXmlHelper;
+
+<DataGrid TItem="Filter"
+          Data="@Filters"
+          DetailRowStartsVisible="false"
+          Filterable="true"
+          FilterMethod="DataGridFilterMethod.Contains"
+          ShowPager="true"
+          ShowPageSizes="true"
+          PageSize="25"
+          Responsive="true"
+          Groupable="true"
+          ShowGrouping="true">
+    <DataGridColumns>
+        <DataGridColumn Field="@nameof(Filter.Id)" Caption="Filter ID" Sortable="true" />
+        <DataGridColumn Field="@nameof(Filter.EffectiveWeight)" Caption="Effective Weight" Sortable="true" />
+        <DataGridColumn Field="@nameof(Filter.Name)" Caption="Name" Sortable="false" />
+        <DataGridColumn Field="@nameof(Filter.LayerKey)" Caption="LayerKey" Sortable="false" Groupable="true" Grouping="true" />
+        <DataGridColumn Field="@nameof(Filter.ProviderKey)" Caption="ProviderKey" Sortable="false" />
+        <DataGridColumn Field="@nameof(Filter.Action)" Caption="Action" Sortable="false" Groupable="true" />
+        <DataGridColumn Field="@nameof(Filter.CalloutKey)" Caption="CalloutKey" Sortable="false" Groupable="true" />
+    </DataGridColumns>
+    <DetailRowTemplate>
+        @{
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Description</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@context.Description" Disabled AutoSize />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Weight</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <TextEdit Text="@context.Weight" Disabled />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Condition</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@context.Condition.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                </FieldBody>
+            </Field>
+        }
+    </DetailRowTemplate>
+</DataGrid>
+
+@code {
+    [Parameter]
+    public IEnumerable<Filter> Filters { get; set; } = Array.Empty<Filter>();
+}

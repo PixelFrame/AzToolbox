@@ -1,0 +1,67 @@
+﻿@using WfpXmlHelper;
+
+<DataGrid TItem="NetEventClassifyDrop"
+          Data="@NetEvents"
+          DetailRowStartsVisible="false"
+          Filterable="true"
+          FilterMethod="DataGridFilterMethod.Contains"
+          ShowPager="true"
+          ShowPageSizes="true"
+          PageSize="25"
+          Responsive="true">
+    <DataGridColumns>
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.TimeStamp)" Caption="TimeStamp" Sortable="true" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.FilterId)" Caption="Filter ID" Sortable="false" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.IPProtocol)" Caption="IP Protocol" Sortable="false" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.Direction)" Caption="Direction" Sortable="false" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.LocalAddress)" Caption="Local Address" Sortable="false" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.LocalPort)" Caption="Local Port" Sortable="false" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.RemoteAddress)" Caption="Remote Address" Sortable="false" />
+        <DataGridColumn Field="@nameof(NetEventClassifyDrop.RemotePort)" Caption="Remote Port" Sortable="false" />
+    </DataGridColumns>
+    <DetailRowTemplate>
+        @{
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">App ID</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <TextEdit Text="@context.AppId" Disabled />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">User ID</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <TextEdit Text="@context.UserId" Disabled />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Package SID</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <TextEdit Text="@context.PackageSid" Disabled />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Current Profile</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <TextEdit Text="@context.CurrentProfile" Disabled />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Original Profile</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <TextEdit Text="@context.OriginalProfile" Disabled />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                </FieldBody>
+            </Field>
+        }
+    </DetailRowTemplate>
+</DataGrid>
+
+@code {
+    [Parameter]
+    public IEnumerable<NetEventClassifyDrop> NetEvents { get; set; } = Array.Empty<NetEventClassifyDrop>();
+}
