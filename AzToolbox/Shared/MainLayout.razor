@@ -5,13 +5,15 @@
         {
             <LayoutHeader>
                 <Bar Breakpoint="Breakpoint.Desktop"
-                 Background="Background.Dark"
-                 ThemeContrast="ThemeContrast.Dark">
+                     Background="Background.Dark"
+                     ThemeContrast="ThemeContrast.Dark">
                     <BarBrand>
-                        <Figure Size="FigureSize.Is48x48" Margin="Margin.Is0">
-                            <FigureImage Source="icon-192.png" />
-                        </Figure>
-                        AzToolbox
+                        <Div Style="display:flex;align-items:baseline">
+                            <Figure Size="FigureSize.Is48x48" Margin="Margin.Is0">
+                                <FigureImage Source="icon-192.png" />
+                            </Figure>
+                            <Heading Size="HeadingSize.Is5" Style="user-select: none">AzToolbox</Heading>
+                        </Div>
                     </BarBrand>
                     <BarToggler />
                     <BarMenu>
@@ -21,10 +23,19 @@
                             </BarItem>
                             <BarItem>
                                 <BarDropdown>
-                                    <BarDropdownToggle>ToolSet</BarDropdownToggle>
+                                    <BarDropdownToggle>Common</BarDropdownToggle>
                                     <BarDropdownMenu>
-                                        <BarDropdownItem To="/VpnBuild">VPN ProfileXML Builder</BarDropdownItem>
-                                        <BarDropdownItem To="/WfpAnalyze">WFP Trace Analyze</BarDropdownItem>
+                                        <BarDropdownItem To="/Common/Base64">Base64 Utils</BarDropdownItem>
+                                        <BarDropdownItem To="/Common/RNG">Random Number Generator</BarDropdownItem>
+                                    </BarDropdownMenu>
+                                </BarDropdown>
+                            </BarItem>
+                            <BarItem>
+                                <BarDropdown>
+                                    <BarDropdownToggle>Windows</BarDropdownToggle>
+                                    <BarDropdownMenu>
+                                        <BarDropdownItem To="/Windows/VpnBuild">VPN ProfileXML Builder</BarDropdownItem>
+                                        <BarDropdownItem To="/Windows/WfpAnalyze">WFP Trace Analyze</BarDropdownItem>
                                     </BarDropdownMenu>
                                 </BarDropdown>
                             </BarItem>
@@ -41,7 +52,7 @@
             <LayoutFooter>
                 <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small">
                     &copy; 2023 AzToolbox <br />
-                    Powered by Blazor, .NET 7 and Blazorise
+                    Powered by Blazor, @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription @System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier and Blazorise
                 </Paragraph>
             </LayoutFooter>
         }

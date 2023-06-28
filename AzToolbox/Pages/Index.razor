@@ -1,13 +1,17 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>AzToolbox</PageTitle>
 
 <Jumbotron Background="Background.Light" Margin="Margin.Is4.FromBottom">
     <JumbotronTitle Size="JumbotronTitleSize.Is4">Welcome</JumbotronTitle>
     <JumbotronSubtitle>
-        This site is under construction... <br/>
-        Visit me another day
+        Tools built with Blazor WebAssembly. <br>
     </JumbotronSubtitle>
     <Divider />
-    <Icon Name="IconName.Wrench" IconSize="IconSize.x7" />
+    <Link To="https://github.com/PixelFrame/AzToolbox" Target="Target.Blank" TextColor="TextColor.Body">
+        <Icon Name="@("fab fa-github")" IconSize="IconSize.Large" />
+    </Link>
+    <Link To="mailto:pm421@live.com" Target="Target.Blank" TextColor="TextColor.Body">
+        <Icon Name="@IconName.Mail" IconSize="IconSize.Large" />
+    </Link>
 </Jumbotron>

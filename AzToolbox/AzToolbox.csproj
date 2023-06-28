@@ -26,8 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj" />
     <ProjectReference Include="..\..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj" />
     <ProjectReference Include="..\..\WfpXmlHelper\WfpXmlHelper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,84 @@
+﻿@page "/Common/BASE64"
+<PageTitle>Base64 Utils - AzToolbox</PageTitle>
+
+@using KzA.Blazor.HexDump
+@using System.Text;
+
+<Row>
+    <Column ColumnSize="ColumnSize.Is6.OnDesktop.Is12.OnMobile">
+        <Card>
+            <CardBody>
+                <CardTitle Size="6">
+                    Base64
+                </CardTitle>
+                <MemoEdit @bind-Text="@base64str" Rows="10"
+                          Style="font-family:'Cascadia Code',Consolas,'Courier New',monospace;font-size:small;resize:none" />
+                <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromBase64">
+                    From Base64
+                </Button>
+            </CardBody>
+        </Card>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is6.OnDesktop.Is12.OnMobile">
+        <Card>
+            <CardBody>
+                <CardTitle Size="6">
+                    Hex Dump
+                </CardTitle>
+                <HexDump Data="@blob" />
+            </CardBody>
+        </Card>
+        <Card>
+            <CardBody>
+                <CardTitle Size="6">
+                    Data
+                </CardTitle>
+                <SelectList TItem="EncodingInfo"
+                            TValue="int"
+                            Data="@SupportedEncodings"
+                            TextField="@((item)=>item.Name)"
+                            ValueField="@((item)=>item.CodePage)"
+                            DefaultItemValue="65001"
+                            @bind-SelectedValue="selectedCodePage" />
+                <MemoEdit @bind-Text="@decodedstr" Rows="10"
+                          Style="font-family:'Cascadia Code',Consolas,'Courier New',monospace;font-size:small;resize:none" />
+                <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromString">
+                    To Base64
+                </Button>
+            </CardBody>
+        </Card>
+    </Column>
+</Row>
+
+@code {
+    string base64str = string.Empty;
+    byte[] blob = Array.Empty<byte>();
+    string decodedstr = string.Empty;
+    SelectList<EncodingInfo, Encoding> encodingSelect = new();
+
+    static readonly IEnumerable<EncodingInfo> SupportedEncodings = System.Text.Encoding.GetEncodings();
+    int selectedCodePage = 65001;
+
+    protected override void OnInitialized()
+    {
+        blob = new byte[256];
+        for (int i = 0; i < blob.Length; i++)
+        {
+            blob[i] = (byte)i;
+        }
+        base64str = Convert.ToBase64String(blob);
+        decodedstr = Encoding.GetEncoding(selectedCodePage).GetString(blob);
+    }
+
+    void FromBase64()
+    {
+        blob = Convert.FromBase64String(base64str);
+        decodedstr = Encoding.GetEncoding(selectedCodePage).GetString(blob);
+    }
+
+    void FromString()
+    {
+        blob = Encoding.GetEncoding(selectedCodePage).GetBytes(decodedstr);
+        base64str = Convert.ToBase64String(blob);
+    }
+}

@@ -1,4 +1,5 @@
 ﻿@page "/VpnBuild"
+@page "/Windows/VpnBuild"
 <PageTitle>VPN ProfileXML Builder - AzToolbox</PageTitle>
 
 @using ProfileXMLBuilder.Lib
@@ -185,24 +186,7 @@
 </Row>
 
 @code {
-    [CascadingParameter]
-    public MainLayout? Layout { get; set; }
-
     bool built = false;
-
-    [Parameter]
-    [SupplyParameterFromQuery]
-    public bool? Compact { get; set; }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender && true == Compact)
-        {
-            Layout!.ShowHeader = false;
-            Layout!.ShowFooter = false;
-        }
-        base.OnAfterRender(firstRender);
-    }
 
     private Task Build()
     {
