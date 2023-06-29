@@ -1,7 +1,344 @@
 ﻿@page "/Common/RNG"
 
-<h3>RngUtils</h3>
+@using System.Security.Cryptography
+
+<Row>
+    <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is12.OnMobile">
+        <Fields>
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Generate Item Count</FieldLabel>
+                <NumericEdit @bind-Value="cnt" />
+            </Field>
+            <Field ColumnSize="ColumnSize.Is6">
+                <FieldLabel>Item Type</FieldLabel>
+                <Select TValue="int" @bind-SelectedValue="@itemType">
+                    <SelectItem Value="1">Integers</SelectItem>
+                    <SelectItem Value="2">Decimals</SelectItem>
+                    <SelectItem Value="3">Roman alphabet characters</SelectItem>
+                    <SelectItem Value="4">Alphanumeric characters</SelectItem>
+                    <SelectItem Value="5">ASCII characters</SelectItem>
+                    <SelectItem Value="6">Roman alphabet strings</SelectItem>
+                    <SelectItem Value="7">Alphanumeric strings</SelectItem>
+                    <SelectItem Value="8">ASCII strings</SelectItem>
+                    <SelectItem Value="9">HEX values</SelectItem>
+                </Select>
+            </Field>
+        </Fields>
+
+        @if (itemType == 1)
+        {
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Minimal Value</FieldLabel>
+                    <NumericPicker @bind-Value="@min" Min="@int.MinValue" Max="@int.MaxValue" Decimals="0" />
+                </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Maximum Value</FieldLabel>
+                    <NumericPicker @bind-Value="@max" Min="@min" Max="@int.MaxValue" Decimals="0" />
+                </Field>
+            </Fields>
+        }
+
+        @if (itemType == 2)
+        {
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Minimal Value</FieldLabel>
+                    <NumericPicker @bind-Value="@min" Min="@int.MinValue" Max="@int.MaxValue" Decimals="@digits" />
+                </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Maximum Value</FieldLabel>
+                    <NumericPicker @bind-Value="@max" Min="@min" Max="@int.MaxValue" Decimals="@digits" />
+                </Field>
+            </Fields>
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Digits</FieldLabel>
+                    <NumericEdit @bind-Value="@digits" Min="0" Max="9" />
+                </Field>
+            </Fields>
+        }
+
+        @if (itemType < 9 && itemType > 5)
+        {
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Minimal String Length</FieldLabel>
+                    <NumericEdit @bind-Value="@min" Min="1" Max="@int.MaxValue" />
+                </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Maximum String Length</FieldLabel>
+                    <NumericEdit @bind-Value="@max" Min="@min" Max="@int.MaxValue" />
+                </Field>
+            </Fields>
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>String Prefix</FieldLabel>
+                    <TextEdit @bind-Text="@strPrefix" />
+                </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>String Suffix</FieldLabel>
+                    <TextEdit @bind-Text="@strSuffix" />
+                </Field>
+            </Fields>
+        }
+
+        <Button Color="Color.Primary" Block Clicked="Generate">Go</Button>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is8.OnDesktop.Is12.OnMobile">
+
+        @if (itemType < 3)
+        {
+            <Card Class="rng-container-block">
+                <Repeater Items="@nums">
+                    <Card Class="rng-item">
+                        @context
+                    </Card>
+                </Repeater>
+            </Card>
+        }
+
+        @if (itemType < 5 && itemType > 2)
+        {
+            <Card Class="rng-container-block">
+                <Repeater Items="@strs">
+                    <Card Class="rng-item">
+                        @context
+                    </Card>
+                </Repeater>
+            </Card>
+        }
+
+        @if (itemType == 5)
+        {
+            <Card Class="rng-container-block">
+                <Repeater Items="@mstrs">
+                    <Card Class="rng-item">
+                        @context
+                    </Card>
+                </Repeater>
+            </Card>
+        }
+
+        @if (itemType < 8 && itemType > 5)
+        {
+            <Card Class="rng-container-line">
+                <Repeater Items="@strs">
+                    <Card Class="rng-item">
+                        @context
+                    </Card>
+                </Repeater>
+            </Card>
+        }
+
+        @if (itemType == 8)
+        {
+            <Card Class="rng-container-line">
+                <Repeater Items="@mstrs">
+                    <Card Class="rng-item">
+                        @context
+                    </Card>
+                </Repeater>
+            </Card>
+        }
+
+        @if (itemType == 9)
+        {
+            <Card Class="rng-container-block">
+                <Repeater Items="@bytes">
+                    <Card Class="rng-item">
+                        @context.ToString("X2")
+                    </Card>
+                </Repeater>
+            </Card>
+        }
+    </Column>
+</Row>
+
+<style>
+    .rng-container-block {
+        flex-flow: row;
+        flex-wrap: wrap;
+    }
+
+    .rng-container-line {
+        flex-flow: column;
+    }
+
+    .rng-item {
+        font-family: 'Cascadia Code', Consolas, monospace;
+        font-size: 2em;
+        align-self: start;
+        padding: 0 14px;
+        margin: 7px 7px;
+    }
+</style>
 
 @code {
+    int cnt = 7;
+    double max = 2501;
+    double min = 1;
+    string strPrefix = string.Empty;
+    string strSuffix = string.Empty;
+    int itemType = 1;
+    int digits = 2;
 
+    List<double> nums = new();
+    List<string> strs = new();
+    List<MarkupString> mstrs = new();
+    List<byte> bytes = new();
+
+    static readonly string romanAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static readonly string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    static readonly string ascii = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%'()*+,-./:;<=>?`@[]\\~^_{}|";
+
+    void Generate(MouseEventArgs args)
+    {
+        var seed = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
+        var rnd = new Random(seed);
+        var _cnt = cnt;
+        Int64 int64Min;
+        Int64 int64Max;
+        Int64 int64StrMin;
+        Int64 int64StrMax;
+        switch (itemType)
+        {
+            case 1:
+                int64Min = (Int64)min;
+                int64Max = (Int64)max;
+                nums.Clear();
+                while (_cnt > 0)
+                {
+                    nums.Add(rnd.NextInt64(int64Min, int64Max + 1));
+                    _cnt--;
+                }
+                break;
+            case 2:
+                int64Min = (Int64)(min * Math.Pow(10, digits));
+                int64Max = (Int64)(max * Math.Pow(10, digits));
+                nums.Clear();
+                while (_cnt > 0)
+                {
+                    nums.Add(rnd.NextInt64(int64Min, int64Max) / Math.Pow(10, digits));
+                    _cnt--;
+                }
+                break;
+            case 3:
+                int64Min = 0;
+                int64Max = romanAlphabet.Length;
+                strs.Clear();
+                while (_cnt > 0)
+                {
+                    var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                    strs.Add(romanAlphabet[idx].ToString());
+                    _cnt--;
+                }
+                break;
+            case 4:
+                int64Min = 0;
+                int64Max = alphanumeric.Length;
+                strs.Clear();
+                while (_cnt > 0)
+                {
+                    var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                    strs.Add(alphanumeric[idx].ToString());
+                    _cnt--;
+                }
+                break;
+            case 5:
+                int64Min = 0;
+                int64Max = ascii.Length;
+                mstrs.Clear();
+                while (_cnt > 0)
+                {
+                    var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                    var mstr = new MarkupString(AsciiEscape(ascii[idx]));
+                    mstrs.Add(mstr);
+                    _cnt--;
+                }
+                break;
+            case 6:
+                int64StrMin = (Int64)min;
+                int64StrMax = (Int64)max;
+                int64Min = 0;
+                int64Max = romanAlphabet.Length;
+                strs.Clear();
+                while (_cnt > 0)
+                {
+                    var strLen = rnd.NextInt64(int64StrMin, int64StrMax + 1);
+                    var sb = new System.Text.StringBuilder();
+                    sb.Append(strPrefix);
+                    while (strLen > 0)
+                    {
+                        var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                        sb.Append(romanAlphabet[idx]);
+                        strLen--;
+                    }
+                    sb.Append(strSuffix);
+                    strs.Add(sb.ToString());
+                    _cnt--;
+                }
+                break;
+            case 7:
+                int64StrMin = (Int64)min;
+                int64StrMax = (Int64)max;
+                int64Min = 0;
+                int64Max = alphanumeric.Length;
+                strs.Clear();
+                while (_cnt > 0)
+                {
+                    var strLen = rnd.NextInt64(int64StrMin, int64StrMax + 1);
+                    var sb = new System.Text.StringBuilder();
+                    sb.Append(strPrefix);
+                    while (strLen > 0)
+                    {
+                        var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                        sb.Append(alphanumeric[idx]);
+                        strLen--;
+                    }
+                    sb.Append(strSuffix);
+                    strs.Add(sb.ToString());
+                    _cnt--;
+                }
+                break;
+            case 8:
+                int64StrMin = (Int64)min;
+                int64StrMax = (Int64)max;
+                int64Min = 0;
+                int64Max = ascii.Length;
+                mstrs.Clear();
+                while (_cnt > 0)
+                {
+                    var strLen = rnd.NextInt64(int64StrMin, int64StrMax + 1);
+                    var sb = new System.Text.StringBuilder();
+                    sb.Append(strPrefix);
+                    while (strLen > 0)
+                    {
+                        var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                        sb.Append(AsciiEscape(ascii[idx]));
+                        strLen--;
+                    }
+                    sb.Append(strSuffix);
+                    mstrs.Add(new MarkupString(sb.ToString()));
+                    _cnt--;
+                }
+                break;
+            case 9:
+                var byteArr = new byte[cnt];
+                rnd.NextBytes(byteArr);
+                bytes.Clear();
+                bytes.AddRange(byteArr);
+                break;
+        }
+
+        static string AsciiEscape(char c) => c switch
+        {
+            ' ' => "&nbsp;",
+            '"' => "&quot;",
+            '&' => "&amp;",
+            '<' => "&lt;",
+            '>' => "&gt;",
+            _ => c.ToString(),
+        };
+    }
 }
