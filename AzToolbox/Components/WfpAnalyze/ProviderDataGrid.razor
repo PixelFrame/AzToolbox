@@ -5,9 +5,11 @@
           DetailRowStartsVisible="false"
           Filterable="true"
           FilterMethod="DataGridFilterMethod.Contains"
+          Narrow="true"
           ShowPager="true"
           ShowPageSizes="true"
-          PageSize="25"
+          @bind-PageSize="@pageSize"
+          PageSizes="@(new int[]{50,100,200,300,400,500,1000,5000})"
           Responsive="true">
     <DataGridColumns>
         <DataGridColumn Field="@nameof(Provider.Key)" Caption="ProviderKey" Sortable="true" />
@@ -30,9 +32,13 @@
             </Field>
         }
     </DetailRowTemplate>
+    <TotalItemsTemplate><Badge Color="Color.Primary">@context.TotalItems total items</Badge></TotalItemsTemplate>
+    <TotalItemsShortTemplate><Badge Color="Color.Primary">@context.TotalItems</Badge></TotalItemsShortTemplate>
 </DataGrid>
 
 @code {
     [Parameter]
     public IEnumerable<Provider> Providers { get; set; } = Array.Empty<Provider>();
+    
+    int pageSize = 200;
 }

@@ -113,7 +113,7 @@
         {
             <Card Class="rng-container-block">
                 <Repeater Items="@mstrs">
-                    <Card Class="rng-item">
+                    <Card Class="rng-item-line">
                         @context
                     </Card>
                 </Repeater>
@@ -124,7 +124,7 @@
         {
             <Card Class="rng-container-line">
                 <Repeater Items="@strs">
-                    <Card Class="rng-item">
+                    <Card Class="rng-item-line">
                         @context
                     </Card>
                 </Repeater>
@@ -171,6 +171,15 @@
         align-self: start;
         padding: 0 14px;
         margin: 7px 7px;
+    }
+
+    .rng-item-line {
+        font-family: 'Cascadia Code', Consolas, monospace;
+        font-size: 2em;
+        align-self: start;
+        padding: 0 14px;
+        margin: 7px 7px;
+        width: calc(100% - 14px);
     }
 </style>
 
