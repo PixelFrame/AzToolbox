@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.8" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.WebAssembly.Threading" Version="7.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

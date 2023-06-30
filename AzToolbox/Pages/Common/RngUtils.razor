@@ -1,89 +1,92 @@
 ﻿@page "/Common/RNG"
+<PageTitle>Random Generator - AzToolbox</PageTitle>
 
 @using System.Security.Cryptography
 
 <Row>
     <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is12.OnMobile">
-        <Fields>
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Generate Item Count</FieldLabel>
-                <NumericEdit @bind-Value="cnt" />
-            </Field>
-            <Field ColumnSize="ColumnSize.Is6">
-                <FieldLabel>Item Type</FieldLabel>
-                <Select TValue="int" @bind-SelectedValue="@itemType">
-                    <SelectItem Value="1">Integers</SelectItem>
-                    <SelectItem Value="2">Decimals</SelectItem>
-                    <SelectItem Value="3">Roman alphabet characters</SelectItem>
-                    <SelectItem Value="4">Alphanumeric characters</SelectItem>
-                    <SelectItem Value="5">ASCII characters</SelectItem>
-                    <SelectItem Value="6">Roman alphabet strings</SelectItem>
-                    <SelectItem Value="7">Alphanumeric strings</SelectItem>
-                    <SelectItem Value="8">ASCII strings</SelectItem>
-                    <SelectItem Value="9">HEX values</SelectItem>
-                </Select>
-            </Field>
-        </Fields>
+        <Div Position="Position.Sticky.Top.Is0" Style="font-size:small">
+            <Fields>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Generate Item Count</FieldLabel>
+                    <NumericEdit @bind-Value="cnt" />
+                </Field>
+                <Field ColumnSize="ColumnSize.Is6">
+                    <FieldLabel>Item Type</FieldLabel>
+                    <Select TValue="int" @bind-SelectedValue="@itemType">
+                        <SelectItem Value="1">Integers</SelectItem>
+                        <SelectItem Value="2">Decimals</SelectItem>
+                        <SelectItem Value="3">Roman alphabet characters</SelectItem>
+                        <SelectItem Value="4">Alphanumeric characters</SelectItem>
+                        <SelectItem Value="5">ASCII characters</SelectItem>
+                        <SelectItem Value="6">Roman alphabet strings</SelectItem>
+                        <SelectItem Value="7">Alphanumeric strings</SelectItem>
+                        <SelectItem Value="8">ASCII strings</SelectItem>
+                        <SelectItem Value="9">HEX values</SelectItem>
+                    </Select>
+                </Field>
+            </Fields>
 
-        @if (itemType == 1)
-        {
-            <Fields>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Minimal Value</FieldLabel>
-                    <NumericPicker @bind-Value="@min" Min="@int.MinValue" Max="@int.MaxValue" Decimals="0" />
-                </Field>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Maximum Value</FieldLabel>
-                    <NumericPicker @bind-Value="@max" Min="@min" Max="@int.MaxValue" Decimals="0" />
-                </Field>
-            </Fields>
-        }
+            @if (itemType == 1)
+            {
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Minimal Value</FieldLabel>
+                        <NumericPicker @bind-Value="@min" Min="@int.MinValue" Max="@int.MaxValue" Decimals="0" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Maximum Value</FieldLabel>
+                        <NumericPicker @bind-Value="@max" Min="@min" Max="@int.MaxValue" Decimals="0" />
+                    </Field>
+                </Fields>
+            }
 
-        @if (itemType == 2)
-        {
-            <Fields>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Minimal Value</FieldLabel>
-                    <NumericPicker @bind-Value="@min" Min="@int.MinValue" Max="@int.MaxValue" Decimals="@digits" />
-                </Field>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Maximum Value</FieldLabel>
-                    <NumericPicker @bind-Value="@max" Min="@min" Max="@int.MaxValue" Decimals="@digits" />
-                </Field>
-            </Fields>
-            <Fields>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Digits</FieldLabel>
-                    <NumericEdit @bind-Value="@digits" Min="0" Max="9" />
-                </Field>
-            </Fields>
-        }
+            @if (itemType == 2)
+            {
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Minimal Value</FieldLabel>
+                        <NumericPicker @bind-Value="@min" Min="@int.MinValue" Max="@int.MaxValue" Decimals="@digits" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Maximum Value</FieldLabel>
+                        <NumericPicker @bind-Value="@max" Min="@min" Max="@int.MaxValue" Decimals="@digits" />
+                    </Field>
+                </Fields>
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Digits</FieldLabel>
+                        <NumericEdit @bind-Value="@digits" Min="0" Max="9" />
+                    </Field>
+                </Fields>
+            }
 
-        @if (itemType < 9 && itemType > 5)
-        {
-            <Fields>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Minimal String Length</FieldLabel>
-                    <NumericEdit @bind-Value="@min" Min="1" Max="@int.MaxValue" />
-                </Field>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>Maximum String Length</FieldLabel>
-                    <NumericEdit @bind-Value="@max" Min="@min" Max="@int.MaxValue" />
-                </Field>
-            </Fields>
-            <Fields>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>String Prefix</FieldLabel>
-                    <TextEdit @bind-Text="@strPrefix" />
-                </Field>
-                <Field ColumnSize="ColumnSize.Is6">
-                    <FieldLabel>String Suffix</FieldLabel>
-                    <TextEdit @bind-Text="@strSuffix" />
-                </Field>
-            </Fields>
-        }
+            @if (itemType < 9 && itemType > 5)
+            {
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Minimal String Length</FieldLabel>
+                        <NumericEdit @bind-Value="@min" Min="1" Max="@int.MaxValue" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>Maximum String Length</FieldLabel>
+                        <NumericEdit @bind-Value="@max" Min="@min" Max="@int.MaxValue" />
+                    </Field>
+                </Fields>
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>String Prefix</FieldLabel>
+                        <TextEdit @bind-Text="@strPrefix" />
+                    </Field>
+                    <Field ColumnSize="ColumnSize.Is6">
+                        <FieldLabel>String Suffix</FieldLabel>
+                        <TextEdit @bind-Text="@strSuffix" />
+                    </Field>
+                </Fields>
+            }
 
-        <Button Color="Color.Primary" Block Clicked="Generate">Go</Button>
+            <Button Color="Color.Primary" Block Clicked="Generate">Go</Button>
+        </Div>
     </Column>
     <Column ColumnSize="ColumnSize.Is8.OnDesktop.Is12.OnMobile">
 
@@ -113,7 +116,7 @@
         {
             <Card Class="rng-container-block">
                 <Repeater Items="@mstrs">
-                    <Card Class="rng-item-line">
+                    <Card Class="rng-item">
                         @context
                     </Card>
                 </Repeater>
@@ -135,7 +138,7 @@
         {
             <Card Class="rng-container-line">
                 <Repeater Items="@mstrs">
-                    <Card Class="rng-item">
+                    <Card Class="rng-item-line">
                         @context
                     </Card>
                 </Repeater>

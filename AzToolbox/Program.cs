@@ -7,6 +7,8 @@ using Blazorise.LoadingIndicator;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
+System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
