@@ -19,9 +19,11 @@
                         <SelectItem Value="3">Roman alphabet characters</SelectItem>
                         <SelectItem Value="4">Alphanumeric characters</SelectItem>
                         <SelectItem Value="5">ASCII characters</SelectItem>
+                        <SelectItem Value="501">Characters from custom characters</SelectItem>
                         <SelectItem Value="6">Roman alphabet strings</SelectItem>
                         <SelectItem Value="7">Alphanumeric strings</SelectItem>
                         <SelectItem Value="8">ASCII strings</SelectItem>
+                        <SelectItem Value="801">Strings from custom characters</SelectItem>
                         <SelectItem Value="9">HEX values</SelectItem>
                     </Select>
                 </Field>
@@ -61,7 +63,7 @@
                 </Fields>
             }
 
-            @if (itemType < 9 && itemType > 5)
+            @if (itemType < 9 && itemType > 5 || itemType == 801)
             {
                 <Fields>
                     <Field ColumnSize="ColumnSize.Is6">
@@ -81,6 +83,16 @@
                     <Field ColumnSize="ColumnSize.Is6">
                         <FieldLabel>String Suffix</FieldLabel>
                         <TextEdit @bind-Text="@strSuffix" />
+                    </Field>
+                </Fields>
+            }
+
+            @if (itemType > 100)
+            {
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is12">
+                        <FieldLabel>Custom Characters</FieldLabel>
+                        <TextEdit @bind-Text="@custom" />
                     </Field>
                 </Fields>
             }
@@ -112,7 +124,7 @@
             </Card>
         }
 
-        @if (itemType == 5)
+        @if (itemType == 5 || itemType == 501)
         {
             <Card Class="rng-container-block">
                 <Repeater Items="@mstrs">
@@ -134,7 +146,7 @@
             </Card>
         }
 
-        @if (itemType == 8)
+        @if (itemType == 8 || itemType == 801)
         {
             <Card Class="rng-container-line">
                 <Repeater Items="@mstrs">
@@ -188,7 +200,7 @@
 
 @code {
     int cnt = 7;
-    double max = 2501;
+    double max = 50;
     double min = 1;
     string strPrefix = string.Empty;
     string strSuffix = string.Empty;
@@ -203,9 +215,11 @@
     static readonly string romanAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     static readonly string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     static readonly string ascii = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%'()*+,-./:;<=>?`@[]\\~^_{}|";
+    string custom = alphanumeric;
 
     void Generate(MouseEventArgs args)
     {
+        if (max < min) max = min;
         var seed = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
         var rnd = new Random(seed);
         var _cnt = cnt;
@@ -269,6 +283,18 @@
                     _cnt--;
                 }
                 break;
+            case 501:
+                int64Min = 0;
+                int64Max = custom.Length;
+                mstrs.Clear();
+                while (_cnt > 0)
+                {
+                    var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                    var mstr = new MarkupString(AsciiEscape(custom[idx]));
+                    mstrs.Add(mstr);
+                    _cnt--;
+                }
+                break;
             case 6:
                 int64StrMin = (Int64)min;
                 int64StrMax = (Int64)max;
@@ -328,6 +354,28 @@
                     {
                         var idx = (int)rnd.NextInt64(int64Min, int64Max);
                         sb.Append(AsciiEscape(ascii[idx]));
+                        strLen--;
+                    }
+                    sb.Append(strSuffix);
+                    mstrs.Add(new MarkupString(sb.ToString()));
+                    _cnt--;
+                }
+                break;
+            case 801:
+                int64StrMin = (Int64)min;
+                int64StrMax = (Int64)max;
+                int64Min = 0;
+                int64Max = custom.Length;
+                mstrs.Clear();
+                while (_cnt > 0)
+                {
+                    var strLen = rnd.NextInt64(int64StrMin, int64StrMax + 1);
+                    var sb = new System.Text.StringBuilder();
+                    sb.Append(strPrefix);
+                    while (strLen > 0)
+                    {
+                        var idx = (int)rnd.NextInt64(int64Min, int64Max);
+                        sb.Append(AsciiEscape(custom[idx]));
                         strLen--;
                     }
                     sb.Append(strSuffix);
