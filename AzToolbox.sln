@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileXMLBuilder.Lib", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WfpXmlHelper", "..\WfpXmlHelper\WfpXmlHelper.csproj", "{D2927C58-E349-48DB-9B25-D09E12C8FA1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KzA.Blazor.HexDump", "..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj", "{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.HexDump", "..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj", "{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.PacParser", "..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj", "{FA251D51-9E23-4522-A367-ADF68CB6C598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

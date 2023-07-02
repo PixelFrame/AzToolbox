@@ -67,3 +67,9 @@ a, .btn-link {
     margin-top: 0.1rem;
     margin-bottom: 0.1rem;
 }
+
+.monospace-fixed-textbox {
+    font-family: 'Cascadia Code',Consolas,'Courier New',monospace;
+    font-size: small;
+    resize: none
+}

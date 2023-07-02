@@ -4,8 +4,10 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.LoadingIndicator;
+using KzA.Blazor.PacParser;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -23,6 +25,8 @@ builder.Services.AddBootstrapProviders();
 builder.Services.AddFontAwesomeIcons();
 builder.Services.AddLoadingIndicator();
 
+builder.Services.AddSingleton(services => (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());
 builder.Services.AddSingleton<VpnBuildService>();
+builder.Services.AddSingleton<PacParserService>();
 
 await builder.Build().RunAsync();

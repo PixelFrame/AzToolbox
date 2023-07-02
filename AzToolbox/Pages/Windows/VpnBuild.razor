@@ -179,7 +179,7 @@
             <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <a target="_blank" href="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</a> for more info.</AlertDescription>
         </Alert>
         <MemoEdit @bind-Text="@svc.ProfileXml"
-                  Style="font-family:'Cascadia Code',Consolas,'Courier New',monospace;font-size:small"
+                  Class="monospace-fixed-textbox"
                   Margin="Margin.Is2.FromTop"
                   AutoSize ReadOnly />
     </Column>

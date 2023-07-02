@@ -1,0 +1,89 @@
+﻿@page "/Networking/PacParse"
+<PageTitle>PAC Parse - AzToolbox</PageTitle>
+
+@inject KzA.Blazor.PacParser.PacParserService pacsvc
+@inject INotificationService NotificationService
+
+<Row>
+    <Column ColumnSize="ColumnSize.Is5.OnDesktop.Is12.OnMobile">
+        <Div Position="Position.Sticky.Top.Is0">
+            <Field>
+                <FieldLabel>PAC</FieldLabel>
+                <MemoEdit Rows="15" @bind-Text="paccontent" Class="monospace-fixed-textbox"></MemoEdit>
+            </Field>
+            <Field>
+                <FieldLabel>URL</FieldLabel>
+                <TextEdit Text="@url" TextChanged="CrackHost"></TextEdit>
+            </Field>
+            <Field>
+                <FieldLabel>Host</FieldLabel>
+                <TextEdit Text="@host" ReadOnly></TextEdit>
+            </Field>
+            <Field>
+                <FieldLabel>My IP Address</FieldLabel>
+                <TextEdit @bind-Text="@myip"></TextEdit>
+            </Field>
+            <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
+            <Alert Color="Color.Info" Visible="@showDnsInfo" Margin="Margin.Is2.FromTop">
+                <AlertMessage>Attention!</AlertMessage>
+                <CloseButton /><br>
+                <AlertDescription>DNS resolution is done with CloudFlare DNS over HTTP API. If there is any private DNS name, it won't be resolved.</AlertDescription><br>
+                <AlertDescription>Only support IPv4 DNS.</AlertDescription>
+            </Alert>
+        </Div>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is7.OnDesktop.Is12.OnMobile">
+        <MemoEdit AutoSize Text="@pacsvc.DebugOutput" ReadOnly Class="monospace-fixed-textbox"></MemoEdit>
+        <MemoEdit AutoSize Text="@pacsvc.JsConsole" ReadOnly Margin="Margin.Is2.FromTop" Class="monospace-fixed-textbox"></MemoEdit>
+    </Column>
+</Row>
+
+@code {
+    string paccontent =
+@"function FindProxyForURL(url, host) {
+    var direct = ""DIRECT"";
+    var proxy = ""PROXY myproxy.contoso.com"";
+    host = host.toLowerCase();
+    var hostdns = dnsResolve(host);
+
+    if (shExpMatch(host, ""*.example.com"")) {
+        return proxy;
+    }
+
+    return direct;
+}";
+    string url = "http://www.example.com/";
+    string host = "www.example.com";
+    string myip = "127.0.0.1";
+    bool showDnsInfo = true;
+
+    async void Parse()
+    {
+        System.Net.IPAddress? myIpAddr;
+        if (!System.Net.IPAddress.TryParse(myip, out myIpAddr) || myIpAddr == null || myIpAddr.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork)
+        {
+            await NotificationService.Error("Invalid IP address");
+            return;
+        }
+        try
+        {
+            pacsvc.Parse(paccontent, url, host, myIpAddr);
+        }
+        catch
+        {
+            await NotificationService.Error("Bad PAC, check syntax.");
+            return;
+        }
+        StateHasChanged();
+    }
+
+    void CrackHost(string newurl)
+    {
+        url = newurl;
+        var match = System.Text.RegularExpressions.Regex.Match(newurl, @"(http://|https://|ftp://)([^/\.]+(\.[^/\.]+)*)(/[^/]+)*");
+        if (match.Success)
+        {
+            host = match.Groups[2].Value;
+        }
+    }
+}

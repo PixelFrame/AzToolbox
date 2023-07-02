@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj" />
+    <ProjectReference Include="..\..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj" />
     <ProjectReference Include="..\..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj" />
     <ProjectReference Include="..\..\WfpXmlHelper\WfpXmlHelper.csproj" />
   </ItemGroup>
