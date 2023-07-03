@@ -4,6 +4,8 @@
 @using KzA.Blazor.HexDump
 @using System.Text;
 
+@inject INotificationService NotificationService
+
 <Row>
     <Column ColumnSize="ColumnSize.Is6.OnDesktop.Is12.OnMobile">
         <Card Position="Position.Sticky.Top.Is0">
@@ -25,7 +27,8 @@
                 <CardTitle Size="6">
                     Hex Dump
                 </CardTitle>
-                <HexDump Data="@blob" />
+                <HexDump Data="@blob" BlockSelection="@blockSelection" />
+                <Switch TValue="bool" @bind-Checked="@blockSelection">Block Selection</Switch>
             </CardBody>
         </Card>
         <Card Margin="Margin.Is1.FromTop">
@@ -39,7 +42,7 @@
                             TextField="@((item)=>item.Name)"
                             ValueField="@((item)=>item.CodePage)"
                             DefaultItemValue="65001"
-                            @bind-SelectedValue="selectedCodePage" />
+                @bind-SelectedValue="selectedCodePage" />
                 <MemoEdit @bind-Text="@decodedstr" Rows="10"
                           Class="monospace-fixed-textbox" />
                 <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromString">
@@ -54,6 +57,7 @@
     string base64str = string.Empty;
     byte[] blob = Array.Empty<byte>();
     string decodedstr = string.Empty;
+    bool blockSelection = false;
     SelectList<EncodingInfo, Encoding> encodingSelect = new();
 
     static readonly IEnumerable<EncodingInfo> SupportedEncodings = System.Text.Encoding.GetEncodings();
@@ -72,8 +76,15 @@
 
     void FromBase64()
     {
-        blob = Convert.FromBase64String(base64str);
-        decodedstr = Encoding.GetEncoding(selectedCodePage).GetString(blob);
+        try
+        {
+            blob = Convert.FromBase64String(base64str);
+            decodedstr = Encoding.GetEncoding(selectedCodePage).GetString(blob);
+        }
+        catch (Exception e)
+        {
+            NotificationService.Error(e.Message);
+        }
     }
 
     void FromString()
