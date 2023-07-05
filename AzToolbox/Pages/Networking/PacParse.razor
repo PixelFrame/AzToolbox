@@ -7,29 +7,35 @@
 <Row>
     <Column ColumnSize="ColumnSize.Is5.OnDesktop.Is12.OnMobile">
         <Div Position="Position.Sticky.Top.Is0">
+            <Alert Color="Color.Info" @bind-Visible="@showAlert" Margin="Margin.Is2.FromTop">
+                <AlertMessage>Attention!</AlertMessage>
+                <CloseButton /><br>
+                <AlertDescription>* DNS resolution is done with CloudFlare DNS over HTTPS API. If there is any private DNS name, upload a hosts file, otherwise it won't be resolved.</AlertDescription><br>
+                <AlertDescription>* Does NOT support IPv6 or Windows extended PAC function (Ex functions).</AlertDescription>
+            </Alert>
             <Field>
                 <FieldLabel>PAC</FieldLabel>
                 <MemoEdit Rows="15" @bind-Text="paccontent" Class="monospace-fixed-textbox"></MemoEdit>
             </Field>
             <Field>
                 <FieldLabel>URL</FieldLabel>
-                <TextEdit Text="@url" TextChanged="CrackHost"></TextEdit>
+                <TextEdit @bind-Text="@url"></TextEdit>
             </Field>
             <Field>
                 <FieldLabel>Host</FieldLabel>
-                <TextEdit Text="@host" ReadOnly></TextEdit>
+                <TextEdit Text="@CrackHost()" ReadOnly></TextEdit>
             </Field>
             <Field>
                 <FieldLabel>My IP Address</FieldLabel>
                 <TextEdit @bind-Text="@myip"></TextEdit>
             </Field>
+            <Tooltip Text="A standard hosts file for private hosts that cannot be resolved by public DNS server" Placement="TooltipPlacement.Right">
+            <Field>
+                <FieldLabel>Hosts File</FieldLabel>
+                <FileEdit Changed="@HostsUpload" AutoReset="false" />
+            </Field>
+            </Tooltip>
             <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
-            <Alert Color="Color.Info" Visible="@showDnsInfo" Margin="Margin.Is2.FromTop">
-                <AlertMessage>Attention!</AlertMessage>
-                <CloseButton /><br>
-                <AlertDescription>DNS resolution is done with CloudFlare DNS over HTTP API. If there is any private DNS name, it won't be resolved.</AlertDescription><br>
-                <AlertDescription>Only support IPv4 DNS.</AlertDescription>
-            </Alert>
         </Div>
     </Column>
     <Column ColumnSize="ColumnSize.Is7.OnDesktop.Is12.OnMobile">
@@ -40,7 +46,7 @@
 
 @code {
     string paccontent =
-@"function FindProxyForURL(url, host) {
+        @"function FindProxyForURL(url, host) {
     var direct = ""DIRECT"";
     var proxy = ""PROXY myproxy.contoso.com"";
     host = host.toLowerCase();
@@ -55,7 +61,8 @@
     string url = "http://www.example.com/";
     string host = "www.example.com";
     string myip = "127.0.0.1";
-    bool showDnsInfo = true;
+    string[]? hosts;
+    bool showAlert = true;
 
     async void Parse()
     {
@@ -67,7 +74,7 @@
         }
         try
         {
-            pacsvc.Parse(paccontent, url, host, myIpAddr);
+            pacsvc.Parse(paccontent, url, host, myIpAddr, hosts);
         }
         catch
         {
@@ -77,13 +84,38 @@
         StateHasChanged();
     }
 
-    void CrackHost(string newurl)
+    string CrackHost()
     {
-        url = newurl;
-        var match = System.Text.RegularExpressions.Regex.Match(newurl, @"(http://|https://|ftp://)([^/\.]+(\.[^/\.]+)*)(/[^/]+)*");
+        var match = System.Text.RegularExpressions.Regex.Match(url, @"(http://|https://|ftp://)([^/\.]+(\.[^/\.]+)*)(/[^/]+)*");
         if (match.Success)
         {
             host = match.Groups[2].Value;
+        }
+        return host;
+    }
+
+    async Task HostsUpload(FileChangedEventArgs e)
+    {
+        try
+        {
+            var file = e.Files.FirstOrDefault();
+            if (file == null)
+            {
+                return;
+            }
+            if (file.Size > 1024 * 1024)
+            {
+                await NotificationService.Error("File too large");
+                return;
+            }
+            using var fs = file.OpenReadStream(1024 * 1024);
+            using var sr = new System.IO.StreamReader(fs);
+            var content = await sr.ReadToEndAsync();
+            hosts = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        }
+        catch (Exception ex)
+        {
+            await NotificationService.Error(ex.Message);
         }
     }
 }
