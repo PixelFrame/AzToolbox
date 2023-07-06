@@ -1,0 +1,78 @@
+﻿@page "/Networking/DhcpSearchListGen"
+<PageTitle>DHCP Option 119 Generator</PageTitle>
+
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+        <Addons>
+            <Addon AddonType="AddonType.Body">
+                <TextEdit @bind-Text="newSuffix" Placeholder="New Suffix" />
+            </Addon>
+            <Addon AddonType="AddonType.End">
+                <Button Color="Color.Primary" Clicked="AddSuffix" Size="Size.Small" Padding="Padding.Is5.OnX">Add</Button>
+            </Addon>
+        </Addons>
+        <ListView TItem="string"
+                  Data="suffixes"
+                  TextField="item=>item"
+                  ValueField="item=>item"
+                  Mode="ListGroupMode.Static"
+                  MaxHeight="30vh"
+                  Flush="true"
+                  Style="overflow:auto">
+            <ItemTemplate>
+                <Div Flex="Flex.InlineFlex.JustifyContent.Between.AlignItems.Center" Width="Width.Is100">
+                    <Heading Size="HeadingSize.Is6" Margin="Margin.Is0">@context.Text</Heading>
+                    <Button Color="Color.Danger" Clicked="@(() => RemoveSuffix(context.Value))" Size="Size.Small">Remove</Button>
+                </Div>
+            </ItemTemplate>
+        </ListView>
+        <Divider DividerType="DividerType.Solid" />
+        <Addons>
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel>Scope ID</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <TextEdit @bind-Text="scopeId"/>
+            </Addon>
+        </Addons>
+        <Divider DividerType="DividerType.Solid" />
+        <Button Color="Color.Primary" Clicked="GenOption" Block>Generate Option 119</Button>
+        <Divider DividerType="DividerType.Solid" />
+        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@netshCommand" Placeholder="Netsh Command" ReadOnly AutoSize />
+        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@powershellCommand" Placeholder="PowerShell Command" ReadOnly AutoSize />
+        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@rawOptionValue" Placeholder="Raw Option Value" ReadOnly AutoSize />
+    </CardBody>
+</Card>
+
+
+@code {
+    string newSuffix = string.Empty;
+    List<string> suffixes = new();
+
+    string netshCommand = string.Empty;
+    string powershellCommand = string.Empty;
+    string rawOptionValue = string.Empty;
+    string? scopeId;
+
+    void AddSuffix()
+    {
+        if (!string.IsNullOrEmpty(newSuffix))
+        {
+            suffixes.Add(newSuffix);
+            newSuffix = string.Empty;
+        }
+    }
+
+    void RemoveSuffix(string item)
+    {
+        suffixes.Remove(item);
+    }
+
+    void GenOption()
+    {
+        var option119bytes = AzToolbox.Utilities.DhcpSearchListUtil.EncodeSearchList(suffixes);
+        netshCommand = AzToolbox.Utilities.DhcpSearchListUtil.GetNetshCommand(option119bytes, scopeId);
+        powershellCommand = AzToolbox.Utilities.DhcpSearchListUtil.GetPowerShellCommand(option119bytes, scopeId);
+        rawOptionValue = string.Join(' ', option119bytes.Select(x => x.ToString("X2")));
+    }
+}
