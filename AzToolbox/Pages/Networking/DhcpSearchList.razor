@@ -1,9 +1,14 @@
-﻿@page "/Networking/DhcpSearchListGen"
-<PageTitle>DHCP Option 119 Generator</PageTitle>
+﻿@page "/Networking/DhcpSearchList"
+<PageTitle>DHCP Option 119 Tool - AzToolbox</PageTitle>
+
+@inject INotificationService NotificationService
 
 <Card Width="Width.Is75" Margin="Margin.IsAuto">
     <CardBody>
         <Addons>
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel>Suffix</AddonLabel>
+            </Addon>
             <Addon AddonType="AddonType.Body">
                 <TextEdit @bind-Text="newSuffix" Placeholder="New Suffix" />
             </Addon>
@@ -16,31 +21,39 @@
                   TextField="item=>item"
                   ValueField="item=>item"
                   Mode="ListGroupMode.Static"
-                  MaxHeight="30vh"
+                  MaxHeight="50vh"
                   Flush="true"
                   Style="overflow:auto">
             <ItemTemplate>
                 <Div Flex="Flex.InlineFlex.JustifyContent.Between.AlignItems.Center" Width="Width.Is100">
                     <Heading Size="HeadingSize.Is6" Margin="Margin.Is0">@context.Text</Heading>
-                    <Button Color="Color.Danger" Clicked="@(() => RemoveSuffix(context.Value))" Size="Size.Small">Remove</Button>
+                    <Button Color="Color.Danger" Padding="Padding.Is5.OnX" Clicked="@(() => RemoveSuffix(context.Value))" Size="Size.Small">Remove</Button>
                 </Div>
             </ItemTemplate>
         </ListView>
-        <Divider DividerType="DividerType.Solid" />
-        <Addons>
+        <Addons Margin="Margin.Is2.FromTop">
             <Addon AddonType="AddonType.Start">
                 <AddonLabel>Scope ID</AddonLabel>
             </Addon>
             <Addon AddonType="AddonType.Body">
-                <TextEdit @bind-Text="scopeId"/>
+                <TextEdit @bind-Text="scopeId" />
+            </Addon>
+        </Addons>
+        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                <AddonLabel>Compress Option</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <Switch @bind-Checked="compress">Enable</Switch>
             </Addon>
         </Addons>
         <Divider DividerType="DividerType.Solid" />
-        <Button Color="Color.Primary" Clicked="GenOption" Block>Generate Option 119</Button>
+        <Button Color="Color.Primary" Clicked="EncOption" Block>Encode Option 119</Button>
+        <Button Color="Color.Secondary" Clicked="DecOption" Block>Decode Option 119</Button>
         <Divider DividerType="DividerType.Solid" />
         <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@netshCommand" Placeholder="Netsh Command" ReadOnly AutoSize />
         <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@powershellCommand" Placeholder="PowerShell Command" ReadOnly AutoSize />
-        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@rawOptionValue" Placeholder="Raw Option Value" ReadOnly AutoSize />
+        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" @bind-Text="@rawOptionValue" Placeholder="Raw Option Value" AutoSize />
     </CardBody>
 </Card>
 
@@ -52,6 +65,7 @@
     string netshCommand = string.Empty;
     string powershellCommand = string.Empty;
     string rawOptionValue = string.Empty;
+    bool compress = true;
     string? scopeId;
 
     void AddSuffix()
@@ -68,11 +82,25 @@
         suffixes.Remove(item);
     }
 
-    void GenOption()
+    void EncOption()
     {
-        var option119bytes = AzToolbox.Utilities.DhcpSearchListUtil.EncodeSearchList(suffixes);
+        var option119bytes = AzToolbox.Utilities.DhcpSearchListUtil.EncodeSearchList(suffixes, compress);
         netshCommand = AzToolbox.Utilities.DhcpSearchListUtil.GetNetshCommand(option119bytes, scopeId);
         powershellCommand = AzToolbox.Utilities.DhcpSearchListUtil.GetPowerShellCommand(option119bytes, scopeId);
         rawOptionValue = string.Join(' ', option119bytes.Select(x => x.ToString("X2")));
+    }
+
+    void DecOption()
+    {
+        suffixes.Clear();
+        try
+        {
+            var option119bytes = Convert.FromHexString(rawOptionValue.Replace(" ", ""));
+            suffixes.AddRange(AzToolbox.Utilities.DhcpSearchListUtil.DecodeSearchList(option119bytes));
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Error(ex.Message);
+        }
     }
 }

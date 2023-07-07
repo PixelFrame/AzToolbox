@@ -77,6 +77,44 @@ namespace AzToolbox.Utilities
             return result;
         }
 
+        private static string ReadName(IEnumerable<byte> SearchList, int index, ref int elapsed)
+        {
+            var str = string.Empty;
+            byte len = SearchList.ElementAt(index);
+            if (len > LABEL_LEN_MAX)
+            {
+                var ptr = (ushort)(BinaryPrimitives.ReadUInt16BigEndian(SearchList.Skip(index).Take(2).ToArray()) & ~POINTER_MASK);
+                elapsed += 2;
+                int _ = 0;
+                return ReadName(SearchList, ptr, ref _);
+            }
+            else if (len == 0)
+            {
+                elapsed += 1;
+                return str;
+            }
+            else
+            {
+                elapsed += len + 1;
+                str += System.Text.Encoding.ASCII.GetString(SearchList.Skip(index + 1).Take(len).ToArray());
+                return str + '.' + ReadName(SearchList, index + len + 1, ref elapsed);
+            }
+        }
+
+        public static List<string> DecodeSearchList(IEnumerable<byte> SearchList)
+        {
+            List<string> result = new();
+            var index = 0;
+            while (index < SearchList.Count())
+            {
+                int elapsed = 0;
+                var name = ReadName(SearchList, index, ref elapsed);
+                index += elapsed;
+                result.Add(name.Remove(name.Length - 1));
+            }
+            return result;
+        }
+
         public static string GetNetshCommand(IEnumerable<byte> OptionValue, string? ScopeId)
         {
             return $"netsh dhcp server V4{(ScopeId is null ? string.Empty : $" scope {ScopeId}")} set optionvalue 119 BYTE {string.Join(' ', OptionValue.Select(x => x.ToString("X2")))}";
