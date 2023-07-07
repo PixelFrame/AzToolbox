@@ -21,7 +21,7 @@ namespace AzToolbox.Utilities
             else
             {
                 SuffixIdxTable.Add(suffix, idx);
-                return 0x4000;
+                return INDEX_MAX + 1;
             }
         }
 
@@ -77,19 +77,29 @@ namespace AzToolbox.Utilities
             return result;
         }
 
-        private static string ReadName(IEnumerable<byte> SearchList, int index, ref int elapsed)
+        private static string ReadName(IEnumerable<byte> SearchList, int index, ref int elapsed, ref List<ushort> passedPtr)
         {
+            /* 
+             * We will record all the pointers passed, if we encounter a pointer that we have passed before, it means we have a loop in the option value.
+             * This detection method makes us still support forward pointers.
+             */
             var str = string.Empty;
             byte len = SearchList.ElementAt(index);
             if (len > LABEL_LEN_MAX)
             {
                 var ptr = (ushort)(BinaryPrimitives.ReadUInt16BigEndian(SearchList.Skip(index).Take(2).ToArray()) & ~POINTER_MASK);
+                if (passedPtr.Contains(ptr))
+                {
+                    throw new Exception("Loop detected in the option value.");
+                }
+                passedPtr.Add(ptr);
                 elapsed += 2;
                 int _ = 0;
-                return ReadName(SearchList, ptr, ref _);
+                return ReadName(SearchList, ptr, ref _, ref passedPtr);
             }
             else if (len == 0)
             {
+                passedPtr.Clear();
                 elapsed += 1;
                 return str;
             }
@@ -97,7 +107,7 @@ namespace AzToolbox.Utilities
             {
                 elapsed += len + 1;
                 str += System.Text.Encoding.ASCII.GetString(SearchList.Skip(index + 1).Take(len).ToArray());
-                return str + '.' + ReadName(SearchList, index + len + 1, ref elapsed);
+                return str + '.' + ReadName(SearchList, index + len + 1, ref elapsed, ref passedPtr);
             }
         }
 
@@ -108,7 +118,8 @@ namespace AzToolbox.Utilities
             while (index < SearchList.Count())
             {
                 int elapsed = 0;
-                var name = ReadName(SearchList, index, ref elapsed);
+                var passedPtr = new List<ushort>();
+                var name = ReadName(SearchList, index, ref elapsed, ref passedPtr);
                 index += elapsed;
                 result.Add(name.Remove(name.Length - 1));
             }
