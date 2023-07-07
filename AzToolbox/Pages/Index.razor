@@ -8,10 +8,32 @@
         Tools built with Blazor WebAssembly. <br>
     </JumbotronSubtitle>
     <Divider />
+    <Div Style="white-space: pre-wrap; font-family: monospace;">
+        @ToolTree
+    </Div>
+    <Divider />
     <Link To="https://github.com/PixelFrame/AzToolbox" Target="Target.Blank" TextColor="TextColor.Body">
-        <Icon Name="@("fab fa-github")" IconSize="IconSize.Large" />
+    <Icon Name="@("fab fa-github")" IconSize="IconSize.Large" />
     </Link>
     <Link To="mailto:pm421@live.com" Target="Target.Blank" TextColor="TextColor.Body">
-        <Icon Name="@IconName.Mail" IconSize="IconSize.Large" />
+    <Icon Name="@IconName.Mail" IconSize="IconSize.Large" />
     </Link>
 </Jumbotron>
+
+@code {
+    string ToolTree =
+@"AzToolbox
+|
++---Networking
+|   +---DhcpSearchList : Encode/Decode DHCP Option 119
+|   +---PacParse : Parse Proxy Auto-Configuration File
+|
++---Windows
+|   +---VpnBuld : VPN Profile XML Builder
+|   +---WfpAnalyze : WFP Log Analyze Helper
+|
++---Common
+    +---Base64Utils : Encode/Decode Base64
+    +---RngUtils : Generate Random Characters/Strings
+";
+}
