@@ -9,6 +9,7 @@
 @inject INotificationService NotificationService
 @inject IModalService ModalService
 @inject IJSRuntime JSRuntime
+@inject HttpClient httpClient
 @inject VpnBuildService svc
 
 <Row>
@@ -147,31 +148,34 @@
         }
         @if (svc.UserTunnel)
         {
-            <Button Color="Color.Info" Clicked="ShowNrpt" Class="button-margin-Y">NRPT</Button>
-            <Button Color="Color.Info" Clicked="ShowTrafficFilters" Class="button-margin-Y">Traffic Filters</Button>
-            <Button Color="Color.Info" Clicked="ShowRoutes" Class="button-margin-Y">Routes</Button>
-            <Button Color="Color.Info" Clicked="ShowProxy" Class="button-margin-Y">Proxy</Button>
-            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2" Class="button-margin-Y">IPsec Policy</Button>
-            <Button Color="Color.Info" Clicked="ShowDeviceCompliance" Disabled="@(!svc.Tls)" Class="button-margin-Y">Device Compliance</Button>
-            <Button Color="Color.Info" Clicked="ShowCertificateSelection" Disabled="@(!svc.Tls)" Class="button-margin-Y">Certificate Selection</Button>
-            <Button Color="Color.Info" Clicked="ShowExtraSettings" Class="button-margin-Y">Extra Settings</Button>
+            <Button Color="Color.Info" Clicked="ShowNrpt" Margin="Margin.Is1.OnY">NRPT</Button>
+            <Button Color="Color.Info" Clicked="ShowTrafficFilters" Margin="Margin.Is1.OnY">Traffic Filters</Button>
+            <Button Color="Color.Info" Clicked="ShowRoutes" Margin="Margin.Is1.OnY">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowProxy" Margin="Margin.Is1.OnY">Proxy</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2" Margin="Margin.Is1.OnY">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowDeviceCompliance" Disabled="@(!svc.Tls)" Margin="Margin.Is1.OnY">Device Compliance</Button>
+            <Button Color="Color.Info" Clicked="ShowCertificateSelection" Disabled="@(!svc.Tls)" Margin="Margin.Is1.OnY">Certificate Selection</Button>
+            <Button Color="Color.Info" Clicked="ShowExtraSettings" Margin="Margin.Is1.OnY">Extra Settings</Button>
         }
         else
         {
-            <Button Color="Color.Info" Clicked="ShowTrafficFilters" Class="button-margin-Y">Traffic Filters</Button>
-            <Button Color="Color.Info" Class="button-margin-Y">Routes</Button>
-            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Class="button-margin-Y">IPsec Policy</Button>
-            <Button Color="Color.Info" Clicked="ShowExtraSettings" Class="button-margin-Y">Extra Settings</Button>
+            <Button Color="Color.Info" Clicked="ShowTrafficFilters" Margin="Margin.Is1.OnY">Traffic Filters</Button>
+            <Button Color="Color.Info" Margin="Margin.Is1.OnY">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Margin="Margin.Is1.OnY">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowExtraSettings" Margin="Margin.Is1.OnY">Extra Settings</Button>
         }
     </Column>
     <Column ColumnSize="ColumnSize.IsHalf">
         <Button Color="Color.Primary" Clicked="@Build" Block>Build</Button>
         <Row HorizontalGutter="8" Margin="Margin.Is2.FromTop">
-            <Column ColumnSize="ColumnSize.Is6">
-                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy to Clipboard</Button>
+            <Column ColumnSize="ColumnSize.Is4">
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy XML to Clipboard</Button>
             </Column>
-            <Column ColumnSize="ColumnSize.Is6">
-                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@Download" Block>Download</Button>
+            <Column ColumnSize="ColumnSize.Is4">
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@Download" Block>Download XML</Button>
+            </Column>
+            <Column ColumnSize="ColumnSize.Is4">
+                <Button Color="Color.Success" Disabled="@(!built)" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
             </Column>
         </Row>
         <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is2.FromTop">
@@ -284,6 +288,17 @@
         var jsparams = new object[]
         {
             "VPNProfile.XML", "text/xml", svc.ProfileXml
+        };
+        await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
+    }
+
+    private async Task DownloadScript()
+    {
+        var filename = svc.UserTunnel ? "VPNDeploy-User.ps1" : "VPNDeploy-Device.ps1";
+        var script = await svc.GetDeployScript(httpClient);
+        var jsparams = new object[]
+        {
+            filename, "text/plain", script
         };
         await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
     }

@@ -187,5 +187,11 @@ namespace AzToolbox.Services
             Win11Profile = builder.Win11Profile;
             ProfileXml = builder.GetXml();
         }
+
+        public async Task<string> GetDeployScript(HttpClient httpClient)
+        {
+            var url = UserTunnel ? "/assets/VpnDeploy-User.txt" : "/assets/VpnDeploy-Device.txt";
+            return await httpClient.GetStringAsync(url);
+        }
     }
 }
