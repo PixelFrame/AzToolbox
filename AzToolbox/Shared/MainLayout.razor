@@ -25,8 +25,8 @@
                                 <BarDropdown>
                                     <BarDropdownToggle>Common</BarDropdownToggle>
                                     <BarDropdownMenu>
-                                        <BarDropdownItem To="/Common/Base64">Base64 Utils</BarDropdownItem>
-                                        <BarDropdownItem To="/Common/RNG">Random Generator</BarDropdownItem>
+                                        <BarDropdownItem To="/Common/Base64Utils">Base64 Utils</BarDropdownItem>
+                                        <BarDropdownItem To="/Common/RngUtils">Random Generator</BarDropdownItem>
                                     </BarDropdownMenu>
                                 </BarDropdown>
                             </BarItem>
@@ -59,7 +59,7 @@
         @if (ShowFooter)
         {
             <LayoutFooter>
-                <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small">
+                <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small; user-select: none">
                     &copy; 2023 AzToolbox <br />
                     Powered by Blazor, @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription @System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier and Blazorise
                 </Paragraph>

@@ -1,4 +1,4 @@
-﻿@page "/Common/RNG"
+﻿@page "/Common/RngUtils"
 <PageTitle>Random Generator - AzToolbox</PageTitle>
 
 @using System.Security.Cryptography
@@ -93,6 +93,16 @@
                     <Field ColumnSize="ColumnSize.Is12">
                         <FieldLabel>Custom Characters</FieldLabel>
                         <TextEdit @bind-Text="@custom" />
+                    </Field>
+                </Fields>
+            }
+
+            @if (itemType < 6 || itemType == 501)
+            {
+                <Fields>
+                    <Field ColumnSize="ColumnSize.Is12">
+                        <FieldLabel>Non-Repeat</FieldLabel>
+                        <Switch TValue="bool" @bind-Checked="@nonrepeat" />
                     </Field>
                 </Fields>
             }
@@ -206,19 +216,25 @@
     string strSuffix = string.Empty;
     int itemType = 1;
     int digits = 2;
+    bool nonrepeat = false;
 
     List<double> nums = new();
     List<string> strs = new();
     List<MarkupString> mstrs = new();
     List<byte> bytes = new();
 
-    static readonly string romanAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static readonly string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    static readonly string ascii = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%'()*+,-./:;<=>?`@[]\\~^_{}|";
+    const string romanAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const string ascii = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%'()*+,-./:;<=>?`@[]\\~^_{}|";
     string custom = alphanumeric;
 
-    void Generate(MouseEventArgs args)
+    void Generate()
     {
+        if (nonrepeat)
+        {
+            GenerateNonRepeat();
+            return;
+        }
         if (max < min) max = min;
         var seed = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
         var rnd = new Random(seed);
@@ -390,15 +406,109 @@
                 bytes.AddRange(byteArr);
                 break;
         }
-
-        static string AsciiEscape(char c) => c switch
-        {
-            ' ' => "&nbsp;",
-            '"' => "&quot;",
-            '&' => "&amp;",
-            '<' => "&lt;",
-            '>' => "&gt;",
-            _ => c.ToString(),
-        };
     }
+
+    void GenerateNonRepeat()
+    {
+        if (max < min) max = min;
+        var seed = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
+        var rnd = new Random(seed);
+        var _cnt = cnt;
+        Int64 int64Min;
+        Int64 int64Max;
+        List<char>? charList;
+        switch (itemType)
+        {
+            case 1:
+                int64Min = (Int64)min;
+                int64Max = (Int64)max;
+                nums.Clear();
+                for (Int64 i = int64Min; i <= int64Max; i++)
+                {
+                    nums.Add(i);
+                };
+                Shuffle(nums, rnd);
+                if(cnt < nums.Count)
+                {
+                    nums = nums.Take(cnt).ToList();
+                }
+                break;
+            case 2:
+                int64Min = (Int64)(min * Math.Pow(10, digits));
+                int64Max = (Int64)(max * Math.Pow(10, digits));
+                nums.Clear();
+                for (Int64 i = int64Min; i <= int64Max; i++)
+                {
+                    nums.Add(i);
+                };
+                Shuffle(nums, rnd);
+                if (cnt < nums.Count)
+                {
+                    nums = nums.Take(cnt).ToList();
+                }
+                break;
+            case 3:
+                charList = romanAlphabet.ToList();
+                Shuffle(charList, rnd);
+                if (cnt < charList.Count)
+                {
+                    charList = charList.Take(cnt).ToList();
+                }
+                strs = charList.Select(c => c.ToString()).ToList();
+                break;
+            case 4:
+                charList = alphanumeric.ToList();
+                Shuffle(charList, rnd);
+                if (cnt < charList.Count)
+                {
+                    charList = charList.Take(cnt).ToList();
+                }
+                strs = charList.Select(c => c.ToString()).ToList();
+                break;
+            case 5:
+                charList = ascii.ToList();
+                Shuffle(charList, rnd);
+                if (cnt < charList.Count)
+                {
+                    charList = charList.Take(cnt).ToList();
+                }
+                mstrs = charList.Select(c => new MarkupString(AsciiEscape(c))).ToList();
+                break;
+            case 501:
+                charList = custom.ToList();
+                Shuffle(charList, rnd);
+                if (cnt < charList.Count)
+                {
+                    charList = charList.Take(cnt).ToList();
+                }
+                mstrs = charList.Select(c => new MarkupString(AsciiEscape(c))).ToList();
+                break;
+            default:
+                nonrepeat = false;
+                Generate();
+                break;
+        }
+    }
+
+    static void Shuffle<T>(IList<T> list, Random rnd)
+    {
+        int n = list.Count;
+        while (n-- > 1)
+        {
+            int k = rnd.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
+    static string AsciiEscape(char c) => c switch
+    {
+        ' ' => "&nbsp;",
+        '"' => "&quot;",
+        '&' => "&amp;",
+        '<' => "&lt;",
+        '>' => "&gt;",
+        _ => c.ToString(),
+    };
 }
