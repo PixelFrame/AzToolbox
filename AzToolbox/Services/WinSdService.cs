@@ -1,4 +1,5 @@
 ﻿using AzToolbox.Models;
+using System.Text.RegularExpressions;
 using WinSdUtil.Lib;
 using WinSdUtil.Lib.Model;
 
@@ -26,6 +27,14 @@ namespace AzToolbox.Services
         public TreeViewItem FromSddlToAcl(string SDDL, AccessMaskType maskType)
         {
             return converter.FromSddlToAcl(SDDL).ToTreeView(maskType);
+        }
+
+        public TreeViewItem FromBinaryToAcl(string BinaryStr, AccessMaskType maskType)
+        {
+            var regDeNoise = new Regex(@"[\\\r\n\t, -]|0x");
+            BinaryStr = regDeNoise.Replace(BinaryStr, "");
+            var binary = Convert.FromHexString(BinaryStr);
+            return converter.FromBinaryToAcl(binary).ToTreeView(maskType);
         }
     }
 }

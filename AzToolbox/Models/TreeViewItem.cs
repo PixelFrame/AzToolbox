@@ -1,7 +1,6 @@
-﻿using Blazorise;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Text;
 using WinSdUtil.Lib.Model;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AzToolbox.Models
 {
@@ -11,6 +10,37 @@ namespace AzToolbox.Models
         public string Description { get; set; } = string.Empty;
         public IEnumerable<TreeViewItem>? Children { get; set; }
         public bool HasChildren => Children?.Any() ?? false;
+
+
+        public override string ToString()
+        {
+            var sbResult = new StringBuilder();
+            printNode("", true, true, ref sbResult);
+
+            return sbResult.ToString();
+        }
+
+        private void printNode(string indent, bool root, bool last, ref StringBuilder sbResult)
+        {
+            sbResult.Append(indent);
+            if (root) { }
+            else if (last)
+            {
+                sbResult.Append(@"└─");
+                indent += "  ";
+            }
+            else
+            {
+                sbResult.Append(@"├─");
+                indent += "│ ";
+            }
+            sbResult.AppendLine($"{Label}: {Description}");
+            if (HasChildren)
+            {
+                for (int i = 0; i < Children!.Count(); i++)
+                    Children!.ElementAt(i).printNode(indent, false, i == Children!.Count() - 1, ref sbResult);
+            }
+        }
     }
 
     public static class WinSdTreeViewExtension
@@ -151,7 +181,7 @@ namespace AzToolbox.Models
                     Children = null,
                 });
             }
-            if (ace.ApplicationData.Length > 0)
+            if (ace.ApplicationData != null && ace.ApplicationData.Length > 0)
             {
                 children.Add(new TreeViewItem()
                 {
