@@ -1,0 +1,956 @@
+[
+    {
+        "Description": "A group with no members. This is often used when a SID value isn't known.",
+        "DisplayName": "Null",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NULL",
+        "SddlName": "S-1-0-0",
+        "Sid": "S-1-0-0"
+    },
+    {
+        "Description": "A group that includes all users.",
+        "DisplayName": "Everyone",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "EVERYONE",
+        "SddlName": "WD",
+        "Sid": "S-1-1-0"
+    },
+    {
+        "Description": "Users who sign in to terminals that are locally (physically) connected to the system.",
+        "DisplayName": "Local",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "LOCAL",
+        "SddlName": "S-1-2-0",
+        "Sid": "S-1-2-0"
+    },
+    {
+        "Description": "A group that includes users who are signed in to the physical console.",
+        "DisplayName": "Console Logon",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "CONSOLE_LOGON",
+        "SddlName": "S-1-2-1",
+        "Sid": "S-1-2-1"
+    },
+    {
+        "Description": "A security identifier to be replaced by the security identifier of the user who created a new object. This SID is used in inheritable access control entries (ACEs).",
+        "DisplayName": "Creator Owner ID",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "CREATOR_OWNER",
+        "SddlName": "CO",
+        "Sid": "S-1-3-0"
+    },
+    {
+        "Description": "A security identifier to be replaced by the security identifier of the user who created a new object. This SID is used in inheritable access control entries (ACEs).",
+        "DisplayName": "Creator Group ID",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "CREATOR_GROUP",
+        "SddlName": "CG",
+        "Sid": "S-1-3-1"
+    },
+    {
+        "Description": "A placeholder in an inheritable ACE. When the ACE is inherited, the system replaces this SID with the SID for the object's owner server.",
+        "DisplayName": "Creator Owner Server",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "OWNER_SERVER",
+        "SddlName": "S-1-3-2",
+        "Sid": "S-1-3-2"
+    },
+    {
+        "Description": "A placeholder in an inheritable ACE. When the ACE is inherited, the system replaces this SID with the SID for the object's group server.",
+        "DisplayName": "Creator Group Server",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "GROUP_SERVER",
+        "SddlName": "S-1-3-3",
+        "Sid": "S-1-3-3"
+    },
+    {
+        "Description": "A group that represents the current owner of the object. When an ACE that carries this SID is applied to an object, the system ignores the implicit READ_CONTROL and WRITE_DAC permissions for the object owner.",
+        "DisplayName": "Owner Rights",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "OWNER_RIGHTS",
+        "SddlName": "OW",
+        "Sid": "S-1-3-4"
+    },
+    {
+        "Description": "A SID that represents an identifier authority.",
+        "DisplayName": "Non-unique Authority",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NON_UNIQUE_AUTHORITY",
+        "SddlName": "S-1-4",
+        "Sid": "S-1-4"
+    },
+    {
+        "Description": "A SID that represents an identifier authority.",
+        "DisplayName": "NT Authority",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NT_AUTHORITY",
+        "SddlName": "S-1-5",
+        "Sid": "S-1-5"
+    },
+    {
+        "Description": "A group that includes all users who are signed in to the system via dial-up connection.",
+        "DisplayName": "Dialup",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "DIALUP",
+        "SddlName": "S-1-5-1",
+        "Sid": "S-1-5-1"
+    },
+    {
+        "Description": "A group that includes all users who are signed in via a network connection. Access tokens for interactive users don't contain the Network SID.",
+        "DisplayName": "Network",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NETWORK",
+        "SddlName": "NU",
+        "Sid": "S-1-5-2"
+    },
+    {
+        "Description": "A group that includes all users who have signed in via batch queue facility, such as task scheduler jobs.",
+        "DisplayName": "Batch",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "BATCH",
+        "SddlName": "S-1-5-3",
+        "Sid": "S-1-5-3"
+    },
+    {
+        "Description": "A group that includes all users who sign in interactively. A user can start an interactive sign-in session by opening a Remote Desktop Services connection from a remote computer, or by using a remote shell such as Telnet. In each case, the user's access token contains the Interactive SID. If the user signs in by using a Remote Desktop Services connection, the user's access token also contains the Remote Interactive Logon SID.",
+        "DisplayName": "Interactive",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "INTERACTIVE",
+        "SddlName": "IU",
+        "Sid": "S-1-5-4"
+    },
+    {
+        "Description": "The X and Y values for these SIDs uniquely identify a particular sign-in session.",
+        "DisplayName": "Logon Session",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "LOGON_ID",
+        "SddlName": "S-1-5-5-x-y",
+        "Sid": "S-1-5-5-x-y"
+    },
+    {
+        "Description": "A group that includes all security principals that have signed in as a service.",
+        "DisplayName": "Service",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "SERVICE",
+        "SddlName": "SU",
+        "Sid": "S-1-5-6"
+    },
+    {
+        "Description": "A user who has connected to the computer without supplying a user name and password.\nThe Anonymous Logon identity is different from the identity that's used by Internet Information Services (IIS) for anonymous web access. IIS uses an actual account�by default, IUSR_ComputerName, for anonymous access to resources on a website. Strictly speaking, such access isn't anonymous, because the security principal is known even though unidentified people are using the account. IUSR_ComputerName (or whatever you name the account) has a password, and IIS signs in to the account when the service starts. As a result, the IIS \"anonymous\" user is a member of Authenticated Users but Anonymous Logon isn't.",
+        "DisplayName": "Anonymous",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ANONYMOUS",
+        "SddlName": "AN",
+        "Sid": "S-1-5-7"
+    },
+    {
+        "Description": "Does not currently apply: this SID isn't used.",
+        "DisplayName": "Proxy",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "PROXY",
+        "SddlName": "S-1-5-8",
+        "Sid": "S-1-5-8"
+    },
+    {
+        "Description": "A group that includes all domain controllers in a forest of domains.",
+        "DisplayName": "Enterprise Domain Controller",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ENTERPRISE_DOMAIN_CONTROLLERS",
+        "SddlName": "ED",
+        "Sid": "S-1-5-9"
+    },
+    {
+        "Description": "A placeholder in an ACE for a user, group, or computer object in Active Directory. When you grant permissions to Self, you grant them to the security principal that's represented by the object. During an access check, the operating system replaces the SID for Self with the SID for the security principal that's represented by the object.",
+        "DisplayName": "Self",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "PRINCIPAL_SELF",
+        "SddlName": "PS",
+        "Sid": "S-1-5-10"
+    },
+    {
+        "Description": "A group that includes all users and computers with identities that have been authenticated. Authenticated Users doesn't include Guest even if the Guest account has a password.\nThis group includes authenticated security principals from any trusted domain, not only the current domain.",
+        "DisplayName": "Authenticated Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "AUTHENTICATED_USERS",
+        "SddlName": "AU",
+        "Sid": "S-1-5-11"
+    },
+    {
+        "Description": "An identity that's used by a process that's running in a restricted security context. In Windows and Windows Server operating systems, a software restriction policy can assign one of three security levels to code:\nUnrestricted\nRestricted\nDisallowed\nWhen code runs at the restricted security level, the Restricted SID is added to the user's access token.",
+        "DisplayName": "Restricted Code",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "RESTRICTED_CODE",
+        "SddlName": "RC",
+        "Sid": "S-1-5-12"
+    },
+    {
+        "Description": "A group that includes all users who sign in to a server with Remote Desktop Services enabled.",
+        "DisplayName": "Terminal Server User",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "TERMINAL_SERVER_USER",
+        "SddlName": "S-1-5-13",
+        "Sid": "S-1-5-13"
+    },
+    {
+        "Description": "A group that includes all users who sign in to the computer by using a remote desktop connection. This group is a subset of the Interactive group. Access tokens that contain the Remote Interactive Logon SID also contain the Interactive SID.",
+        "DisplayName": "Remote Interactive Logon",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "REMOTE_INTERACTIVE_LOGON",
+        "SddlName": "S-1-5-14",
+        "Sid": "S-1-5-14"
+    },
+    {
+        "Description": "A group that includes all users from the same organization. Included only with Active Directory accounts and added only by a domain controller.",
+        "DisplayName": "This Organization",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "THIS_ORGANIZATION",
+        "SddlName": "S-1-5-15",
+        "Sid": "S-1-5-15"
+    },
+    {
+        "Description": "An account that's used by the default Internet Information Services (IIS) user.",
+        "DisplayName": "IUSR",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "IUSR",
+        "SddlName": "S-1-5-17",
+        "Sid": "S-1-5-17"
+    },
+    {
+        "Description": "An identity that's used locally by the operating system and by services that are configured to sign in as LocalSystem.\nSystem is a hidden member of Administrators. That is, any process running as System has the SID for the built-in Administrators group in its access token.\nWhen a process that's running locally as System accesses network resources, it does so by using the computer's domain identity. Its access token on the remote computer includes the SID for the local computer's domain account plus SIDs for security groups that the computer is a member of, such as Domain Computers and Authenticated Users.",
+        "DisplayName": "LocalSystem",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "LOCAL_SYSTEM",
+        "SddlName": "SY",
+        "Sid": "S-1-5-18"
+    },
+    {
+        "Description": "An identity that's used by services that are local to the computer, have no need for extensive local access, and don't need authenticated network access. Services that run as LocalService access local resources as ordinary users, and they access network resources as anonymous users. As a result, a service that runs as LocalService has significantly less authority than a service that runs as LocalSystem locally and on the network.",
+        "DisplayName": "LocalService",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "LOCAL_SERVICE",
+        "SddlName": "LS",
+        "Sid": "S-1-5-19"
+    },
+    {
+        "Description": "An identity that's used by services that have no need for extensive local access but do need authenticated network access. Services running as NetworkService access local resources as ordinary users and access network resources by using the computer's identity. As a result, a service that runs as NetworkService has the same network access as a service that runs as LocalSystem, but it has significantly reduced local access.",
+        "DisplayName": "Network Service",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NETWORK_SERVICE",
+        "SddlName": "NS",
+        "Sid": "S-1-5-20"
+    },
+    {
+        "Description": "A universal group containing all read-only domain controllers in a forest.",
+        "DisplayName": "Enterprise Readonly Domain Controllers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "ENTERPRISE_READONLY_DOMAIN_CONTROLLERS",
+        "SddlName": "RO",
+        "Sid": "S-1-5-21-<root domain>-498"
+    },
+    {
+        "Description": "Device identity is included in the Kerberos service ticket. If a forest boundary was crossed, then claims transformation occurred.",
+        "DisplayName": "Compounded Authentication",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "COMPOUNDED_AUTHENTICATION",
+        "SddlName": "S-1-5-21-0-0-0-496",
+        "Sid": "S-1-5-21-0-0-0-496"
+    },
+    {
+        "Description": "Claims were queried for in the account's domain, and if a forest boundary was crossed, then claims transformation occurred.",
+        "DisplayName": "Claims Valid",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "CLAIMS_VALID",
+        "SddlName": "S-1-5-21-0-0-0-497",
+        "Sid": "S-1-5-21-0-0-0-497"
+    },
+    {
+        "Description": "A user account for the system administrator. Every computer has a local Administrator account and every domain has a domain Administrator account.\nThe Administrator account is the first account created during operating system installation. The account can't be deleted, disabled, or locked out, but it can be renamed.\nBy default, the Administrator account is a member of the Administrators group, and it can't be removed from that group.",
+        "DisplayName": "Administrator",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ADMINISTRATOR",
+        "SddlName": "LA",
+        "Sid": "S-1-5-21-<machine>-500"
+    },
+    {
+        "Description": "A user account for people who don't have individual accounts. Every computer has a local Guest account, and every domain has a domain Guest account.\nBy default, Guest is a member of the Everyone and the Guests groups. The domain Guest account is also a member of the Domain Guests and Domain Users groups.\nUnlike Anonymous Logon, Guest is a real account, and it can be used to sign in interactively. The Guest account doesn't require a password, but it can have one.",
+        "DisplayName": "Guest",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "GUEST",
+        "SddlName": "LG",
+        "Sid": "S-1-5-21-<machine>-501"
+    },
+    {
+        "Description": "A user account that's used by the Key Distribution Center (KDC) service. The account exists only on domain controllers.",
+        "DisplayName": "KRBTGT",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "KRBTGT",
+        "SddlName": "S-1-5-21-<domain>-502",
+        "Sid": "S-1-5-21-<domain>-502"
+    },
+    {
+        "Description": "A global group with members that are authorized to administer the domain. By default, the Domain Admins group is a member of the Administrators group on all computers that have joined the domain, including domain controllers.\nDomain Admins is the default owner of any object that's created in the domain's Active Directory by any member of the group. If members of the group create other objects, such as files, the default owner is the Administrators group.",
+        "DisplayName": "Domain Admins",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "DOMAIN_ADMINS",
+        "SddlName": "DA",
+        "Sid": "S-1-5-21-<domain>-512"
+    },
+    {
+        "Description": "A global group that includes all users in a domain. When you create a new User object in Active Directory, the user is automatically added to this group.",
+        "DisplayName": "Domain Users",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "DOMAIN_USERS",
+        "SddlName": "DU",
+        "Sid": "S-1-5-21-<domain>-513"
+    },
+    {
+        "Description": "A global group that, by default, has only one member: the domain's built-in Guest account.",
+        "DisplayName": "Domain Guests",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "DOMAIN_GUESTS",
+        "SddlName": "DG",
+        "Sid": "S-1-5-21-<domain>-514"
+    },
+    {
+        "Description": "A global group that includes all computers that have joined the domain, excluding domain controllers.",
+        "DisplayName": "Domain Computers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "DOMAIN_COMPUTERS",
+        "SddlName": "DC",
+        "Sid": "S-1-5-21-<domain>-515"
+    },
+    {
+        "Description": "A global group that includes all domain controllers in the domain. New domain controllers are added to this group automatically.",
+        "DisplayName": "Domain Controllers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "DOMAIN_DOMAIN_CONTROLLERS",
+        "SddlName": "DD",
+        "Sid": "S-1-5-21-<domain>-516"
+    },
+    {
+        "Description": "A global group that includes all computers that host an enterprise certification authority.\nCert Publishers are authorized to publish certificates for User objects in Active Directory.",
+        "DisplayName": "Cert Publishers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "CERT_PUBLISHERS",
+        "SddlName": "CA",
+        "Sid": "S-1-5-21-<domain>-517"
+    },
+    {
+        "Description": "A group that exists only in the forest root domain. It's a universal group if the domain is in native mode, and it's a global group if the domain is in mixed mode. The Schema Admins group is authorized to make schema changes in Active Directory. By default, the only member of the group is the Administrator account for the forest root domain.",
+        "DisplayName": "Schema Admins",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "SCHEMA_ADMINISTRATORS",
+        "SddlName": "SA",
+        "Sid": "S-1-5-21-<root-domain>-518"
+    },
+    {
+        "Description": "A group that exists only in the forest root domain. It's a universal group if the domain is in native mode, and it's a global group if the domain is in mixed mode.\nThe Enterprise Admins group is authorized to make changes to the forest infrastructure, such as adding child domains, configuring sites, authorizing DHCP servers, and installing enterprise certification authorities.\nBy default, the only member of Enterprise Admins is the Administrator account for the forest root domain. The group is a default member of every Domain Admins group in the forest.",
+        "DisplayName": "Enterprise Admins",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "ENTERPRISE_ADMINS",
+        "SddlName": "EA",
+        "Sid": "S-1-5-21-<root-domain>-519"
+    },
+    {
+        "Description": "A global group that's authorized to create new Group Policy Objects in Active Directory. By default, the only member of the group is Administrator.\nObjects that are created by members of Group Policy Creator Owners are owned by the individual user who creates them. In this way, the Group Policy Creator Owners group is unlike other administrative groups (such as Administrators and Domain Admins). Objects that are created by members of these groups are owned by the group rather than by the individual.",
+        "DisplayName": "Group Policy Creator Owners",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "GROUP_POLICY_CREATOR_OWNERS",
+        "SddlName": "PA",
+        "Sid": "S-1-5-21-<domain>-520"
+    },
+    {
+        "Description": "A global group that includes all read-only domain controllers.",
+        "DisplayName": "Readonly Domain Controllers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "READONLY_DOMAIN_CONTROLLERS",
+        "SddlName": "S-1-5-21-<domain>-521",
+        "Sid": "S-1-5-21-<domain>-521"
+    },
+    {
+        "Description": "A global group that includes all domain controllers in the domain that can be cloned.",
+        "DisplayName": "Cloneable Controllers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "CLONEABLE_CONTROLLERS",
+        "SddlName": "CN",
+        "Sid": "S-1-5-21-<domain>-522"
+    },
+    {
+        "Description": "A global group that is afforded additional protections against authentication security threats.",
+        "DisplayName": "Protected Users",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "PROTECTED_USERS",
+        "SddlName": "AP",
+        "Sid": "S-1-5-21-<domain>-525"
+    },
+    {
+        "Description": "A security group for delegated write access on the msdsKeyCredentialLink attribute only. The group is intended for use in scenarios where trusted external authorities (for example, Active Directory Federated Services) are responsible for modifying this attribute. Only trusted administrators should be made a member of this group.",
+        "DisplayName": "Key Admins",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "KEY_ADMINS",
+        "SddlName": "KA",
+        "Sid": "S-1-5-21-<domain>-526"
+    },
+    {
+        "Description": "A security group for delegated write access on the msdsKeyCredentialLink attribute only. The group is intended for use in scenarios where trusted external authorities (for example, Active Directory Federated Services) are responsible for modifying this attribute. Only trusted enterprise administrators should be made a member of this group.",
+        "DisplayName": "Enterprise Key Admins",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "ENTERPRISE_KEY_ADMINS",
+        "SddlName": "EK",
+        "Sid": "S-1-5-21-<domain>-527"
+    },
+    {
+        "Description": "A local domain group. By default, this group has no members. Computers that are running the Routing and Remote Access service are added to the group automatically.\nMembers of this group have access to certain properties of User objects, such as Read Account Restrictions, Read Logon Information, and Read Remote Access Information.",
+        "DisplayName": "RAS and IAS Servers",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "RAS_SERVERS",
+        "SddlName": "RS",
+        "Sid": "S-1-5-21-<domain>-553"
+    },
+    {
+        "Description": "Members in this group can have their passwords replicated to all read-only domain controllers in the domain.",
+        "DisplayName": "Allowed RODC Password Replication Group",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "ALLOWED_RODC_PASSWORD_REPLICATION_GROUP",
+        "SddlName": "S-1-5-21-<domain>-571",
+        "Sid": "S-1-5-21-<domain>-571"
+    },
+    {
+        "Description": "Members in this group cannot have their passwords replicated to all read-only domain controllers in the domain.",
+        "DisplayName": "Denied RODC Password Replication Group",
+        "DomainId": null,
+        "IsLocal": 0,
+        "Name": "DENIED_RODC_PASSWORD_REPLICATION_GROUP",
+        "SddlName": "S-1-5-21-<domain>-572",
+        "Sid": "S-1-5-21-<domain>-572"
+    },
+    {
+        "Description": "A built-in group. After the initial installation of the operating system, the only member of the group is the Administrator account. When a computer joins a domain, the Domain Admins group is added to the Administrators group. When a server becomes a domain controller, the Enterprise Admins group also is added to the Administrators group.",
+        "DisplayName": "Administrators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "BUILTIN_ADMINISTRATORS",
+        "SddlName": "BA",
+        "Sid": "S-1-5-32-544"
+    },
+    {
+        "Description": "A built-in group. After the initial installation of the operating system, the only member is the Authenticated Users group.",
+        "DisplayName": "Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "BUILTIN_USERS",
+        "SddlName": "BG",
+        "Sid": "S-1-5-32-545"
+    },
+    {
+        "Description": "A built-in group. By default, the only member is the Guest account. The Guests group allows occasional or one-time users to sign in with limited privileges to a computer's built-in Guest account.",
+        "DisplayName": "Guests",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "BUILTIN_GUESTS",
+        "SddlName": "BU",
+        "Sid": "S-1-5-32-546"
+    },
+    {
+        "Description": "A built-in group. By default, the group has no members. Power users can create local users and groups; modify and delete accounts that they have created; and remove users from the Power Users, Users, and Guests groups. Power users also can install programs; create, manage, and delete local printers; and create and delete file shares.",
+        "DisplayName": "Power Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "POWER_USERS",
+        "SddlName": "PU",
+        "Sid": "S-1-5-32-547"
+    },
+    {
+        "Description": "A built-in group that exists only on domain controllers. By default, the group has no members. By default, Account Operators have permission to create, modify, and delete accounts for users, groups, and computers in all containers and organizational units of Active Directory except the Builtin container and the Domain Controllers OU. Account Operators don't have permission to modify the Administrators and Domain Admins groups, nor do they have permission to modify the accounts for members of those groups.",
+        "DisplayName": "Account Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ACCOUNT_OPERATORS",
+        "SddlName": "AO",
+        "Sid": "S-1-5-32-548"
+    },
+    {
+        "Description": "A built-in group that exists only on domain controllers. By default, the group has no members. Server Operators can sign in to a server interactively; create and delete network shares; start and stop services; back up and restore files; format the hard disk of the computer; and shut down the computer.",
+        "DisplayName": "Server Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "SERVER_OPERATORS",
+        "SddlName": "SO",
+        "Sid": "S-1-5-32-549"
+    },
+    {
+        "Description": "A built-in group that exists only on domain controllers. By default, the only member is the Domain Users group. Print Operators can manage printers and document queues.",
+        "DisplayName": "Printer Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "PRINTER_OPERATORS",
+        "SddlName": "PO",
+        "Sid": "S-1-5-32-550"
+    },
+    {
+        "Description": "A built-in group. By default, the group has no members. Backup Operators can back up and restore all files on a computer, regardless of the permissions that protect those files. Backup Operators also can sign in to the computer and shut it down.",
+        "DisplayName": "Backup Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "BACKUP_OPERATORS",
+        "SddlName": "BO",
+        "Sid": "S-1-5-32-551"
+    },
+    {
+        "Description": "A built-in group that's used by the File Replication service on domain controllers. By default, the group has no members. Do not add users to this group.",
+        "DisplayName": "Replicator",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "REPLICATOR",
+        "SddlName": "RE",
+        "Sid": "S-1-5-32-552"
+    },
+    {
+        "Description": "An alias added by Windows 2000. A backward compatibility group that allows read access on all users and groups in the domain.",
+        "DisplayName": "Pre-Windows 2000 Compatible Access",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ALIAS_PREW2KCOMPACC",
+        "SddlName": "RU",
+        "Sid": "S-1-5-32-554"
+    },
+    {
+        "Description": "An alias. Members of this group are granted the right to sign in remotely.",
+        "DisplayName": "Remote Desktop Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "REMOTE_DESKTOP",
+        "SddlName": "RD",
+        "Sid": "S-1-5-32-555"
+    },
+    {
+        "Description": "An alias. Members of this group can have some administrative privileges to manage configuration of networking features.",
+        "DisplayName": "Network Configuration Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NETWORK_CONFIGURATION_OPS",
+        "SddlName": "NO",
+        "Sid": "S-1-5-32-556"
+    },
+    {
+        "Description": "An alias. Members of this group can create incoming, one-way trusts to this forest.",
+        "DisplayName": "Incoming Forest Trust Builders",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "INCOMING_FOREST_TRUST_BUILDERS",
+        "SddlName": "S-1-5-32-557",
+        "Sid": "S-1-5-32-557"
+    },
+    {
+        "Description": "An alias. Members of this group have remote access to monitor this computer.",
+        "DisplayName": "Performance Monitor Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "PERFMON_USERS",
+        "SddlName": "MU",
+        "Sid": "S-1-5-32-558"
+    },
+    {
+        "Description": "An alias. Members of this group have remote access to schedule logging of performance counters on this computer.",
+        "DisplayName": "Performance Log Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "PERFLOG_USERS",
+        "SddlName": "LU",
+        "Sid": "S-1-5-32-559"
+    },
+    {
+        "Description": "An alias. Members of this group have access to the computed tokenGroupsGlobalAndUniversal attribute on User objects.",
+        "DisplayName": "Windows Authorization Access Group",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "WINDOWS_AUTHORIZATION_ACCESS_GROUP",
+        "SddlName": "S-1-5-32-560",
+        "Sid": "S-1-5-32-560"
+    },
+    {
+        "Description": "An alias. A group for Terminal Server License Servers.",
+        "DisplayName": "Terminal Server License Servers",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "TERMINAL_SERVER_LICENSE_SERVERS",
+        "SddlName": "S-1-5-32-561",
+        "Sid": "S-1-5-32-561"
+    },
+    {
+        "Description": "An alias. A group for COM to provide computer-wide access controls that govern access to all call, activation, or launch requests on the computer.",
+        "DisplayName": "Distributed COM Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "DISTRIBUTED_COM_USERS",
+        "SddlName": "S-1-5-32-562",
+        "Sid": "S-1-5-32-562"
+    },
+    {
+        "Description": "A built-in group account for IIS users.",
+        "DisplayName": "IIS_IUSRS",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "IIS_IUSRS",
+        "SddlName": "IS",
+        "Sid": "S-1-5-32-568"
+    },
+    {
+        "Description": "A built-in group account for cryptographic operators.",
+        "DisplayName": "Cryptographic Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "CRYPTOGRAPHIC_OPERATORS",
+        "SddlName": "CY",
+        "Sid": "S-1-5-32-569"
+    },
+    {
+        "Description": "A built-in local group.  Members of this group can read event logs from the local machine.",
+        "DisplayName": "Event Log Readers",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "EVENT_LOG_READERS",
+        "SddlName": "ER",
+        "Sid": "S-1-5-32-573"
+    },
+    {
+        "Description": "A built-in local group. Members of this group are allowed to connect to Certification Authorities in the enterprise.",
+        "DisplayName": "Certificate Service DCOM Access",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "CERTIFICATE_SERVICE_DCOM_ACCESS",
+        "SddlName": "CD",
+        "Sid": "S-1-5-32-574"
+    },
+    {
+        "Description": "A built-in local group. Servers in this group enable users of RemoteApp programs and personal virtual desktops access to these resources. In internet-facing deployments, these servers are typically deployed in an edge network. This group needs to be populated on servers that are running RD Connection Broker. RD Gateway servers and RD Web Access servers used in the deployment need to be in this group.",
+        "DisplayName": "RDS Remote Access Servers",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "RDS_REMOTE_ACCESS_SERVERS",
+        "SddlName": "RA",
+        "Sid": "S-1-5-32-575"
+    },
+    {
+        "Description": "A built-in local group. Servers in this group run virtual machines and host sessions where users RemoteApp programs and personal virtual desktops run. This group needs to be populated on servers running RD Connection Broker. RD Session Host servers and RD Virtualization Host servers used in the deployment need to be in this group.",
+        "DisplayName": "RDS Endpoint Servers",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "RDS_ENDPOINT_SERVERS",
+        "SddlName": "ES",
+        "Sid": "S-1-5-32-576"
+    },
+    {
+        "Description": "A built-in local group. Servers in this group can perform routine administrative actions on servers running Remote Desktop Services. This group needs to be populated on all servers in a Remote Desktop Services deployment. The servers running the RDS Central Management service must be included in this group.",
+        "DisplayName": "RDS Management Servers",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "RDS_MANAGEMENT_SERVERS",
+        "SddlName": "MS",
+        "Sid": "S-1-5-32-577"
+    },
+    {
+        "Description": "A built-in local group. Members of this group have complete and unrestricted access to all features of Hyper-V.",
+        "DisplayName": "Hyper-V Administrators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "HYPER_V_ADMINS",
+        "SddlName": "HA",
+        "Sid": "S-1-5-32-578"
+    },
+    {
+        "Description": "A built-in local group. Members of this group can remotely query authorization attributes and permissions for resources on this computer.",
+        "DisplayName": "Access Control Assistance Operators",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ACCESS_CONTROL_ASSISTANCE_OPS",
+        "SddlName": "AA",
+        "Sid": "S-1-5-32-579"
+    },
+    {
+        "Description": "A built-in local group. Members of this group can access Windows Management Instrumentation (WMI) resources over management protocols (such as WS-Management via the Windows Remote Management service). This applies only to WMI namespaces that grant access to the user.",
+        "DisplayName": "Remote Management Users",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "REMOTE_MANAGEMENT_USERS",
+        "SddlName": "RM",
+        "Sid": "S-1-5-32-580"
+    },
+    {
+        "Description": "A SID that allows objects to have an ACL that lets any service process with a write-restricted token to write to the object.",
+        "DisplayName": "Write Restricted Code",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "WRITE_RESTRICTED_CODE",
+        "SddlName": "WR",
+        "Sid": "S-1-5-33"
+    },
+    {
+        "Description": "A SID that's used when the NTLM authentication package authenticates the client.",
+        "DisplayName": "NTLM Authentication",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NTLM_AUTHENTICATION",
+        "SddlName": "S-1-5-64-10",
+        "Sid": "S-1-5-64-10"
+    },
+    {
+        "Description": "A SID that's used when the SChannel authentication package authenticates the client.",
+        "DisplayName": "SChannel Authentication",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "SCHANNEL_AUTHENTICATION",
+        "SddlName": "S-1-5-64-14",
+        "Sid": "S-1-5-64-14"
+    },
+    {
+        "Description": "A SID that's used when the Digest authentication package authenticates the client.",
+        "DisplayName": "Digest Authentication",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "DIGEST_AUTHENTICATION",
+        "SddlName": "S-1-5-64-21",
+        "Sid": "S-1-5-64-21"
+    },
+    {
+        "Description": "A SID that indicates that the client's Kerberos service ticket's PAC contained a NTLM_SUPPLEMENTAL_CREDENTIAL structure (as specified in [MS-PAC] section 2.6.4). If the OTHER_ORGANIZATION SID is present, then this SID MUST NOT be present.",
+        "DisplayName": "This Organization Certificate",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "THIS_ORGANIZATION_CERTIFICATE",
+        "SddlName": "S-1-5-65-1",
+        "Sid": "S-1-5-65-1"
+    },
+    {
+        "Description": "A group that includes all service processes configured on the system. Membership is controlled by the operating system.",
+        "DisplayName": "All Services",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "NT_SERVICE",
+        "SddlName": "S-1-5-80",
+        "Sid": "S-1-5-80"
+    },
+    {
+        "Description": "Identifies a user-mode driver process.",
+        "DisplayName": "User Mode Drivers",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "USER_MODE_DRIVERS",
+        "SddlName": "UD",
+        "Sid": "S-1-5-84-0-0-0-0-0"
+    },
+    {
+        "Description": "A group that includes all users who are local accounts.",
+        "DisplayName": "Local Account",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "LOCAL_ACCOUNT",
+        "SddlName": "S-1-5-113",
+        "Sid": "S-1-5-113"
+    },
+    {
+        "Description": "A group that includes all users who are local accounts and members of the administrators group.",
+        "DisplayName": "Local Account and Member of Administrators Group",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "LOCAL_ACCOUNT_AND_MEMBER_OF_ADMINISTRATORS_GROUP",
+        "SddlName": "S-1-5-114",
+        "Sid": "S-1-5-114"
+    },
+    {
+        "Description": "A group that includes all users and computers from another organization. If this SID is present, THIS_ORGANIZATION SID MUST NOT be present.",
+        "DisplayName": "Other Organization",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "OTHER_ORGANIZATION",
+        "SddlName": "S-1-5-1000",
+        "Sid": "S-1-5-1000"
+    },
+    {
+        "Description": "All applications running in an app package context.",
+        "DisplayName": "All App Packages",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ALL_APP_PACKAGES",
+        "SddlName": "AC",
+        "Sid": "S-1-15-2-1"
+    },
+    {
+        "Description": "An untrusted integrity level.",
+        "DisplayName": "ML_UNTRUSTED",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_UNTRUSTED",
+        "SddlName": "S-1-16-0",
+        "Sid": "S-1-16-0"
+    },
+    {
+        "Description": "A low integrity level.",
+        "DisplayName": "ML_LOW",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_LOW",
+        "SddlName": "S-1-16-4096",
+        "Sid": "S-1-16-4096"
+    },
+    {
+        "Description": "A medium integrity level.",
+        "DisplayName": "ML_MEDIUM",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_MEDIUM",
+        "SddlName": "S-1-16-8192",
+        "Sid": "S-1-16-8192"
+    },
+    {
+        "Description": "A medium-plus integrity level.",
+        "DisplayName": "ML_MEDIUM_PLUS",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_MEDIUM_PLUS",
+        "SddlName": "S-1-16-8448",
+        "Sid": "S-1-16-8448"
+    },
+    {
+        "Description": "A high integrity level.",
+        "DisplayName": "ML_HIGH",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_HIGH",
+        "SddlName": "S-1-16-12288",
+        "Sid": "S-1-16-12288"
+    },
+    {
+        "Description": "A system integrity level.",
+        "DisplayName": "ML_SYSTEM",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_SYSTEM",
+        "SddlName": "S-1-16-16384",
+        "Sid": "S-1-16-16384"
+    },
+    {
+        "Description": "A protected-process integrity level.",
+        "DisplayName": "ML_PROTECTED_PROCESS",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_PROTECTED_PROCESS",
+        "SddlName": "S-1-16-20480",
+        "Sid": "S-1-16-20480"
+    },
+    {
+        "Description": "A secure process integrity level.",
+        "DisplayName": "ML_SECURE_PROCESS",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "ML_SECURE_PROCESS",
+        "SddlName": "S-1-16-28672",
+        "Sid": "S-1-16-28672"
+    },
+    {
+        "Description": "A SID that means the client's identity is asserted by an authentication authority based on proof of possession of client credentials.",
+        "DisplayName": "Authentication Authority Asserted Identity",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "AUTHENTICATION_AUTHORITY_ASSERTED_IDENTITY",
+        "SddlName": "AS",
+        "Sid": "S-1-18-1"
+    },
+    {
+        "Description": "A SID that means the client's identity is asserted by a service.",
+        "DisplayName": "Service Asserted Identity",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "SERVICE_ASSERTED_IDENTITY",
+        "SddlName": "SS",
+        "Sid": "S-1-18-2"
+    },
+    {
+        "Description": "A SID that means the client's identity is asserted by an authentication authority based on proof of current possession of client public key credentials.",
+        "DisplayName": "Fresh Public Key Identity",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "FRESH_PUBLIC_KEY_IDENTITY",
+        "SddlName": "S-1-18-3",
+        "Sid": "S-1-18-3"
+    },
+    {
+        "Description": "A SID that means the client's identity is based on proof of possession of public key credentials using the key trust object.",
+        "DisplayName": "Key Trust Identity",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "KEY_TRUST_IDENTITY",
+        "SddlName": "S-1-18-4",
+        "Sid": "S-1-18-4"
+    },
+    {
+        "Description": "A SID that means the key trust object had the multifactor authentication (MFA) property.",
+        "DisplayName": "Key Property MFA",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "KEY_PROPERTY_MFA",
+        "SddlName": "S-1-18-5",
+        "Sid": "S-1-18-5"
+    },
+    {
+        "Description": "A SID that means the key trust object had the attestation property.",
+        "DisplayName": "Key Property Attestation",
+        "DomainId": null,
+        "IsLocal": 1,
+        "Name": "KEY_PROPERTY_ATTESTATION",
+        "SddlName": "S-1-18-6",
+        "Sid": "S-1-18-6"
+    }
+]

@@ -28,5 +28,6 @@ builder.Services.AddLoadingIndicator();
 builder.Services.AddSingleton(services => (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());
 builder.Services.AddSingleton<VpnBuildService>();
 builder.Services.AddSingleton<PacParserService>();
+builder.Services.AddScoped<WinSdService>();
 
 await builder.Build().RunAsync();

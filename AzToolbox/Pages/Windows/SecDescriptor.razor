@@ -1,0 +1,64 @@
+﻿@page "/Windows/SecDescriptor"
+<PageTitle>Security Descriptor Conversion - AzToolbox</PageTitle>
+
+@using AzToolbox.Models
+@using WinSdUtil.Lib.Model
+@inject WinSdService wsdsvc
+@inject INotificationService NotificationService
+
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+	<CardBody>
+		<MemoEdit Rows="5" AutoSize Class="monospace-fixed-textbox" Placeholder="SDDL" @bind-Text="sddl" />
+		<Addons Margin="Margin.Is2.OnY">
+			<Addon AddonType="AddonType.Start">
+				<AddonLabel>Access Mask Type</AddonLabel>
+			</Addon>
+			<Addon AddonType="AddonType.Body">
+				<SelectList TItem="AccessMaskType"
+							TValue="AccessMaskType"
+							Data="Enum.GetValues<AccessMaskType>()"
+							TextField="@(item => item.ToString())"
+							ValueField="@(item => item)"
+				@bind-SelectedValue="@selectedAccessMaskType" />
+			</Addon>
+		</Addons>
+		<Divider DividerType="DividerType.Solid" />
+		<Button Color="Color.Primary" Clicked="ParseSddl" Block>Parse</Button>
+		<Divider DividerType="DividerType.Solid" />
+		<TreeView @ref="@AclTree"
+				  Nodes="AclTreeHead"
+				  GetChildNodes="@(item => item.Children)"
+				  HasChildNodes="@(item => item.HasChildren)">
+			<NodeContent>
+				<Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+				<Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
+			</NodeContent>
+		</TreeView>
+	</CardBody>
+</Card>
+
+@code {
+	TreeView<TreeViewItem> AclTree = null!;
+	IEnumerable<TreeViewItem> AclTreeHead = null!;
+	string sddl = string.Empty;
+	AccessMaskType selectedAccessMaskType = AccessMaskType.File;
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (!wsdsvc.IsInitialized)
+			await wsdsvc.InitializeAsync();
+	}
+
+	void ParseSddl()
+	{
+		try
+		{
+			AclTreeHead = new TreeViewItem[] { wsdsvc.FromSddlToAcl(sddl, selectedAccessMaskType) };
+			AclTree.ExpandAll();
+		}
+		catch (Exception ex)
+		{
+			NotificationService.Error(ex.Message);
+		}
+	}
+}
