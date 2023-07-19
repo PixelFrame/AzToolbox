@@ -7,43 +7,39 @@
 @inject INotificationService NotificationService
 @inject IJSRuntime JSRuntime
 
-<Row>
-    <Column ColumnSize="ColumnSize.Is6.OnDesktop.Is12.OnMobile">
-        <Card Position="Position.Sticky.Top.Is0">
-            <CardBody>
-                <CardTitle Size="6">
-                    Base64
-                </CardTitle>
-                <MemoEdit @bind-Text="@base64str" Rows="10"
-                          Class="monospace-fixed-textbox" />
-                <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromBase64">
-                    From Base64
-                </Button>
-            </CardBody>
-        </Card>
-    </Column>
-    <Column ColumnSize="ColumnSize.Is6.OnDesktop.Is12.OnMobile">
-        <Card Margin="Margin.Is2.FromBottom">
-            <CardBody>
-                <CardTitle Size="6">
-                    Data
-                </CardTitle>
-                <SelectList TItem="EncodingInfo"
-                            TValue="int"
-                            Data="@SupportedEncodings"
-                            TextField="@((item)=>item.Name)"
-                            ValueField="@((item)=>item.CodePage)"
-                            DefaultItemValue="65001"
-                @bind-SelectedValue="selectedCodePage" />
-                <MemoEdit @bind-Text="@decodedstr" Rows="10"
-                          Class="monospace-fixed-textbox" />
-                <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromString">
-                    To Base64
-                </Button>
-            </CardBody>
-        </Card>
-    </Column>
-</Row>
+<Div Flex="Flex.Row.JustifyContent.Between" Margin="Margin.Is2.FromBottom">
+    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromEnd">
+        <CardBody>
+            <CardTitle Size="6">
+                Base64
+            </CardTitle>
+            <MemoEdit @bind-Text="@base64str" Rows="12"
+                      Class="monospace-fixed-textbox" />
+            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromBase64" Width="Width.Is25">
+                From Base64
+            </Button>
+        </CardBody>
+    </Card>
+    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromStart">
+        <CardBody>
+            <CardTitle Size="6">
+                Data
+            </CardTitle>
+            <SelectList TItem="EncodingInfo"
+                        TValue="int"
+                        Data="@SupportedEncodings"
+                        TextField="@((item)=>item.Name)"
+                        ValueField="@((item)=>item.CodePage)"
+                        DefaultItemValue="65001"
+            @bind-SelectedValue="selectedCodePage" />
+            <MemoEdit @bind-Text="@decodedstr" Rows="10"
+                      Class="monospace-fixed-textbox" />
+            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromString" Width="Width.Is25">
+                To Base64
+            </Button>
+        </CardBody>
+    </Card>
+</Div>
 
 <Card>
     <CardBody>

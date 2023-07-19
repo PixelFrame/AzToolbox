@@ -9,7 +9,7 @@
                 <AddonLabel Style="min-width: 100px">Bandwidth</AddonLabel>
             </Addon>
             <Addon AddonType="AddonType.Body">
-                <NumericPicker @bind-Value="bandwidthDisplay" Min="0"/>
+                <NumericEdit @bind-Value="bandwidthDisplay" Min="0" />
             </Addon>
             <Addon AddonType="AddonType.End">
                 <Select TValue="double" @bind-SelectedValue="bwUnit" Style="min-width: 100px">
