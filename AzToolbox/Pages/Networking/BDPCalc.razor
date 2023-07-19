@@ -1,0 +1,106 @@
+﻿@page "/Networking/BDPCalc"
+<PageTitle>BDP Calculator - AzToolbox</PageTitle>
+
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+
+        <Addons>
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel Style="min-width: 100px">Bandwidth</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <NumericPicker @bind-Value="bandwidthDisplay" Min="0"/>
+            </Addon>
+            <Addon AddonType="AddonType.End">
+                <Select TValue="double" @bind-SelectedValue="bwUnit" Style="min-width: 100px">
+                    <SelectItem Value="1">bps</SelectItem>
+                    <SelectItem Value="1000">Kbps</SelectItem>
+                    <SelectItem Value="1000000">Mbps</SelectItem>
+                    <SelectItem Value="1000000000">Gbps</SelectItem>
+                    <SelectItem Value="8">B/s</SelectItem>
+                    <SelectItem Value="8192">KB/s</SelectItem>
+                    <SelectItem Value="8388608">MB/s</SelectItem>
+                    <SelectItem Value="8589934592">GB/s</SelectItem>
+                </Select>
+            </Addon>
+        </Addons>
+
+        <Addons Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel Style="min-width: 100px">BDP</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <NumericEdit @bind-Value="bdp" Min="1" Max="1073741824" />
+            </Addon>
+        </Addons>
+
+        <Addons Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel Style="min-width: 100px">RTT</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <NumericEdit @bind-Value="rttDisplay" />
+            </Addon>
+            <Addon AddonType="AddonType.End">
+                <Select TValue="double" @bind-SelectedValue="rttUnit" Style="min-width: 100px">
+                    <SelectItem Value="1">s</SelectItem>
+                    <SelectItem Value="0.001">ms</SelectItem>
+                    <SelectItem Value="0.000001">μs</SelectItem>
+                </Select>
+            </Addon>
+        </Addons>
+
+        <Divider />
+
+        <Div Flex="Flex.Row.AlignItems.Center" Margin="Margin.Is2.FromTop">
+            <Heading Size="HeadingSize.Is6">Calculate</Heading>
+            <Select TValue="int" @bind-SelectedValue="target" Margin="Margin.Is2.OnX">
+                <SelectItem Value="1">Bandwidth</SelectItem>
+                <SelectItem Value="2">BDP</SelectItem>
+                <SelectItem Value="3">RTT</SelectItem>
+            </Select>
+            <Button Color="Color.Primary" Clicked="Calculate" Width="Width.Is25">Go</Button>
+        </Div>
+
+    </CardBody>
+</Card>
+
+@code {
+    double bandwidth = 0;
+    double bwUnit = 1;
+
+    double bandwidthDisplay
+    {
+        get => bandwidth / bwUnit;
+        set => bandwidth = value * bwUnit;
+    }
+
+    int bdp = 65535;
+
+    double rtt = 0.01;
+    double rttUnit = 0.001;
+
+    double rttDisplay
+    {
+        get => rtt / rttUnit;
+        set => rtt = value * rttUnit;
+    }
+
+    int target = 1;
+
+    void Calculate()
+    {
+        if (target == 1)
+        {
+            bandwidth = bdp * 8.0 / rtt;
+        }
+        if (target == 2)
+        {
+            bdp = (int)Math.Ceiling(bandwidth * rtt / 8);
+        }
+        if (target == 3)
+        {
+            rtt = bdp * 8 / bandwidth;
+        }
+    }
+}
