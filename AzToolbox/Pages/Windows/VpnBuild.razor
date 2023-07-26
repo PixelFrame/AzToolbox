@@ -55,11 +55,11 @@
                 <Field>
                     <FieldLabel>Tunnel Protocol</FieldLabel>
                     <SelectList TItem="NativeProtocolType"
-                            TValue="NativeProtocolType"
-                            TextField="@(t=>t.ToString())"
-                            ValueField="@(t=>t)"
-                            Data="@(Enum.GetValues<NativeProtocolType>())"
-                            @bind-SelectedValue="@svc.TunnelProtocol" />
+                                TValue="NativeProtocolType"
+                                TextField="@(t=>t.ToString())"
+                                ValueField="@(t=>t)"
+                                Data="@(Enum.GetValues<NativeProtocolType>())"
+                    @bind-SelectedValue="@svc.TunnelProtocol" />
                 </Field>
                 @if (svc.TunnelProtocol == NativeProtocolType.ProtocolList)
                 {
@@ -121,12 +121,12 @@
                 <Field>
                     <FieldLabel>Tunnel Protocol</FieldLabel>
                     <SelectList TItem="NativeProtocolType"
-                            TValue="NativeProtocolType"
-                            TextField="@(t=>t.ToString())"
-                            ValueField="@(t=>t)"
-                            Data="@(Enum.GetValues<NativeProtocolType>())"
-                            SelectedValue="NativeProtocolType.IKEv2"
-                            Disabled="true" />
+                                TValue="NativeProtocolType"
+                                TextField="@(t=>t.ToString())"
+                                ValueField="@(t=>t)"
+                                Data="@(Enum.GetValues<NativeProtocolType>())"
+                                SelectedValue="NativeProtocolType.IKEv2"
+                                Disabled="true" />
                 </Field>
                 <Divider DividerType="DividerType.TextContent" Text="Routing Settings" />
                 <Field>
@@ -167,17 +167,17 @@
     </Column>
     <Column ColumnSize="ColumnSize.IsHalf">
         <Button Color="Color.Primary" Clicked="@Build" Block>Build</Button>
-        <Row HorizontalGutter="8" Margin="Margin.Is2.FromTop">
-            <Column ColumnSize="ColumnSize.Is4">
+        <Div Flex="Flex.AlignContent.Stretch.JustifyContent.Around" Margin="Margin.Is2.FromTop">
+            <Div Flex="Flex.Grow.Is1.Shrink.Is1" Style="flex-basis: 0" Margin="Margin.Is1.OnX">
                 <Button Color="Color.Success" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy XML to Clipboard</Button>
-            </Column>
-            <Column ColumnSize="ColumnSize.Is4">
+            </Div>
+            <Div Flex="Flex.Grow.Is1.Shrink.Is1" Style="flex-basis: 0" Margin="Margin.Is1.OnX">
                 <Button Color="Color.Success" Disabled="@(!built)" Clicked="@Download" Block>Download XML</Button>
-            </Column>
-            <Column ColumnSize="ColumnSize.Is4">
+            </Div>
+            <Div Flex="Flex.Grow.Is1.Shrink.Is1" Style="flex-basis: 0" Margin="Margin.Is1.OnX">
                 <Button Color="Color.Success" Disabled="@(!built)" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
-            </Column>
-        </Row>
+            </Div>
+        </Div>
         <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is2.FromTop">
             <AlertMessage>Windows 11 ONLY</AlertMessage>
             <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <a target="_blank" href="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</a> for more info.</AlertDescription>

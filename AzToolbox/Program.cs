@@ -4,6 +4,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.LoadingIndicator;
+using KristofferStrube.Blazor.FileSystemAccess;
 using KzA.Blazor.PacParser;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -29,5 +30,7 @@ builder.Services.AddSingleton(services => (IJSInProcessRuntime)services.GetRequi
 builder.Services.AddSingleton<VpnBuildService>();
 builder.Services.AddSingleton<PacParserService>();
 builder.Services.AddScoped<WinSdService>();
+
+builder.Services.AddFileSystemAccessService();
 
 await builder.Build().RunAsync();

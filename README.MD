@@ -8,25 +8,26 @@ Web Toolbox built with Blazor WASM hosted on Azure Web App service.
 AzToolbox
 |
 +---Networking
-|   +---DhcpSearchList : Encode/Decode DHCP Option 119
-|   +---PacParse       : Parse Proxy Auto-Configuration File
-|   +---BDPCalc        : BDP Calculator
+|   +---DhcpSearchList   : Encode/Decode DHCP Option 119
+|   +---PacParse         : Parse Proxy Auto-Configuration File
+|   +---BDPCalc          : BDP Calculator
 |
 +---Windows
-|   +---VpnBuld        : VPN Profile XML Builder
-|   +---WfpAnalyze     : WFP Log Analyze Helper
-|   +---SecDescriptor  : Security Descriptor Tool
+|   +---VpnBuld          : VPN Profile XML Builder
+|   +---WfpAnalyze       : WFP Log Analyze Helper
+|   +---SecDescriptor    : Security Descriptor Tool
 |
 +---Common
-    +---Base64Utils    : Encode/Decode Base64
-    +---RngUtils       : Generate Random Characters/Strings
+    +---Base64Utils      : Encode/Decode Base64
+    +---RngUtils         : Generate Random Characters/Strings
+    +---DummyFileCreator : Create Dummy File filled with Random Data / FF / 00
 ```
 
 ## Roadmap
 
 ### Planned
 
-- [ ] Common/Dummy File Creator
+- [x] Common/Dummy File Creator [Need File System Access API]
 - [ ] Common/Unit Converter
 - [ ] Common/HEXEH Frontend (HEX Converter)
 - [ ] Common/HEX Editor (KzA.Blazor.HexDump)

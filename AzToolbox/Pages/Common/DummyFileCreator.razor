@@ -1,0 +1,91 @@
+﻿@page "/Common/DummyFileCreator"
+<PageTitle>Dummy File Creator - AzToolbox</PageTitle>
+
+@inject IFileSystemAccessService FileSystemAccessService
+@using KristofferStrube.Blazor.FileSystem
+@using System.Security.Cryptography
+
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+        <Alert Color="Color.Info" Visible="true">
+            <AlertMessage>Attention!</AlertMessage>
+            <CloseButton /><br>
+            <AlertDescription>This tool is only supported on limited browsers and platforms. Refer to <Link Target="Target.Blank" To="https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API#browser_compatibility">MDN File System Access API document</Link>.</AlertDescription> <br>
+            <AlertDescription>Max File Size: 10240MB</AlertDescription>
+        </Alert>
+        <Addons>
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel Style="min-width: 100px">Content</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <Select TValue="int" @bind-SelectedValue="fillType">
+                    <SelectItem Value="1">Random Bytes</SelectItem>
+                    <SelectItem Value="2">All FF</SelectItem>
+                    <SelectItem Value="3">All 00</SelectItem>
+                </Select>
+            </Addon>
+        </Addons>
+        <Addons Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start">
+                <AddonLabel Style="min-width: 100px">Size</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <NumericEdit @bind-Value="@size" Min="0" Max="10240" Step="1" />
+            </Addon>
+            <Addon AddonType="AddonType.End">
+                <AddonLabel>MB</AddonLabel>
+            </Addon>
+        </Addons>
+        <Button Color="Color.Primary" Block Clicked="OpenAndWriteFile" Margin="Margin.Is2.FromTop">Create File</Button>
+        <Progress Value="@progress" Animated Striped Margin="Margin.Is2.FromTop" />
+    </CardBody>
+</Card>
+
+@code {
+    int fillType = 0;
+    int size = 100;
+    int progress = 0;
+
+    private async Task OpenAndWriteFile()
+    {
+        var buf = new byte[1024 * 1024];
+        if (fillType != 1)
+        {
+            for (int i = 0; i < buf.Length; i++)
+            {
+                buf[i] = (byte)(fillType == 2 ? 0xFF : 0x00);
+            }
+        }
+        var cnt = 0;
+        progress = 0;
+        FileSystemFileHandle? fileHandle = null;
+        try
+        {
+            SaveFilePickerOptionsStartInWellKnownDirectory options = new()
+                {
+                    StartIn = WellKnownDirectory.Downloads
+                };
+            fileHandle = await FileSystemAccessService.ShowSaveFilePickerAsync(options);
+
+            if (fileHandle is not null)
+            {
+                var file = await fileHandle.GetFileAsync();
+                var writable = await fileHandle.CreateWritableAsync();
+                while (cnt++ < size)
+                {
+                    if (fillType == 1) RandomNumberGenerator.Fill(buf);
+                    await writable.WriteAsync(buf);
+                    progress = cnt * 100 / size;
+                    StateHasChanged();
+                    await Task.Delay(1);
+                }
+                await writable.CloseAsync();
+            }
+        }
+        catch (JSException ex)
+        {
+            // Handle Exception or cancelation of File Access prompt
+            Console.WriteLine(ex);
+        }
+    }
+}
