@@ -1,0 +1,21 @@
+﻿<Card>
+    <CardBody Flex="Flex.JustifyContent.Center">
+        <Image Source="@($"data:image/{ImageType};base64,{base64Image}")" Width="Width.Is100.Max" />
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter]
+    public byte[]? ImageBytes { get; set; }
+
+    [Parameter]
+    public string ImageType { get; set; } = "png";
+
+    string base64Image
+    {
+        get
+        {
+            return ImageBytes == null ? string.Empty : Convert.ToBase64String(ImageBytes);
+        }
+    }
+}

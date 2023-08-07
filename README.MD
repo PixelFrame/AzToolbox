@@ -18,9 +18,12 @@ AzToolbox
 |   +---SecDescriptor    : Security Descriptor Tool
 |
 +---Common
-    +---Base64Utils      : Encode/Decode Base64
-    +---RngUtils         : Generate Random Characters/Strings
-    +---DummyFileCreator : Create Dummy File filled with Random Data / FF / 00
+|   +---Base64Utils      : Encode/Decode Base64
+|   +---RngUtils         : Generate Random Characters/Strings
+|   +---DummyFileCreator : Create Dummy File filled with Random Data / FF / 00
+|
++---Experimental
+    +---ArchiveReader    : Display images from a zip archive
 ```
 
 ## Roadmap
@@ -31,7 +34,7 @@ AzToolbox
 - [ ] Common/Unit Converter
 - [ ] Common/HEXEH Frontend (HEX Converter)
 - [ ] Common/HEX Editor (KzA.Blazor.HexDump)
-- [ ] Common/Comic Archive Reader
+- [x] Experimental/Archive Reader
 - [ ] Windows/Well-Known Registry
 - [ ] Networking/RFC Tree
 

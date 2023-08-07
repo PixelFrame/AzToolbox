@@ -10,64 +10,61 @@
 
 @if (!ShowResult)
 {
-    <Div Style="max-width: 70vw; margin: auto">
-        <FilePicker Upload="OnFileSelected" Changed="OnFileChanged" Filter=".xml" @ref="filePickerCustom">
-            <FileTemplate>
-                <Div Flex="Flex.JustifyContent.Between">
-                    <Div>
-                        <Heading Size="HeadingSize.Is5">@context.File.Name</Heading>
-                        <Paragraph>@($"Size: {(context.File.Size / 1048576.0):0.##}MB")</Paragraph>
-                        </Div>
+    <Card Width="Width.Is75" Margin="Margin.IsAuto">
+        <CardBody>
+            <FilePicker Upload="OnFileSelected" Changed="OnFileChanged" Filter=".xml" @ref="filePickerCustom">
+                <FileTemplate>
+                    <Div Flex="Flex.JustifyContent.Between">
                         <Div>
-                            <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read & Analayze</Button>
+                            <Heading Size="HeadingSize.Is5">@context.File.Name</Heading>
+                            <Paragraph>@($"Size: {(context.File.Size / 1048576.0):0.##}MB")</Paragraph>
+                            </Div>
+                            <Div>
+                                <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read & Analayze</Button>
+                            </Div>
                         </Div>
-                    </Div>
-                    <Divider />
-                    <Progress Value="@filePickerCustom.GetProgressPercentage()" />
-                </FileTemplate>
-                <ButtonsTemplate>
-                </ButtonsTemplate>
-            </FilePicker>
+                        <Divider />
+                        <Progress Value="@filePickerCustom.GetProgressPercentage()" />
+                    </FileTemplate>
+                    <ButtonsTemplate />
+                </FilePicker>
 
-            <Alert Color="Color.Primary" Visible="true" Style="margin:5px 0 5px 0">
-                <AlertMessage>
-                    <Icon Name="IconName.ExclamationCircle" /> Supported Traces <br>
-                </AlertMessage>
-                <AlertDescription>
-                    wfpdiag.xml - netsh wfp capture start/stop <br>
-                    wfpstate.xml - netsh wfp show state <br>
-                    netEvents.xml - netsh wfp show netevents <br>
-                </AlertDescription>
-                <AlertMessage>
-                    <Icon Name="IconName.ExclamationCircle" /> File Size Limit <br>
-                </AlertMessage>
-                <AlertDescription>
-                    100MB
-                </AlertDescription>
-            </Alert>
+                <Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.OnY">
+                    <AlertMessage>
+                        <Icon Name="IconName.ExclamationCircle" /> Supported Traces <br>
+                    </AlertMessage>
+                    <AlertDescription>
+                        wfpdiag.xml - netsh wfp capture start/stop <br>
+                        wfpstate.xml - netsh wfp show state <br>
+                        netEvents.xml - netsh wfp show netevents <br>
+                    </AlertDescription>
+                    <AlertMessage>
+                        <Icon Name="IconName.ExclamationCircle" /> File Size Limit <br>
+                    </AlertMessage>
+                    <AlertDescription>
+                        100MB
+                    </AlertDescription>
+                </Alert>
 
-            <Alert Color="Color.Warning" @bind-Visible="@ShowLargeFileWarning" Style="margin:5px 0 5px 0">
-                <AlertMessage>
-                    <Icon Name="IconName.ExclamationTriangle" /> Warning <br>
-                </AlertMessage>
-                <AlertDescription>
-                    File size large than 10MB, it may take a while to parse. <br>
-                    Switching to another tab or minimizing the browser may cause white screen, but the parsing will be still processing. <br>
-                    Do not refresh the page or close the browser until the parsing is completed.
-                </AlertDescription>
-            </Alert>
+                <Alert Color="Color.Warning" @bind-Visible="@ShowLargeFileWarning" Style="margin:5px 0 5px 0">
+                    <AlertMessage>
+                        <Icon Name="IconName.ExclamationTriangle" /> Warning <br>
+                    </AlertMessage>
+                    <AlertDescription>
+                        File size large than 10MB, it may take a while to parse. <br>
+                        Switching to another tab or minimizing the browser may cause white screen, but the parsing will be still processing. <br>
+                        Do not refresh the page or close the browser until the parsing is completed.
+                    </AlertDescription>
+                </Alert>
 
-            @if (ShowParsingProgress)
-        {
-            <Card>
-                <CardBody>
-                    <Heading Size="HeadingSize.Is5">@($"Parsing XML") </Heading>
-                    <Divider />
-                    <Progress Value="@wfpdiag.CurrentCount" Max="@wfpdiag.CurrentMax" ShowValue /> <!-- Won't work due to WASM limitation -->
-                </CardBody>
-            </Card>
-        }
-    </Div>
+                @if (ShowParsingProgress)
+            {
+                <Heading Size="HeadingSize.Is5">@($"Parsing XML") </Heading>
+                <Divider />
+                <Progress Value="@wfpdiag.CurrentCount" Max="@wfpdiag.CurrentMax" ShowValue /> <!-- Won't work due to WASM limitation -->
+            }
+        </CardBody>
+    </Card>
 }
 else
 {

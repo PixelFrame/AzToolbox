@@ -1,0 +1,189 @@
+﻿@page "/Experimental/ArcReader"
+<PageTitle>Archive Reader - AzToolbox</PageTitle>
+
+@using System.IO.Compression
+@inject IJSRuntime JSRuntime
+
+@if (!zipReading)
+{
+    <Card Width="Width.Is75" Margin="Margin.IsAuto">
+        <CardBody>
+
+            <Alert Color="Color.Warning" Visible="true">
+                <AlertMessage>
+                    <Icon Name="IconName.ExclamationCircle" /> WARNING: Experimental Utility <br>
+                </AlertMessage>
+                <AlertDescription>
+                    May consume high memory and cause browser freeze!
+                    Current file size limitation is 500MB.
+                </AlertDescription>
+            </Alert>
+
+            <FilePicker Upload="ReadArchive" Filter=".zip" @ref="filePickerCustom">
+                <FileTemplate>
+                    <Div Flex="Flex.JustifyContent.Between">
+                        <Div>
+                            <Heading Size="HeadingSize.Is5">@context.File.Name</Heading>
+                            <Paragraph>@($"Size: {(context.File.Size / 1048576.0):0.##}MB")</Paragraph>
+                            </Div>
+                            <Div>
+                                <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read Zip</Button>
+                            </Div>
+                        </Div>
+                        <Divider />
+                        <Progress Value="@filePickerCustom.GetProgressPercentage()" />
+                    </FileTemplate>
+                    <ButtonsTemplate />
+                </FilePicker>
+
+            </CardBody>
+        </Card>
+}
+else
+{
+    <Button Clicked="GoBack" Color="Color.Primary" Margin="Margin.Is2.FromBottom">
+        <Icon Name="IconName.ArrowLeft" /> Select Another Archive
+    </Button>
+    <SelectList @ref="zipEntrySelect"
+    @bind-SelectedValue="@SelectedEntry"
+                TItem="string"
+                TValue="string"
+                Data="@zipFiles"
+                TextField="@((item)=>item)"
+                ValueField="@((item)=>item)" />
+    <Div Flex="Flex.JustifyContent.Between" Margin="Margin.Is2.OnY">
+        <Button Color="Color.Primary" Width="Width.Is25" Clicked="Previous">Previous</Button>
+        <Button Color="Color.Primary" Width="Width.Is25" Clicked="Next">Next</Button>
+    </Div>
+    @if (showImage)
+    {
+        <ImageViewer ImageBytes="@imgdata" ImageType="@imgtype" />
+    }
+    else
+    {
+        <Card>
+            <CardBody Flex="Flex.Column.AlignItems.Center.Grow.Is0">
+                <Heading Size="HeadingSize.Is5">Preview of this file is not supported yet.</Heading>
+                <Button Color="Color.Primary" Clicked="DownloadEntry">Extract & Download</Button>
+            </CardBody>
+        </Card>
+    }
+}
+
+@code {
+    FilePicker filePickerCustom = new();
+    ZipArchive? zip = null;
+    SelectList<string, string> zipEntrySelect = default!;
+    string selectedEntry = string.Empty;
+    int SelectedIndex
+    {
+        get => zipFiles.IndexOf(selectedEntry);
+        set
+        {
+            SelectedEntry = zipFiles[value];
+        }
+    }
+    List<string> zipFiles = new();
+    string SelectedEntry
+    {
+        get => selectedEntry;
+        set
+        {
+            selectedEntry = value;
+            ReadEntry();
+        }
+    }
+    byte[]? imgdata;
+    string imgtype = "jpeg";
+    bool zipReading = false;
+    bool showImage = false;
+
+    static readonly string[] commonImageTypes = { "jpg", "jpeg", "png", "apng", "webp", "bmp", "gif" };
+
+    async Task ReadArchive(FileUploadEventArgs e)
+    {
+        // Before multithreading comes true, it appears reading all file content to MemoryStream is the only way
+
+        var file = e.File;
+        using var fileStream = file.OpenReadStream(524288000);
+        var memStream = new MemoryStream();
+        await fileStream.CopyToAsync(memStream);
+
+        if (zip != null) zip.Dispose();
+        zip = new ZipArchive(memStream, ZipArchiveMode.Read, false);
+        zipFiles.Clear();
+        zipFiles.AddRange(zip.Entries.Where(e => !e.FullName.EndsWith("/")).Select(e => e.FullName));
+        zipReading = true;
+        SelectedEntry = zipFiles[0];
+        await InvokeAsync(StateHasChanged);
+    }
+
+    void ReadEntry()
+    {
+        var entry = zip?.GetEntry(selectedEntry);
+        if (entry == null) return;
+        using var entryStream = entry.Open();
+        var ext = entry.Name.Substring(entry.Name.LastIndexOf('.') + 1);
+        if (commonImageTypes.Contains(ext))
+        {
+            showImage = true;
+            var len = entry.Length;
+            var totalReadLen = 0;
+            imgdata = new byte[len];
+            while (totalReadLen < len)
+            {
+                var readLen = entryStream.Read(imgdata, totalReadLen, (int)len - totalReadLen);
+                if (readLen == 0) break;
+                totalReadLen += readLen;
+            }
+            imgtype = ext == "jpg" ? "jpeg" : ext;
+            StateHasChanged();
+        }
+        else
+        {
+            showImage = false;
+        }
+        GC.Collect();
+    }
+
+    async Task DownloadEntry()
+    {
+        var entry = zip?.GetEntry(selectedEntry);
+        if (entry == null) return;
+        using var entryStream = entry.Open();
+        var len = entry.Length;
+        var totalReadLen = 0;
+        var data = new byte[len];
+        while (totalReadLen < len)
+        {
+            var readLen = await entryStream.ReadAsync(data, totalReadLen, (int)len - totalReadLen);
+            if (readLen == 0) break;
+            totalReadLen += readLen;
+        }
+        var jsparams = new object[]
+        {
+            entry.Name, "application/octet-stream", data
+        };
+        await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
+    }
+
+    void Previous()
+    {
+        if (SelectedIndex == 0) SelectedIndex = zipFiles.Count - 1;
+        else SelectedIndex--;
+    }
+
+    void Next()
+    {
+        if (SelectedIndex == zipFiles.Count - 1) SelectedIndex = 0;
+        else SelectedIndex++;
+    }
+
+    void GoBack()
+    {
+        zip?.Dispose();
+        zip = null;
+        zipReading = false;
+        StateHasChanged();
+    }
+}

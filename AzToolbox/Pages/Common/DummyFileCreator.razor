@@ -2,6 +2,7 @@
 <PageTitle>Dummy File Creator - AzToolbox</PageTitle>
 
 @inject IFileSystemAccessService FileSystemAccessService
+@inject INotificationService NotificationService
 @using KristofferStrube.Blazor.FileSystem
 @using System.Security.Cryptography
 
@@ -46,7 +47,7 @@
     int size = 100;
     int progress = 0;
 
-    private async Task OpenAndWriteFile()
+    async Task OpenAndWriteFile()
     {
         var buf = new byte[1024 * 1024];
         if (fillType != 1)
@@ -80,12 +81,12 @@
                     await Task.Delay(1);
                 }
                 await writable.CloseAsync();
+                await NotificationService.Success("File Created Successfully");
             }
         }
         catch (JSException ex)
         {
-            // Handle Exception or cancelation of File Access prompt
-            Console.WriteLine(ex);
+            await NotificationService.Error(ex.Message);
         }
     }
 }
