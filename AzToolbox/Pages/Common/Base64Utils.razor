@@ -55,8 +55,18 @@
         <Button Color="@(blockSelection ? Color.Success : Color.Info)" Size="Size.ExtraSmall" Clicked="() => blockSelection = !blockSelection">
             Toggle Selection Mode
         </Button>
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos -= hdlen">
+            Previous Page
+        </Button>
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos += hdlen">
+            Next Page
+        </Button>
         <!-- TODO: Update inspection position when viewport changes -->
-        <HexDump @ref="hxdp" Data="@blob" BlockSelection="@blockSelection" DataInspectionPosition="DataInspectionPosition.Right" />
+        <HexDump @ref="hxdp" Data="@blob" 
+            BlockSelection="@blockSelection" 
+            DataDisplayPosition="@hdpos"
+            DataDisplayLength="@hdlen"
+            DataInspectionPosition="DataInspectionPosition.Right" />
     </CardBody>
 </Card>
 
@@ -67,6 +77,9 @@
     HexDump hxdp = null!;
     bool blockSelection = false;
     SelectList<EncodingInfo, Encoding> encodingSelect = new();
+
+    int hdpos = 0;
+    int hdlen = 256;
 
     static readonly IEnumerable<EncodingInfo> SupportedEncodings = System.Text.Encoding.GetEncodings();
     int selectedCodePage = 65001;
