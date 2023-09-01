@@ -55,10 +55,10 @@
         <Button Color="@(blockSelection ? Color.Success : Color.Info)" Size="Size.ExtraSmall" Clicked="() => blockSelection = !blockSelection">
             Toggle Selection Mode
         </Button>
-        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos -= hdlen">
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos -= hdlen" Disabled="@(!canPrevious)">
             Previous Page
         </Button>
-        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos += hdlen">
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos += hdlen" Disabled="@(!canNext)">
             Next Page
         </Button>
         <!-- TODO: Update inspection position when viewport changes -->
@@ -77,6 +77,9 @@
     HexDump hxdp = null!;
     bool blockSelection = false;
     SelectList<EncodingInfo, Encoding> encodingSelect = new();
+
+    bool canNext => hdpos + hdlen < blob.Length;
+    bool canPrevious => hdpos > 0;
 
     int hdpos = 0;
     int hdlen = 256;
