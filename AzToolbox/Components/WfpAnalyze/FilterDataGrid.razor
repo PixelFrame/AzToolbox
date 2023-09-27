@@ -20,7 +20,6 @@
         <DataGridColumn Field="@nameof(Filter.LayerKey)" Caption="LayerKey" Sortable="false" Groupable="true" Grouping="true" />
         <DataGridColumn Field="@nameof(Filter.ProviderKey)" Caption="ProviderKey" Sortable="false" />
         <DataGridColumn Field="@nameof(Filter.Action)" Caption="Action" Sortable="false" Groupable="true" />
-        <DataGridColumn Field="@nameof(Filter.CalloutKey)" Caption="CalloutKey" Sortable="false" Groupable="true" />
     </DataGridColumns>
     <DetailRowTemplate>
         @{
@@ -42,6 +41,15 @@
                     <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
                 </FieldBody>
             </Field>
+            @if (context.Callout != null)
+            {
+                <Field Horizontal>
+                     <FieldLabel ColumnSize="ColumnSize.Is2">Callout</FieldLabel>
+                     <FieldBody ColumnSize="ColumnSize.Is10">
+                        <MemoEdit Text="@("ID: " + context.Callout.Id + " Key: " + context.Callout.CalloutKey + Environment.NewLine + context.Callout.Name + Environment.NewLine + context.Callout.Description + Environment.NewLine + context.Callout.ApplicableLayer)" Disabled AutoSize />
+                     </FieldBody>
+                </Field>
+            }
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Condition</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
