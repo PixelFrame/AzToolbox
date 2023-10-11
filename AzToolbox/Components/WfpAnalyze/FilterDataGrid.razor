@@ -10,9 +10,12 @@
           ShowPageSizes="true"
           @bind-PageSize="@pageSize"
           PageSizes="@(new int[]{50,100,200,300,400,500,1000,5000})"
-          Responsive="true"
           Groupable="true"
-          ShowGrouping="true">
+          ShowGrouping="true"
+          Bordered="true"
+          Resizable="true"
+          ResizeMode="TableResizeMode.Columns"
+          Style="font-size:small">
     <DataGridColumns>
         <DataGridColumn Field="@nameof(Filter.Id)" Caption="Filter ID" Sortable="true" />
         <DataGridColumn Field="@nameof(Filter.EffectiveWeight)" Caption="Effective Weight" Sortable="true" />
@@ -26,19 +29,19 @@
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Description</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Description" Disabled AutoSize />
+                    <MemoEdit Text="@context.Description" Disabled AutoSize Size="Size.Small"/>
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Weight</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.Weight" Disabled />
+                    <TextEdit Text="@context.Weight" Disabled Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
             @if (context.Callout != null)
@@ -46,14 +49,32 @@
                 <Field Horizontal>
                      <FieldLabel ColumnSize="ColumnSize.Is2">Callout</FieldLabel>
                      <FieldBody ColumnSize="ColumnSize.Is10">
-                        <MemoEdit Text="@("ID: " + context.Callout.Id + " Key: " + context.Callout.CalloutKey + Environment.NewLine + context.Callout.Name + Environment.NewLine + context.Callout.Description + Environment.NewLine + context.Callout.ApplicableLayer)" Disabled AutoSize />
+                     <MemoEdit Text="@("ID: " + context.Callout.Id + " Key: " + context.Callout.CalloutKey + Environment.NewLine + context.Callout.Name + Environment.NewLine + context.Callout.Description + Environment.NewLine + context.Callout.ApplicableLayer)" Disabled AutoSize Size="Size.Small" />
                      </FieldBody>
                 </Field>
             }
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Condition</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Condition.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                    <Table Bordered Narrow Responsive>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHeaderCell>Field</TableHeaderCell>
+                                <TableHeaderCell>Match</TableHeaderCell>
+                                <TableHeaderCell>Value</TableHeaderCell>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                        @foreach(var cond in context.Condition)
+                        {
+                            <TableRow>
+                                <TableRowCell>@cond.Item1</TableRowCell>
+                                <TableRowCell>@cond.Item2</TableRowCell>
+                                <TableRowCell>@cond.Item3</TableRowCell>
+                            </TableRow>
+                        }
+                        </TableBody>
+                    </Table>
                 </FieldBody>
             </Field>
         }

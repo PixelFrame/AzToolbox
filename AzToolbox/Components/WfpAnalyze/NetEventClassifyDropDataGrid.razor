@@ -10,9 +10,12 @@
           ShowPageSizes="true"
           @bind-PageSize="@pageSize"
           PageSizes="@(new int[]{50,100,200,300,400,500,1000,5000})"
-          Responsive="true"
           Groupable="true"
-          ShowGrouping="true">
+          ShowGrouping="true" 
+          Bordered="true"
+          Resizable="true"
+          ResizeMode="TableResizeMode.Columns"
+          Style="font-size:small">
     <DataGridColumns>
         <DataGridColumn Field="@nameof(NetEventClassifyDrop.TimeStamp)" DisplayFormat="{0:yyyy-MM-dd-HH-mm-ss.fff}" Caption="TimeStamp" Sortable="true" />
         <DataGridColumn Field="@nameof(NetEventClassifyDrop.FilterId)" Caption="Filter ID" Sortable="false" Groupable="true" />
@@ -28,37 +31,37 @@
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">App ID</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.AppId" Disabled />
+                    <TextEdit Text="@context.AppId" Disabled Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">User ID</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.UserId" Disabled />
+                    <TextEdit Text="@context.UserId" Disabled Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Package SID</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.PackageSid" Disabled />
+                    <TextEdit Text="@context.PackageSid" Disabled Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Current Profile</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.CurrentProfile" Disabled />
+                    <TextEdit Text="@context.CurrentProfile" Disabled Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Original Profile</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.OriginalProfile" Disabled />
+                    <TextEdit Text="@context.OriginalProfile" Disabled Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize />
+                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
         }
