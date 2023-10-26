@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.HexDump", "..\Kz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.PacParser", "..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj", "{FA251D51-9E23-4522-A367-ADF68CB6C598}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HEXEH.Core", "..\HEXEH\HEXEH.Core\HEXEH.Core.csproj", "{609E1EA7-2EBC-4426-9541-05340BB1A240}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinSdUtil.Lib", "..\WinSdUtil\WinSdUtil.Lib\WinSdUtil.Lib.csproj", "{3050421A-0CEB-4D78-8166-4495618BAE50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.HEXEH.Core", "..\KzA.HEXEH.Core\KzA.HEXEH.Core.csproj", "{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,14 +65,6 @@ Global
 		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Release|x64.ActiveCfg = Release|Any CPU
 		{FA251D51-9E23-4522-A367-ADF68CB6C598}.Release|x64.Build.0 = Release|Any CPU
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Debug|x64.ActiveCfg = Debug|x64
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Debug|x64.Build.0 = Debug|x64
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Release|Any CPU.Build.0 = Release|Any CPU
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Release|x64.ActiveCfg = Release|x64
-		{609E1EA7-2EBC-4426-9541-05340BB1A240}.Release|x64.Build.0 = Release|x64
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Debug|x64.ActiveCfg = Debug|x64
@@ -81,6 +73,14 @@ Global
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Release|x64.ActiveCfg = Release|x64
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Release|x64.Build.0 = Release|x64
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|x64.Build.0 = Debug|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|x64.ActiveCfg = Release|Any CPU
+		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
