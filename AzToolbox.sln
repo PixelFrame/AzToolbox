@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.PacParser", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinSdUtil.Lib", "..\WinSdUtil\WinSdUtil.Lib\WinSdUtil.Lib.csproj", "{3050421A-0CEB-4D78-8166-4495618BAE50}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.HEXEH.Core", "..\KzA.HEXEH.Core\KzA.HEXEH.Core.csproj", "{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,14 +71,6 @@ Global
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Release|x64.ActiveCfg = Release|x64
 		{3050421A-0CEB-4D78-8166-4495618BAE50}.Release|x64.Build.0 = Release|x64
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Debug|x64.Build.0 = Debug|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|x64.ActiveCfg = Release|Any CPU
-		{047A4D7B-E037-4180-8FDD-FF864FCF5BE5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
