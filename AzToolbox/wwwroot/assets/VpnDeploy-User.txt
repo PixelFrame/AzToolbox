@@ -6,7 +6,11 @@ param (
 
     [Parameter(Mandatory = $true)]
     [string]
-    $ProfileXMLFile
+    $ProfileXMLFile,
+
+    [Parameter(Mandatory = $true)]
+    [string]
+    $Domain
 )
 
 $ProfileNameEscaped = $ProfileName -replace ' ', '%20'
@@ -21,11 +25,26 @@ $ProfileXML = $ProfileXML -replace '"', '&quot;'
 
 try
 {
-    $username = Get-WmiObject -Class Win32_ComputerSystem | Select-Object username
-    $objuser = New-Object System.Security.Principal.NTAccount($username.username)
-    $sid = $objuser.Translate([System.Security.Principal.SecurityIdentifier])
-    $SidValue = $sid.Value
+    # Determine user SID for VPN profile.
+    $WmiLoggedOnUsers = (Get-WmiObject Win32_LoggedOnUser).Antecedent
+    If($WmiLoggedOnUsers.Count -gt 1) { 
+        $WmiLoggedOnUsers = $WmiLoggedOnUsers -match "Domain=""$Domain"""
+    }
+
+    $WmiUserValid = ($WmiLoggedOnUsers | Select-Object -Unique -First 1) -match 'Domain="([^"]+)",Name="([^"]+)"'
+
+    If(-not $WmiUserValid){
+        Throw "Returned object is not a valid WMI string"
+    }
+
+
+    $UserName = "$($Matches[1])\$($Matches[2])"
+
+    $ObjUser = New-Object System.Security.Principal.NTAccount($UserName)
+    $Sid = $ObjUser.Translate([System.Security.Principal.SecurityIdentifier])
+    $SidValue = $Sid.Value
     $Message = "User SID is $SidValue."
+
     Write-Host "$Message"
 }
 catch [Exception]
