@@ -19,42 +19,48 @@
                 <AddonLabel Style="min-width: 300px">Subnet ID (0-65535)</AddonLabel>
             </Addon>
             <Addon AddonType="AddonType.Body">
-                <NumericPicker TValue="ushort" @bind-Value="@subnetId" Min="0" Max="65535" />
+                <NumericPicker TValue="ushort" @bind-Value="@SubnetId" Min="0" Max="65535" />
             </Addon>
         </Addons>
-        <Divider />
-        <Button Color="Color.Primary" Clicked="Generate" Block Margin="Margin.Is2.FromTop">Generate</Button>
+        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                <AddonLabel Style="min-width: 300px">Random Prefix</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <Button Color="Color.Primary" Clicked="Generate">Generate</Button>
+            </Addon>
+        </Addons>
          <Divider />
-         <Table FixedColumns Margin="Margin.Is2.OnX">
+         <Table FixedColumns Bordered Margin="Margin.Is2.OnX">
              <TableHeader>
                  <TableRow>
-                     <TableHeaderCell Width="@Width.Is33">Prefix</TableHeaderCell>
-                     <TableHeaderCell Width="@Width.Px(100)">Subnet</TableHeaderCell>
-                     <TableHeaderCell Width="@Width.Px(50)">Interface</TableHeaderCell>
-                     <TableHeaderCell Width="@Width.Is33">Network ID</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(10)">Prefix</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(5)">Subnet</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(5)">Interface</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(15)">Network ID</TableHeaderCell>
                  </TableRow>
              </TableHeader>
              <TableBody>
                  <TableRow>
-                     <TableRowCell>
-                         <Card Class="addr-item">
+                     <TableRowCell Width="@Width.Em(10)">
+                         <Div Class="addr-item">
                              @prefixDisplay
-                        </Card>
+                        </Div>
                     </TableRowCell>
-                    <TableRowCell>
-                        <Card Class="addr-item">
+                    <TableRowCell Width="@Width.Em(5)">
+                        <Div Class="addr-item">
                             @subnetIdDisplay
-                        </Card>
+                        </Div>
                     </TableRowCell>
-                    <TableRowCell>
-                        <Card Class="addr-item">
+                    <TableRowCell Width="@Width.Em(5)">
+                        <Div Class="addr-item">
                             ::
-                        </Card>
+                        </Div>
                     </TableRowCell>
-                    <TableRowCell>
-                        <Card Class="addr-item">
+                    <TableRowCell Width="@Width.Em(15)">
+                        <Div Class="addr-item">
                             @(addr.ToString() + "/64")
-                        </Card>
+                        </Div>
                     </TableRowCell>
                 </TableRow>
             </TableBody>
@@ -66,17 +72,47 @@
 <style>
     .addr-item {
         font-family: 'Cascadia Code', Consolas, monospace;
-        font-size: 2em;
-        align-self: start;
-        padding: 0 14px;
-        margin: 7px 7px;
+        font-size: 1.75em;
     }
 </style>
 
 @code {
-    bool Lbit = true;
+    bool lbit = true;
+    bool Lbit
+    {
+        get => lbit;
+        set
+        {
+            lbit = value;
+            if (lbit)
+                rawAddr[0] |= 1;
+            else
+                rawAddr[0] &= 0xfe;
+            addr = new(rawAddr);
+        }
+    }
+
     ushort subnetId = 0;
-    byte[] rawAddr = [0xfc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    ushort SubnetId
+    {
+        get => subnetId;
+        set
+        {
+            subnetId = value;
+            var subnet = BitConverter.GetBytes(subnetId);
+            Array.Reverse(subnet);
+            for (var i = 6; i < 8; ++i)
+            {
+                rawAddr[i] = subnet[i - 6];
+            }
+            addr = new(rawAddr);
+        }
+    }
+
+    byte[] rawAddr = [0xfd, 0, 0, 0,
+                         0, 0, 0, 0,
+                         0, 0, 0, 0,
+                         0, 0, 0, 0];
     IPAddress addr;  // Used for IPv6 address compressing
 
     string prefixDisplay
@@ -122,21 +158,11 @@
 
     private void Generate()
     {
-        if (Lbit)
-            rawAddr[0] |= 1;
-        else
-            rawAddr[0] &= 0xfe;
         var prefix = GenerateBytes();
         var i = 1;
         for (; i < 6; ++i)
         {
             rawAddr[i] = prefix[i - 1];
-        }
-        var subnet = BitConverter.GetBytes(subnetId);
-        Array.Reverse(subnet);
-        for (; i < 8; ++i)
-        {
-            rawAddr[i] = subnet[i - 6];
         }
         addr = new(rawAddr);
     }
