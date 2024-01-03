@@ -1,0 +1,143 @@
+﻿@page "/Networking/ULAGen"
+<PageTitle>ULA Generator - AzToolbox</PageTitle>
+
+@using System.Net;
+@using System.Text;
+
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                <AddonLabel Style="min-width: 300px">L bit</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <Switch @bind-Checked="Lbit">@(Lbit ? 1 : 0)</Switch>
+            </Addon>
+        </Addons>
+        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
+            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                <AddonLabel Style="min-width: 300px">Subnet ID (0-65535)</AddonLabel>
+            </Addon>
+            <Addon AddonType="AddonType.Body">
+                <NumericPicker TValue="ushort" @bind-Value="@subnetId" Min="0" Max="65535" />
+            </Addon>
+        </Addons>
+        <Divider />
+        <Button Color="Color.Primary" Clicked="Generate" Block Margin="Margin.Is2.FromTop">Generate</Button>
+         <Divider />
+         <Table FixedColumns Margin="Margin.Is2.OnX">
+             <TableHeader>
+                 <TableRow>
+                     <TableHeaderCell Width="@Width.Is33">Prefix</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Px(100)">Subnet</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Px(50)">Interface</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Is33">Network ID</TableHeaderCell>
+                 </TableRow>
+             </TableHeader>
+             <TableBody>
+                 <TableRow>
+                     <TableRowCell>
+                         <Card Class="addr-item">
+                             @prefixDisplay
+                        </Card>
+                    </TableRowCell>
+                    <TableRowCell>
+                        <Card Class="addr-item">
+                            @subnetIdDisplay
+                        </Card>
+                    </TableRowCell>
+                    <TableRowCell>
+                        <Card Class="addr-item">
+                            ::
+                        </Card>
+                    </TableRowCell>
+                    <TableRowCell>
+                        <Card Class="addr-item">
+                            @(addr.ToString() + "/64")
+                        </Card>
+                    </TableRowCell>
+                </TableRow>
+            </TableBody>
+        </Table>
+    </CardBody>
+</Card>
+
+
+<style>
+    .addr-item {
+        font-family: 'Cascadia Code', Consolas, monospace;
+        font-size: 2em;
+        align-self: start;
+        padding: 0 14px;
+        margin: 7px 7px;
+    }
+</style>
+
+@code {
+    bool Lbit = true;
+    ushort subnetId = 0;
+    byte[] rawAddr = [0xfc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    IPAddress addr;  // Used for IPv6 address compressing
+
+    string prefixDisplay
+    {
+        get
+        {
+            var sb = new StringBuilder();
+            sb.Append($"{rawAddr[0]:x2}");
+            sb.Append($"{rawAddr[1]:x2}");
+            sb.Append(":");
+            sb.Append($"{rawAddr[2]:x2}");
+            sb.Append($"{rawAddr[3]:x2}");
+            sb.Append(":");
+            sb.Append($"{rawAddr[4]:x2}");
+            sb.Append($"{rawAddr[5]:x2}");
+            return sb.ToString();
+        }
+    }
+
+    string subnetIdDisplay
+    {
+        get
+        {
+            var sb = new StringBuilder();
+            sb.Append($"{rawAddr[6]:x2}");
+            sb.Append($"{rawAddr[7]:x2}");
+            return sb.ToString();
+        }
+    }
+
+    public ULAGen()
+    {
+        addr = new(rawAddr);
+    }
+
+    private byte[] GenerateBytes()
+    {
+        var buf = new byte[5];
+        var rnd = new Random((int)DateTimeOffset.Now.ToUnixTimeSeconds());
+        rnd.NextBytes(buf);
+        return buf;
+    }
+
+    private void Generate()
+    {
+        if (Lbit)
+            rawAddr[0] |= 1;
+        else
+            rawAddr[0] &= 0xfe;
+        var prefix = GenerateBytes();
+        var i = 1;
+        for (; i < 6; ++i)
+        {
+            rawAddr[i] = prefix[i - 1];
+        }
+        var subnet = BitConverter.GetBytes(subnetId);
+        Array.Reverse(subnet);
+        for (; i < 8; ++i)
+        {
+            rawAddr[i] = subnet[i - 6];
+        }
+        addr = new(rawAddr);
+    }
+}
