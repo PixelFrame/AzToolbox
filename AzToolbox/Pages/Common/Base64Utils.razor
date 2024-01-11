@@ -13,7 +13,7 @@
             <CardTitle Size="6">
                 Base64
             </CardTitle>
-            <MemoEdit @bind-Text="@base64str" Rows="12"
+            <MemoEdit @bind-Text="@base64str" Rows="12" spellcheck="false"
                       Class="monospace-fixed-textbox" />
             <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromBase64" Width="Width.Is25">
                 From Base64
@@ -32,7 +32,7 @@
                         ValueField="@((item)=>item.CodePage)"
                         DefaultItemValue="65001"
             @bind-SelectedValue="selectedCodePage" />
-            <MemoEdit @bind-Text="@decodedstr" Rows="10"
+            <MemoEdit @bind-Text="@decodedstr" Rows="10" spellcheck="false"
                       Class="monospace-fixed-textbox" />
             <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromString" Width="Width.Is25">
                 To Base64

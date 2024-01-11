@@ -1,4 +1,9 @@
-﻿html, body {
+﻿@font-face {
+    font-family: FiraCode;
+    src: url(/fonts/firacode/woff2/FiraCode-VF.woff2);
+}
+
+html, body {
     font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -95,13 +100,13 @@ a, .btn-link {
     }
 
 .monospace-text {
-    font-family: 'Cascadia Code',Consolas,'Courier New',monospace;
+    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace;
     font-size: small;
     white-space: pre
 }
 
 .monospace-fixed-textbox {
-    font-family: 'Cascadia Code',Consolas,'Courier New',monospace;
+    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace;
     font-size: small;
     resize: none
 }

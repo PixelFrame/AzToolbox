@@ -34,30 +34,30 @@
          <Table FixedColumns Bordered Margin="Margin.Is2.OnX">
              <TableHeader>
                  <TableRow>
-                     <TableHeaderCell Width="@Width.Em(10)">Prefix</TableHeaderCell>
-                     <TableHeaderCell Width="@Width.Em(5)">Subnet</TableHeaderCell>
-                     <TableHeaderCell Width="@Width.Em(5)">Interface</TableHeaderCell>
-                     <TableHeaderCell Width="@Width.Em(15)">Network ID</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(7)">Prefix</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(3)">Subnet</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(3)">Interface</TableHeaderCell>
+                     <TableHeaderCell Width="@Width.Em(10)">Network ID</TableHeaderCell>
                  </TableRow>
              </TableHeader>
              <TableBody>
                  <TableRow>
-                     <TableRowCell Width="@Width.Em(10)">
+                     <TableRowCell Width="@Width.Em(7)">
                          <Div Class="addr-item">
                              @prefixDisplay
                         </Div>
                     </TableRowCell>
-                    <TableRowCell Width="@Width.Em(5)">
+                    <TableRowCell Width="@Width.Em(3)">
                         <Div Class="addr-item">
                             @subnetIdDisplay
                         </Div>
                     </TableRowCell>
-                    <TableRowCell Width="@Width.Em(5)">
+                    <TableRowCell Width="@Width.Em(3)">
                         <Div Class="addr-item">
                             ::
                         </Div>
                     </TableRowCell>
-                    <TableRowCell Width="@Width.Em(15)">
+                    <TableRowCell Width="@Width.Em(10)">
                         <Div Class="addr-item">
                             @(addr.ToString() + "/64")
                         </Div>
@@ -71,7 +71,7 @@
 
 <style>
     .addr-item {
-        font-family: 'Cascadia Code', Consolas, monospace;
+        font-family: FiraCode, 'Cascadia Code', Consolas, monospace;
         font-size: 1.75em;
     }
 </style>

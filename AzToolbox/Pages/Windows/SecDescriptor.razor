@@ -19,11 +19,11 @@
         </Addons>
         @if (SddlOrBinary)
         {
-            <MemoEdit Rows="5" AutoSize Class="monospace-fixed-textbox" Placeholder="SDDL" @bind-Text="sddl" />
+            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" Placeholder="SDDL" @bind-Text="sddl" />
         }
         else
         {
-            <MemoEdit Rows="5" AutoSize Class="monospace-fixed-textbox" Placeholder="HEX String of Binary SD" @bind-Text="binarystr" />
+            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" Placeholder="HEX String of Binary SD" @bind-Text="binarystr" />
         }
         <Addons Margin="Margin.Is2.OnY">
             <Addon AddonType="AddonType.Start">
