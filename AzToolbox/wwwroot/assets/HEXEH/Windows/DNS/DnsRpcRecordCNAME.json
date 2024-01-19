@@ -1,0 +1,15 @@
+{
+  "Name": "DNS RPC Record: CNAME",
+  "Structure": {
+    "Fields": "CNAME",
+    "Definition": [
+      {
+        "Name": "CNAME",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsCountName"
+        }
+      }
+    ]
+  }
+}

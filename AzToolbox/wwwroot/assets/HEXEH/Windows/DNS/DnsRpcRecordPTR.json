@@ -1,0 +1,15 @@
+{
+  "Name": "DNS RPC Record: PTR",
+  "Structure": {
+    "Fields": "PTR",
+    "Definition": [
+      {
+        "Name": "PTR",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsCountName"
+        }
+      }
+    ]
+  }
+}

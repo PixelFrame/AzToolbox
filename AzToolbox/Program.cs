@@ -30,6 +30,7 @@ builder.Services.AddSingleton(services => (IJSInProcessRuntime)services.GetRequi
 builder.Services.AddSingleton<VpnBuildService>();
 builder.Services.AddSingleton<PacParserService>();
 builder.Services.AddScoped<WinSdService>();
+builder.Services.AddScoped<HexehService>();
 
 builder.Services.AddFileSystemAccessService();
 

@@ -1,0 +1,162 @@
+{
+  "Name": "Active Directory dnsRecord attribute",
+  "Structure": {
+    "Fields": "DataLength:Type:Version:Rank:Flags:Serial:TtlSeconds:Reserved:TimeStamp:Data",
+    "Definition": [
+      {
+        "Name": "DataLength",
+        "Parser": {
+          "Type": 0,
+          "Target": "WORD"
+        }
+      },
+      {
+        "Name": "Type",
+        "Parser": {
+          "Type": 1,
+          "Target": "WORD",
+          "Conversion": {
+            "Type": 1,
+            "Target": "DnsRecordType"
+          }
+        }
+      },
+      {
+        "Name": "Version",
+        "Parser": {
+          "Type": 0,
+          "Target": "BYTE"
+        },
+        "Expected": 5
+      },
+      {
+        "Name": "Rank",
+        "Parser": {
+          "Type": 1,
+          "Target": "BYTE",
+          "Conversion": {
+            "Type": 2,
+            "Target": "DnsRecordRank"
+          }
+        }
+      },
+      {
+        "Name": "Flags",
+        "Parser": {
+          "Type": 0,
+          "Target": "WORD"
+        },
+        "Expected": 0
+      },
+      {
+        "Name": "Serial",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "TtlSeconds",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Reserved",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        },
+        "Expected": 0
+      },
+      {
+        "Name": "TimeStamp",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.ElapsedTime",
+          "Options": {
+            "StartTime": "1601/1/1 0:0:0",
+            "Unit": "h",
+            "Length": "4"
+          }
+        }
+      },
+      {
+        "Name": "Data",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsRpcRecord{Type.DisplayValue}"
+        }
+      }
+    ]
+  },
+  "Enums": [
+    {
+      "Name": "DnsRecordType",
+      "Definition": {
+        "0": "ZERO",
+        "1": "A",
+        "2": "NS",
+        "3": "MD",
+        "4": "MF",
+        "5": "CNAME",
+        "6": "SOA",
+        "7": "MB",
+        "9": "MR",
+        "10": "NULL",
+        "11": "WKS",
+        "12": "PTR",
+        "13": "HINFO",
+        "14": "MINFO",
+        "15": "MX",
+        "16": "TXT",
+        "17": "RP",
+        "18": "AFSDB",
+        "19": "X25",
+        "20": "ISDN",
+        "21": "RT",
+        "24": "SIG",
+        "25": "KEY",
+        "28": "AAAA",
+        "29": "LOC",
+        "30": "NXT",
+        "33": "SRV",
+        "34": "ATMA",
+        "35": "NAPTR",
+        "39": "DNAME",
+        "43": "DS",
+        "46": "RRSIG",
+        "47": "NSEC",
+        "48": "DNSKEY",
+        "49": "DHCID",
+        "50": "NSEC3",
+        "51": "NSEC3PARAM",
+        "52": "TLSA",
+        "255": "ALL",
+        "65281": "WINS",
+        "65282": "WINSR"
+      }
+    }
+  ],
+  "Flags": [
+    {
+      "Name": "DnsRecordRank",
+      "Definition": {
+        "1": "CACHE",
+        "8": "ROOT_HINT",
+        "32": "OUTSIDE_GLUE",
+        "49": "CACHE ADDITIONAL section of NON_AUTHORITY response",
+        "65": "CACHE AUTHORITY section of NON_AUTHORITY response",
+        "81": "CACHE ADDITIONAL section of AUTHORITY response",
+        "97": "CACHE ANSWER section of NON_AUTHORITY response",
+        "113": "CACHE AUTHORITY section of AUTHORITY response",
+        "128": "GLUE",
+        "130": "NS GLUE",
+        "193": "CACHE ANSWER section of AUTHORITY response",
+        "240": "ZONE"
+      }
+    }
+  ]
+}

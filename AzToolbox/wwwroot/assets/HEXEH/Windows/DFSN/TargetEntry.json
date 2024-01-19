@@ -1,0 +1,73 @@
+{
+  "Name": "DFSN Target Entry BLOB",
+  "Structure": {
+    "Fields": "Size:TimeStamp:State:Type:ServerName:ShareName",
+    "Definition": [
+      {
+        "Name": "Size",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "TimeStamp",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.FILETIME"
+        }
+      },
+      {
+        "Name": "State",
+        "Parser": {
+          "Type": 1,
+          "Target": "DWORD",
+          "Conversion": {
+            "Type": 1,
+            "Target": "TargetState"
+          }
+        }
+      },
+      {
+        "Name": "Type",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "Expected": 2
+        }
+      },
+      {
+        "Name": "ServerName",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      },
+      {
+        "Name": "ShareName",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      }
+    ]
+  },
+  "Enums": [
+    {
+      "Name": "TargetState",
+      "Definition": {
+        "1": "DFS_STORAGE_STATE_OFFLINE",
+        "2": "DFS_STORAGE_STATE_ONLINE",
+        "4": "DFS_STORAGE_STATE_ACTIVE"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "Name": "DFSN Site Information BLOB",
+  "Structure": {
+    "Fields": "SiteTableGuid:SiteEntryCount:SiteEntries",
+    "Definition": [
+      {
+        "Name": "SiteTableGuid",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Guid"
+        }
+      },
+      {
+        "Name": "SiteEntryCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "SiteEntries",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectCount": "{SiteEntryCount}",
+            "ObjectParser": "Windows.DFSN.SiteEntry",
+            "IncludeSchema": "true"
+          }
+        }
+      }
+    ]
+  }
+}

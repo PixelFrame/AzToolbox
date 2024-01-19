@@ -1,0 +1,133 @@
+﻿@page "/Common/HEXEH"
+<PageTitle>HEX Interpreter - AzToolbox</PageTitle>
+
+@using KzA.Blazor.HexDump
+@using System.Text;
+@using KzA.HEXEH.Base.Output
+@using KzA.HEXEH.Core.Parser
+
+@inject INotificationService NotificationService
+@inject IJSRuntime JSRuntime
+@inject HexehService HexehService
+
+<Div Flex="Flex.Row.JustifyContent.Between" Margin="Margin.Is2.FromBottom">
+    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromEnd">
+        <CardBody>
+            <CardTitle Size="6">
+                HEX
+            </CardTitle>
+            <MemoEdit @bind-Text="@hexstring" Rows="12" spellcheck="false"
+                      Class="monospace-fixed-textbox" />
+            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="Parse" Width="Width.Is25">
+                From HEX string
+            </Button>
+        </CardBody>
+    </Card>
+    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromStart">
+        <CardBody>
+            <TreeView TNode="DataNode"
+                      Nodes="DataTreeHead"
+                      GetChildNodes="@(item => item.Children)"
+                      HasChildNodes="@(item => item.Children.Count > 0)">
+                <NodeContent>
+                    <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+                    <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.DisplayValue</Text>
+                    </NodeContent>
+                </TreeView>
+        </CardBody>
+    </Card>
+</Div>
+
+<Card>
+    <CardBody>
+        <CardTitle Size="6">
+            Hex Dump
+        </CardTitle>
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDump">
+            Copy Hex Dump
+        </Button>
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDumpSelection">
+            Copy Selected HEX
+        </Button>
+        <Button Color="@(blockSelection ? Color.Success : Color.Info)" Size="Size.ExtraSmall" Clicked="() => blockSelection = !blockSelection">
+            Toggle Selection Mode
+        </Button>
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos -= hdlen" Disabled="@(!canPrevious)">
+            Previous Page
+        </Button>
+        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos += hdlen" Disabled="@(!canNext)">
+            Next Page
+        </Button>
+        <HexDump @ref="hxdp" Data="@blob"
+                 BlockSelection="@blockSelection"
+                 DataDisplayPosition="@hdpos"
+                 DataDisplayLength="@hdlen"
+                 DataInspectionPosition="DataInspectionPosition.Right" />
+    </CardBody>
+</Card>
+
+    @code {
+    string hexstring = string.Empty;
+    Type target;
+    IEnumerable<DataNode> DataTreeHead = null!;
+    byte[] blob = Array.Empty<byte>();
+    HexDump hxdp = null!;
+    bool blockSelection = false;
+
+    bool canNext => hdpos + hdlen < blob.Length;
+    bool canPrevious => hdpos > 0;
+
+    int hdpos = 0;
+    int hdlen = 256;
+
+    protected override void OnInitialized()
+    {
+        HexehService.Initialize();
+        var Parsers = ParserManager.AvailableParsers;
+        blob = new byte[256];
+        for (int i = 0; i < blob.Length; i++)
+        {
+            blob[i] = (byte)i;
+        }
+    }
+
+    void Parse()
+    {
+        try
+        {
+            var escaped = System.Text.RegularExpressions.Regex.Replace(hexstring, @"[,\s\n\r-]|0x", string.Empty);
+            blob = Convert.FromHexString(escaped);
+        }
+        catch (Exception e)
+        {
+            NotificationService.Error(e.Message);
+        }
+    }
+
+    async Task CopyHexDump()
+    {
+        var message = await JSRuntime.InvokeAsync<string>("copyTextToClipboard", hxdp.ToString());
+        if (message == "Success")
+        {
+            await NotificationService.Success("Hex Dump copied!");
+        }
+        else
+        {
+            await NotificationService.Error(message, "Copy Failed");
+        }
+    }
+
+    async Task CopyHexDumpSelection()
+    {
+        var message = await JSRuntime.InvokeAsync<string>("copyTextToClipboard", hxdp.SelectionToString(true));
+        if (message == "Success")
+        {
+            await NotificationService.Success("Hex Values copied!");
+        }
+        else
+        {
+            await NotificationService.Error(message, "Copy Failed");
+        }
+    }
+}
+

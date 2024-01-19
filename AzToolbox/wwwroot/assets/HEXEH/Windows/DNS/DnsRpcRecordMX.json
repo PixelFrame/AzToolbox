@@ -1,0 +1,23 @@
+{
+  "Name": "DNS RPC Record: MX",
+  "Structure": {
+    "Fields": "Preference:NameExchange",
+    "Definition": [
+      {
+        "Name": "Preference",
+        "Parser": {
+          "Type": 0,
+          "Target": "WORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "NameExchange",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsCountName"
+        }
+      }
+    ]
+  }
+}

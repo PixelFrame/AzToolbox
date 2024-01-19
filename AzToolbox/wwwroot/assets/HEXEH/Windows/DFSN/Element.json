@@ -1,0 +1,31 @@
+{
+  "Name": "DFSN Element BLOB",
+  "Structure": {
+    "Fields": "Name:Data",
+    "Definition": [
+      {
+        "Name": "Name",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      },
+      {
+        "Name": "Data",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.LengthedObject",
+          "Options": {
+            "LenOfLen": "4",
+            "ObjectParser": "[Name.Value;\\siteroot:Windows.DFSN.SiteInformation;:Windows.DFSN.DFSNamespaceLink]",
+            "IncludeSchema": "true"
+          }
+        }
+      }
+    ]
+  }
+}

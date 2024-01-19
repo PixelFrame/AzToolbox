@@ -1,0 +1,39 @@
+{
+  "Name": "DNS RPC Record: SRV",
+  "Structure": {
+    "Fields": "Priority:Weight:Port:Target",
+    "Definition": [
+      {
+        "Name": "Priority",
+        "Parser": {
+          "Type": 0,
+          "Target": "WORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Weight",
+        "Parser": {
+          "Type": 0,
+          "Target": "WORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Port",
+        "Parser": {
+          "Type": 0,
+          "Target": "WORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Target",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsCountName"
+        }
+      }
+    ]
+  }
+}

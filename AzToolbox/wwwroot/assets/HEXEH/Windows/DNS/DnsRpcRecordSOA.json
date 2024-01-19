@@ -1,0 +1,62 @@
+{
+  "Name": "DNS RPC Record: SOA",
+  "Structure": {
+    "Fields": "SerialNo:Refresh:Retry:Expire:MinimumTtl:PrimaryServer:ZoneAdministratorEmail",
+    "Definition": [
+      {
+        "Name": "SerialNo",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Refresh",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Retry",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "Expire",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "MinimumTtl",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "BigEndian": true
+        }
+      },
+      {
+        "Name": "PrimaryServer",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsCountName"
+        }
+      },
+      {
+        "Name": "ZoneAdministratorEmail",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.DNS.DnsCountName"
+        }
+      }
+    ]
+  }
+}

@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\assets\WinSdAdSchemaGuid.json" />
-    <Content Remove="wwwroot\assets\WinSdTrustee.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Blazorise.Animate" Version="1.4.0" />
     <PackageReference Include="Blazorise.Bootstrap" Version="1.4.0" />
     <PackageReference Include="Blazorise.Components" Version="1.4.0" />
@@ -36,18 +31,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj" />
     <ProjectReference Include="..\..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj" />
+    <ProjectReference Include="..\..\KzA.HEXEH\KzA.HEXEH.Base\KzA.HEXEH.Base.csproj" />
+    <ProjectReference Include="..\..\KzA.HEXEH\KzA.HEXEH.Core\KzA.HEXEH.Core.csproj" />
     <ProjectReference Include="..\..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj" />
     <ProjectReference Include="..\..\WfpXmlHelper\WfpXmlHelper.csproj" />
     <ProjectReference Include="..\..\WinSdUtil\WinSdUtil.Lib\WinSdUtil.Lib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\assets\WinSdAdSchemaGuid.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="wwwroot\assets\WinSdTrustee.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

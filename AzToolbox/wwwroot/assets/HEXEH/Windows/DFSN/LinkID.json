@@ -1,0 +1,123 @@
+{
+  "Name": "DFSN Link ID BLOB",
+  "Structure": {
+    "Fields": "Guid:Prefix:ShortPrefix:Type:State:Comment:PrefixTimeStamp:StateTimeStamp:CommentTimeStamp:Version",
+    "Definition": [
+      {
+        "Name": "Guid",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Guid"
+        }
+      },
+      {
+        "Name": "Prefix",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      },
+      {
+        "Name": "ShortPrefix",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      },
+      {
+        "Name": "Type",
+        "Parser": {
+          "Type": 1,
+          "Target": "DWORD",
+          "Conversion": {
+            "Type": 2,
+            "Target": "PktEntryType"
+          }
+        }
+      },
+      {
+        "Name": "State",
+        "Parser": {
+          "Type": 1,
+          "Target": "DWORD",
+          "Conversion": {
+            "Type": 1,
+            "Target": "PktEntryState"
+          }
+        }
+      },
+      {
+        "Name": "Comment",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      },
+      {
+        "Name": "PrefixTimeStamp",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.FILETIME"
+        }
+      },
+      {
+        "Name": "StateTimeStamp",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.FILETIME"
+        }
+      },
+      {
+        "Name": "CommentTimeStamp",
+        "Parser": {
+          "Type": 10,
+          "Target": "Windows.FILETIME"
+        }
+      },
+      {
+        "Name": "Version",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      }
+    ]
+  },
+  "Enums": [
+    {
+      "Name": "PktEntryState",
+      "Definition": {
+        "1": "DFS_VOLUME_STATE_OK",
+        "2": "RESERVED",
+        "3": "DFS_VOLUME_STATE_OFFLINE",
+        "4": "DFS_VOLUME_STATE_ONLINE"
+      }
+    }
+  ],
+  "Flags": [
+    {
+      "Name": "PktEntryType",
+      "Definition": {
+        "1": "PKT_ENTRY_TYPE_DFS",
+        "16": "PKT_ENTRY_TYPE_OUTSIDE_MY_DOM",
+        "32": "PKT_ENTRY_TYPE_INSITE_ONLY",
+        "64": "PKT_ENTRY_TYPE_COST_BASED_SITE_SELECTION",
+        "128": "PKT_ENTRY_TYPE_REFERRAL_SVC",
+        "512": "PKT_ENTRY_TYPE_ROOT_SCALABILITY",
+        "32768": "PKT_ENTRY_TYPE_TARGET_FAILBACK"
+      }
+    }
+  ]
+}

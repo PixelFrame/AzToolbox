@@ -1,0 +1,34 @@
+{
+  "Name": "PKT Attribute",
+  "Structure": {
+    "Fields": "Version:ElementCount:Elements",
+    "Definition": [
+      {
+        "Name": "Version",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "ElementCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "Elements",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectCount": "{ElementCount}",
+            "ObjectParser": "Windows.DFSN.Element",
+            "IncludeSchema": "true"
+          }
+        }
+      }
+    ]
+  }
+}

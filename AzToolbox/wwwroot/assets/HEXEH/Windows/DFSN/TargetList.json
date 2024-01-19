@@ -1,0 +1,28 @@
+{
+  "Name": "DFSN Target List BLOB",
+  "Structure": {
+    "Fields": "TargetCount:TargetEntries",
+    "Definition": [
+      {
+        "Name": "TargetCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "TargetEntries",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectCount": "{TargetCount}",
+            "LenOfLen": "4",
+            "ObjectParser": "Windows.DFSN.TargetEntry",
+            "IncludeSchema": "true"
+          }
+        }
+      }
+    ]
+  }
+}

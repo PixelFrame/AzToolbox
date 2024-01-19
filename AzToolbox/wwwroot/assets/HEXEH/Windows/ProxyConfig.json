@@ -1,0 +1,93 @@
+{
+  "Name": "Windows Proxy Configuration Binary",
+  "Structure": {
+    "Fields": "Magic:Version:Flag:ProxyServer:BypassList:AutoConfigUrl:AFlag:Unknown",
+    "Definition": [
+      {
+        "Name": "Magic",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        },
+        "Expected": 70
+      },
+      {
+        "Name": "Version",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "Flag",
+        "Parser": {
+          "Type": 1,
+          "Target": "DWORD",
+          "Conversion": {
+            "Type": 2,
+            "Target": "ProxyFlag"
+          }
+        }
+      },
+      {
+        "Name": "ProxyServer",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "4",
+            "Encoding": "ASCII"
+          }
+        }
+      },
+      {
+        "Name": "BypassList",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "4",
+            "Encoding": "ASCII"
+          }
+        }
+      },
+      {
+        "Name": "AutoConfigUrl",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "4",
+            "Encoding": "ASCII"
+          }
+        }
+      },
+      {
+        "Name": "AFlag",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "Unknown",
+        "Parser": {
+          "Type": 0,
+          "Target": "RAW",
+          "Length": 28
+        }
+      }
+    ]
+  },
+  "Flags": [
+    {
+      "Name": "ProxyFlag",
+      "Definition": {
+        "1": "Insignificant",
+        "2": "ManualProxy",
+        "4": "AutoConfig",
+        "8": "AutoDetect"
+      }
+    }
+  ]
+}

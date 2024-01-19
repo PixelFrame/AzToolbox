@@ -1,0 +1,15 @@
+{
+  "Name": "DNS RPC Record: A",
+  "Structure": {
+    "Fields": "A",
+    "Definition": [
+      {
+        "Name": "A",
+        "Parser": {
+          "Type": 10,
+          "Target": "Networking.IPv4Addr"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "Name": "DFSN Site Name Info BLOB",
+  "Structure": {
+    "Fields": "Flags:SiteName",
+    "Definition": [
+      {
+        "Name": "Flags",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD",
+          "Expected": 0
+        }
+      },
+      {
+        "Name": "SiteName",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.LengthedString",
+          "Options": {
+            "LenOfLen": "2",
+            "Encoding": "Unicode"
+          }
+        }
+      }
+    ]
+  }
+}

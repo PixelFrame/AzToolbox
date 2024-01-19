@@ -1,0 +1,20 @@
+{
+  "Name": "DNS RPC Record: TXT",
+  "Structure": {
+    "Fields": "TXT",
+    "Definition": [
+      {
+        "Name": "TXT",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectParser": "Common.String.LengthedString",
+            "IncludeSchema": "false",
+            "ParserOptions": "{\"LenOfLen\": \"1\",\"Encoding\": \"UTF-8\"}"
+          }
+        }
+      }
+    ]
+  }
+}

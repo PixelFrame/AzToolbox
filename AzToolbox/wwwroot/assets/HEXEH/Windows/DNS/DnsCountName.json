@@ -1,0 +1,29 @@
+﻿{
+  "Name": "Counted DNS Name",
+  "Structure": {
+    "Fields": "Length:LabelCount:RawName",
+    "Definition": [
+      {
+        "Name": "Length",
+        "Parser": {
+          "Type": 0,
+          "Target": "BYTE"
+        }
+      },
+      {
+        "Name": "LabelCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "BYTE"
+        }
+      },
+      {
+        "Name": "RawName",
+        "Parser": {
+          "Type": 10,
+          "Target": "Networking.Fqdn"
+        }
+      }
+    ]
+  }
+}
