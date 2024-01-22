@@ -41,7 +41,7 @@
             </Addons>
             @foreach (var option in ParserOptionsDef)
             {
-                <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.OnY">
+                <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
                     <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
                         <AddonLabel Style="min-width: 300px">@option.Key</AddonLabel>
                         </Addon>
@@ -50,8 +50,11 @@
                         </Addon>
                     </Addons>
             }
-            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="Parse" Width="Width.Is100">
+            <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="Parse" Width="Width.Is100">
                 Go
+            </Button>
+            <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="CopyTreeView" Width="Width.Is100" Disabled="@(DataTreeHead == null || DataTreeHead.Count() == 0)">
+                Copy Tree
             </Button>
         </CardBody>
     </Card>
@@ -185,6 +188,19 @@
         if (message == "Success")
         {
             await NotificationService.Success("Hex Values copied!");
+        }
+        else
+        {
+            await NotificationService.Error(message, "Copy Failed");
+        }
+    }
+
+    async Task CopyTreeView()
+    {
+        var message = await JSRuntime.InvokeAsync<string>("copyTextToClipboard", DataTreeHead.First().ToString());
+        if (message == "Success")
+        {
+            await NotificationService.Success("Data tree copied!");
         }
         else
         {

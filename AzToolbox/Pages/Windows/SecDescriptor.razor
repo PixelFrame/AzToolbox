@@ -95,7 +95,7 @@
         var message = await JSRuntime.InvokeAsync<string>("copyTextToClipboard", AclTreeHead.First().ToString());
         if (message == "Success")
         {
-            await NotificationService.Success("ProfileXML copied!");
+            await NotificationService.Success("ACL tree copied!");
         }
         else
         {
