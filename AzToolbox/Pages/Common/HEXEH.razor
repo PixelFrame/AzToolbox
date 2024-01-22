@@ -4,73 +4,125 @@
 @using KzA.Blazor.HexDump
 @using System.Text;
 @using KzA.HEXEH.Base.Output
+@using KzA.HEXEH.Base.Parser
 @using KzA.HEXEH.Core.Parser
+@using KzA.HEXEH.Core.Parser.Common.String
 
 @inject INotificationService NotificationService
 @inject IJSRuntime JSRuntime
 @inject HexehService HexehService
 
-<Div Flex="Flex.Row.JustifyContent.Between" Margin="Margin.Is2.FromBottom">
+<Grid Columns="GridColumns.Are2" Gap="Gap.Is1" Margin="Margin.Is2.FromBottom">
     <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromEnd">
         <CardBody>
             <CardTitle Size="6">
                 HEX
             </CardTitle>
             <MemoEdit @bind-Text="@hexstring" Rows="12" spellcheck="false"
-                      Class="monospace-fixed-textbox" />
-            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="Parse" Width="Width.Is25">
-                From HEX string
+                      Class="monospace-fixed-textbox" Margin="Margin.Is1.FromBottom" />
+            <Select TValue="string" @bind-SelectedValue="@TargetParserName" Margin="Margin.Is1.FromBottom">
+                @foreach (var group in groupedParsers)
+                {
+                    <SelectGroup Label="@group.Key">
+                        @foreach (var parser in group)
+                        {
+                            <SelectItem Value="@parser.FullName">@parser.Name</SelectItem>
+                        }
+                    </SelectGroup>
+                }
+            </Select>
+            <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
+                <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                    <AddonLabel Style="min-width: 300px">Big Endian</AddonLabel>
+                </Addon>
+                <Addon AddonType="AddonType.Body">
+                    <Switch @bind-Checked="@bigEndian"></Switch>
+                </Addon>
+            </Addons>
+            @foreach (var option in ParserOptionsDef)
+            {
+                <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.OnY">
+                    <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                        <AddonLabel Style="min-width: 300px">@option.Key</AddonLabel>
+                        </Addon>
+                        <Addon AddonType="AddonType.Body">
+                            <TextEdit @bind-Text="@ParserOptions[option.Key]" />
+                        </Addon>
+                    </Addons>
+            }
+            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="Parse" Width="Width.Is100">
+                Go
             </Button>
         </CardBody>
     </Card>
     <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromStart">
-        <CardBody>
-            <TreeView TNode="DataNode"
-                      Nodes="DataTreeHead"
+        <CardBody Overflow="Overflow.Scroll">
+            <TreeView TNode="DataNode" Nodes="DataTreeHead"
                       GetChildNodes="@(item => item.Children)"
-                      HasChildNodes="@(item => item.Children.Count > 0)">
+                      HasChildNodes="@(item => item.Children.Count > 0)"
+                      AutoExpandAll="true">
                 <NodeContent>
                     <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
                     <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.DisplayValue</Text>
                     </NodeContent>
                 </TreeView>
+            </CardBody>
+        </Card>
+    </Grid>
+
+    <Card>
+        <CardBody>
+            <CardTitle Size="6">
+                Hex Dump
+            </CardTitle>
+            <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDump">
+                Copy Hex Dump
+            </Button>
+            <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDumpSelection">
+                Copy Selected HEX
+            </Button>
+            <Button Color="@(blockSelection ? Color.Success : Color.Info)" Size="Size.ExtraSmall" Clicked="() => blockSelection = !blockSelection">
+                Toggle Selection Mode
+            </Button>
+            <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos -= hdlen" Disabled="@(!canPrevious)">
+                Previous Page
+            </Button>
+            <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos += hdlen" Disabled="@(!canNext)">
+                Next Page
+            </Button>
+            <HexDump @ref="hxdp" Data="@blob"
+                     BlockSelection="@blockSelection"
+                     DataDisplayPosition="@hdpos"
+                     DataDisplayLength="@hdlen"
+                     DataInspectionPosition="DataInspectionPosition.Right" />
         </CardBody>
     </Card>
-</Div>
-
-<Card>
-    <CardBody>
-        <CardTitle Size="6">
-            Hex Dump
-        </CardTitle>
-        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDump">
-            Copy Hex Dump
-        </Button>
-        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDumpSelection">
-            Copy Selected HEX
-        </Button>
-        <Button Color="@(blockSelection ? Color.Success : Color.Info)" Size="Size.ExtraSmall" Clicked="() => blockSelection = !blockSelection">
-            Toggle Selection Mode
-        </Button>
-        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos -= hdlen" Disabled="@(!canPrevious)">
-            Previous Page
-        </Button>
-        <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="() => hdpos += hdlen" Disabled="@(!canNext)">
-            Next Page
-        </Button>
-        <HexDump @ref="hxdp" Data="@blob"
-                 BlockSelection="@blockSelection"
-                 DataDisplayPosition="@hdpos"
-                 DataDisplayLength="@hdlen"
-                 DataInspectionPosition="DataInspectionPosition.Right" />
-    </CardBody>
-</Card>
 
     @code {
     string hexstring = string.Empty;
-    Type target;
+    IEnumerable<IGrouping<string, Type>> groupedParsers = [];
+    string targetParserName = "KzA.HEXEH.Core.Parser.Common.String.StringParser";
+    string TargetParserName
+    {
+        get => targetParserName;
+        set
+        {
+            targetParserName = value;
+            targetParserInstance = ParserManager.InstantiateParserByFullName(targetParserName);
+            ParserOptionsDef = targetParserInstance.GetOptions();
+            ParserOptions.Clear();
+            foreach (var key in ParserOptionsDef.Keys) ParserOptions.Add(key, string.Empty);
+        }
+    }
+    IParser targetParserInstance = new StringParser();
+    Dictionary<string, string> ParserOptions = [];
+    Dictionary<string, Type> ParserOptionsDef = [];
+    bool bigEndian = false;
+
     IEnumerable<DataNode> DataTreeHead = null!;
+
     byte[] blob = Array.Empty<byte>();
+
     HexDump hxdp = null!;
     bool blockSelection = false;
 
@@ -80,15 +132,10 @@
     int hdpos = 0;
     int hdlen = 256;
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        HexehService.Initialize();
-        var Parsers = ParserManager.AvailableParsers;
-        blob = new byte[256];
-        for (int i = 0; i < blob.Length; i++)
-        {
-            blob[i] = (byte)i;
-        }
+        await HexehService.InitializeAsync();
+        groupedParsers = ParserManager.AvailableParsers.GroupBy(p => p.Namespace ?? string.Empty);
     }
 
     void Parse()
@@ -97,10 +144,23 @@
         {
             var escaped = System.Text.RegularExpressions.Regex.Replace(hexstring, @"[,\s\n\r-]|0x", string.Empty);
             blob = Convert.FromHexString(escaped);
+            var parser = ParserManager.InstantiateParserByFullName(targetParserName);
+            var opts = new Dictionary<string, string>(ParserOptions);
+            opts.Add("BigEndian", bigEndian.ToString());
+            parser.SetOptionsFromSchema(opts);
+            DataTreeHead = [parser.Parse(blob)];
         }
         catch (Exception e)
         {
             NotificationService.Error(e.Message);
+            Console.WriteLine(e.Message);
+            var inner = e.InnerException;
+            while (inner != null)
+            {
+                Console.WriteLine(inner.Message);
+                inner = inner.InnerException;
+            }
+            Console.WriteLine(e.StackTrace);
         }
     }
 

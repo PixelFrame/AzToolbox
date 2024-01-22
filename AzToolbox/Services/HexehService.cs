@@ -7,11 +7,12 @@ namespace AzToolbox.Services
         private readonly HttpClient _httpClient = httpClient;
         public bool IsInitialized { get; private set; } = false;
 
-        public void Initialize()
+        public async Task InitializeAsync()
         {
             if(IsInitialized) return;
             var fileAccess = new HexehBlazorFileAccess(_httpClient);
             KzA.HEXEH.Core.Global.Configure(fileAccess);
+            await KzA.HEXEH.Core.Global.InitializeAsync();
             IsInitialized = true;
         }
     }
