@@ -136,6 +136,8 @@
     {
         await HexehService.InitializeAsync();
         groupedParsers = ParserManager.AvailableParsers.GroupBy(p => p.Namespace ?? string.Empty);
+        ParserOptionsDef = targetParserInstance.GetOptions();
+        foreach (var key in ParserOptionsDef.Keys) ParserOptions.Add(key, string.Empty);
     }
 
     void Parse()
