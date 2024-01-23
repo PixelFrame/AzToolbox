@@ -38,7 +38,7 @@ namespace AzToolbox.Services
                 var schemaFile = new SchemaFile()
                 {
                     Name = splits[0],
-                    RelativePath = splits[1],
+                    RelativePath = splits[1].Trim(),        // The csv file will use CRLF not LF after pulled from git
                     Root = "/assets/HEXEH/"
                 };
                 result.Add(schemaFile);

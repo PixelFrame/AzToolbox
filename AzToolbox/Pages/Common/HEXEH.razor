@@ -33,22 +33,44 @@
             </Select>
             <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
                 <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                    <AddonLabel Style="min-width: 300px">Big Endian</AddonLabel>
+                    <AddonLabel Style="min-width: 180px">Big Endian</AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
-                    <Switch @bind-Checked="@bigEndian"></Switch>
+                    <Select TValue="string" @bind-SelectedValue="@bigEndian">
+                        <SelectItem Value="@("True")">True</SelectItem>
+                        <SelectItem Value="@("False")">False</SelectItem>
+                    </Select>
                 </Addon>
             </Addons>
             @foreach (var option in ParserOptionsDef)
             {
                 <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
                     <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                        <AddonLabel Style="min-width: 300px">@option.Key</AddonLabel>
+                        <AddonLabel Style="min-width: 180px">@option.Key</AddonLabel>
                         </Addon>
                         <Addon AddonType="AddonType.Body">
-                            <TextEdit @bind-Text="@ParserOptions[option.Key]" />
-                        </Addon>
-                    </Addons>
+                            @switch (option.Value.Name)
+                        {
+                            case "Encoding":
+                                <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
+                                    @foreach (var encoding in System.Text.Encoding.GetEncodings())
+                                    {
+                                        <SelectItem Value="@encoding.Name">@encoding.Name</SelectItem>
+                                    }
+                                </Select>
+                                break;
+                            case "Boolean":
+                                <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
+                                    <SelectItem Value="@("True")">True</SelectItem>
+                                    <SelectItem Value="@("False")">False</SelectItem>
+                                </Select>
+                                break;
+                            default:
+                                <TextEdit @bind-Text="@ParserOptions[option.Key]" />
+                                break;
+                        }
+                    </Addon>
+                </Addons>
             }
             <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="Parse" Width="Width.Is100">
                 Go
@@ -120,7 +142,7 @@
     IParser targetParserInstance = new StringParser();
     Dictionary<string, string> ParserOptions = [];
     Dictionary<string, Type> ParserOptionsDef = [];
-    bool bigEndian = false;
+    string bigEndian = "False";
 
     IEnumerable<DataNode> DataTreeHead = null!;
 
@@ -150,7 +172,14 @@
             var escaped = System.Text.RegularExpressions.Regex.Replace(hexstring, @"[,\s\n\r-]|0x", string.Empty);
             blob = Convert.FromHexString(escaped);
             var parser = ParserManager.InstantiateParserByFullName(targetParserName);
-            var opts = new Dictionary<string, string>(ParserOptions);
+            var opts = new Dictionary<string, string>();
+            foreach (var opt in ParserOptions)
+            {
+                if (opt.Key.EndsWith('?'))
+                    opts.Add(opt.Key[..(opt.Key.Length - 1)], opt.Value);
+                else
+                    opts.Add(opt.Key, opt.Value);
+            }
             opts.Add("BigEndian", bigEndian.ToString());
             parser.SetOptionsFromSchema(opts);
             DataTreeHead = [parser.Parse(blob)];
