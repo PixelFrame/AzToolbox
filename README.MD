@@ -22,6 +22,7 @@ AzToolbox
 |   +---Base64Utils      : Encode/Decode Base64
 |   +---RngUtils         : Generate Random Characters/Strings
 |   +---DummyFileCreator : Create Dummy File filled with Random Data / FF / 00
+|   +---HEXEH            : Binary data interpreter
 |
 +---Experimental
     +---ArchiveReader    : Display images from a zip archive
@@ -32,12 +33,10 @@ AzToolbox
 ### Planned
 
 - [x] Common/Dummy File Creator [Need File System Access API]
-- [ ] Common/Unit Converter
-- [ ] Common/HEXEH Frontend (HEX Converter)
+- [x] Common/HEXEH Frontend (HEX interpreter)
 - [ ] Common/HEX Editor (KzA.Blazor.HexDump)
 - [x] Experimental/Archive Reader
-- [ ] Windows/Well-Known Registry
-- [ ] Networking/RFC Tree
+- [ ] Common/Dice
 
 ### Under Consideration
 
@@ -46,6 +45,5 @@ AzToolbox
 
 ## Need Investigation
 
-- WASM Multithreading: Need .NET 8
+- WASM Multithreading: Not Available for Blazor yet :(
 - Native(C/CPP) Library?
-- Component Loading As Needed

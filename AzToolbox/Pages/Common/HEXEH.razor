@@ -136,7 +136,16 @@
             targetParserInstance = ParserManager.InstantiateParserByFullName(targetParserName);
             ParserOptionsDef = targetParserInstance.GetOptions();
             ParserOptions.Clear();
-            foreach (var key in ParserOptionsDef.Keys) ParserOptions.Add(key, string.Empty);
+            foreach (var def in ParserOptionsDef)
+            {
+                var defaultValue = string.Empty;
+                switch (def.Value.Name)
+                {
+                    case "Encoding": defaultValue = "utf-8"; break;
+                    case "Boolean": defaultValue = "False"; break;
+                }
+                ParserOptions.Add(def.Key, defaultValue);
+            }
         }
     }
     IParser targetParserInstance = new StringParser();
@@ -162,7 +171,7 @@
         await HexehService.InitializeAsync();
         groupedParsers = ParserManager.AvailableParsers.GroupBy(p => p.Namespace ?? string.Empty);
         ParserOptionsDef = targetParserInstance.GetOptions();
-        foreach (var key in ParserOptionsDef.Keys) ParserOptions.Add(key, string.Empty);
+        ParserOptions.Add("Encoding", "utf-8");
     }
 
     void Parse()
@@ -175,13 +184,21 @@
             var opts = new Dictionary<string, string>();
             foreach (var opt in ParserOptions)
             {
-                if (opt.Key.EndsWith('?'))
+                if (opt.Key.EndsWith('?') && !string.IsNullOrWhiteSpace(opt.Value))
                     opts.Add(opt.Key[..(opt.Key.Length - 1)], opt.Value);
                 else
+                {
                     opts.Add(opt.Key, opt.Value);
+                }
             }
             opts.Add("BigEndian", bigEndian.ToString());
-            parser.SetOptionsFromSchema(opts);
+            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(opts)); // Log options provided
+            try { parser.SetOptionsFromSchema(opts); } 
+            catch (NotSupportedException) 
+            { 
+                /* Nothing actual to be done if the parser does not accept options */
+                Console.WriteLine("Target parser does not need options");
+            }
             DataTreeHead = [parser.Parse(blob)];
         }
         catch (Exception e)
