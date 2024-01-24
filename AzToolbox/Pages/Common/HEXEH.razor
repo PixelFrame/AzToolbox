@@ -33,7 +33,11 @@
             </Select>
             <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
                 <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                    <AddonLabel Style="min-width: 180px">Big Endian</AddonLabel>
+                    <AddonLabel Style="min-width: 180px">Big Endian&ensp;
+                        <Tooltip Text="Some parsers will ignore this option">
+                            <Icon Name="IconName.InfoCircle" />
+                        </Tooltip>
+                    </AddonLabel>
                 </Addon>
                 <Addon AddonType="AddonType.Body">
                     <Select TValue="string" @bind-SelectedValue="@bigEndian">
@@ -178,7 +182,7 @@
     {
         try
         {
-            var escaped = System.Text.RegularExpressions.Regex.Replace(hexstring, @"[,\s\n\r-]|0x", string.Empty);
+            var escaped = System.Text.RegularExpressions.Regex.Replace(hexstring, @"[\\\r\n\s,-]|0x", string.Empty);
             blob = Convert.FromHexString(escaped);
             var parser = ParserManager.InstantiateParserByFullName(targetParserName);
             var opts = new Dictionary<string, string>();
@@ -193,9 +197,9 @@
             }
             opts.Add("BigEndian", bigEndian.ToString());
             Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(opts)); // Log options provided
-            try { parser.SetOptionsFromSchema(opts); } 
-            catch (NotSupportedException) 
-            { 
+            try { parser.SetOptionsFromSchema(opts); }
+            catch (NotSupportedException)
+            {
                 /* Nothing actual to be done if the parser does not accept options */
                 Console.WriteLine("Target parser does not need options");
             }

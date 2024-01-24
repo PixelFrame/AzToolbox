@@ -8,6 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\HEXEH\Windows\Service\FailureActions.json" />
+    <Content Remove="wwwroot\assets\HEXEH\Windows\Service\ScAction.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\HEXEH\Windows\Service\FailureActions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\assets\HEXEH\Windows\Service\ScAction.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazorise.Animate" Version="1.4.0" />
     <PackageReference Include="Blazorise.Bootstrap" Version="1.4.0" />
     <PackageReference Include="Blazorise.Components" Version="1.4.0" />

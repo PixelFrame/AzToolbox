@@ -1,0 +1,37 @@
+{
+  "Name": "Service Control Action",
+  "Structure": {
+    "Fields": "Type:Delay",
+    "Definition": [
+      {
+        "Name": "Type",
+        "Parser": {
+          "Type": 1,
+          "Target": "DWORD",
+          "Conversion": {
+            "Type": 1,
+            "Target": "ScActionType"
+          }
+        }
+      },
+      {
+        "Name": "Delay",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      }
+    ]
+  },
+  "Enums": [
+    {
+      "Name": "ScActionType",
+      "Definition": {
+        "0": "SC_ACTION_NONE",
+        "1": "SC_ACTION_RESTART",
+        "2": "SC_ACTION_REBOOT",
+        "3": "SC_ACTION_RUN_COMMAND"
+      }
+    }
+  ]
+}

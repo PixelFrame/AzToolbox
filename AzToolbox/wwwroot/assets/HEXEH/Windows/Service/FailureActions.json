@@ -1,0 +1,55 @@
+{
+  "Name": "Service Failure Actions",
+  "Structure": {
+    "Fields": "ResetPeriod:RebootMsgCount:CommandCount:ActionsCount:ActionsPointer:Actions",
+    "Definition": [
+      {
+        "Name": "ResetPeriod",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "RebootMsgCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "CommandCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "ActionsCount",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "ActionsPointer",
+        "Parser": {
+          "Type": 0,
+          "Target": "DWORD"
+        }
+      },
+      {
+        "Name": "Actions",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectCount": "{ActionsCount}",
+            "ObjectParser": "Windows.Service.ScAction",
+            "IncludeSchema": "true"
+          }
+        }
+      }
+    ]
+  }
+}

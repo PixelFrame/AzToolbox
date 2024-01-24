@@ -31,7 +31,7 @@ namespace AzToolbox.Services
 
         public TreeViewItem FromBinaryToAcl(string BinaryStr, AccessMaskType maskType)
         {
-            var regDeNoise = new Regex(@"[\\\r\n\t, -]|0x");
+            var regDeNoise = new Regex(@"[\\\r\n\s,-]|0x");
             BinaryStr = regDeNoise.Replace(BinaryStr, "");
             var binary = Convert.FromHexString(BinaryStr);
             return converter.FromBinaryToAcl(binary).ToTreeView(maskType);

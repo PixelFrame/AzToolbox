@@ -19,3 +19,5 @@ DnsRpcRecordPTR.json,Windows/DNS/DnsRpcRecordPTR.json
 DnsRpcRecordSOA.json,Windows/DNS/DnsRpcRecordSOA.json
 DnsRpcRecordSRV.json,Windows/DNS/DnsRpcRecordSRV.json
 DnsRpcRecordTXT.json,Windows/DNS/DnsRpcRecordTXT.json
+FailureActions.json,Windows/Service/FailureActions.json
+ScAction.json,Windows/Service/ScAction.json
