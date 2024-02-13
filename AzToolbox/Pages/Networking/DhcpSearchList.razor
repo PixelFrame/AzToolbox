@@ -95,7 +95,8 @@
         suffixes.Clear();
         try
         {
-            var option119bytes = Convert.FromHexString(rawOptionValue.Replace(" ", ""));
+            var escaped = System.Text.RegularExpressions.Regex.Replace(rawOptionValue, @"[\\\r\n\s,-]|0x", string.Empty);
+            var option119bytes = Convert.FromHexString(escaped);
             suffixes.AddRange(AzToolbox.Utilities.DhcpSearchListUtil.DecodeSearchList(option119bytes));
         }
         catch (Exception ex)

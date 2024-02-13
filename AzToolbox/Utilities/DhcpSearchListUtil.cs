@@ -133,7 +133,7 @@ namespace AzToolbox.Utilities
 
         public static string GetPowerShellCommand(IEnumerable<byte> OptionValue, string? ScopeId)
         {
-            return $"Add-DhcpServerv4OptionValue -OptionId 119{(ScopeId is null ? string.Empty : $" -ScopeId {ScopeId}")} -Value {string.Join(',', OptionValue)}";
+            return $"Set-DhcpServerv4OptionValue -OptionId 119{(ScopeId is null ? string.Empty : $" -ScopeId {ScopeId}")} -Value {string.Join(',', OptionValue)}";
         }
     }
 }
