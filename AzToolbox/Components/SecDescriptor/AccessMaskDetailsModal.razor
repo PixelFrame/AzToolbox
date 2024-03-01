@@ -1,0 +1,76 @@
+﻿@using AzToolbox.Models;
+@using WinSdUtil.Lib.Model;
+
+<Grid Columns="GridColumns.Are2" Gap="Gap.Is1">
+    <SelectList TItem="AccessMaskType"
+                TValue="AccessMaskType"
+                Data="Enum.GetValues<AccessMaskType>().Where(t => t!=AccessMaskType.Unknown)"
+                TextField="@(item => item.ToString())"
+                ValueField="@(item => item)"
+                @bind-SelectedValue="@TargetAccessMaskType" />
+    <NumericEdit @bind-Value="@MaskValue"/>
+</Grid>
+
+<MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop"/>
+
+<TreeView Nodes="AccessMaskTreeHead"
+          GetChildNodes="@(item => item.Children)"
+          HasChildNodes="@(item => item.HasChildren)"
+          ExpandedNodes="AccessMaskTreeHead">
+    <NodeContent>
+        <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+        <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
+    </NodeContent>
+</TreeView>
+
+    @code {
+    TreeViewItem[] AccessMaskTreeHead = null!;
+    AccessMaskType targetAccessMaskType = AccessMaskType.File;
+    AccessMaskType TargetAccessMaskType
+    {
+        get => targetAccessMaskType;
+        set
+        {
+            targetAccessMaskType = value;
+            GenerateTree();
+        }
+    }
+    uint maskValue = 0;
+    uint MaskValue
+    {
+        get => maskValue;
+        set
+        {
+            maskValue = value;
+            GenerateTree();
+        }
+    }
+    string CastedText = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        GenerateTree();
+    }
+
+    void GenerateTree()
+    {
+        AccessMaskTreeHead = new TreeViewItem[2];
+        var mask = new AccessMask()
+            {
+                Full = maskValue,
+                ObjectType = targetAccessMaskType
+            };
+        CastedText = string.Join(',', mask.ToStrings());
+        var longest = WinSdTreeViewExtension.CalcLongestNameLen(targetAccessMaskType, out var TargetType);
+        AccessMaskTreeHead[0] = new TreeViewItem()
+            {
+                Label = $"Object Specific ({TargetAccessMaskType})",
+            };
+        AccessMaskTreeHead[0].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(maskValue, TargetType, longest, false);
+        AccessMaskTreeHead[1] = new TreeViewItem()
+            {
+                Label = "Generic",
+            };
+        AccessMaskTreeHead[1].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(maskValue, typeof(AccessMask_Standard), longest, true);
+    }
+}
