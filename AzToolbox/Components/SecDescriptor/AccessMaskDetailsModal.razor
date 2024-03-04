@@ -1,5 +1,6 @@
 ﻿@using AzToolbox.Models;
 @using WinSdUtil.Lib.Model;
+@using System.Buffers.Binary;
 
 <Grid Columns="GridColumns.Are2" Gap="Gap.Is1">
     <SelectList TItem="AccessMaskType"
@@ -8,22 +9,48 @@
                 TextField="@(item => item.ToString())"
                 ValueField="@(item => item)"
                 @bind-SelectedValue="@TargetAccessMaskType" />
-    <NumericEdit @bind-Value="@MaskValue"/>
+    <Div Flex="Flex.AlignItems.Center">
+        <Switch @bind-Checked="@HexInput" Display="Display.Inline">@(HexInput ? "HEX" : "DEC")</Switch>
+        @if (HexInput)
+        {
+            <TextEdit @bind-Text="@MaskValueHex" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
+        }
+        else
+        {
+            <NumericEdit @bind-Value="@MaskValue" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
+        }
+    </Div>
+
 </Grid>
 
-<MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop"/>
+<MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop" />
 
-<TreeView Nodes="AccessMaskTreeHead"
-          GetChildNodes="@(item => item.Children)"
-          HasChildNodes="@(item => item.HasChildren)"
-          ExpandedNodes="AccessMaskTreeHead">
-    <NodeContent>
-        <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
-        <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
-    </NodeContent>
-</TreeView>
+ <TreeView Nodes="AccessMaskTreeHead"
+           GetChildNodes="@(item => item.Children)"
+           HasChildNodes="@(item => item.HasChildren)"
+           ExpandedNodes="AccessMaskTreeHead">
+     <NodeContent>
+         <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+         <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
+        </NodeContent>
+    </TreeView>
 
     @code {
+    bool HexInput = false;
+    string MaskValueHex
+    {
+        get => maskValue.ToString("X");
+        set
+        {
+            try
+            {
+                if (value.Length > 8) value = value[0..8];
+                else { value = value.PadLeft(8, '0'); }
+                MaskValue = BinaryPrimitives.ReadUInt32BigEndian(Convert.FromHexString(value));
+            }
+            catch { }
+        }
+    }
     TreeViewItem[] AccessMaskTreeHead = null!;
     AccessMaskType targetAccessMaskType = AccessMaskType.File;
     AccessMaskType TargetAccessMaskType
