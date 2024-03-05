@@ -9,6 +9,7 @@ namespace AzToolbox.Models
     {
         public string Label { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public object? Tag { get; set; }
         public IEnumerable<TreeViewItem>? Children { get; set; }
         public bool HasChildren => Children?.Any() ?? false;
 

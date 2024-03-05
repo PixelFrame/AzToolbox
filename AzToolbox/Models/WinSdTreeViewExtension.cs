@@ -194,6 +194,7 @@ namespace AzToolbox.Models
                 {
                     Label = label,
                     Description = desc,
+                    Tag = i,
                     Children = null,
                 };
                 mask <<= 1;

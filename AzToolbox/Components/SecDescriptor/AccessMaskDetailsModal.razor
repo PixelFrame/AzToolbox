@@ -1,5 +1,6 @@
 ﻿@using AzToolbox.Models;
 @using WinSdUtil.Lib.Model;
+@using System.Collections;
 @using System.Buffers.Binary;
 
 <Grid Columns="GridColumns.Are2" Gap="Gap.Is1">
@@ -20,37 +21,32 @@
             <NumericEdit @bind-Value="@MaskValue" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
         }
     </Div>
-
 </Grid>
 
 <MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop" />
 
- <TreeView Nodes="AccessMaskTreeHead"
-           GetChildNodes="@(item => item.Children)"
-           HasChildNodes="@(item => item.HasChildren)"
-           ExpandedNodes="AccessMaskTreeHead">
-     <NodeContent>
-         <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
-         <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
-        </NodeContent>
-    </TreeView>
-
-    @code {
-    bool HexInput = false;
-    string MaskValueHex
-    {
-        get => maskValue.ToString("X");
-        set
+<TreeView Nodes="AccessMaskTreeHead"
+          GetChildNodes="@(item => item.Children)"
+          HasChildNodes="@(item => item.HasChildren)"
+          ExpandedNodes="AccessMaskTreeHead">
+    <NodeContent>
+        @if (context.Tag != null)
         {
-            try
-            {
-                if (value.Length > 8) value = value[0..8];
-                else { value = value.PadLeft(8, '0'); }
-                MaskValue = BinaryPrimitives.ReadUInt32BigEndian(Convert.FromHexString(value));
-            }
-            catch { }
+            <Check TValue="bool" @bind-Checked="@maskBits[(int)context.Tag]" />
         }
+        <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+        <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
+    </NodeContent>
+</TreeView>
+
+<style>
+    .custom-checkbox {
+        display: inline
     }
+</style>
+
+@code {
+    bool HexInput = false;
     TreeViewItem[] AccessMaskTreeHead = null!;
     AccessMaskType targetAccessMaskType = AccessMaskType.File;
     AccessMaskType TargetAccessMaskType
@@ -62,17 +58,47 @@
             GenerateTree();
         }
     }
-    uint maskValue = 0;
+    BitArray maskBits = new(32);
     uint MaskValue
     {
-        get => maskValue;
+        get
+        {
+            var intArr = new int[1];
+            maskBits.CopyTo(intArr, 0);
+            return (uint)intArr[0];
+        }
         set
         {
-            maskValue = value;
+            maskBits = new(BitConverter.GetBytes(value));
             GenerateTree();
         }
     }
-    string CastedText = string.Empty;
+    string MaskValueHex
+    {
+        get => MaskValue.ToString("X");
+        set
+        {
+            try
+            {
+                if (value.Length > 8) value = value[0..8];
+                else { value = value.PadLeft(8, '0'); }
+                MaskValue = BinaryPrimitives.ReadUInt32BigEndian(Convert.FromHexString(value));
+            }
+            catch { }
+        }
+    }
+    string CastedText
+    {
+        get
+        {
+            AccessMask Mask = new()
+                {
+                    Full = MaskValue,
+                    ObjectType = targetAccessMaskType,
+                };
+            return string.Join(',', Mask.ToStrings());
+        }
+    }
 
     protected override void OnInitialized()
     {
@@ -82,22 +108,16 @@
     void GenerateTree()
     {
         AccessMaskTreeHead = new TreeViewItem[2];
-        var mask = new AccessMask()
-            {
-                Full = maskValue,
-                ObjectType = targetAccessMaskType
-            };
-        CastedText = string.Join(',', mask.ToStrings());
         var longest = WinSdTreeViewExtension.CalcLongestNameLen(targetAccessMaskType, out var TargetType);
         AccessMaskTreeHead[0] = new TreeViewItem()
             {
                 Label = $"Object Specific ({TargetAccessMaskType})",
             };
-        AccessMaskTreeHead[0].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(maskValue, TargetType, longest, false);
+        AccessMaskTreeHead[0].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(MaskValue, TargetType, longest, false);
         AccessMaskTreeHead[1] = new TreeViewItem()
             {
                 Label = "Generic",
             };
-        AccessMaskTreeHead[1].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(maskValue, typeof(AccessMask_Standard), longest, true);
+        AccessMaskTreeHead[1].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(MaskValue, typeof(AccessMask_Standard), longest, true);
     }
 }
