@@ -20,14 +20,15 @@ namespace AzToolbox.Models
                 {
                     Label = "Owner",
                     Description = acl.Owner.DisplayName,
-                    Children = new TreeViewItem[]
-                    {
+                    Children =
+                    [
                         new() {
-                            Label = "SID",
+                            Label = "Trustee",
                             Description = acl.Owner.Sid,
+                            Tag = acl.Owner,
                             Children = null,
                         }
-                    },
+                    ],
                 });
             }
             if (acl.Group != null)
@@ -36,14 +37,15 @@ namespace AzToolbox.Models
                 {
                     Label = "Group",
                     Description = acl.Group.DisplayName,
-                    Children = new TreeViewItem[]
-                    {
+                    Children =
+                    [
                         new() {
-                            Label = "SID",
+                            Label = "Trustee",
                             Description = acl.Group.Sid,
+                            Tag = acl.Group,
                             Children = null,
                         }
-                    },
+                    ],
                 });
             }
             if (acl.DAclAces != null)
@@ -92,8 +94,9 @@ namespace AzToolbox.Models
             };
             children.Add(new TreeViewItem()
             {
-                Label = "SID",
+                Label = "Trustee",
                 Description = ace.Trustee.Sid,
+                Tag = ace.Trustee,
                 Children = null,
             });
             children.Add(new TreeViewItem()
@@ -108,8 +111,8 @@ namespace AzToolbox.Models
             {
                 Label = "Access Mask",
                 Description = $"0x{ace.Mask.Full:X8}",
-                Children = new TreeViewItem[]
-                {
+                Children =
+                [
                     new()
                     {
                         Label = objspecLabel,
@@ -122,7 +125,7 @@ namespace AzToolbox.Models
                         Description = ace.Mask.Standard.ToString("X8")[..4] + "....",
                         Children = AccessMaskToTreeViewItems(ace.Mask.Standard, typeof(AccessMask_Standard), longestNameLen, true),
                     },
-                },
+                ],
             });
             if (ace.ObjectGuid != Guid.Empty)
             {

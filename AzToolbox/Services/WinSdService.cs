@@ -24,17 +24,17 @@ namespace AzToolbox.Services
             converter = new WinSdConverter(true, trusteeJsonData, adSchemaGuidJsonData);
         }
 
-        public TreeViewItem FromSddlToAcl(string SDDL, AccessMaskType maskType)
+        public AccessControlList FromSddlToAcl(string SDDL)
         {
-            return converter.FromSddlToAcl(SDDL).ToTreeView(maskType);
+            return converter.FromSddlToAcl(SDDL);
         }
 
-        public TreeViewItem FromBinaryToAcl(string BinaryStr, AccessMaskType maskType)
+        public AccessControlList FromBinaryToAcl(string BinaryStr)
         {
             var regDeNoise = new Regex(@"[\\\r\n\s,-]|0x");
             BinaryStr = regDeNoise.Replace(BinaryStr, "");
             var binary = Convert.FromHexString(BinaryStr);
-            return converter.FromBinaryToAcl(binary).ToTreeView(maskType);
+            return converter.FromBinaryToAcl(binary);
         }
     }
 }

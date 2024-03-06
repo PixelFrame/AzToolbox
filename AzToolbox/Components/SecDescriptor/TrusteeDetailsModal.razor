@@ -1,0 +1,30 @@
+﻿@using WinSdUtil.Lib.Model;
+
+<Field Horizontal>
+    <FieldLabel ColumnSize="ColumnSize.Is2">Name</FieldLabel>
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <TextEdit Disabled Text="@trustee.DisplayName" />
+    </FieldBody>
+</Field>
+<Field Horizontal>
+    <FieldLabel ColumnSize="ColumnSize.Is2">SID</FieldLabel>
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <TextEdit Disabled Text="@trustee.Sid" />
+    </FieldBody>
+</Field>
+<Field Horizontal>
+    <FieldLabel ColumnSize="ColumnSize.Is2">SDDL Name</FieldLabel>
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <TextEdit Disabled Text="@trustee.SddlName" />
+    </FieldBody>
+</Field>
+<Field Horizontal>
+    <FieldLabel ColumnSize="ColumnSize.Is2">Description</FieldLabel>
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <MemoEdit AutoSize Disabled Text="@trustee.Description" />
+    </FieldBody>
+</Field>
+
+@code {
+    [Parameter] public Trustee trustee { get; set; } = default!;
+}

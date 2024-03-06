@@ -38,7 +38,7 @@
                             Data="Enum.GetValues<AccessMaskType>()"
                             TextField="@(item => item.ToString())"
                             ValueField="@(item => item)"
-                @bind-SelectedValue="@selectedAccessMaskType" />
+                            @bind-SelectedValue="@selectedAccessMaskType" />
             </Addon>
             <Addon AddonType="AddonType.End">
                 <Button Color="Color.Primary" Clicked="ShowAccessMaskDetails">Details</Button>
@@ -51,11 +51,16 @@
         <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small">Copy Tree</Button>
         <TreeView @ref="@AclTree"
                   Nodes="AclTreeHead"
+                  ExpandedNodes="ExpandedNodes"
                   GetChildNodes="@(item => item.Children)"
                   HasChildNodes="@(item => item.HasChildren)">
             <NodeContent>
                 <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
                 <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
+                @if (context.Label == "Trustee")
+                {
+                    <Button Size="Size.Small" Style="padding: 0 0 0 2px" Clicked="()=>ShowTrusteeDetails((Trustee)context.Tag!)"><Icon Name="IconName.InfoCircle" /></Button>
+                }
             </NodeContent>
         </TreeView>
     </CardBody>
@@ -64,12 +69,14 @@
 @code {
     TreeView<TreeViewItem> AclTree = null!;
     IEnumerable<TreeViewItem> AclTreeHead = null!;
+    List<TreeViewItem> ExpandedNodes = new();
 
     bool SddlOrBinary = true;
     string sddl = string.Empty;
     string binarystr = string.Empty;
     string currentType => SddlOrBinary ? "SDDL" : "Binary";
     AccessMaskType selectedAccessMaskType = AccessMaskType.File;
+    AccessControlList aclResult = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,14 +88,17 @@
     {
         try
         {
-            if(SddlOrBinary)
+            if (SddlOrBinary)
             {
-                AclTreeHead = new TreeViewItem[] { wsdsvc.FromSddlToAcl(sddl, selectedAccessMaskType) };
+                aclResult = wsdsvc.FromSddlToAcl(sddl);
             }
             else
             {
-                AclTreeHead = new TreeViewItem[] { wsdsvc.FromBinaryToAcl(binarystr, selectedAccessMaskType) };
+                aclResult = wsdsvc.FromBinaryToAcl(binarystr);
             }
+            ExpandedNodes.Clear();
+            AclTreeHead = new TreeViewItem[] { aclResult.ToTreeView(selectedAccessMaskType) };
+            ExpandedNodes.Add(AclTreeHead.First());
         }
         catch (Exception ex)
         {
@@ -112,6 +122,15 @@
     Task ShowAccessMaskDetails()
     {
         return ModalService.Show<AccessMaskDetailsModal>("Access Mask", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    Task ShowTrusteeDetails(Trustee trustee)
+    {
+        return ModalService.Show<TrusteeDetailsModal>("Trustee", x => x.Add(x => x.trustee, trustee),
+        new ModalInstanceOptions()
             {
                 Size = ModalSize.ExtraLarge
             });
