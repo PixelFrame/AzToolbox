@@ -14,6 +14,17 @@
 
 <Row>
     <Column ColumnSize="ColumnSize.IsHalf">
+        <Divider DividerType="DividerType.TextContent" Text="PreSet" />
+        <Div Display="Display.Flex" Flex="Flex.Row.AlignContent.Center">
+            <SelectList TValue="VpnBuildService.PreSets"
+                        TItem="VpnBuildService.PreSets"
+                        TextField="@(s=>s.ToString().Replace("__", "-").Replace('_','/'))"
+                        ValueField="s=>s"
+                        Data="@(Enum.GetValues<VpnBuildService.PreSets>())"
+                        @bind-SelectedValue="set" />
+            <Button Color="Color.Warning" Clicked="LoadPreSet" Margin="Margin.Is1.FromStart" Width="Width.Px(150)" >Load</Button>
+        </Div>
+        <Divider DividerType="DividerType.Solid" />
         <Field>
             <Switch TValue="bool" @bind-Checked="@svc.UserTunnel">User Tunnel</Switch>
         </Field>
@@ -97,20 +108,25 @@
                 <Field>
                     <Switch TValue="bool" @bind-Checked="@svc.ForceTunnel">Force Tunnel</Switch>
                 </Field>
-                @if (!svc.ForceTunnel)
+                <Field>
+                    <Switch TValue="bool" @bind-Checked="@svc.SimpleRoute">Simple Route Generation</Switch>
+                </Field>
+                @if (svc.SimpleRoute)
                 {
-                    <Field>
-                        <Switch TValue="bool" @bind-Checked="@svc.SimpleRoute">Simple Route Generation</Switch>
-                    </Field>
-                    @if (svc.SimpleRoute)
-                    {
-                        <Tooltip Text="Comma separated subnet list, e.g. 10.1.1.0/24,10.1.2.0/24." Placement="TooltipPlacement.Right">
-                            <Field>
+                    <Tooltip Text="Comma separated subnet list, e.g. 10.1.1.0/24,10.1.2.0/24." Placement="TooltipPlacement.Right">
+                        <Field>
+                            @if (svc.ForceTunnel)
+                            {
+                                <FieldLabel>Excluded Subnets</FieldLabel>
+                                <TextEdit @bind-Text="@svc.ExcludedSubnets" />
+                            }
+                            else
+                            {
                                 <FieldLabel>Domain Subnets</FieldLabel>
                                 <TextEdit @bind-Text="@svc.DomainSubnets" />
-                            </Field>
-                        </Tooltip>
-                    }
+                            }
+                        </Field>
+                    </Tooltip>
                 }
             </Div>
         }
@@ -180,11 +196,12 @@
                   Class="monospace-fixed-textbox"
                   Margin="Margin.Is1.FromTop"
                   AutoSize ReadOnly />
-     </Column>
- </Row>
+    </Column>
+</Row>
 
- @code {
+@code {
     bool built = false;
+    VpnBuildService.PreSets set = VpnBuildService.PreSets.User_Split_PEAP__TLS;
 
     private Task Build()
     {
@@ -295,5 +312,12 @@
             filename, "text/plain", script
         };
         await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
+    }
+
+    private void LoadPreSet()
+    {
+        svc.LoadPreSet(set);
+        StateHasChanged();
+        built = true;
     }
 }
