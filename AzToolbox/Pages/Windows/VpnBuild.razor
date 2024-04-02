@@ -170,7 +170,7 @@
         <Grid Columns="GridColumns.Are3" Gap="Gap.Is1">
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy XML to Clipboard</Button>
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@Download" Block>Download XML</Button>
-            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
+            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
         </Grid>
         <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is1.FromTop">
             <AlertMessage>Windows 11 ONLY</AlertMessage>

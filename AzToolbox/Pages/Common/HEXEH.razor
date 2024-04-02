@@ -12,105 +12,99 @@
 @inject IJSRuntime JSRuntime
 @inject HexehService HexehService
 
-<Grid Columns="GridColumns.Are2" Gap="Gap.Is1" Margin="Margin.Is2.FromBottom">
-    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromEnd">
-        <CardBody>
-            <CardTitle Size="6">
-                HEX
-            </CardTitle>
-            <MemoEdit @bind-Text="@hexstring" Rows="12" spellcheck="false"
-                      Class="monospace-fixed-textbox" Margin="Margin.Is1.FromBottom" />
-            <Select TValue="string" @bind-SelectedValue="@TargetParserName" Margin="Margin.Is1.FromBottom">
-                @foreach (var group in groupedParsers)
-                {
-                    <SelectGroup Label="@group.Key[(group.Key.LastIndexOf(".Parser.") + 8)..]">
-                        @foreach (var parser in group)
-                        {
-                            <SelectItem Value="@parser.FullName">@parser.Name[..(parser.Name.Length - 6)]</SelectItem>
-                        }
-                    </SelectGroup>
-                }
-            </Select>
-            <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
-                <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                    <AddonLabel Style="min-width: 180px">
-                        Big Endian&ensp;
-                        <Tooltip Text="Some parsers will ignore this option">
-                            <Icon Name="IconName.InfoCircle" />
-                        </Tooltip>
-                    </AddonLabel>
-                </Addon>
-                <Addon AddonType="AddonType.Body">
-                    <Select TValue="string" @bind-SelectedValue="@bigEndian">
-                        <SelectItem Value="@("True")">True</SelectItem>
-                        <SelectItem Value="@("False")">False</SelectItem>
-                    </Select>
-                </Addon>
-            </Addons>
-            @foreach (var option in ParserOptionsDef)
-            {
+<Splitter Direction="SplitterDirection.Vertical" Style="height:calc(100vh - 74px - 1rem)">
+    <SplitterSection MinSize="400" Overflow="Overflow.Hidden">
+        <Splitter Style="min-height:400px">
+            <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+                <MemoEdit @bind-Text="@hexstring" Rows="12" spellcheck="false"
+                          Class="monospace-fixed-textbox" Margin="Margin.Is1.FromBottom" />
+                <Select TValue="string" @bind-SelectedValue="@TargetParserName" Margin="Margin.Is1.FromBottom">
+                    @foreach (var group in groupedParsers)
+                    {
+                        <SelectGroup Label="@group.Key[(group.Key.LastIndexOf(".Parser.") + 8)..]">
+                            @foreach (var parser in group)
+                            {
+                                <SelectItem Value="@parser.FullName">@parser.Name[..(parser.Name.Length - 6)]</SelectItem>
+                            }
+                        </SelectGroup>
+                    }
+                </Select>
                 <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
                     <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                        <AddonLabel Style="min-width: 180px">@option.Key</AddonLabel>
+                        <AddonLabel Style="min-width: 180px">
+                            Big Endian&ensp;
+                            <Tooltip Text="Some parsers will ignore this option">
+                                <Icon Name="IconName.InfoCircle" />
+                            </Tooltip>
+                        </AddonLabel>
+                    </Addon>
+                    <Addon AddonType="AddonType.Body">
+                        <Select TValue="string" @bind-SelectedValue="@bigEndian">
+                            <SelectItem Value="@("True")">True</SelectItem>
+                            <SelectItem Value="@("False")">False</SelectItem>
+                        </Select>
+                    </Addon>
+                </Addons>
+                @foreach (var option in ParserOptionsDef)
+                {
+                    <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
+                        <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+                            <AddonLabel Style="min-width: 180px">@option.Key</AddonLabel>
                         </Addon>
                         <Addon AddonType="AddonType.Body">
                             @switch (option.Value.Name)
-                        {
-                            case "Encoding":
-                                <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
-                                    @foreach (var encoding in System.Text.Encoding.GetEncodings())
-                                    {
-                                        <SelectItem Value="@encoding.Name">@encoding.Name</SelectItem>
-                                    }
-                                </Select>
-                                break;
-                            case "Boolean":
-                                <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
-                                    <SelectItem Value="@("True")">True</SelectItem>
-                                    <SelectItem Value="@("False")">False</SelectItem>
-                                </Select>
-                                break;
-                            default:
-                                <TextEdit @bind-Text="@ParserOptions[option.Key]" />
-                                break;
-                        }
-                    </Addon>
-                </Addons>
-            }
-            <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="Parse" Block="true" Disabled="!ready">
-                @(ready ? "Go" : "Initializing")
-            </Button>
-        </CardBody>
-    </Card>
-    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromStart">
-        <CardBody Overflow="Overflow.Scroll">
+                            {
+                                case "Encoding":
+                                    <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
+                                        @foreach (var encoding in System.Text.Encoding.GetEncodings())
+                                        {
+                                            <SelectItem Value="@encoding.Name">@encoding.Name</SelectItem>
+                                        }
+                                    </Select>
+                                    break;
+                                case "Boolean":
+                                    <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
+                                        <SelectItem Value="@("True")">True</SelectItem>
+                                        <SelectItem Value="@("False")">False</SelectItem>
+                                    </Select>
+                                    break;
+                                default:
+                                    <TextEdit @bind-Text="@ParserOptions[option.Key]" />
+                                    break;
+                            }
+                        </Addon>
+                    </Addons>
+                }
+                <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="Parse" Block="true" Disabled="!ready">
+                    @(ready ? "Go" : "Initializing")
+                </Button>
+            </SplitterSection>
+            <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+                <Div>
+                    <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.ExtraSmall" Disabled="@(DataTreeHead == null || DataTreeHead.Count() == 0)">
+                        Copy Tree
+                    </Button>
 
-            <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.ExtraSmall" Disabled="@(DataTreeHead == null || DataTreeHead.Count() == 0)">
-                Copy Tree
-            </Button>
+                    <Button Color="@(showDataPosLen ? Color.Success : Color.Primary)" Clicked="() => showDataPosLen = !showDataPosLen" Size="Size.ExtraSmall" Disabled="@(DataTreeHead == null || DataTreeHead.Count() == 0)">
+                        Show position and length
+                    </Button>
+                </Div>
 
-            <Button Color="@(showDataPosLen ? Color.Success : Color.Primary)" Clicked="() => showDataPosLen = !showDataPosLen" Size="Size.ExtraSmall" Disabled="@(DataTreeHead == null || DataTreeHead.Count() == 0)">
-                Show position and length
-            </Button>
-
-            <TreeView TNode="DataNode" Nodes="DataTreeHead"
-                      GetChildNodes="@(item => item.Children)"
-                      HasChildNodes="@(item => item.Children.Count > 0)"
-                      AutoExpandAll="true">
-                <NodeContent>
-                    <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
-                    <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@(showDataPosLen ? $"[{context.Index}:{context.Length}] {context.DisplayValue}" : context.DisplayValue)</Text>
-                </NodeContent>
-            </TreeView>
-        </CardBody>
-    </Card>
-</Grid>
-
-<Card>
-    <CardBody>
-        <CardTitle Size="6">
-            Hex Dump
-        </CardTitle>
+                <Div Overflow="Overflow.Scroll">
+                    <TreeView TNode="DataNode" Nodes="DataTreeHead"
+                              GetChildNodes="@(item => item.Children)"
+                              HasChildNodes="@(item => item.Children.Count > 0)"
+                              AutoExpandAll="true">
+                        <NodeContent>
+                            <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+                            <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@(showDataPosLen ? $"[{context.Index}:{context.Length}] {context.DisplayValue}" : context.DisplayValue)</Text>
+                        </NodeContent>
+                    </TreeView>
+                </Div>
+            </SplitterSection>
+        </Splitter>
+    </SplitterSection>
+    <SplitterSection Overflow="Overflow.Scroll">
         <Button Color="Color.Info" Size="Size.ExtraSmall" Clicked="CopyHexDump">
             Copy Hex Dump
         </Button>
@@ -131,10 +125,13 @@
                  DataDisplayPosition="@hdpos"
                  DataDisplayLength="@hdlen"
                  DataInspectionPosition="DataInspectionPosition.Right" />
-    </CardBody>
-</Card>
+    </SplitterSection>
+</Splitter>
 
 @code {
+    [CascadingParameter(Name = "MainLayout")]
+    public MainLayout? layout { get; set; }
+
     string hexstring = string.Empty;
     IEnumerable<IGrouping<string, Type>> groupedParsers = [];
     string targetParserName = "KzA.HEXEH.Core.Parser.Common.String.StringParser";
@@ -181,6 +178,7 @@
 
     protected async override Task OnInitializedAsync()
     {
+        if (layout != null) layout.ShowFooter = false;
         await HexehService.InitializeAsync();
         groupedParsers = ParserManager.AvailableParsers.GroupBy(p => p.Namespace ?? string.Empty);
         ParserOptionsDef = targetParserInstance.GetOptions();

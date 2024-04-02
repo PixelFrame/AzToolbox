@@ -7,39 +7,29 @@
 @inject INotificationService NotificationService
 @inject IJSRuntime JSRuntime
 
-<Div Flex="Flex.Row.JustifyContent.Between" Margin="Margin.Is2.FromBottom">
-    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromEnd">
-        <CardBody>
-            <CardTitle Size="6">
-                Base64
-            </CardTitle>
-            <MemoEdit @bind-Text="@base64str" Rows="12" spellcheck="false"
-                      Class="monospace-fixed-textbox" />
-            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromBase64" Width="Width.Is25">
-                From Base64
-            </Button>
-        </CardBody>
-    </Card>
-    <Card Flex="Flex.AlignSelf.Stretch.Grow.Is1" Margin="Margin.Is1.FromStart">
-        <CardBody>
-            <CardTitle Size="6">
-                Data
-            </CardTitle>
-            <SelectList TItem="EncodingInfo"
-                        TValue="int"
-                        Data="@SupportedEncodings"
-                        TextField="@((item)=>item.Name)"
-                        ValueField="@((item)=>item.CodePage)"
-                        DefaultItemValue="65001"
-            @bind-SelectedValue="selectedCodePage" />
-            <MemoEdit @bind-Text="@decodedstr" Rows="10" spellcheck="false"
-                      Class="monospace-fixed-textbox" />
-            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="FromString" Width="Width.Is25">
-                To Base64
-            </Button>
-        </CardBody>
-    </Card>
-</Div>
+<Splitter Style="height:50vh">
+    <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+        <Button Color="Color.Primary" Clicked="FromBase64" Block>
+            Base64 → String
+        </Button>
+        <MemoEdit @bind-Text="@base64str" Height="Height.Is100" spellcheck="false" Flex="Flex.Grow"
+                  Class="monospace-fixed-textbox" />
+    </SplitterSection>
+    <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+        <Button Color="Color.Primary" Clicked="FromString" Block>
+            String → Base64
+        </Button>
+        <SelectList TItem="EncodingInfo"
+                    TValue="int"
+                    Data="@SupportedEncodings"
+                    TextField="@((item)=>item.Name)"
+                    ValueField="@((item)=>item.CodePage)"
+                    DefaultItemValue="65001"
+                    @bind-SelectedValue="selectedCodePage" />
+        <MemoEdit @bind-Text="@decodedstr" Height="Height.Is100" spellcheck="false" Flex="Flex.Grow"
+                  Class="monospace-fixed-textbox" />
+    </SplitterSection>
+</Splitter>
 
 <Card>
     <CardBody>
@@ -62,11 +52,11 @@
             Next Page
         </Button>
         <!-- TODO: Update inspection position when viewport changes -->
-        <HexDump @ref="hxdp" Data="@blob" 
-            BlockSelection="@blockSelection" 
-            DataDisplayPosition="@hdpos"
-            DataDisplayLength="@hdlen"
-            DataInspectionPosition="DataInspectionPosition.Right" />
+        <HexDump @ref="hxdp" Data="@blob"
+                 BlockSelection="@blockSelection"
+                 DataDisplayPosition="@hdpos"
+                 DataDisplayLength="@hdlen"
+                 DataInspectionPosition="DataInspectionPosition.Right" />
     </CardBody>
 </Card>
 
