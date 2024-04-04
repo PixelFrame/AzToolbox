@@ -110,3 +110,8 @@ a, .btn-link {
     font-size: small;
     resize: none
 }
+
+code {
+    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace !important;
+    font-size: small !important;
+}

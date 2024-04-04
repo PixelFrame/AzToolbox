@@ -45,3 +45,7 @@ function copyTextToClipboard(text) {
     navigator.clipboard.writeText(text);
     return "Success";
 }
+
+function prismHighlightXml(code) {
+    return Prism.highlight(code, Prism.languages.xml, 'xml');
+}

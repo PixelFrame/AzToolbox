@@ -12,8 +12,8 @@
 @inject HttpClient httpClient
 @inject VpnBuildService svc
 
-<Row>
-    <Column ColumnSize="ColumnSize.IsHalf">
+<Splitter>
+    <SplitterSection Style="height:calc(100vh - 74px - 1rem); overflow-y:scroll">
         <Divider DividerType="DividerType.TextContent" Text="PreSet" />
         <Div Display="Display.Flex" Flex="Flex.Row.AlignContent.Center">
             <SelectList TValue="VpnBuildService.PreSets"
@@ -22,7 +22,7 @@
                         ValueField="s=>s"
                         Data="@(Enum.GetValues<VpnBuildService.PreSets>())"
                         @bind-SelectedValue="set" />
-            <Button Color="Color.Warning" Clicked="LoadPreSet" Margin="Margin.Is1.FromStart" Width="Width.Px(150)" >Load</Button>
+            <Button Color="Color.Warning" Clicked="LoadPreSet" Margin="Margin.Is1.FromStart" Width="Width.Px(150)">Load</Button>
         </Div>
         <Divider DividerType="DividerType.Solid" />
         <Field>
@@ -180,40 +180,61 @@
             <Button Color="Color.Info" Clicked="ShowCryptographySuite" Margin="Margin.Is1.OnY">IPsec Policy</Button>
             <Button Color="Color.Info" Clicked="ShowExtraSettings" Margin="Margin.Is1.OnY">Extra Settings</Button>
         }
-    </Column>
-    <Column ColumnSize="ColumnSize.IsHalf">
+    </SplitterSection>
+    <SplitterSection Display="Display.Flex" Flex="Flex.Column" Style="height:calc(100vh - 74px - 1rem); overflow-y:scroll">
         <Button Color="Color.Primary" Clicked="@Build" Block>Build</Button>
         <Grid Columns="GridColumns.Are3" Gap="Gap.Is1">
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy XML to Clipboard</Button>
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@Download" Block>Download XML</Button>
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
         </Grid>
-        <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is1.FromTop">
+        <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is1.FromTop.Is0.FromBottom">
             <AlertMessage>Windows 11 ONLY</AlertMessage>
             <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <a target="_blank" href="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</a> for more info.</AlertDescription>
         </Alert>
-        <MemoEdit @bind-Text="@svc.ProfileXml"
+        <Div Margin="Margin.Is1.OnY" Flex="Flex.Grow.Is1" Border="Border.Is1.Rounded.White">
+            @if (built)
+            {
+                <pre class="language-xml" style="margin:0">
+                <code>@highlightedProfileXml</code>
+                </pre>
+            }
+        </Div>
+        <!--<MemoEdit @bind-Text="@svc.ProfileXml"
                   Class="monospace-fixed-textbox"
-                  Margin="Margin.Is1.FromTop"
-                  AutoSize ReadOnly />
-    </Column>
-</Row>
+                  Style="text-wrap:nowrap"
+                  Margin="Margin.Is1.OnY"
+                  ReadOnly
+                  Flex="Flex.Grow.Is1" />-->
+    </SplitterSection>
+</Splitter>
 
 @code {
+    [CascadingParameter(Name = "MainLayout")]
+    public MainLayout? layout { get; set; }
+
     bool built = false;
     VpnBuildService.PreSets set = VpnBuildService.PreSets.User_Split_PEAP__TLS;
+    MarkupString highlightedProfileXml;
 
-    private Task Build()
+    protected override void OnInitialized()
+    {
+        if (layout != null) layout.ShowFooter = false;
+        base.OnInitialized();
+    }
+
+    private async void Build()
     {
         try
         {
             svc.Build();
             built = true;
-            return InvokeAsync(StateHasChanged);
+            await PrismHighlight();
+            await InvokeAsync(StateHasChanged);
         }
         catch (Exception e)
         {
-            return NotificationService.Error(e.Message, "Build Failed");
+            await NotificationService.Error(e.Message, "Build Failed");
         }
     }
 
@@ -314,10 +335,14 @@
         await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
     }
 
+    private async Task PrismHighlight()
+    {
+        highlightedProfileXml = new MarkupString(await JSRuntime.InvokeAsync<string>("prismHighlightXml", svc.ProfileXml));
+    }
+
     private void LoadPreSet()
     {
         svc.LoadPreSet(set);
-        StateHasChanged();
-        built = true;
+        Build();
     }
 }

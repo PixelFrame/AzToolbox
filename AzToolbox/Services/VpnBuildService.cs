@@ -238,7 +238,6 @@ namespace AzToolbox.Services
                 case PreSets.Device:
                     LoadPreSet_Device(); break;
             }
-            Build();
         }
 
         private void LoadPreSet_User_Split_PEAP_TLS()
