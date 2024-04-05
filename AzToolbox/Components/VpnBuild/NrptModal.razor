@@ -19,29 +19,17 @@
 @code {
     DomainNameInformation? selected;
 
-    private Task ShowNrptAdd()
+    private void ShowNrptAdd()
     {
         ModalService.Show<NrptAddModal>("New NRPT Entry",
-            x =>
-            {
-                x.Add(x => x.OnNewNrpt, NrptAdded);
-            },
             new ModalInstanceOptions()
                 {
                     Size = ModalSize.Large
                 });
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 
-    private Task NrptAdded()
-    {
-        return InvokeAsync(StateHasChanged);
-    }
-
-    private Task RemoveNrpt()
+    private void RemoveNrpt()
     {
         if (selected != null) svc.Nrpt.Remove(selected);
-        return InvokeAsync(StateHasChanged);
     }
 }

@@ -166,6 +166,7 @@
         {
             <Button Color="Color.Info" Clicked="ShowNrpt" Margin="Margin.Is1.OnY">NRPT</Button>
             <Button Color="Color.Info" Clicked="ShowTrafficFilters" Margin="Margin.Is1.OnY">Traffic Filters</Button>
+            <Button Color="Color.Info" Clicked="ShowAppTriggers" Margin="Margin.Is1.OnY">App Triggers</Button>
             <Button Color="Color.Info" Clicked="ShowRoutes" Margin="Margin.Is1.OnY">Routes</Button>
             <Button Color="Color.Info" Clicked="ShowProxy" Margin="Margin.Is1.OnY">Proxy</Button>
             <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2" Margin="Margin.Is1.OnY">IPsec Policy</Button>
@@ -176,7 +177,8 @@
         else
         {
             <Button Color="Color.Info" Clicked="ShowTrafficFilters" Margin="Margin.Is1.OnY">Traffic Filters</Button>
-            <Button Color="Color.Info" Margin="Margin.Is1.OnY">Routes</Button>
+            <Button Color="Color.Info" Clicked="ShowAppTriggers" Margin="Margin.Is1.OnY">App Triggers</Button>
+            <Button Color="Color.Info" Clicked="ShowRoutes" Margin="Margin.Is1.OnY">Routes</Button>
             <Button Color="Color.Info" Clicked="ShowCryptographySuite" Margin="Margin.Is1.OnY">IPsec Policy</Button>
             <Button Color="Color.Info" Clicked="ShowExtraSettings" Margin="Margin.Is1.OnY">Extra Settings</Button>
         }
@@ -241,6 +243,14 @@
     private Task ShowTrafficFilters()
     {
         return ModalService.Show<TrafficFilterModal>("Traffic Filters", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    private Task ShowAppTriggers()
+    {
+        return ModalService.Show<AppTriggerModal>("App Triggers", new ModalInstanceOptions()
             {
                 Size = ModalSize.ExtraLarge
             });

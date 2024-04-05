@@ -162,8 +162,6 @@
         else Direction = (TrafficDirection)value - 1;
     }
 
-    [Parameter] public Func<Task>? OnNewTrafficFilter { get; set; }
-
     private async Task NewTrafficFilter()
     {
         if (AppId == null && Claims == null && Protocol == null
@@ -196,7 +194,6 @@
                     };
             }
             svc.TrafficFilters.Add(trafficFilter);
-            if (OnNewTrafficFilter != null) await OnNewTrafficFilter();
             await ModalService.Hide();
         }
         catch (Exception e)

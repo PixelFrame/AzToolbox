@@ -99,8 +99,6 @@
     Snackbar? notification;
     string notificationMessage = "";
 
-    [Parameter] public Func<Task>? OnNewNrpt { get; set; }
-
     private async Task NewNrpt()
     {
         try
@@ -114,7 +112,6 @@
                     Persistent = Persistent
                 };
             svc.Nrpt.Add(nrpt);
-            if (OnNewNrpt != null) await OnNewNrpt.Invoke();
             await ModalService.Hide();
         }
         catch (Exception e)

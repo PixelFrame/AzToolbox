@@ -1,4 +1,5 @@
 ﻿using ProfileXMLBuilder.Lib;
+using System.Collections.ObjectModel;
 
 namespace AzToolbox.Services
 {
@@ -41,14 +42,14 @@ namespace AzToolbox.Services
         public bool? PlumbIKEv2TSAsRoutes { get; set; } = null;
         public bool DisableServerValidationPrompt { get; set; } = true;
         public bool? AllPurposeEnabled { get; set; } = null;
-        public List<TrafficFilter> TrafficFilters { get; set; } = new();
-        public List<DomainNameInformation> Nrpt { get; set; } = new();
-        public List<Route> Routes { get; set; } = new();
-        public List<AppTrigger> AppTriggers { get; set; } = new();
+        public ObservableCollection<TrafficFilter> TrafficFilters { get; set; } = new();
+        public ObservableCollection<DomainNameInformation> Nrpt { get; set; } = new();
+        public ObservableCollection<Route> Routes { get; set; } = new();
+        public ObservableCollection<AppTrigger> AppTriggers { get; set; } = new();
         public CryptographySuite? CryptographySuite { get; set; } = null;
         public DeviceCompliance? DeviceCompliance { get; set; } = null;
         public Proxy? Proxy { get; set; } = null;
-        public List<Eku> EkuMapping { get; set; } = new();
+        public ObservableCollection<Eku> EkuMapping { get; set; } = new();
 
         public bool NotIKEv2
         {
@@ -84,14 +85,14 @@ namespace AzToolbox.Services
                     .SetDisableClassBasedDefaultRoute(true)
                     .SetAuthentication(auth,
                         RadiusServerName,
-                        new List<string>(RootCAHash.Split(',')),
+                        RootCAHash.Split(','),
                         DisableServerValidationPrompt,
-                        new List<string>(CertSelectCAHash.Split(',')),
+                        CertSelectCAHash.Split(','),
                         AllPurposeEnabled,
                         (EkuMapping.Count == 0) ? null : EkuMapping)
                     .AddDomainNameInformation(VpnServer, null, null, null, null)
-                    .AddDomainNameInformation(Nrpt.ToArray())
-                    .AddTrafficFilters(TrafficFilters.ToArray())
+                    .AddDomainNameInformation(Nrpt)
+                    .AddTrafficFilters(TrafficFilters)
                     .SetProxy(Proxy);
 
                 if (DomainNRPT)
@@ -119,7 +120,7 @@ namespace AzToolbox.Services
                             throw new InvalidDataException($"{protocol} is not a valid native protocol");
                         }
                     }
-                    builder.SetNativeProtocolList(pl.ToArray(), RetryTimeInHours);
+                    builder.SetNativeProtocolList(pl, RetryTimeInHours);
                 }
                 else
                 {
@@ -129,7 +130,7 @@ namespace AzToolbox.Services
                 if (ForceTunnel)
                 {
                     builder.SetRoutingPolicyType(RoutingPolicyType.ForceTunnel)
-                        .AddRoutes(Routes.ToArray());
+                        .AddRoutes(Routes);
                     if (SimpleRoute)
                     {
                         foreach (var subnet in ExcludedSubnets.Split(','))
@@ -142,7 +143,7 @@ namespace AzToolbox.Services
                 else
                 {
                     builder.SetRoutingPolicyType(RoutingPolicyType.SplitTunnel)
-                        .AddRoutes(Routes.ToArray());
+                        .AddRoutes(Routes);
                     if (SimpleRoute)
                     {
                         foreach (var subnet in DomainSubnets.Split(','))
@@ -165,8 +166,8 @@ namespace AzToolbox.Services
                     .SetRoutingPolicyType(RoutingPolicyType.SplitTunnel)
                     .SetDisableClassBasedDefaultRoute(true)
                     .SetAuthentication(AuthenticationMethod.MachineCert, null, null, null, null, null, null)
-                    .AddTrafficFilters(TrafficFilters.ToArray())
-                    .AddRoutes(Routes.ToArray())
+                    .AddTrafficFilters(TrafficFilters)
+                    .AddRoutes(Routes)
                     .SetCryptographySuite(CryptographySuite);
                 if (SimpleRoute)
                 {
@@ -178,6 +179,7 @@ namespace AzToolbox.Services
             }
 
             builder
+                .AddAppTriggers(AppTriggers)
                 .SetRegisterDNS(RegisterDNS)
                 .SetByPassForLocal(BypassForLocal)
                 .SetAlwaysOnActive(AlwaysOnActive)

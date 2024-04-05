@@ -18,29 +18,17 @@
 @code {
     Route? selected;
 
-    private Task ShowRouteAdd()
+    private void ShowRouteAdd()
     {
         ModalService.Show<RouteAddModal>("New Route",
-            x =>
-            {
-                x.Add(x => x.OnNewRoute, RouteAdded);
-            },
             new ModalInstanceOptions()
                 {
                     Size = ModalSize.Large
                 });
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 
-    private Task RouteAdded()
-    {
-        return InvokeAsync(StateHasChanged);
-    }
-
-    private Task RemoveRoute()
+    private void RemoveRoute()
     {
         if(selected != null) svc.Routes.Remove(selected);
-        return InvokeAsync(StateHasChanged);
     }
 }

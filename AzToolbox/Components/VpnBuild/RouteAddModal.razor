@@ -61,8 +61,6 @@
     Snackbar? notification;
     string notificationMessage = "";
 
-    [Parameter] public Func<Task>? OnNewRoute { get; set; }
-
     private async Task NewRoute()
     {
         try
@@ -75,7 +73,6 @@
                     Metric = Metric
                 };
             svc.Routes.Add(route);
-            if (OnNewRoute != null) await OnNewRoute.Invoke();
             await ModalService.Hide();
         }
         catch (Exception e)

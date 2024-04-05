@@ -1,0 +1,58 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<ModalBody Margin="Margin.Is2.OnX">
+    <Field Horizontal>
+        <FieldLabel>App ID</FieldLabel>
+        <TextEdit @bind-Text="@id"></TextEdit>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel>App Type</FieldLabel>
+        <SelectList TItem="AppType"
+                    TValue="AppType"
+                    TextField="@(t=>t.ToString())"
+                    ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<AppType>())"
+                    @bind-SelectedValue="type" />
+    </Field>
+</ModalBody>
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="NewAppTrigger">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    string id = "";
+    AppType type = AppType.FilePath;
+
+    Snackbar? notification;
+    string notificationMessage = "";
+
+    private async Task NewAppTrigger()
+    {
+        try
+        {
+            var apptrigger = new AppTrigger()
+            {
+                App = new()
+                {
+                    Id = id,
+                    Type = type
+                }
+            };
+            svc.AppTriggers.Add(apptrigger);
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
+}

@@ -1,0 +1,32 @@
+﻿@using ProfileXMLBuilder.Lib
+@inject VpnBuildService svc
+@inject IModalService ModalService
+
+<Button Color="Color.Info" Clicked="ShowAppTriggerAdd">Add</Button>
+<Button Color="Color.Danger" Clicked="RemoveAppTrigger">Remove</Button>
+<DataGrid TItem="AppTrigger"
+          Data="@svc.AppTriggers"
+          @bind-SelectedRow="@selected"
+          Responsive>
+    <DataGridCommandColumn />
+    <DataGridColumn Field="App.Id" Caption="ID" />
+    <DataGridColumn Field="App.Type" Caption="Type" />
+</DataGrid>
+
+@code {
+    AppTrigger? selected;
+
+    private void ShowAppTriggerAdd()
+    {
+        ModalService.Show<AppTriggerAddModal>("New AppTrigger Entry",
+            new ModalInstanceOptions()
+                {
+                    Size = ModalSize.Large
+                });
+    }
+
+    private void RemoveAppTrigger()
+    {
+        if (selected != null) svc.AppTriggers.Remove(selected);
+    }
+}

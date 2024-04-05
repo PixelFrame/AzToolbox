@@ -23,29 +23,17 @@
 @code {
     TrafficFilter? selected;
 
-    private Task ShowTrafficFiltersAdd()
+    private void ShowTrafficFiltersAdd()
     {
         ModalService.Show<TrafficFilterAddModal>("New Traffic Filter",
-            x =>
-            {
-                x.Add(x => x.OnNewTrafficFilter, TrafficFilterAdded);
-            },
             new ModalInstanceOptions()
                 {
                     Size = ModalSize.Large
                 });
-        StateHasChanged();
-        return Task.CompletedTask;
     }
 
-    private Task TrafficFilterAdded()
-    {
-        return InvokeAsync(StateHasChanged);
-    }
-
-    private Task RemoveTrafficFilter()
+    private void RemoveTrafficFilter()
     {
         if (selected != null) svc.TrafficFilters.Remove(selected);
-        return InvokeAsync(StateHasChanged);
     }
 }
