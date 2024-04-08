@@ -14,9 +14,9 @@ namespace AzToolbox.Utilities
             {
                 throw new Exception("Index too large, the option cannot be compressed.");
             }
-            if (SuffixIdxTable.ContainsKey(suffix))
+            if (SuffixIdxTable.TryGetValue(suffix, out ushort value))
             {
-                return SuffixIdxTable[suffix];
+                return value;
             }
             else
             {
@@ -27,8 +27,8 @@ namespace AzToolbox.Utilities
 
         public static List<byte> EncodeSearchList(IEnumerable<string> SearchList, bool Compression = true)
         {
-            List<byte> result = new();
-            Dictionary<string, ushort> SuffixIdxTable = new();
+            List<byte> result = [];
+            Dictionary<string, ushort> SuffixIdxTable = [];
             ushort index = 0;
             foreach (var name in SearchList)
             {
@@ -113,7 +113,7 @@ namespace AzToolbox.Utilities
 
         public static List<string> DecodeSearchList(IEnumerable<byte> SearchList)
         {
-            List<string> result = new();
+            List<string> result = [];
             var index = 0;
             while (index < SearchList.Count())
             {

@@ -42,14 +42,14 @@ namespace AzToolbox.Services
         public bool? PlumbIKEv2TSAsRoutes { get; set; } = null;
         public bool DisableServerValidationPrompt { get; set; } = true;
         public bool? AllPurposeEnabled { get; set; } = null;
-        public ObservableCollection<TrafficFilter> TrafficFilters { get; set; } = new();
-        public ObservableCollection<DomainNameInformation> Nrpt { get; set; } = new();
-        public ObservableCollection<Route> Routes { get; set; } = new();
-        public ObservableCollection<AppTrigger> AppTriggers { get; set; } = new();
+        public ObservableCollection<TrafficFilter> TrafficFilters { get; set; } = [];
+        public ObservableCollection<DomainNameInformation> Nrpt { get; set; } = [];
+        public ObservableCollection<Route> Routes { get; set; } = [];
+        public ObservableCollection<AppTrigger> AppTriggers { get; set; } = [];
         public CryptographySuite? CryptographySuite { get; set; } = null;
         public DeviceCompliance? DeviceCompliance { get; set; } = null;
         public Proxy? Proxy { get; set; } = null;
-        public ObservableCollection<Eku> EkuMapping { get; set; } = new();
+        public ObservableCollection<Eku> EkuMapping { get; set; } = [];
 
         public bool NotIKEv2
         {

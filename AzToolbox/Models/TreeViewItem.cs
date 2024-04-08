@@ -17,12 +17,12 @@ namespace AzToolbox.Models
         public override string ToString()
         {
             var sbResult = new StringBuilder();
-            printNode("", true, true, ref sbResult);
+            PrintNode("", true, true, ref sbResult);
 
             return sbResult.ToString();
         }
 
-        private void printNode(string indent, bool root, bool last, ref StringBuilder sbResult)
+        private void PrintNode(string indent, bool root, bool last, ref StringBuilder sbResult)
         {
             sbResult.Append(indent);
             if (root) { }
@@ -40,7 +40,7 @@ namespace AzToolbox.Models
             if (HasChildren)
             {
                 for (int i = 0; i < Children!.Count(); i++)
-                    Children!.ElementAt(i).printNode(indent, false, i == Children!.Count() - 1, ref sbResult);
+                    Children!.ElementAt(i).PrintNode(indent, false, i == Children!.Count() - 1, ref sbResult);
             }
         }
     }

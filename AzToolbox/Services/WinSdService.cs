@@ -5,21 +5,16 @@ using WinSdUtil.Lib.Model;
 
 namespace AzToolbox.Services
 {
-    public class WinSdService
+    public partial class WinSdService(HttpClient httpClient)
     {
         private WinSdConverter converter = null!;
-        private readonly HttpClient _httpClient;
-        public bool IsInitialized => converter != null;
 
-        public WinSdService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
+        public bool IsInitialized => converter != null;
 
         public async Task InitializeAsync()
         {
-            var trusteeJsonData = await _httpClient.GetStringAsync("/assets/WinSdTrustee.json");
-            var adSchemaGuidJsonData = await _httpClient.GetStringAsync("/assets/WinSdAdSchemaGuid.json");
+            var trusteeJsonData = await httpClient.GetStringAsync("/assets/WinSdTrustee.json");
+            var adSchemaGuidJsonData = await httpClient.GetStringAsync("/assets/WinSdAdSchemaGuid.json");
 
             converter = new WinSdConverter(true, trusteeJsonData, adSchemaGuidJsonData);
         }
@@ -31,10 +26,13 @@ namespace AzToolbox.Services
 
         public AccessControlList FromBinaryToAcl(string BinaryStr)
         {
-            var regDeNoise = new Regex(@"[\\\r\n\s,-]|0x");
+            var regDeNoise = RegDeNoise();
             BinaryStr = regDeNoise.Replace(BinaryStr, "");
             var binary = Convert.FromHexString(BinaryStr);
             return converter.FromBinaryToAcl(binary);
         }
+
+        [GeneratedRegex(@"[\\\r\n\s,-]|0x")]
+        private static partial Regex RegDeNoise();
     }
 }

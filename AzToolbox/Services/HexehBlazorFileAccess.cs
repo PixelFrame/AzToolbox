@@ -2,16 +2,9 @@
 
 namespace AzToolbox.Services
 {
-    internal class HexehBlazorFileAccess : IFileAccess
+    internal class HexehBlazorFileAccess(HttpClient httpClient) : IFileAccess
     {
-        private readonly HttpClient _httpClient;
-
         public bool UseAsync { get; set; } = true;
-
-        public HexehBlazorFileAccess(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
 
         public IEnumerable<DirectoryInfo> EnumExtensionDirs()
         {
@@ -31,7 +24,7 @@ namespace AzToolbox.Services
         public async Task<IEnumerable<SchemaFile>> EnumSchemasAsync()
         {
             var result = new List<SchemaFile>();
-            var schemaCsv = (await _httpClient.GetStringAsync("/assets/HEXEH/schemas.csv")).Split("\n", StringSplitOptions.RemoveEmptyEntries);
+            var schemaCsv = (await httpClient.GetStringAsync("/assets/HEXEH/schemas.csv")).Split("\n", StringSplitOptions.RemoveEmptyEntries);
             foreach (var schema in schemaCsv)
             {
                 var splits = schema.Split(',');
@@ -48,7 +41,7 @@ namespace AzToolbox.Services
 
         public Task<Stream> GetSchemaReadStreamAsync(SchemaFile schema)
         {
-            return _httpClient.GetStreamAsync(schema.Root + schema.RelativePath);
+            return httpClient.GetStreamAsync(schema.Root + schema.RelativePath);
         }
 
         public string ReadSchemaContent(SchemaFile schema)
