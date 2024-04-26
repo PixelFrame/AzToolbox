@@ -1,0 +1,107 @@
+﻿@page "/Common/Reverse"
+<PageTitle>Reverse Objects - AzToolbox</PageTitle>
+
+@using System.Text;
+
+@inject INotificationService NotificationService
+@inject IJSRuntime JSRuntime
+
+<SelectList TItem="KeyValuePair<int,string>"
+            TValue="int"
+            Data="@modes"
+            TextField="@((item)=>item.Value)"
+            ValueField="@((item)=>item.Key)"
+            DefaultItemValue="0"
+            @bind-SelectedValue="mode" />
+
+@if (mode == 0)
+{
+    <Addons Margin="Margin.Is1.FromTop">
+        <Addon AddonType="AddonType.Start">
+            <AddonLabel Style="min-width: 300px">Splitter</AddonLabel>
+        </Addon>
+        <Addon AddonType="AddonType.Body">
+            <TextEdit @bind-Text="splitter" />
+        </Addon>
+    </Addons>
+
+    <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromTop">
+        <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
+            <AddonLabel Style="min-width: 300px">Trim Splitted Word</AddonLabel>
+        </Addon>
+        <Addon AddonType="AddonType.Body">
+            <Switch @bind-Checked="@trim" />
+        </Addon>
+    </Addons>
+}
+else if (mode == 1)
+{
+    <Addons Margin="Margin.Is1.FromTop">
+        <Addon AddonType="AddonType.Start">
+            <AddonLabel Style="min-width: 300px">X =</AddonLabel>
+        </Addon>
+        <Addon AddonType="AddonType.Body">
+            <NumericEdit @bind-Value="splitCount" Min="1" Max="input.Length" />
+        </Addon>
+    </Addons>
+}
+
+<Button Color="Color.Primary" Clicked="DoReverse" Block Margin="Margin.Is1.FromTop">
+    Reverse
+</Button>
+
+<Splitter Style="height:50vh" Margin="Margin.Is1.FromTop">
+    <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+        <MemoEdit @bind-Text="@input" Height="Height.Is100" spellcheck="false" Flex="Flex.Grow"
+                  Class="monospace-fixed-textbox" />
+    </SplitterSection>
+    <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+        <MemoEdit @bind-Text="@output" Height="Height.Is100" spellcheck="false" Flex="Flex.Grow"
+                  Class="monospace-fixed-textbox" />
+    </SplitterSection>
+</Splitter>
+
+@code {
+    private readonly Dictionary<int, string> modes = new()
+    {
+        {0, "By splitter"},
+        {1, "Every X characters"},
+    };
+    int mode = 0;
+    string splitter = ",";
+    int splitCount = 2;
+    string input = string.Empty;
+    string output = string.Empty;
+    bool trim = false;
+
+    void DoReverse()
+    {
+        switch(mode)
+        {
+            case 0: ReverseBySplitter();break;
+            case 1: ReverseByCount(); break;
+        }
+    }
+
+    void ReverseBySplitter()
+    {
+        IEnumerable<string> words = input.Split(splitter).Reverse();
+        if(trim)
+        {
+            words = words.Select(w => w.Trim());
+        }
+        output = string.Join(splitter, words);
+    }
+
+    void ReverseByCount()
+    {
+        var words = SplitStringByCount().Reverse();
+        output = string.Join(string.Empty, words);
+    }
+
+    IEnumerable<string> SplitStringByCount()
+    {
+        for (var i = 0; i < input.Length; i += splitCount)
+            yield return input.Substring(i, Math.Min(splitCount, input.Length - i));
+    }
+}
