@@ -8,21 +8,23 @@
         Tools built with Blazor WebAssembly. <br>
     </JumbotronSubtitle>
     <Divider />
-    <Div Style="white-space: pre-wrap; font-family: FiraCode, monospace;">
-        @ToolTree
-    </Div>
+    <pre>
+    <Code>
+            @ToolTree
+    </Code>
+    </pre>
     <Divider />
     <Link To="https://github.com/PixelFrame/AzToolbox" Target="Target.Blank" TextColor="TextColor.Body">
-    <Icon Name="@("fab fa-github")" IconSize="IconSize.Large" />
+    <Icon Name="@("fab fa-github")" IconSize="IconSize.Default" />
     </Link>
     <Link To="mailto:pm421@live.com" Target="Target.Blank" TextColor="TextColor.Body">
-    <Icon Name="@IconName.Mail" IconSize="IconSize.Large" />
+    <Icon Name="@("fa-solid fa-envelope")" IconSize="IconSize.Default" />
     </Link>
 </Jumbotron>
 
 @code {
     string ToolTree =
-@"AzToolbox
+        @"AzToolbox
 |
 +---Networking
 |   +---DhcpSearchList   : Encode/Decode DHCP Option 119
