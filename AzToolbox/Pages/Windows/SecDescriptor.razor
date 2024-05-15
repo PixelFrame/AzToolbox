@@ -40,15 +40,14 @@
                             ValueField="@(item => item)"
                             @bind-SelectedValue="@selectedAccessMaskType" />
             </Addon>
-            <Addon AddonType="AddonType.End">
-                <Button Color="Color.Primary" Clicked="ShowAccessMaskDetails">Details</Button>
-            </Addon>
         </Addons>
         <Divider DividerType="DividerType.Solid" />
         <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
         <Divider DividerType="DividerType.Solid" />
         <Button Color="Color.Primary" Clicked="() => AclTree.ExpandAll()" Size="Size.Small">Expand All</Button>
         <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small">Copy Tree</Button>
+        <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small">Trustee List</Button>
+        <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small">Access Mask List</Button>
         <TreeView @ref="@AclTree"
                   Nodes="AclTreeHead"
                   ExpandedNodes="ExpandedNodes"
@@ -130,6 +129,15 @@
     Task ShowTrusteeDetails(Trustee trustee)
     {
         return ModalService.Show<TrusteeDetailsModal>("Trustee", x => x.Add(x => x.trustee, trustee),
+        new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
+    }
+
+    Task ShowTrusteeOverview()
+    {
+        return ModalService.Show<TrusteeOverviewModal>("Trustee Overview",
         new ModalInstanceOptions()
             {
                 Size = ModalSize.ExtraLarge
