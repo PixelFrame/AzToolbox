@@ -4,7 +4,7 @@
           Data="@Filters"
           DetailRowStartsVisible="false"
           Filterable="true"
-          FilterMethod="DataGridFilterMethod.Contains"
+          FilterMode="DataGridFilterMode.Menu"
           Narrow="true"
           ShowPager="true"
           ShowPageSizes="true"
@@ -29,7 +29,7 @@
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Description</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Description" Disabled AutoSize Size="Size.Small"/>
+                    <MemoEdit Text="@context.Description" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
@@ -47,10 +47,34 @@
             @if (context.Callout != null)
             {
                 <Field Horizontal>
-                     <FieldLabel ColumnSize="ColumnSize.Is2">Callout</FieldLabel>
-                     <FieldBody ColumnSize="ColumnSize.Is10">
-                     <MemoEdit Text="@("ID: " + context.Callout.Id + " Key: " + context.Callout.CalloutKey + Environment.NewLine + context.Callout.Name + Environment.NewLine + context.Callout.Description + Environment.NewLine + context.Callout.ApplicableLayer)" Disabled AutoSize Size="Size.Small" />
-                     </FieldBody>
+                    <FieldLabel ColumnSize="ColumnSize.Is2">Callout</FieldLabel>
+                    <FieldBody ColumnSize="ColumnSize.Is10">
+                        <Table Bordered Narrow Responsive>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHeaderCell ColumnSpan="2">@context.Callout.Name</TableHeaderCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow>
+                                    <TableHeaderCell>ID</TableHeaderCell>
+                                    <TableRowCell>@context.Callout.Id</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Key</TableHeaderCell>
+                                    <TableRowCell>@context.Callout.CalloutKey</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Description</TableHeaderCell>
+                                    <TableRowCell>@context.Callout.Description</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Applicable Layer</TableHeaderCell>
+                                    <TableRowCell>@context.Callout.ApplicableLayer</TableRowCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </FieldBody>
                 </Field>
             }
             <Field Horizontal>
@@ -65,14 +89,14 @@
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                        @foreach(var cond in context.Condition)
-                        {
-                            <TableRow>
-                                <TableRowCell>@cond.Item1</TableRowCell>
-                                <TableRowCell>@cond.Item2</TableRowCell>
-                                <TableRowCell>@cond.Item3</TableRowCell>
-                            </TableRow>
-                        }
+                            @foreach (var cond in context.Condition)
+                            {
+                                <TableRow>
+                                    <TableRowCell>@cond.Item1</TableRowCell>
+                                    <TableRowCell>@cond.Item2</TableRowCell>
+                                    <TableRowCell>@cond.Item3</TableRowCell>
+                                </TableRow>
+                            }
                         </TableBody>
                     </Table>
                 </FieldBody>

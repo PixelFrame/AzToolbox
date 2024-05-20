@@ -24,7 +24,7 @@
                         @bind-SelectedValue="set" />
             <Button Color="Color.Warning" Clicked="LoadPreSet" Margin="Margin.Is1.FromStart" Width="Width.Px(150)">Load</Button>
         </Div>
-        <Divider DividerType="DividerType.Solid" />
+        <Divider DividerType="DividerType.TextContent" Text="Basic Settings" />
         <Field>
             <Switch TValue="bool" @bind-Checked="@svc.UserTunnel">User Tunnel</Switch>
         </Field>
@@ -162,6 +162,7 @@
                 }
             </Div>
         }
+        <Divider DividerType="DividerType.TextContent" Text="Details & Extra" />
         @if (svc.UserTunnel)
         {
             <Button Color="Color.Info" Clicked="ShowNrpt" Margin="Margin.Is1.OnY">NRPT</Button>
@@ -169,7 +170,7 @@
             <Button Color="Color.Info" Clicked="ShowAppTriggers" Margin="Margin.Is1.OnY">App Triggers</Button>
             <Button Color="Color.Info" Clicked="ShowRoutes" Margin="Margin.Is1.OnY">Routes</Button>
             <Button Color="Color.Info" Clicked="ShowProxy" Margin="Margin.Is1.OnY">Proxy</Button>
-            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@svc.NotIKEv2" Margin="Margin.Is1.OnY">IPsec Policy</Button>
+            <Button Color="Color.Info" Clicked="ShowCryptographySuite" Disabled="@(svc.TunnelProtocol != NativeProtocolType.IKEv2)" Margin="Margin.Is1.OnY">IPsec Policy</Button>
             <Button Color="Color.Info" Clicked="ShowDeviceCompliance" Disabled="@(!svc.Tls)" Margin="Margin.Is1.OnY">Device Compliance</Button>
             <Button Color="Color.Info" Clicked="ShowCertificateSelection" Disabled="@(!svc.Tls)" Margin="Margin.Is1.OnY">Certificate Selection</Button>
             <Button Color="Color.Info" Clicked="ShowExtraSettings" Margin="Margin.Is1.OnY">Extra Settings</Button>
@@ -198,7 +199,7 @@
             @if (built)
             {
                 <pre class="language-xml" style="margin:0">
-                <code>@highlightedProfileXml</code>
+                    <code>@highlightedProfileXml</code>
                 </pre>
             }
         </Div>

@@ -1,5 +1,6 @@
 ﻿using ProfileXMLBuilder.Lib;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 
 namespace AzToolbox.Services
 {
@@ -11,21 +12,21 @@ namespace AzToolbox.Services
         public bool DomainNRPT { get; set; } = true;
         public bool SimpleRoute { get; set; } = true;
         public bool CertSelectUseRadiusCA { get; set; } = true;
-        public string VpnServer { get; set; } = "";
-        public string DomainDnsSuffix { get; set; } = "";
-        public string TrustedNetworkDetection { get; set; } = "";
-        public string RadiusServerName { get; set; } = "";
-        public string RootCAHash { get; set; } = "";
-        public string CertSelectCAHash { get; set; } = "";
-        public string DnsServers { get; set; } = "";
-        public string DomainSubnets { get; set; } = "";
-        public string ExcludedSubnets { get; set; } = "";
-        public string DomainControllerAddresses { get; set; } = "";
+        public string VpnServer { get; set; } = string.Empty;
+        public string DomainDnsSuffix { get; set; } = string.Empty;
+        public string TrustedNetworkDetection { get; set; } = string.Empty;
+        public string RadiusServerName { get; set; } = string.Empty;
+        public string RootCAHash { get; set; } = string.Empty;
+        public string CertSelectCAHash { get; set; } = string.Empty;
+        public string DnsServers { get; set; } = string.Empty;
+        public string DomainSubnets { get; set; } = string.Empty;
+        public string ExcludedSubnets { get; set; } = string.Empty;
+        public string DomainControllerAddresses { get; set; } = string.Empty;
         public bool Peap { get; set; } = false;
         public bool Tls { get; set; } = true;
-        public string ProfileXml { get; set; } = "";
+        public string ProfileXml { get; set; } = string.Empty;
         public NativeProtocolType TunnelProtocol { get; set; } = NativeProtocolType.IKEv2;
-        public string ProtocolListString { get; set; } = "";
+        public string ProtocolListString { get; set; } = string.Empty;
         public int? RetryTimeInHours { get; set; } = null;
         public bool? RegisterDNS { get; set; } = true;
         public bool? BypassForLocal { get; set; } = null;
@@ -50,11 +51,6 @@ namespace AzToolbox.Services
         public DeviceCompliance? DeviceCompliance { get; set; } = null;
         public Proxy? Proxy { get; set; } = null;
         public ObservableCollection<Eku> EkuMapping { get; set; } = [];
-
-        public bool NotIKEv2
-        {
-            get => TunnelProtocol != NativeProtocolType.IKEv2;
-        }
 
         public void Build()
         {
@@ -219,6 +215,7 @@ namespace AzToolbox.Services
 
         public void LoadPreSet(PreSets set)
         {
+            LoadPreSet_Null();
             switch (set)
             {
                 case PreSets.User_Split_PEAP__TLS:
@@ -242,26 +239,70 @@ namespace AzToolbox.Services
             }
         }
 
+        private void LoadPreSet_Null()
+        {
+            UserTunnel = true;
+            ForceTunnel = false;
+            DomainNRPT = true;
+            SimpleRoute = true;
+            CertSelectUseRadiusCA = true;
+            VpnServer = string.Empty;
+            DomainDnsSuffix = string.Empty;
+            TrustedNetworkDetection = string.Empty;
+            RadiusServerName = string.Empty;
+            RootCAHash = string.Empty;
+            CertSelectCAHash = string.Empty;
+            DnsServers = string.Empty;
+            DomainSubnets = string.Empty;
+            ExcludedSubnets = string.Empty;
+            DomainControllerAddresses = string.Empty;
+            Peap = false;
+            Tls = true;
+            TunnelProtocol = NativeProtocolType.IKEv2;
+            ProtocolListString = string.Empty;
+            RetryTimeInHours = null;
+            RegisterDNS = true;
+            BypassForLocal = null;
+            DataEncryption = null;
+            AlwaysOnActive = null;
+            DisableAdvancedOptionsEditButton = null;
+            DisableDisconnectButton = null;
+            DisableIKEv2Fragmentation = null;
+            IPv4InterfaceMetric = null;
+            IPv6InterfaceMetric = null;
+            NetworkOutageTime = null;
+            PrivateNetwork = null;
+            UseRasCredential = null;
+            PlumbIKEv2TSAsRoutes = null;
+            DisableServerValidationPrompt = true;
+            AllPurposeEnabled = null;
+            TrafficFilters.Clear();
+            Nrpt.Clear();
+            Routes.Clear();
+            AppTriggers.Clear();
+            CryptographySuite = null;
+            DeviceCompliance = null;
+            Proxy = null;
+            EkuMapping.Clear();
+        }
         private void LoadPreSet_User_Split_PEAP_TLS()
         {
             UserTunnel = true;
             ForceTunnel = false;
             DomainNRPT = true;
             SimpleRoute = true;
-            Routes.Clear();
             CertSelectUseRadiusCA = true;
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
             RadiusServerName = "nps.corp.contoso.com";
-            RootCAHash = "00112233aabbccddeeffffeeddccbbaa445566";
+            RootCAHash = RandomSHA1();
             DnsServers = "10.1.1.1";
             DomainSubnets = "10.1.1.0/24";
             Peap = true;
             Tls = true;
             TunnelProtocol = NativeProtocolType.Automatic;
             RegisterDNS = true;
-            Nrpt.Clear();
         }
         private void LoadPreSet_User_Split_EAP_TLS()
         {
@@ -269,20 +310,18 @@ namespace AzToolbox.Services
             ForceTunnel = false;
             DomainNRPT = true;
             SimpleRoute = true;
-            Routes.Clear();
             CertSelectUseRadiusCA = true;
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
             RadiusServerName = "nps.corp.contoso.com";
-            RootCAHash = "00112233aabbccddeeffffeeddccbbaa445566";
+            RootCAHash = RandomSHA1();
             DnsServers = "10.1.1.1";
             DomainSubnets = "10.1.1.0/24";
             Peap = false;
             Tls = true;
             TunnelProtocol = NativeProtocolType.Automatic;
             RegisterDNS = true;
-            Nrpt.Clear();
         }
         private void LoadPreSet_User_Split_PEAP_MSCHAPv2()
         {
@@ -290,20 +329,18 @@ namespace AzToolbox.Services
             ForceTunnel = false;
             DomainNRPT = true;
             SimpleRoute = true;
-            Routes.Clear();
             CertSelectUseRadiusCA = true;
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
             RadiusServerName = "nps.corp.contoso.com";
-            RootCAHash = "00112233aabbccddeeffffeeddccbbaa445566";
+            RootCAHash = RandomSHA1();
             DnsServers = "10.1.1.1";
             DomainSubnets = "10.1.1.0/24";
             Peap = true;
             Tls = false;
             TunnelProtocol = NativeProtocolType.Automatic;
             RegisterDNS = true;
-            Nrpt.Clear();
         }
         private void LoadPreSet_User_Split_EAP_MSCHAPv2()
         {
@@ -311,7 +348,6 @@ namespace AzToolbox.Services
             ForceTunnel = false;
             DomainNRPT = true;
             SimpleRoute = true;
-            Routes.Clear();
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
@@ -321,7 +357,6 @@ namespace AzToolbox.Services
             Tls = false;
             TunnelProtocol = NativeProtocolType.Automatic;
             RegisterDNS = true;
-            Nrpt.Clear();
         }
         private void LoadPreSet_User_Force_PEAP_TLS()
         {
@@ -329,13 +364,12 @@ namespace AzToolbox.Services
             ForceTunnel = true;
             DomainNRPT = false;
             SimpleRoute = true;
-            Routes.Clear();
             CertSelectUseRadiusCA = true;
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
             RadiusServerName = "nps.corp.contoso.com";
-            RootCAHash = "00112233aabbccddeeffffeeddccbbaa445566";
+            RootCAHash = RandomSHA1();
             DnsServers = "10.1.1.1";
             ExcludedSubnets = "192.168.0.0/16";
             Peap = true;
@@ -343,7 +377,6 @@ namespace AzToolbox.Services
             TunnelProtocol = NativeProtocolType.Automatic;
             IPv4InterfaceMetric = 10;
             RegisterDNS = true;
-            Nrpt.Clear();
             Nrpt.Add(
                 new() { DomainName = ".", DnsServers = DnsServers, }
                 );
@@ -354,13 +387,12 @@ namespace AzToolbox.Services
             ForceTunnel = true;
             DomainNRPT = false;
             SimpleRoute = true;
-            Routes.Clear();
             CertSelectUseRadiusCA = true;
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
             RadiusServerName = "nps.corp.contoso.com";
-            RootCAHash = "00112233aabbccddeeffffeeddccbbaa445566";
+            RootCAHash = RandomSHA1();
             DnsServers = "10.1.1.1";
             ExcludedSubnets = "192.168.0.0/16";
             Peap = false;
@@ -368,7 +400,6 @@ namespace AzToolbox.Services
             TunnelProtocol = NativeProtocolType.Automatic;
             IPv4InterfaceMetric = 10;
             RegisterDNS = true;
-            Nrpt.Clear();
             Nrpt.Add(
                 new() { DomainName = ".", DnsServers = DnsServers, }
                 );
@@ -379,12 +410,11 @@ namespace AzToolbox.Services
             ForceTunnel = true;
             DomainNRPT = false;
             SimpleRoute = true;
-            Routes.Clear();
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
             RadiusServerName = "nps.corp.contoso.com";
-            RootCAHash = "00112233aabbccddeeffffeeddccbbaa445566";
+            RootCAHash = RandomSHA1();
             DnsServers = "10.1.1.1";
             ExcludedSubnets = "192.168.0.0/16";
             Peap = true;
@@ -392,7 +422,6 @@ namespace AzToolbox.Services
             TunnelProtocol = NativeProtocolType.Automatic;
             IPv4InterfaceMetric = 10;
             RegisterDNS = true;
-            Nrpt.Clear();
             Nrpt.Add(
                 new() { DomainName = ".", DnsServers = DnsServers, }
                 );
@@ -403,7 +432,6 @@ namespace AzToolbox.Services
             ForceTunnel = true;
             DomainNRPT = false;
             SimpleRoute = true;
-            Routes.Clear();
             VpnServer = "ras.contoso.com";
             DomainDnsSuffix = "corp.contoso.com";
             TrustedNetworkDetection = "corp.contoso.com";
@@ -414,7 +442,6 @@ namespace AzToolbox.Services
             TunnelProtocol = NativeProtocolType.Automatic;
             IPv4InterfaceMetric = 10;
             RegisterDNS = true;
-            Nrpt.Clear();
             Nrpt.Add(
                 new() { DomainName = ".", DnsServers = DnsServers, }
                 );
@@ -432,6 +459,15 @@ namespace AzToolbox.Services
             DomainControllerAddresses = "10.1.1.1,10.1.1.2";
             TunnelProtocol = NativeProtocolType.IKEv2;
             RegisterDNS = true;
+        }
+
+        private string RandomSHA1()
+        {
+            var rand = new Random();
+            var rndData = new byte[512];
+            rand.NextBytes(rndData);
+            var sha1Data = SHA1.HashData(rndData);
+            return string.Join(string.Empty, sha1Data.Select(s => s.ToString("X2")));
         }
     }
 }
