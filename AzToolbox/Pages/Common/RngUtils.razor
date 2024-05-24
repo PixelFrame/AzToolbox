@@ -25,6 +25,7 @@
                         <SelectItem Value="8">ASCII strings</SelectItem>
                         <SelectItem Value="801">Strings from custom characters</SelectItem>
                         <SelectItem Value="9">HEX values</SelectItem>
+                        <SelectItem Value="10">GUID</SelectItem>
                     </Select>
                 </Field>
             </Fields>
@@ -177,6 +178,17 @@
                 </Repeater>
             </Card>
         }
+
+        @if (itemType == 10)
+        {
+            <Card Class="rng-container-line">
+                <Repeater Items="@guids">
+                    <Card Class="rng-item-line">
+                        @context.ToString()
+                    </Card>
+                </Repeater>
+            </Card>
+        }
     </Column>
 </Row>
 
@@ -222,6 +234,7 @@
     List<string> strs = new();
     List<MarkupString> mstrs = new();
     List<byte> bytes = new();
+    List<Guid> guids = new();
 
     const string romanAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -404,6 +417,14 @@
                 rnd.NextBytes(byteArr);
                 bytes.Clear();
                 bytes.AddRange(byteArr);
+                break;
+            case 10:
+                guids.Clear();
+                while (_cnt > 0)
+                {
+                    guids.Add(Guid.NewGuid());
+                    _cnt--;
+                }
                 break;
         }
     }
