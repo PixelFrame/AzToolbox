@@ -87,7 +87,8 @@
         "Name": "Data",
         "Parser": {
           "Type": 10,
-          "Target": "Windows.DNS.DnsRpcRecord{Type.DisplayValue}"
+          "Target": "Windows.DNS.DnsRpcRecord{Type.DisplayValue}",
+          "AllowFallback": true
         }
       }
     ]

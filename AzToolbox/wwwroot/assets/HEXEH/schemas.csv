@@ -1,3 +1,11 @@
+DhcpOption.json,Networking/DHCP/DhcpOption.json
+DhcpOptionData1.json,Networking/DHCP/DhcpOptionData1.json
+DhcpOptionData119.json,Networking/DHCP/DhcpOptionData119.json
+DhcpOptionData15.json,Networking/DHCP/DhcpOptionData15.json
+DhcpOptionData252.json,Networking/DHCP/DhcpOptionData252.json
+DhcpOptionData3.json,Networking/DHCP/DhcpOptionData3.json
+DhcpOptionData6.json,Networking/DHCP/DhcpOptionData6.json
+DhcpOptionList.json,Networking/DHCP/DhcpOptionList.json
 ProxyConfig.json,Windows/ProxyConfig.json
 DFSNamespaceLink.json,Windows/DFSN/DFSNamespaceLink.json
 Element.json,Windows/DFSN/Element.json
@@ -8,6 +16,8 @@ SiteInformation.json,Windows/DFSN/SiteInformation.json
 SiteNameInfo.json,Windows/DFSN/SiteNameInfo.json
 TargetEntry.json,Windows/DFSN/TargetEntry.json
 TargetList.json,Windows/DFSN/TargetList.json
+DhcpInterfaceOption.json,Windows/DHCP/DhcpInterfaceOption.json
+DhcpInterfaceOptions.json,Windows/DHCP/DhcpInterfaceOptions.json
 DnsCountName.json,Windows/DNS/DnsCountName.json
 DnsRecordDsAttribute.json,Windows/DNS/DnsRecordDsAttribute.json
 DnsRpcRecordA.json,Windows/DNS/DnsRpcRecordA.json

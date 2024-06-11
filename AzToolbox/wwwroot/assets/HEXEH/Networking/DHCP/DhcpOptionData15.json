@@ -1,0 +1,15 @@
+﻿{
+  "Name": "DHCP Option: Domain Name",
+  "Structure": {
+    "Fields": "Domain Name",
+    "Definition": [
+      {
+        "Name": "Domain Name",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.NullTerminatedAsciiString"
+        }
+      }
+    ]
+  }
+}

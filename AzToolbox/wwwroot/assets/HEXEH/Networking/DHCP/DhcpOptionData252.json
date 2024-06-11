@@ -1,0 +1,15 @@
+﻿{
+  "Name": "DHCP Option: Web Proxy Auto-Discovery Protocol",
+  "Structure": {
+    "Fields": "WPAD",
+    "Definition": [
+      {
+        "Name": "WPAD",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.String.NullTerminatedAsciiString"
+        }
+      }
+    ]
+  }
+}

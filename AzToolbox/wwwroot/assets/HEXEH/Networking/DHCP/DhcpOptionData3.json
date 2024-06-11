@@ -1,0 +1,20 @@
+﻿{
+  "Name": "DHCP Option: Router",
+  "Structure": {
+    "Fields": "Routers",
+    "Definition": [
+      {
+        "Name": "Routers",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectParser": "Networking.IPv4Addr",
+            "IncludeSchema": "false"
+          },
+          "LengthFromParent": true
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+﻿{
+  "Name": "DHCP Option: Domain search",
+  "Structure": {
+    "Fields": "Domain Search List",
+    "Definition": [
+      {
+        "Name": "Domain Search List",
+        "Parser": {
+          "Type": 10,
+          "Target": "Networking.FqdnList",
+          "LengthFromParent": true
+        }
+      }
+    ]
+  }
+}

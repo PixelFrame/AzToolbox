@@ -1,0 +1,19 @@
+{
+  "Name": "DHCP Interface Options",
+  "Structure": {
+    "Fields": "Option List",
+    "Definition": [
+      {
+        "Name": "Option List",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectParser": "Windows.DHCP.DhcpInterfaceOption",
+            "IncludeSchema": "true"
+          }
+        }
+      }
+    ]
+  }
+}

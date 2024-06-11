@@ -1,0 +1,28 @@
+﻿{
+  "Name": "DHCP Option List",
+  "Structure": {
+    "Fields": "OptionList:End",
+    "Definition": [
+      {
+        "Name": "OptionList",
+        "Parser": {
+          "Type": 10,
+          "Target": "Common.Array",
+          "Options": {
+            "ObjectParser": "Networking.DHCP.DhcpOption",
+            "Terminator": "255",
+            "IncludeSchema": "true"
+          }
+        }
+      },
+      {
+        "Name": "End",
+        "Parser": {
+          "Type": 0,
+          "Target": "BYTE"
+        },
+        "Expected": 255
+      }
+    ]
+  }
+}
