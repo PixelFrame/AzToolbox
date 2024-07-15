@@ -7,18 +7,17 @@
 @inject INotificationService NotificationService
 @inject IJSRuntime JSRuntime
 
-<Splitter Style="height:50vh">
+<Splitter Style="height:40vh">
     <SplitterSection Display="Display.Flex" Flex="Flex.Column">
-        <Button Color="Color.Primary" Clicked="FromBase64" Block>
+        <FieldLabel>Base64</FieldLabel>
+        <MemoEdit @bind-Text="@base64str" spellcheck="false" Flex="Flex.Grow"
+                  Class="monospace-fixed-textbox" />
+        <Button Color="Color.Primary" Clicked="FromBase64" Width="Width.Is33" Flex="Flex.AlignSelf.Center" Margin="Margin.Is1.OnY">
             Base64 → String
         </Button>
-        <MemoEdit @bind-Text="@base64str" Height="Height.Is100" spellcheck="false" Flex="Flex.Grow"
-                  Class="monospace-fixed-textbox" />
     </SplitterSection>
     <SplitterSection Display="Display.Flex" Flex="Flex.Column">
-        <Button Color="Color.Primary" Clicked="FromString" Block>
-            String → Base64
-        </Button>
+        <FieldLabel>String</FieldLabel>
         <SelectList TItem="EncodingInfo"
                     TValue="int"
                     Data="@SupportedEncodings"
@@ -26,8 +25,11 @@
                     ValueField="@((item)=>item.CodePage)"
                     DefaultItemValue="65001"
                     @bind-SelectedValue="selectedCodePage" />
-        <MemoEdit @bind-Text="@decodedstr" Height="Height.Is100" spellcheck="false" Flex="Flex.Grow"
+        <MemoEdit @bind-Text="@decodedstr" spellcheck="false" Flex="Flex.Grow" Margin="Margin.Is1.FromTop"
                   Class="monospace-fixed-textbox" />
+        <Button Color="Color.Primary" Clicked="FromString" Width="Width.Is33" Flex="Flex.AlignSelf.Center" Margin="Margin.Is1.OnY">
+            String → Base64
+        </Button>
     </SplitterSection>
 </Splitter>
 

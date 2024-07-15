@@ -2,27 +2,27 @@
 @inject VpnBuildService svc
 @inject IModalService ModalService
 
-<ModalBody Margin="Margin.Is2.OnX">
+<ModalBody Margin="Margin.Is2.OnX" Overflow="Overflow.Auto">
     @if (svc.TunnelProtocol == NativeProtocolType.ProtocolList)
     {
-        <Field Horizontal>
-        <FieldLabel>ProtocolList/RetryTimeInHours</FieldLabel>
-        <NumericEdit TValue="int?" @bind-Value="@svc.RetryTimeInHours" />
-    </Field>
+        <Field>
+            <FieldLabel>ProtocolList/RetryTimeInHours</FieldLabel>
+            <NumericEdit TValue="int?" @bind-Value="@svc.RetryTimeInHours" />
+        </Field>
     }
-    <Field Horizontal>
+    <Field>
         <FieldLabel>IPv4InterfaceMetric</FieldLabel>
         <NumericEdit TValue="int?" @bind-Value="@svc.IPv4InterfaceMetric" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>IPv6InterfaceMetric</FieldLabel>
         <NumericEdit TValue="int?" @bind-Value="@svc.IPv6InterfaceMetric" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>NetworkOutageTime</FieldLabel>
         <NumericEdit TValue="uint?" @bind-Value="@svc.NetworkOutageTime" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>RegisterDNS</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -32,7 +32,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.RegisterDNS))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "RegisterDNS"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>AlwaysOnActive</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -42,7 +42,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.AlwaysOnActive))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "AlwaysOnActive"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>BypassForLocal</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -52,7 +52,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.BypassForLocal))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "BypassForLocal"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>DisableAdvancedOptionsEditButton</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -62,7 +62,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.DisableAdvancedOptionsEditButton))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "DisableAdvancedOptionsEditButton"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>DisableDisconnectButton</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -72,7 +72,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.DisableDisconnectButton))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "DisableDisconnectButton"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>DisableIKEv2Fragmentation</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -82,7 +82,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.DisableIKEv2Fragmentation))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "DisableIKEv2Fragmentation"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>UseRasCredential</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -92,7 +92,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.UseRasCredential))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "UseRasCredential"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>PrivateNetwork</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -102,7 +102,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.PrivateNetwork))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "PrivateNetwork"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>PlumbIKEv2TSAsRoutes</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
@@ -112,7 +112,7 @@
                     SelectedValue="@(BooleanPropToInt(svc.PlumbIKEv2TSAsRoutes))"
                     SelectedValueChanged="@((v) => BooleanPropChanged(v, "PlumbIKEv2TSAsRoutes"))" />
     </Field>
-    <Field Horizontal>
+    <Field>
         <FieldLabel>DataEncryption</FieldLabel>
         <SelectList TItem="KeyValuePair<string, int>"
                     TValue="int"
