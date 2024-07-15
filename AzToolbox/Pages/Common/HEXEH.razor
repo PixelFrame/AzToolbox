@@ -15,43 +15,48 @@
 <Splitter Direction="SplitterDirection.Vertical" Style="height:calc(100vh - 74px - 1rem)">
     <SplitterSection MinSize="400" Overflow="Overflow.Hidden">
         <Splitter Style="min-height:400px">
-            <SplitterSection Display="Display.Flex" Flex="Flex.Column">
+            <SplitterSection Display="Display.Flex" Flex="Flex.Column" Overflow="Overflow.Auto">
                 <MemoEdit @bind-Text="@hexstring" Rows="12" spellcheck="false"
                           Class="monospace-fixed-textbox" Margin="Margin.Is1.FromBottom" />
-                <Select TValue="string" @bind-SelectedValue="@TargetParserName" Margin="Margin.Is1.FromBottom">
-                    @foreach (var group in groupedParsers)
-                    {
-                        <SelectGroup Label="@group.Key[(group.Key.LastIndexOf(".Parser.") + 8)..]">
-                            @foreach (var parser in group)
+                <Field Margin="Margin.Is1.OnY" Horizontal Flex="Flex.AlignItems.Center">
+                    <FieldLabel>
+                        Type
+                    </FieldLabel>
+                    <FieldBody Flex="Flex.Grow.Is1" Margin="Margin.Is1.FromStart">
+                        <Select TValue="string" @bind-SelectedValue="@TargetParserName" Margin="Margin.Is1.FromBottom">
+                            @foreach (var group in groupedParsers)
                             {
-                                <SelectItem Value="@parser.FullName">@parser.Name[..(parser.Name.Length - 6)]</SelectItem>
+                                <SelectGroup Label="@group.Key[(group.Key.LastIndexOf(".Parser.") + 8)..]">
+                                    @foreach (var parser in group)
+                                    {
+                                        <SelectItem Value="@parser.FullName">@parser.Name[..(parser.Name.Length - 6)]</SelectItem>
+                                    }
+                                </SelectGroup>
                             }
-                        </SelectGroup>
-                    }
-                </Select>
-                <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
-                    <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                        <AddonLabel Style="min-width: 180px">
-                            Big Endian&ensp;
-                            <Tooltip Text="Some parsers will ignore this option">
-                                <Icon Name="IconName.InfoCircle" />
-                            </Tooltip>
-                        </AddonLabel>
-                    </Addon>
-                    <Addon AddonType="AddonType.Body">
+                        </Select>
+                    </FieldBody>
+                </Field>
+                <Field Margin="Margin.Is1.FromBottom" Horizontal Flex="Flex.AlignItems.Center">
+                    <FieldLabel>
+                        Big Endian
+                        <Tooltip Text="Some parsers will ignore this option" Display="Display.Inline">
+                            <Icon Name="IconName.InfoCircle" />
+                        </Tooltip>
+                    </FieldLabel>
+                    <FieldBody Flex="Flex.Grow.Is1" Margin="Margin.Is1.FromStart">
                         <Select TValue="string" @bind-SelectedValue="@bigEndian">
                             <SelectItem Value="@("True")">True</SelectItem>
                             <SelectItem Value="@("False")">False</SelectItem>
                         </Select>
-                    </Addon>
-                </Addons>
+                    </FieldBody>
+                </Field>
                 @foreach (var option in ParserOptionsDef)
                 {
-                    <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromBottom">
-                        <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                            <AddonLabel Style="min-width: 180px">@option.Key</AddonLabel>
-                        </Addon>
-                        <Addon AddonType="AddonType.Body">
+                    <Field Margin="Margin.Is1.FromBottom" Horizontal Flex="Flex.AlignItems.Center">
+                        <FieldLabel>
+                            @option.Key
+                        </FieldLabel>
+                        <FieldBody Flex="Flex.Grow.Is1" Margin="Margin.Is1.FromStart">
                             @switch (option.Value.Name)
                             {
                                 case "Encoding":
@@ -72,8 +77,8 @@
                                     <TextEdit @bind-Text="@ParserOptions[option.Key]" />
                                     break;
                             }
-                        </Addon>
-                    </Addons>
+                        </FieldBody>
+                    </Field>
                 }
                 <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="Parse" Block="true" Disabled="!ready">
                     @(ready ? "Go" : "Initializing")

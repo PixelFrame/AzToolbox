@@ -4,63 +4,59 @@
 <Card Width="Width.Is75" Margin="Margin.IsAuto">
     <CardBody>
 
-        <Addons>
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel Style="min-width: 100px">Bandwidth</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <NumericEdit @bind-Value="bandwidthDisplay" Min="0" />
-            </Addon>
-            <Addon AddonType="AddonType.End">
-                <Select TValue="double" @bind-SelectedValue="bwUnit">
-                    <SelectItem Value="1">bps</SelectItem>
-                    <SelectItem Value="1000">Kbps</SelectItem>
-                    <SelectItem Value="1000000">Mbps</SelectItem>
-                    <SelectItem Value="1000000000">Gbps</SelectItem>
-                    <SelectItem Value="8">B/s</SelectItem>
-                    <SelectItem Value="8192">KB/s</SelectItem>
-                    <SelectItem Value="8388608">MB/s</SelectItem>
-                    <SelectItem Value="8589934592">GB/s</SelectItem>
-                </Select>
-            </Addon>
-        </Addons>
+        <Field>
+            <FieldLabel>Bandwidth</FieldLabel>
+            <Addons>
+                <Addon AddonType="AddonType.Body">
+                    <NumericEdit @bind-Value="bandwidthDisplay" Min="0" />
+                </Addon>
+                <Addon AddonType="AddonType.End">
+                    <Select TValue="double" @bind-SelectedValue="bwUnit">
+                        <SelectItem Value="1">bps</SelectItem>
+                        <SelectItem Value="1000">Kbps</SelectItem>
+                        <SelectItem Value="1000000">Mbps</SelectItem>
+                        <SelectItem Value="1000000000">Gbps</SelectItem>
+                        <SelectItem Value="8">B/s</SelectItem>
+                        <SelectItem Value="8192">KB/s</SelectItem>
+                        <SelectItem Value="8388608">MB/s</SelectItem>
+                        <SelectItem Value="8589934592">GB/s</SelectItem>
+                    </Select>
+                </Addon>
+            </Addons>
+        </Field>
 
-        <Addons Margin="Margin.Is2.FromTop">
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel Style="min-width: 100px">BDP</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <NumericEdit @bind-Value="bdp" Min="1" Max="1073741824" />
-            </Addon>
-        </Addons>
+        <Field Margin="Margin.Is1.FromTop">
+            <FieldLabel>BDP</FieldLabel>
+            <NumericEdit @bind-Value="bdp" Min="1" Max="1073741824" />
+        </Field>
 
-        <Addons Margin="Margin.Is2.FromTop">
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel Style="min-width: 100px">RTT</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <NumericEdit @bind-Value="rttDisplay" />
-            </Addon>
-            <Addon AddonType="AddonType.End">
-                <Select TValue="double" @bind-SelectedValue="rttUnit" Style="min-width: 100px">
-                    <SelectItem Value="1">s</SelectItem>
-                    <SelectItem Value="0.001">ms</SelectItem>
-                    <SelectItem Value="0.000001">μs</SelectItem>
-                </Select>
-            </Addon>
-        </Addons>
+        <Field Margin="Margin.Is1.FromTop">
+            <FieldLabel>RTT</FieldLabel>
+            <Addons>
+                <Addon AddonType="AddonType.Body">
+                    <NumericEdit @bind-Value="rttDisplay" />
+                </Addon>
+                <Addon AddonType="AddonType.End">
+                    <Select TValue="double" @bind-SelectedValue="rttUnit" Style="min-width: 100px">
+                        <SelectItem Value="1">s</SelectItem>
+                        <SelectItem Value="0.001">ms</SelectItem>
+                        <SelectItem Value="0.000001">μs</SelectItem>
+                    </Select>
+                </Addon>
+            </Addons>
+        </Field>
 
         <Divider />
 
-        <Div Flex="Flex.Row.AlignItems.Center" Margin="Margin.Is2.FromTop">
-            <Heading Size="HeadingSize.Is6">Calculate</Heading>
-            <Select TValue="int" @bind-SelectedValue="target" Margin="Margin.Is2.OnX">
+        <Field Flex="Flex.Row.AlignItems.Center" Margin="Margin.Is1.FromTop">
+            <FieldLabel>Calculate</FieldLabel>
+            <Select TValue="int" @bind-SelectedValue="target" Margin="Margin.Is1.OnX">
                 <SelectItem Value="1">Bandwidth</SelectItem>
                 <SelectItem Value="2">BDP</SelectItem>
                 <SelectItem Value="3">RTT</SelectItem>
             </Select>
-            <Button Color="Color.Primary" Clicked="Calculate" Width="Width.Is25">Go</Button>
-        </Div>
+        </Field>
+        <Button Color="Color.Primary" Clicked="Calculate" Width="Width.Is25">Go</Button>
 
     </CardBody>
 </Card>

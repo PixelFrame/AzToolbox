@@ -6,44 +6,43 @@
 @inject INotificationService NotificationService
 @inject IJSRuntime JSRuntime
 
-<SelectList TItem="KeyValuePair<int,string>"
-            TValue="int"
-            Data="@modes"
-            TextField="@((item)=>item.Value)"
-            ValueField="@((item)=>item.Key)"
-            DefaultItemValue="0"
-            @bind-SelectedValue="mode" />
+<Field>
+    <FieldLabel>
+        Mode
+    </FieldLabel>
+    <SelectList TItem="KeyValuePair<int,string>"
+                TValue="int"
+                Data="@modes"
+                TextField="@((item)=>item.Value)"
+                ValueField="@((item)=>item.Key)"
+                DefaultItemValue="0"
+                @bind-SelectedValue="mode" />
+</Field>
 
 @if (mode == 0)
 {
-    <Addons Margin="Margin.Is1.FromTop">
-        <Addon AddonType="AddonType.Start">
-            <AddonLabel Style="min-width: 300px">Splitter</AddonLabel>
-        </Addon>
-        <Addon AddonType="AddonType.Body">
-            <TextEdit @bind-Text="splitter" />
-        </Addon>
-    </Addons>
+    <Field Margin="Margin.Is1.FromTop">
+        <FieldLabel>
+            Splitter
+        </FieldLabel>
+        <TextEdit @bind-Text="splitter" />
+    </Field>
 
-    <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.FromTop">
-        <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-            <AddonLabel Style="min-width: 300px">Trim Splitted Word</AddonLabel>
-        </Addon>
-        <Addon AddonType="AddonType.Body">
-            <Switch @bind-Checked="@trim" />
-        </Addon>
-    </Addons>
+    <Field Margin="Margin.Is1.FromTop">
+        <FieldLabel>
+            Trim Splitted Word
+        </FieldLabel>
+        <Switch @bind-Checked="@trim" />
+    </Field>
 }
 else if (mode == 1)
 {
-    <Addons Margin="Margin.Is1.FromTop">
-        <Addon AddonType="AddonType.Start">
-            <AddonLabel Style="min-width: 300px">X =</AddonLabel>
-        </Addon>
-        <Addon AddonType="AddonType.Body">
-            <NumericEdit @bind-Value="splitCount" Min="1" Max="input.Length" />
-        </Addon>
-    </Addons>
+    <Field Margin="Margin.Is1.FromTop">
+        <FieldLabel>
+            X =
+        </FieldLabel>
+        <NumericEdit @bind-Value="splitCount" Min="1" Max="input.Length" />
+    </Field>
 }
 
 <Button Color="Color.Primary" Clicked="DoReverse" Block Margin="Margin.Is1.FromTop">
@@ -76,9 +75,9 @@ else if (mode == 1)
 
     void DoReverse()
     {
-        switch(mode)
+        switch (mode)
         {
-            case 0: ReverseBySplitter();break;
+            case 0: ReverseBySplitter(); break;
             case 1: ReverseByCount(); break;
         }
     }
@@ -86,7 +85,7 @@ else if (mode == 1)
     void ReverseBySplitter()
     {
         IEnumerable<string> words = input.Split(splitter).Reverse();
-        if(trim)
+        if (trim)
         {
             words = words.Select(w => w.Trim());
         }

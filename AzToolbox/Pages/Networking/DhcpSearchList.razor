@@ -5,17 +5,17 @@
 
 <Card Width="Width.Is75" Margin="Margin.IsAuto">
     <CardBody>
-        <Addons>
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel Style="min-width: 300px">Suffix</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <TextEdit @bind-Text="newSuffix" Placeholder="New Suffix" />
-            </Addon>
-            <Addon AddonType="AddonType.End">
-                <Button Color="Color.Primary" Clicked="AddSuffix" Size="Size.Small" Padding="Padding.Is5.OnX">Add</Button>
-            </Addon>
-        </Addons>
+        <Field>
+            <FieldLabel>Suffix</FieldLabel>
+            <Addons>
+                <Addon AddonType="AddonType.Body">
+                    <TextEdit @bind-Text="newSuffix" Placeholder="New Suffix" />
+                </Addon>
+                <Addon AddonType="AddonType.End">
+                    <Button Style="background:var(--colorBrandBackground); color:var(--colorNeutralForegroundOnBrand)" Width="Width.Px(75)" Clicked="AddSuffix" Size="Size.Small">Add</Button>
+                </Addon>
+            </Addons>
+        </Field>
         <ListView TItem="string"
                   Data="suffixes"
                   TextField="item=>item"
@@ -27,38 +27,41 @@
             <ItemTemplate>
                 <Div Flex="Flex.InlineFlex.JustifyContent.Between.AlignItems.Center" Width="Width.Is100">
                     <Heading Size="HeadingSize.Is6" Margin="Margin.Is0">@context.Text</Heading>
-                        <Button Color="Color.Danger" Padding="Padding.Is5.OnX" Clicked="@(() => RemoveSuffix(context.Value))" Size="Size.Small">Remove</Button>
-                    </Div>
-                </ItemTemplate>
-            </ListView>
-            <Addons Margin="Margin.Is2.FromTop">
-                <Addon AddonType="AddonType.Start">
-                    <AddonLabel Style="min-width: 300px">Scope ID</AddonLabel>
-                </Addon>
-                <Addon AddonType="AddonType.Body">
-                    <TextEdit @bind-Text="scopeId" />
-                </Addon>
-            </Addons>
-            <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
-                <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                    <AddonLabel Style="min-width: 300px">Compress Option</AddonLabel>
-                </Addon>
-                <Addon AddonType="AddonType.Body">
-                    <Switch @bind-Checked="compress">Enable</Switch>
-                </Addon>
-            </Addons>
-            <Divider DividerType="DividerType.Solid" />
-            <Button Color="Color.Primary" Clicked="EncOption" Block>Encode Option 119</Button>
-        <Button Color="Color.Secondary" Clicked="DecOption" Block>Decode Option 119</Button>
+                    <Button Color="Color.Danger" Padding="Padding.Is5.OnX" Clicked="@(() => RemoveSuffix(context.Value))" Size="Size.Small">Remove</Button>
+                </Div>
+            </ItemTemplate>
+        </ListView>
+        <Field Margin="Margin.Is1.OnY">
+            <FieldLabel>Scope ID</FieldLabel>
+            <TextEdit @bind-Text="scopeId" />
+        </Field>
+        <Field Margin="Margin.Is1.OnY" Flex="Flex.AlignItems.Center">
+            <FieldLabel>Compress Option</FieldLabel>
+            <Switch @bind-Checked="compress">@(compress ? "Enabled" : "Disabled")</Switch>
+        </Field>
         <Divider DividerType="DividerType.Solid" />
-        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@netshCommand" Placeholder="Netsh Command" ReadOnly AutoSize />
-        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" Text="@powershellCommand" Placeholder="PowerShell Command" ReadOnly AutoSize />
-        <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is2.FromTop" spellcheck="false" @bind-Text="@rawOptionValue" Placeholder="Raw Option Value" AutoSize />
-     </CardBody>
- </Card>
+        <Div Flex="Flex.Row.JustifyContent.Around" Margin="Margin.IsAuto.OnX.Is1.OnY">
+            <Button Color="Color.Primary" Clicked="EncOption" Width="Width.Px(350)">Encode Option 119</Button>
+            <Button Color="Color.Secondary" Clicked="DecOption" Width="Width.Px(350)">Decode Option 119</Button>
+        </Div>
+        <Divider DividerType="DividerType.Solid" />
+        <Field Margin="Margin.Is1.OnY">
+            <FieldLabel>Netsh Command</FieldLabel>
+            <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is1.OnY" Text="@netshCommand" ReadOnly AutoSize />
+        </Field>
+        <Field Margin="Margin.Is1.OnY">
+            <FieldLabel>PowerShell Command</FieldLabel>
+            <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is1.OnY" Text="@powershellCommand" ReadOnly AutoSize />
+        </Field>
+        <Field Margin="Margin.Is1.OnY">
+            <FieldLabel>Raw Option Value</FieldLabel>
+            <MemoEdit Class="monospace-fixed-textbox" Margin="Margin.Is1.OnY" spellcheck="false" @bind-Text="@rawOptionValue" AutoSize />
+        </Field>
+    </CardBody>
+</Card>
 
 
- @code {
+@code {
     string newSuffix = string.Empty;
     List<string> suffixes = new();
 

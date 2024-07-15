@@ -100,18 +100,31 @@ a, .btn-link {
     }
 
 .monospace-text {
-    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace;
-    font-size: small;
+    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace !important;
+    font-size: small !important;
     white-space: pre
 }
 
 .monospace-fixed-textbox {
-    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace;
-    font-size: small;
+    font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace !important;
+    font-size: small !important;
     resize: none
+}
+
+.fui-Textarea {
+    height: 100%;
+}
+
+.fui-Tooltip {
+    width: 100%;
+}
+
+.fui-Field .fui-Label {
+    font-weight: 600;
 }
 
 code {
     font-family: FiraCode, 'Cascadia Code',Consolas,'Courier New',monospace !important;
     font-size: small !important;
+    background: transparent !important;
 }

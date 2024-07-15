@@ -11,32 +11,32 @@
         <Alert Color="Color.Info" Visible="true">
             <AlertMessage>Attention!</AlertMessage>
             <CloseButton /><br>
-            <AlertDescription>This tool is only supported on limited browsers and platforms. Refer to <Link Target="Target.Blank" To="https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API#browser_compatibility">MDN File System Access API document</Link>.</AlertDescription> <br>
+            <AlertDescription>This tool is only supported on limited browsers and platforms. Refer to <Link Target="Target.Blank" Style="display: contents" To="https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API#browser_compatibility">MDN File System Access API document</Link>.</AlertDescription> <br>
             <AlertDescription>Max File Size: 10240MB</AlertDescription>
         </Alert>
-        <Addons>
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel Style="min-width: 100px">Content</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <Select TValue="int" @bind-SelectedValue="fillType">
-                    <SelectItem Value="1">Random Bytes</SelectItem>
-                    <SelectItem Value="2">All FF</SelectItem>
-                    <SelectItem Value="3">All 00</SelectItem>
-                </Select>
-            </Addon>
-        </Addons>
-        <Addons Margin="Margin.Is2.FromTop">
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel Style="min-width: 100px">Size</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <NumericEdit @bind-Value="@size" Min="0" Max="10240" Step="1" />
-            </Addon>
-            <Addon AddonType="AddonType.End">
-                <AddonLabel>MB</AddonLabel>
-            </Addon>
-        </Addons>
+        <Field>
+            <FieldLabel>
+                Content
+            </FieldLabel>
+            <Select TValue="int" @bind-SelectedValue="fillType">
+                <SelectItem Value="1">Random Bytes</SelectItem>
+                <SelectItem Value="2">All FF</SelectItem>
+                <SelectItem Value="3">All 00</SelectItem>
+            </Select>
+        </Field>
+        <Field>
+            <FieldLabel>
+                Size
+            </FieldLabel>
+            <Addons>
+                <Addon AddonType="AddonType.Body">
+                    <NumericEdit @bind-Value="@size" Min="0" Max="10240" Step="1" />
+                </Addon>
+                <Addon AddonType="AddonType.End">
+                    <AddonLabel>MB</AddonLabel>
+                </Addon>
+            </Addons>
+        </Field>
         <Button Color="Color.Primary" Block Clicked="OpenAndWriteFile" Margin="Margin.Is2.FromTop">Create File</Button>
         <Progress Value="@progress" Animated Striped Margin="Margin.Is2.FromTop" />
     </CardBody>

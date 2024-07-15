@@ -1,7 +1,8 @@
 using AzToolbox;
 using AzToolbox.Services;
 using Blazorise;
-using Blazorise.Bootstrap;
+using Blazorise.FluentUI2;
+using Blazorise.Icons.FluentUI;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.LoadingIndicator;
 using KristofferStrube.Blazor.FileSystemAccess;
@@ -22,7 +23,9 @@ builder.Services
     {
         options.Immediate = true;
     });
-builder.Services.AddBootstrapProviders();
+builder.Services
+    .AddFluentUI2Providers()
+    .AddFluentUIIcons();
 builder.Services.AddFontAwesomeIcons();
 builder.Services.AddLoadingIndicator();
 

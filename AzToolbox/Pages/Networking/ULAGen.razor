@@ -6,30 +6,18 @@
 
 <Card Width="Width.Is75" Margin="Margin.IsAuto">
     <CardBody>
-        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
-            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                <AddonLabel Style="min-width: 300px">L bit</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <Switch @bind-Checked="Lbit">@(Lbit ? 1 : 0)</Switch>
-            </Addon>
-        </Addons>
-        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
-            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                <AddonLabel Style="min-width: 300px">Subnet ID (0-65535)</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <NumericPicker TValue="ushort" @bind-Value="@SubnetId" Min="0" Max="65535" />
-            </Addon>
-        </Addons>
-        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.FromTop">
-            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                <AddonLabel Style="min-width: 300px">Random Prefix</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <Button Color="Color.Primary" Clicked="Generate">Generate</Button>
-            </Addon>
-        </Addons>
+        <Field Margin="Margin.Is1.OnY" Flex="Flex.AlignItems.Center">
+            <FieldLabel>L bit</FieldLabel>
+            <Switch @bind-Checked="Lbit">@(Lbit ? 1 : 0)</Switch>
+        </Field>
+        <Field Margin="Margin.Is1.OnY">
+            <FieldLabel>Subnet ID (0-65535)</FieldLabel>
+            <NumericPicker TValue="ushort" @bind-Value="@SubnetId" Min="0" Max="65535" />
+        </Field>
+        <Field Margin="Margin.Is1.OnY" >
+            <FieldLabel>Random Prefix</FieldLabel>
+            <Button Color="Color.Primary" Clicked="Generate">Generate</Button>
+        </Field>
          <Divider />
          <Table FixedColumns Bordered Margin="Margin.Is2.OnX">
              <TableHeader>

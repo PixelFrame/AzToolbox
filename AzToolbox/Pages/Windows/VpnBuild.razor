@@ -191,9 +191,9 @@
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@Download" Block>Download XML</Button>
             <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
         </Grid>
-        <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is1.FromTop.Is0.FromBottom">
+        <Alert Color="Color.Warning" Visible="@svc.Win11Profile" Margin="Margin.Is1.FromTop.Is0.FromBottom" Display="Display.Table">
             <AlertMessage>Windows 11 ONLY</AlertMessage>
-            <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <a target="_blank" href="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</a> for more info.</AlertDescription>
+            <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <Link Target="Target.Blank" Style="display: contents" To="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</Link> for more info.</AlertDescription>
         </Alert>
         <Div Margin="Margin.Is1.OnY" Flex="Flex.Grow.Is1" Border="Border.Is1.Rounded.White">
             @if (built)

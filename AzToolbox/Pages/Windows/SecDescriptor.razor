@@ -12,35 +12,31 @@
 
 <Card Width="Width.Is75" Margin="Margin.IsAuto">
     <CardBody>
-        <Addons Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is2.OnY">
-            <Addon AddonType="AddonType.Start" Margin="Margin.Is1.FromEnd">
-                <AddonLabel>Input Type</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <Switch @bind-Checked="SddlOrBinary">@currentType</Switch>
-            </Addon>
-        </Addons>
+        <Field Flex="Flex.InlineFlex.AlignItems.Center" Margin="Margin.Is1.OnY">
+            <FieldLabel>Input Type</FieldLabel>
+            <Switch @bind-Checked="SddlOrBinary">@currentType</Switch>
+        </Field>
+        <Field Margin="Margin.Is1.OnY">
         @if (SddlOrBinary)
         {
-            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" Placeholder="SDDL" @bind-Text="sddl" />
+            <FieldLabel>SDDL</FieldLabel>
+            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="sddl" />
         }
         else
         {
-            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" Placeholder="HEX String of Binary SD" @bind-Text="binarystr" />
+            <FieldLabel>HEX String of Binary SD</FieldLabel>
+            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="binarystr" />
         }
-        <Addons Margin="Margin.Is2.OnY">
-            <Addon AddonType="AddonType.Start">
-                <AddonLabel>Access Mask Type</AddonLabel>
-            </Addon>
-            <Addon AddonType="AddonType.Body">
-                <SelectList TItem="AccessMaskType"
-                            TValue="AccessMaskType"
-                            Data="Enum.GetValues<AccessMaskType>()"
-                            TextField="@(item => item.ToString())"
-                            ValueField="@(item => item)"
-                            @bind-SelectedValue="@selectedAccessMaskType" />
-            </Addon>
-        </Addons>
+        </Field>
+        <Field Margin="Margin.Is1.OnY">
+            <FieldLabel>Access Mask Type</FieldLabel>
+            <SelectList TItem="AccessMaskType"
+                        TValue="AccessMaskType"
+                        Data="Enum.GetValues<AccessMaskType>()"
+                        TextField="@(item => item.ToString())"
+                        ValueField="@(item => item)"
+                        @bind-SelectedValue="@selectedAccessMaskType" />
+        </Field>
         <Divider DividerType="DividerType.Solid" />
         <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
         <Divider DividerType="DividerType.Solid" />
