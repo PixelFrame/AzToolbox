@@ -1,10 +1,11 @@
 ﻿@inherits LayoutComponentBase
+
 <CascadingValue Value="this" Name="MainLayout">
     <Layout>
         @if (ShowHeader)
         {
             <LayoutHeader>
-                <Bar Breakpoint="Breakpoint.Desktop" Border="Border.Is3.OnBottom.Primary">
+                <Bar Breakpoint="Breakpoint.Desktop" Border="Border.Is3.OnBottom.Primary" @ref="layoutBar">
                     <BarBrand>
                         <Div Flex="Flex.AlignItems.End">
                             <Figure Size="FigureSize.Is48x48" Margin="Margin.Is0">
@@ -13,7 +14,8 @@
                             <Heading Size="HeadingSize.Is5" Style="user-select: none">AzToolbox</Heading>
                         </Div>
                     </BarBrand>
-                    <BarToggler />
+                    <BarToggler/>
+                    <Div Class="barSplitter" />
                     <BarMenu>
                         <BarStart>
                             <BarItem>
@@ -66,6 +68,7 @@
             </LayoutHeader>
         }
         <LayoutContent Margin="Margin.Is3">
+            <Button Clicked="DebugClick">DEBUG BUTTON</Button>
             @Body
         </LayoutContent>
         @if (ShowFooter)
@@ -80,7 +83,22 @@
     </Layout>
 </CascadingValue>
 
+<style>
+    .barSplitter {
+        border-left: 1px solid #afafaf;
+        margin: 0 2px 0 2px;
+        height: 35px;
+    }
+</style>
+
 @code {
+    private Bar layoutBar = new();
+
+    private void DebugClick()
+    {
+        Console.WriteLine("DEBUG");
+    }
+
     public bool showHeader = true;
     public bool ShowHeader
     {

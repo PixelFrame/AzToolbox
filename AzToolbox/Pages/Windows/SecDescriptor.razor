@@ -17,16 +17,16 @@
             <Switch @bind-Checked="SddlOrBinary">@currentType</Switch>
         </Field>
         <Field Margin="Margin.Is1.OnY">
-        @if (SddlOrBinary)
-        {
-            <FieldLabel>SDDL</FieldLabel>
-            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="sddl" />
-        }
-        else
-        {
-            <FieldLabel>HEX String of Binary SD</FieldLabel>
-            <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="binarystr" />
-        }
+            @if (SddlOrBinary)
+            {
+                <FieldLabel>SDDL</FieldLabel>
+                <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="sddl" />
+            }
+            else
+            {
+                <FieldLabel>HEX String of Binary SD</FieldLabel>
+                <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="binarystr" />
+            }
         </Field>
         <Field Margin="Margin.Is1.OnY">
             <FieldLabel>Access Mask Type</FieldLabel>
@@ -40,10 +40,12 @@
         <Divider DividerType="DividerType.Solid" />
         <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
         <Divider DividerType="DividerType.Solid" />
-        <Button Color="Color.Primary" Clicked="() => AclTree.ExpandAll()" Size="Size.Small">Expand All</Button>
-        <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small">Copy Tree</Button>
-        <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small">Trustee List</Button>
-        <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small">Access Mask List</Button>
+        <Div Display="Display.Flex" Margin="Margin.Is1.FromTop">
+            <Button Color="Color.Primary" Clicked="() => AclTree.ExpandAll()" Size="Size.Small">Expand All</Button>
+            <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small">Copy Tree</Button>
+            <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small">Trustee List</Button>
+            <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small">Access Mask List</Button>
+        </Div>
         <TreeView @ref="@AclTree"
                   Nodes="AclTreeHead"
                   ExpandedNodes="ExpandedNodes"
@@ -54,7 +56,7 @@
                 <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
                 @if (context.Label == "Trustee")
                 {
-                    <Button Size="Size.Small" Style="padding: 0 0 0 2px" Clicked="()=>ShowTrusteeDetails((Trustee)context.Tag!)"><Icon Name="IconName.InfoCircle" /></Button>
+                    <Button Size="Size.Small" Style="padding: 0; border:none" Clicked="()=>ShowTrusteeDetails((Trustee)context.Tag!)"><Icon Name="IconName.InfoCircle" /></Button>
                 }
             </NodeContent>
         </TreeView>
@@ -118,7 +120,7 @@
     {
         return ModalService.Show<AccessMaskDetailsModal>("Access Mask", new ModalInstanceOptions()
             {
-                Size = ModalSize.Fullscreen
+                Size = ModalSize.ExtraLarge
             });
     }
 
@@ -136,7 +138,7 @@
         return ModalService.Show<TrusteeOverviewModal>("Trustee Overview",
         new ModalInstanceOptions()
             {
-                Size = ModalSize.Fullscreen
+                Size = ModalSize.ExtraLarge
             });
     }
 }

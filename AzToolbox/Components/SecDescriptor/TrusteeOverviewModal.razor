@@ -1,28 +1,30 @@
 ﻿@using WinSdUtil.Lib.Model;
 
-<DataGrid TItem="Trustee"
-          Data="@Data"
-          DetailRowStartsVisible="false"
-          Filterable="true"
-          FilterMode="DataGridFilterMode.Menu"
-          Narrow="true"
-          Bordered="true"
-          ShowPager="true"
-          PageSize="15"
-          Resizable="true"
-          ResizeMode="TableResizeMode.Columns"
-          Style="font-size:small">
-    <DataGridColumns>
-        <DataGridColumn Field="@nameof(Trustee.DisplayName)" Caption="Display Name" Sortable="true" />
-        <DataGridColumn Field="@nameof(Trustee.SddlName)" Caption="SDDL Name" Sortable="true" />
-        <DataGridColumn Field="@nameof(Trustee.Sid)" Caption="SID" Sortable="true" />
-        <DataGridColumn Field="@nameof(Trustee.Description)" Caption="Description" Sortable="false" />
-    </DataGridColumns>
-    <TotalItemsTemplate><Badge Color="Color.Primary">@context.TotalItems total items</Badge></TotalItemsTemplate>
-    <TotalItemsShortTemplate><Badge Color="Color.Primary">@context.TotalItems</Badge></TotalItemsShortTemplate>
-</DataGrid>
+<Div Overflow="Overflow.Auto">
+    <DataGrid TItem="Trustee"
+              Data="@Data"
+              DetailRowStartsVisible="false"
+              Filterable="true"
+              FilterMode="DataGridFilterMode.Menu"
+              Narrow="true"
+              Bordered="true"
+              ShowPager="true"
+              PageSize="15"
+              Resizable="true"
+              ResizeMode="TableResizeMode.Columns"
+              Style="font-size:small">
+        <DataGridColumns>
+            <DataGridColumn Field="@nameof(Trustee.DisplayName)" Caption="Display Name" Sortable="true" />
+            <DataGridColumn Field="@nameof(Trustee.SddlName)" Caption="SDDL Name" Sortable="true" />
+            <DataGridColumn Field="@nameof(Trustee.Sid)" Caption="SID" Sortable="true" />
+            <DataGridColumn Field="@nameof(Trustee.Description)" Caption="Description" Sortable="false" />
+        </DataGridColumns>
+        <TotalItemsTemplate><Badge Color="Color.Primary">@context.TotalItems total items</Badge></TotalItemsTemplate>
+        <TotalItemsShortTemplate><Badge Color="Color.Primary">@context.TotalItems</Badge></TotalItemsShortTemplate>
+    </DataGrid>
+</Div>
 
-@code 
+@code
 {
     IEnumerable<Trustee> Data = Trustee.EnumAllTrustees();
 }

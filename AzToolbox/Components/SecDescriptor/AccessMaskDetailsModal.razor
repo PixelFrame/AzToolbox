@@ -3,45 +3,50 @@
 @using System.Collections;
 @using System.Buffers.Binary;
 
-<Grid Columns="GridColumns.Are2" Gap="Gap.Is1">
-    <SelectList TItem="AccessMaskType"
-                TValue="AccessMaskType"
-                Data="Enum.GetValues<AccessMaskType>().Where(t => t!=AccessMaskType.Unknown)"
-                TextField="@(item => item.ToString())"
-                ValueField="@(item => item)"
-                @bind-SelectedValue="@TargetAccessMaskType" />
-    <Div Flex="Flex.AlignItems.Center">
-        <Switch @bind-Checked="@HexInput" Display="Display.Inline">@(HexInput ? "HEX" : "DEC")</Switch>
-        @if (HexInput)
-        {
-            <TextEdit @bind-Text="@MaskValueHex" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
-        }
-        else
-        {
-            <NumericEdit @bind-Value="@MaskValue" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
-        }
-    </Div>
-</Grid>
+<Div Overflow="Overflow.Auto">
+    <Card>
+        <Grid Columns="GridColumns.Are2" Gap="Gap.Is1">
+            <SelectList TItem="AccessMaskType"
+                        TValue="AccessMaskType"
+                        Data="Enum.GetValues<AccessMaskType>().Where(t => t!=AccessMaskType.Unknown)"
+                        TextField="@(item => item.ToString())"
+                        ValueField="@(item => item)"
+                        @bind-SelectedValue="@TargetAccessMaskType" />
+            <Div Flex="Flex.AlignItems.Center">
+                <Switch @bind-Checked="@HexInput" Display="Display.Inline">@(HexInput ? "HEX" : "DEC")</Switch>
+                @if (HexInput)
+                {
+                    <TextEdit @bind-Text="@MaskValueHex" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
+                }
+                else
+                {
+                    <NumericEdit @bind-Value="@MaskValue" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
+                }
+            </Div>
+        </Grid>
 
-<MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop" />
+        <MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop" />
+    </Card>
 
-<TreeView Nodes="AccessMaskTreeHead"
-          GetChildNodes="@(item => item.Children)"
-          HasChildNodes="@(item => item.HasChildren)"
-          ExpandedNodes="AccessMaskTreeHead">
-    <NodeContent>
-        @if (context.Tag != null)
-        {
-            <Check TValue="bool" @bind-Checked="@maskBits[(int)context.Tag]" />
-        }
-        <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
-        <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
-    </NodeContent>
-</TreeView>
+    <TreeView Nodes="AccessMaskTreeHead"
+              GetChildNodes="@(item => item.Children)"
+              HasChildNodes="@(item => item.HasChildren)"
+              ExpandedNodes="AccessMaskTreeHead"
+              Padding="Padding.Is3.FromBottom">
+        <NodeContent>
+            @if (context.Tag != null)
+            {
+                <Check TValue="bool" @bind-Checked="@maskBits[(int)context.Tag]" />
+            }
+            <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
+            <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
+        </NodeContent>
+    </TreeView>
+</Div>
 
 <style>
-    .custom-checkbox {
-        display: inline
+    .fui-Checkbox__input + .fui-Checkbox__indicator {
+        margin: 0
     }
 </style>
 

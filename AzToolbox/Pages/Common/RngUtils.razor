@@ -9,7 +9,7 @@
             <Fields>
                 <Field ColumnSize="ColumnSize.Is6">
                     <FieldLabel>Generate Item Count</FieldLabel>
-                    <NumericEdit @bind-Value="cnt" Min="1"/>
+                    <NumericEdit @bind-Value="cnt" Min="1" />
                 </Field>
                 <Field ColumnSize="ColumnSize.Is6">
                     <FieldLabel>Item Type</FieldLabel>
@@ -217,6 +217,8 @@
         padding: 7px;
         margin: 7px;
         width: calc(100% - 14px);
+        line-height: normal;
+        word-wrap: break-word;
     }
 </style>
 
@@ -449,7 +451,7 @@
                     nums.Add(i);
                 };
                 Shuffle(nums, rnd);
-                if(cnt < nums.Count)
+                if (cnt < nums.Count)
                 {
                     nums = nums.Take(cnt).ToList();
                 }
