@@ -2,8 +2,10 @@
 @inject VpnBuildService svc
 @inject IModalService ModalService
 
-<Button Color="Color.Info" Clicked="ShowNrptAdd">Add</Button>
-<Button Color="Color.Danger" Clicked="RemoveNrpt">Remove</Button>
+<Div Flex="Flex.Row.JustifyContent.Between">
+    <Button Color="Color.Info" Clicked="ShowNrptAdd">Add</Button>
+    <Button Color="Color.Danger" Clicked="RemoveNrpt">Remove</Button>
+</Div>
 <DataGrid TItem="DomainNameInformation"
           Data="@svc.Nrpt"
           @bind-SelectedRow="@selected"

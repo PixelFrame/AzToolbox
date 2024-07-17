@@ -2,14 +2,16 @@
 @inject VpnBuildService svc
 @inject IModalService ModalService
 
-<Button Color="Color.Info" Clicked="ShowTrafficFiltersAdd">Add</Button>
-<Button Color="Color.Danger" Clicked="RemoveTrafficFilter">Remove</Button>
+<Div Flex="Flex.Row.JustifyContent.Between">
+    <Button Color="Color.Info" Clicked="ShowTrafficFiltersAdd">Add</Button>
+    <Button Color="Color.Danger" Clicked="RemoveTrafficFilter">Remove</Button>
+</Div>
 <DataGrid TItem="TrafficFilter"
           Data="@svc.TrafficFilters"
           @bind-SelectedRow="@selected"
           Responsive>
     <DataGridCommandColumn />
-    <DataGridColumn Field="@nameof(TrafficFilter.App)" Caption="App ID" />
+    <DataGridColumn Field="App.Id" Caption="App ID" />
     <DataGridColumn Field="@nameof(TrafficFilter.Claims)" Caption="Claims" />
     <DataGridColumn Field="@nameof(TrafficFilter.Protocol)" Caption="Protocol" />
     <DataGridColumn Field="@nameof(TrafficFilter.LocalPortRanges)" Caption="Local Port Ranges" />

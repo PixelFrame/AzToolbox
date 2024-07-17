@@ -2,8 +2,10 @@
 @inject VpnBuildService svc
 @inject IModalService ModalService
 
-<Button Color="Color.Info" Clicked="ShowRouteAdd">Add</Button>
-<Button Color="Color.Danger" Clicked="RemoveRoute">Remove</Button>
+<Div Flex="Flex.Row.JustifyContent.Between">
+    <Button Color="Color.Info" Clicked="ShowRouteAdd">Add</Button>
+    <Button Color="Color.Danger" Clicked="RemoveRoute">Remove</Button>
+</Div>
 <DataGrid TItem="Route"
           Data="@svc.Routes"
           @bind-SelectedRow="@selected"
@@ -29,6 +31,6 @@
 
     private void RemoveRoute()
     {
-        if(selected != null) svc.Routes.Remove(selected);
+        if (selected != null) svc.Routes.Remove(selected);
     }
 }
