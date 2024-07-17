@@ -25,53 +25,65 @@
                         <Div>
                             <Heading Size="HeadingSize.Is5">@context.File.Name</Heading>
                             <Paragraph>@($"Size: {(context.File.Size / 1048576.0):0.##}MB")</Paragraph>
-                            </Div>
-                            <Div>
-                                <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read Zip</Button>
-                            </Div>
                         </Div>
-                        <Divider />
-                        <Progress Value="@filePickerCustom.GetProgressPercentage()" />
-                    </FileTemplate>
-                    <ButtonsTemplate />
-                </FilePicker>
+                        <Div>
+                            <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read Zip</Button>
+                        </Div>
+                    </Div>
+                    <Divider />
+                    <Progress Value="@filePickerCustom.GetProgressPercentage()" />
+                </FileTemplate>
+                <ButtonsTemplate />
+            </FilePicker>
 
-            </CardBody>
-        </Card>
+        </CardBody>
+    </Card>
 }
 else
 {
-    <Button Clicked="GoBack" Color="Color.Primary" Margin="Margin.Is2.FromBottom">
-        <Icon Name="IconName.ArrowLeft" /> Select Another Archive
-    </Button>
-    <SelectList @ref="zipEntrySelect"
-    @bind-SelectedValue="@SelectedEntry"
-                TItem="string"
-                TValue="string"
-                Data="@zipFiles"
-                TextField="@((item)=>item)"
-                ValueField="@((item)=>item)" />
-    <Div Flex="Flex.JustifyContent.Between.AlignItems.Center" Margin="Margin.Is2.OnY">
-        <Button Color="Color.Primary" Width="Width.Is25" Clicked="Previous">Previous</Button>
-        <Check TValue="bool" CheckedChanged="ImageOnlyChanged" Checked="@imageOnly">View Images Only</Check>
-        <Button Color="Color.Primary" Width="Width.Is25" Clicked="Next">Next</Button>
+    <Div Flex="Flex.Column">
+        <Div Flex="Flex.Row.AlignItems.Center.Wrap">
+            <Button Clicked="GoBack" Color="Color.Primary" Margin="Margin.Is2.FromBottom" Style="margin: 0 3px 0 0 !important" TextOverflow="TextOverflow.Truncate">
+                <Icon Name="IconName.ArrowLeft" /> Select Another Archive
+            </Button>
+            <Div Flex="Flex.Grow.Is1" Overflow="Overflow.Hidden">
+                <!--SelectList will be a span, unable to set flex grow on it, so need to wrap it with div-->
+                <SelectList @ref="zipEntrySelect"
+                            @bind-SelectedValue="@SelectedEntry"
+                            TItem="string"
+                            TValue="string"
+                            Data="@zipFiles"
+                            TextField="@((item)=>item)"
+                            ValueField="@((item)=>item)" />
+            </Div>
+            <Switch @bind-Checked="@fitHeight">Fit Window Height</Switch>
+            <Switch @bind-Checked="@HideHeader">Hide Header</Switch>
+        </Div>
+        <Div Flex="Flex.JustifyContent.Between.AlignItems.Center" Margin="Margin.Is1.OnY">
+            <Button Color="Color.Primary" Width="Width.Is25" Clicked="Previous">Previous</Button>
+            <Check TValue="bool" CheckedChanged="ImageOnlyChanged" Checked="@imageOnly">View Images Only</Check>
+            <Button Color="Color.Primary" Width="Width.Is25" Clicked="Next">Next</Button>
+        </Div>
+        @if (showImage)
+        {
+            <ImageViewer ImageBytes="@imgdata" ImageType="@imgtype" FitHeight="@fitHeight"/>
+        }
+        else
+        {
+            <Card>
+                <CardBody Flex="Flex.Column.AlignItems.Center.Grow.Is0">
+                    <Heading Size="HeadingSize.Is5">Preview of this file is not supported yet.</Heading>
+                    <Button Color="Color.Primary" Clicked="DownloadEntry">Extract & Download</Button>
+                </CardBody>
+            </Card>
+        }
     </Div>
-    @if (showImage)
-    {
-        <ImageViewer ImageBytes="@imgdata" ImageType="@imgtype" />
-    }
-    else
-    {
-        <Card>
-            <CardBody Flex="Flex.Column.AlignItems.Center.Grow.Is0">
-                <Heading Size="HeadingSize.Is5">Preview of this file is not supported yet.</Heading>
-                <Button Color="Color.Primary" Clicked="DownloadEntry">Extract & Download</Button>
-            </CardBody>
-        </Card>
-    }
 }
 
 @code {
+    [CascadingParameter(Name = "MainLayout")]
+    public MainLayout? layout { get; set; }
+
     FilePicker filePickerCustom = new();
     ZipArchive? zip = null;
     SelectList<string, string> zipEntrySelect = default!;
@@ -99,13 +111,29 @@ else
             ReadEntry();
         }
     }
+    bool HideHeader
+    {
+        get => !layout!.ShowHeader;
+        set
+        {
+            layout!.ShowHeader = !value;
+        }
+    }
+
     byte[]? imgdata;
     string imgtype = "jpeg";
     bool zipReading = false;
     bool showImage = false;
     bool imageOnly = false;
+    bool fitHeight = true;
 
     static readonly string[] commonImageTypes = { "jpg", "jpeg", "png", "apng", "webp", "bmp", "gif" };
+
+    protected override void OnInitialized()
+    {
+        if (layout != null) layout.ShowFooter = false;
+        base.OnInitialized();
+    }
 
     async Task ReadArchive(FileUploadEventArgs e)
     {
@@ -206,7 +234,7 @@ else
         else
         {
             zipFiles.AddRange(zip.Entries
-                .Where(e => commonImageTypes.Contains(e.Name.Substring(e.Name.LastIndexOf('.') + 1), 
+                .Where(e => commonImageTypes.Contains(e.Name.Substring(e.Name.LastIndexOf('.') + 1),
                     StringComparer.CurrentCultureIgnoreCase))
                 .Select(e => e.FullName));
         }
