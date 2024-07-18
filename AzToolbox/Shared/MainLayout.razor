@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
 
 <CascadingValue Value="this" Name="MainLayout">
     <Layout>
@@ -14,7 +15,7 @@
                             <Heading Size="HeadingSize.Is5" Style="user-select: none">AzToolbox</Heading>
                         </Div>
                     </BarBrand>
-                    @if (!BarBroken)
+                    @if (!BarBroken || (isInit && initShow))
                     {
                         <Div Class="barSplitter" />
                     }
@@ -78,7 +79,7 @@
         {
             <LayoutFooter>
                 <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small; user-select: none">
-                    &copy; 2023-2024 AzToolbox version 20240717.1 <br />
+                    &copy; 2023-2024 AzToolbox version 20240718.1 <br />
                     Powered by @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription (@System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier) and Blazorise with Fluent 2 design
                 </Paragraph>
             </LayoutFooter>
@@ -96,10 +97,12 @@
 
 @code {
     private Bar layoutBar = new();
+    private bool initShow = false;
+    private bool isInit = true;
 
     /*
     private void DebugClick()
-    {
+        {
         Console.WriteLine("DEBUG");
     }
     */
@@ -136,5 +139,16 @@
         }
     }
 
+    protected async override Task OnInitializedAsync()
+    {
+        var wid = await JSRuntime.InvokeAsync<int>("getWindowWidth");
+        if (wid >= 768) initShow = true;
+        await base.OnInitializedAsync();
+    }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender && isInit) isInit = false;
+        base.OnAfterRender(firstRender);
+    }
 }

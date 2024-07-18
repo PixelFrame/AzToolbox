@@ -49,3 +49,7 @@ function copyTextToClipboard(text) {
 function prismHighlightXml(code) {
     return Prism.highlight(code, Prism.languages.xml, 'xml');
 }
+
+function getWindowWidth() {
+    return window.innerWidth;
+}

@@ -58,9 +58,10 @@ namespace AzToolbox.Models
                 children.Add(daclItem);
 
                 var daceItems = new List<TreeViewItem>();
+                int trusteeNamePadding = acl.DAclAces.Select(acl => acl.Trustee.DisplayName.Length).Max() + 1;
                 foreach (var dace in acl.DAclAces)
                 {
-                    daceItems.Add(dace.ToTreeView(maskType));
+                    daceItems.Add(dace.ToTreeView(maskType, trusteeNamePadding));
                 }
                 daclItem.Children = daceItems;
             }
@@ -74,22 +75,23 @@ namespace AzToolbox.Models
                 children.Add(saclItem);
 
                 var saceItems = new List<TreeViewItem>();
+                int trusteeNamePadding = acl.SAclAces.Select(acl => acl.Trustee.DisplayName.Length).Max() + 1;
                 foreach (var sace in acl.SAclAces)
                 {
-                    saceItems.Add(sace.ToTreeView(maskType));
+                    saceItems.Add(sace.ToTreeView(maskType, trusteeNamePadding));
                 }
                 saclItem.Children = saceItems;
             }
             return root;
         }
 
-        public static TreeViewItem ToTreeView(this AccessControlEntry ace, AccessMaskType maskType)
+        public static TreeViewItem ToTreeView(this AccessControlEntry ace, AccessMaskType maskType, int trusteeNamePadding)
         {
             var children = new List<TreeViewItem>();
             var root = new TreeViewItem()
             {
                 Label = ace.Type.ToString(),
-                Description = ace.Trustee.DisplayName,
+                Description = ace.Trustee.DisplayName.PadRight(trusteeNamePadding) + ace.Mask.ToSDDL(),
                 Children = children,
             };
             children.Add(new TreeViewItem()
