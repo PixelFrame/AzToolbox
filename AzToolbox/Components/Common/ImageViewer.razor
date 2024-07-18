@@ -1,6 +1,6 @@
-﻿<Card>
-    <CardBody Flex="Flex.JustifyContent.Center">
-        <Image Source="@($"data:image/{ImageType};base64,{base64Image}")" Width="Width.Is100.Max" />
+﻿<Card Padding="Padding.Is1">
+    <CardBody Padding="Padding.Is0" Flex="Flex.JustifyContent.Center">
+        <Image Source="@($"data:image/{ImageType};base64,{base64Image}")" Style="@FitHeightStyle" />
     </CardBody>
 </Card>
 
@@ -11,6 +11,23 @@
     [Parameter]
     public string ImageType { get; set; } = "png";
 
+    [Parameter]
+    public bool FitHeight { get; set; } = true;
+
+    [CascadingParameter(Name = "MainLayout")]
+    public MainLayout? layout { get; set; }
+
+    private string FitHeightStyle
+    {
+        get
+        {
+            int padding = 108;
+            if (layout!.ShowHeader) padding += 79;
+            if (layout!.ShowFooter) padding += 48;
+
+            return FitHeight ? $"max-height:calc(100vh - {padding}px)" : "max-width:100%";
+        }
+    }
     string base64Image
     {
         get
