@@ -1,7 +1,12 @@
 ﻿@page "/Networking/DnsZoneFile"
+
+@using AzToolbox.Components.DnsZoneFile;
 @using KzA.DNS.ResourceRecord
 @using KzA.DNS.Zone
 @using System.Net
+
+@inject IModalService ModalService
+
 <PageTitle>DNS Zone File Builder - AzToolbox</PageTitle>
 
 <Row>
@@ -196,9 +201,12 @@
         base.OnInitialized();
     }
 
-    void NewRecord()
+    private Task NewRecord()
     {
-
+        return ModalService.Show<RecordAddModal>("New Record", new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            });
     }
 
     void DeleteRecord()

@@ -1,19 +1,112 @@
-﻿@using KzA.DNS.ResourceRecord
+﻿@using AzToolbox.Components.DnsZoneFile
+@using KzA.DNS.ResourceRecord
+@using KzA.DNS.DataModel
 
 <Field Horizontal>
     <FieldLabel>Name</FieldLabel>
     <FieldBody>
-        <TextEdit @bind-Text="@name"/>
+        <TextEdit @bind-Text="@name" />
     </FieldBody>
 </Field>
+
+<Field Horizontal>
+    <FieldLabel>Type</FieldLabel>
+    <FieldBody>
+        <SelectList TItem="RRType" TValue="RRType" TextField="@(t=>t.ToString())" ValueField="@(t=>t)"
+            Data="_supportedTypes" @bind-SelectedValue="type" />
+    </FieldBody>
+</Field>
+
+<Field Horizontal>
+    <FieldLabel>TTL</FieldLabel>
+    <FieldBody>
+        <NumericEdit @bind-Value="@ttl" />
+    </FieldBody>
+</Field>
+
+@switch (type)
+{
+    case RRType.A:
+        {
+            <Field Horizontal>
+                <FieldLabel>A</FieldLabel>
+                <FieldBody>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </FieldBody>
+            </Field>
+            break;
+        }
+    case RRType.AAAA:
+        {
+            <Field Horizontal>
+                <FieldLabel>AAAA</FieldLabel>
+                <FieldBody>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </FieldBody>
+            </Field>
+            break;
+        }
+    case RRType.CNAME:
+        {
+            <Field Horizontal>
+                <FieldLabel>CNAME</FieldLabel>
+                <FieldBody>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </FieldBody>
+            </Field>
+            break;
+        }
+    case RRType.TXT:
+        {
+            <Field Horizontal>
+                <FieldLabel>CNAME</FieldLabel>
+                <FieldBody>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </FieldBody>
+            </Field>
+            break;
+        }
+    case RRType.MX:
+        {
+            <MxFields Data="@mxData" />
+            break;
+        }
+    case RRType.SRV:
+        {
+            <SrvFields Data="@srvData" />
+            break;
+        }
+    case RRType.SVCB:
+        {
+            <SvcbFields Data="@svcbData" />
+            break;
+        }
+    case RRType.HTTPS:
+        {
+            <SvcbFields Data="@svcbData" />
+            break;
+        }
+}
 
 @code {
     string name = string.Empty;
     RRType type = RRType.A;
     int ttl = -1;
+    string textFieldValue = string.Empty;
+    MxData mxData = new();
+    SrvData srvData = new();
+    SvcbData svcbData = new();
+
+    static readonly RRType[] _supportedTypes =
+    [
+    RRType.A, RRType.AAAA, RRType.CNAME,
+RRType.NS, RRType.TXT,
+RRType.MX, RRType.SRV,
+RRType.SVCB, RRType.HTTPS
+    ];
 
     IRecord CreateRecord()
     {
-        
+        return new A();
     }
 }

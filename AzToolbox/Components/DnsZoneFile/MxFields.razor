@@ -1,5 +1,19 @@
-﻿<h3>MxFields</h3>
+﻿@using KzA.DNS.DataModel
+
+<Field Horizontal>
+    <FieldLabel>Preference</FieldLabel>
+    <FieldBody>
+        <NumericEdit @bind-Value="@Data.Preference" />
+    </FieldBody>
+</Field>
+<Field Horizontal>
+    <FieldLabel>Target</FieldLabel>
+    <FieldBody>
+        <TextEdit @bind-Text="@Data.Host.HostName" />
+    </FieldBody>
+</Field>
 
 @code {
-
+    [Parameter]
+    public MxData Data {get;set;} = new ();
 }
