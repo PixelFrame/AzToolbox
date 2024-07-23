@@ -1,0 +1,19 @@
+﻿@using KzA.DNS.ResourceRecord
+
+<Field Horizontal>
+    <FieldLabel>Name</FieldLabel>
+    <FieldBody>
+        <TextEdit @bind-Text="@name"/>
+    </FieldBody>
+</Field>
+
+@code {
+    string name = string.Empty;
+    RRType type = RRType.A;
+    int ttl = -1;
+
+    IRecord CreateRecord()
+    {
+        
+    }
+}

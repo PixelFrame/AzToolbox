@@ -1,0 +1,213 @@
+﻿@page "/Networking/DnsZoneFile"
+@using KzA.DNS.ResourceRecord
+@using KzA.DNS.Zone
+@using System.Net
+<PageTitle>DNS Zone File Builder - AzToolbox</PageTitle>
+
+<Row>
+    <Column>
+        <Field>
+            <FieldLabel>Zone Name</FieldLabel>
+            <TextEdit @bind-Text="@zone.Name" />
+        </Field>
+        <Field>
+            <FieldLabel>Primary Server</FieldLabel>
+            <TextEdit @bind-Text="@zone.SOA.MNAME" />
+        </Field>
+        <Field>
+            <FieldLabel>Responsible Person</FieldLabel>
+            <TextEdit @bind-Text="@zone.SOA.RNAME" />
+        </Field>
+    </Column>
+    <Column>
+        <Field>
+            <FieldLabel>Serial Number</FieldLabel>
+            <NumericEdit @bind-Value="@zone.SOA.SERIAL" />
+        </Field>
+        <Field>
+            <FieldLabel>Refresh Interval</FieldLabel>
+            <NumericEdit @bind-Value="@zone.SOA.REFRESH" />
+        </Field>
+        <Field>
+            <FieldLabel>Retry Interval</FieldLabel>
+            <NumericEdit @bind-Value="@zone.SOA.RETRY" />
+        </Field>
+    </Column>
+    <Column>
+        <Field>
+            <FieldLabel>Expires After</FieldLabel>
+            <NumericEdit @bind-Value="@zone.SOA.EXPIRE" />
+        </Field>
+        <Field>
+            <FieldLabel>Minimum TTL</FieldLabel>
+            <NumericEdit @bind-Value="@zone.SOA.MINIMUM" />
+        </Field>
+        <Field>
+            <FieldLabel>SOA TTL</FieldLabel>
+            <NumericEdit @bind-Value="@zone.SOA.TTL" />
+        </Field>
+    </Column>
+</Row>
+
+
+
+<DataGrid TItem="IRecord"
+          Data="@zone.Records"
+          @bind-SelectedRow="selectedRecord"
+          Editable="true"
+          EditMode="DataGridEditMode.Form"
+          Filterable="true"
+          FilterMode="DataGridFilterMode.Menu"
+          Narrow="true"
+          ShowPager="true"
+          ShowPageSizes="true"
+          PageSize="100"
+          PageSizes="@([50, 100, 200, 500])"
+          Groupable="true"
+          ShowGrouping="true"
+          Bordered="true"
+          Resizable="true"
+          ResizeMode="TableResizeMode.Header"
+          Style="font-size:small">
+    <DataGridColumns>
+        <DataGridColumn Field="@nameof(IRecord.Name)" Caption="Name" Sortable="true" Editable="true" />
+        <DataGridColumn Field="@nameof(IRecord.Type)" Caption="Type" Sortable="true" Groupable="true" />
+        <DataGridColumn Field="@nameof(IRecord.TTL)" Caption="TTL" Sortable="true" Editable="true" />
+        <DataGridColumn Field="@nameof(IRecord.Data)" Caption="Data">
+            <DisplayTemplate>
+                @context
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridCommandColumn CancelCommandAllowed="false" SaveCommandAllowed="false">
+            <NewCommandTemplate>
+                <Icon Name="IconName.Add" IconSize="IconSize.Large" Clicked="@NewRecord" />
+            </NewCommandTemplate>
+            <EditCommandTemplate>
+                <Icon Name="IconName.Edit" IconSize="IconSize.Large" Clicked="@(()=>EditRecord(context.Item))" />
+            </EditCommandTemplate>
+            <DeleteCommandTemplate>
+                <Icon Name="IconName.Remove" IconSize="IconSize.Large" Clicked="@context.Clicked" />
+            </DeleteCommandTemplate>
+        </DataGridCommandColumn>
+    </DataGridColumns>
+</DataGrid>
+
+@code {
+    private PrimaryZone zone = new();
+    private IRecord? selectedRecord;
+    private bool suppressDeleteWarning = false;
+
+    protected override void OnInitialized()
+    {
+        zone.SOA.MNAME = "ns.contoso.org.";
+        zone.SOA.RNAME = "hostmaster.contoso.org.";
+        zone.SOA.SERIAL = 240722;
+        zone.SOA.REFRESH = 900;
+        zone.SOA.RETRY = 600;
+        zone.SOA.EXPIRE = 86400;
+        zone.SOA.MINIMUM = 3600;
+
+        zone.Records.Add(new NS()
+            {
+                Name = "@",
+                HostName = "ns.contoso.org.",
+            });
+        zone.Records.Add(new A()
+            {
+                Name = "ns",
+                Data = IPAddress.Parse("10.1.1.1"),
+            });
+        zone.Records.Add(new AAAA()
+            {
+                Name = "ns",
+                Data = IPAddress.Parse("fd45:1234:abcd:1::1"),
+            });
+        zone.Records.Add(new A()
+            {
+                Name = "dc",
+                Data = IPAddress.Parse("10.10.1.1"),
+            });
+        zone.Records.Add(new AAAA()
+            {
+                Name = "dc",
+                Data = IPAddress.Parse("fd45:1234:abcd:10::1"),
+            });
+        zone.Records.Add(new CNAME()
+            {
+                Name = "dns",
+                HostName = "dc.contoso.org.",
+            });
+        zone.Records.Add(new SRV()
+            {
+                Name = "_ldap._tcp",
+                Priority = 0,
+                Weight = 100,
+                Port = 389,
+                Target = "dc.contoso.org.",
+            });
+        zone.Records.Add(new SRV()
+            {
+                Name = "_ldap._tcp.sites.Mars",
+                Priority = 0,
+                Weight = 100,
+                Port = 389,
+                Target = "dc.contoso.org.",
+            });
+        zone.Records.Add(new A()
+            {
+                Name = "mail",
+                Data = IPAddress.Parse("10.1.2.1"),
+                TTL = 60,
+            });
+        zone.Records.Add(new MX()
+            {
+                Name = "@",
+                Preference = 10,
+                Host = "mail.contoso.org.",
+            });
+        zone.Records.Add(new TXT()
+            {
+                Name = "@",
+                Txt = "v=spf1 ip4:192.0.2.0/24 ip4:198.51.100.123 ip6:2620:0:860::/46 a -all",
+            });
+        zone.Records.Add(new SVCB()
+            {
+                Name = "_ssh._tcp",
+                Priority = 1,
+                Target = "srv.contoso.org.",
+                Params =
+                {
+                    {"port", "12345" },
+                    {"alpn", "sshv2" }
+                }
+            });
+        zone.Records.Add(new HTTPS()
+            {
+                Name = "www",
+                Priority = 1,
+                Target = "srv.contoso.org.",
+                Params =
+                {
+                    {"port", "54321" },
+                    {"alpn", "\"h3,h2\"" },
+                    {"ipv4hint", "10.10.10.10,10.20.10.10" },
+                }
+            });
+        base.OnInitialized();
+    }
+
+    void NewRecord()
+    {
+
+    }
+
+    void DeleteRecord()
+    {
+
+    }
+
+    void EditRecord(IRecord record)
+    {
+        
+    }
+}
