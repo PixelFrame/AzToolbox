@@ -3,7 +3,6 @@ using AzToolbox.Services;
 using Blazorise;
 using Blazorise.FluentUI2;
 using Blazorise.Icons.FluentUI;
-using Blazorise.Icons.FontAwesome;
 using Blazorise.LoadingIndicator;
 using KristofferStrube.Blazor.FileSystemAccess;
 using KzA.Blazor.PacParser;
@@ -27,7 +26,6 @@ builder.Services
 builder.Services
     .AddFluentUI2Providers()
     .AddFluentUIIcons();
-builder.Services.AddFontAwesomeIcons();
 builder.Services.AddLoadingIndicator();
 
 builder.Services.AddSingleton(services => (IJSInProcessRuntime)services.GetRequiredService<IJSRuntime>());

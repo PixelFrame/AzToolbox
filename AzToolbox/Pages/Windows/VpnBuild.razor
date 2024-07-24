@@ -185,11 +185,11 @@
         }
     </SplitterSection>
     <SplitterSection Display="Display.Flex" Flex="Flex.Column" Style="height:calc(100vh - 74px - 1rem); overflow-y:scroll">
-        <Button Color="Color.Primary" Clicked="@Build" Block>Build</Button>
+        <Button Color="Color.Primary" Clicked="@Build" Block><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.WrenchFilled" IconSize="IconSize.Large" />Build</Button>
         <Grid Columns="GridColumns.Are3" Gap="Gap.Is1">
-            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@CopyToClipboard" Block>Copy XML to Clipboard</Button>
-            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@Download" Block>Download XML</Button>
-            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Clicked="@DownloadScript" Block>Download Deploy Script</Button>
+            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@CopyToClipboard" Block><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CopyFilled" IconSize="IconSize.Large" />Copy XML to Clipboard</Button>
+            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Disabled="@(!built)" Clicked="@Download" Block><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowDownloadFilled" IconSize="IconSize.Large" />Download XML</Button>
+            <Button Color="Color.Success" Margin="Margin.Is1.FromTop" Clicked="@DownloadScript" Block><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowDownloadFilled" IconSize="IconSize.Large" />Download Deploy Script</Button>
         </Grid>
         @if (svc.Win11Profile)
         {

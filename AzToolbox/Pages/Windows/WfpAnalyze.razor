@@ -18,46 +18,46 @@
                         <Div>
                             <Heading Size="HeadingSize.Is5">@context.File.Name</Heading>
                             <Paragraph>@($"Size: {(context.File.Size / 1048576.0):0.##}MB")</Paragraph>
-                            </Div>
-                            <Div>
-                                <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read & Analayze</Button>
-                            </Div>
                         </Div>
-                        <Divider />
-                        <Progress Value="@filePickerCustom.GetProgressPercentage()" />
-                    </FileTemplate>
-                    <ButtonsTemplate />
-                </FilePicker>
+                        <Div>
+                            <Button Clicked="@(()=>filePickerCustom.UploadFile(context.File))" Color="Color.Primary">Read & Analayze</Button>
+                        </Div>
+                    </Div>
+                    <Divider />
+                    <Progress Value="@filePickerCustom.GetProgressPercentage()" />
+                </FileTemplate>
+                <ButtonsTemplate />
+            </FilePicker>
 
-                <Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.OnY">
-                    <AlertMessage>
-                        <Icon Name="IconName.ExclamationCircle" /> Supported Traces <br>
-                    </AlertMessage>
-                    <AlertDescription>
-                        wfpdiag.xml - netsh wfp capture start/stop <br>
-                        wfpstate.xml - netsh wfp show state <br>
-                        netEvents.xml - netsh wfp show netevents <br>
-                    </AlertDescription>
-                    <AlertMessage>
-                        <Icon Name="IconName.ExclamationCircle" /> File Size Limit <br>
-                    </AlertMessage>
-                    <AlertDescription>
-                        100MB
-                    </AlertDescription>
-                </Alert>
+            <Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.OnY">
+                <AlertMessage>
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" /> Supported Traces <br>
+                </AlertMessage>
+                <AlertDescription>
+                    wfpdiag.xml - netsh wfp capture start/stop <br>
+                    wfpstate.xml - netsh wfp show state <br>
+                    netEvents.xml - netsh wfp show netevents <br>
+                </AlertDescription>
+                <AlertMessage>
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" /> File Size Limit <br>
+                </AlertMessage>
+                <AlertDescription>
+                    100MB
+                </AlertDescription>
+            </Alert>
 
-                <Alert Color="Color.Warning" @bind-Visible="@ShowLargeFileWarning" Style="margin:5px 0 5px 0">
-                    <AlertMessage>
-                        <Icon Name="IconName.ExclamationTriangle" /> Warning <br>
-                    </AlertMessage>
-                    <AlertDescription>
-                        File size large than 10MB, it may take a while to parse. <br>
-                        Switching to another tab or minimizing the browser may cause white screen, but the parsing will be still processing. <br>
-                        Do not refresh the page or close the browser until the parsing is completed.
-                    </AlertDescription>
-                </Alert>
+            <Alert Color="Color.Warning" @bind-Visible="@ShowLargeFileWarning" Style="margin:5px 0 5px 0">
+                <AlertMessage>
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.WarningFilled" IconSize="IconSize.Large" /> Warning <br>
+                </AlertMessage>
+                <AlertDescription>
+                    File size large than 10MB, it may take a while to parse. <br>
+                    Switching to another tab or minimizing the browser may cause white screen, but the parsing will be still processing. <br>
+                    Do not refresh the page or close the browser until the parsing is completed.
+                </AlertDescription>
+            </Alert>
 
-                @if (ShowParsingProgress)
+            @if (ShowParsingProgress)
             {
                 <Heading Size="HeadingSize.Is5">@($"Parsing XML") </Heading>
                 <Divider />
@@ -68,7 +68,7 @@
 }
 else
 {
-    <Button Clicked="@(()=>ShowResult = false)" Color="Color.Primary"><Icon Name="IconName.ArrowLeft" /> Select Another File</Button>
+    <Button Clicked="@(()=>ShowResult = false)" Color="Color.Primary"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowResetFilled" IconSize="IconSize.Large" /> Select Another File</Button>
     @resultFragment
 }
 

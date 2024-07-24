@@ -8,12 +8,14 @@
 @inject DnsZoneFileService svc
 @inject IModalService ModalService
 @inject IMessageService MessageService
+@inject IJSRuntime JSRuntime
+@inject INotificationService NotificationService
 
 <PageTitle>DNS Zone File Builder - AzToolbox</PageTitle>
 
 @if (!done)
 {
-    <Button Clicked="()=>done = !done">Show Result</Button>
+    <Button Clicked="()=>done = !done"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CheckmarkFilled" IconSize="IconSize.Large" />Show Result</Button>
     <Row>
         <Column>
             <Field>
@@ -105,7 +107,11 @@
 }
 else
 {
-    <Button Clicked="()=>done = !done" Margin="Margin.Is1.FromBottom">Go Back</Button>
+    <Div Flex="Flex.Row" Margin="Margin.Is1.FromBottom">
+        <Button Clicked="()=>done = !done" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowResetFilled" IconSize="IconSize.Large" />Go Back</Button>
+        <Button Clicked="@CopyFile" Color="Color.Primary" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CopyFilled" IconSize="IconSize.Large" />Copy</Button>
+        <Button Clicked="@DownloadFile" Color="Color.Primary" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowDownloadFilled" IconSize="IconSize.Large" />Copy</Button>
+    </Div>
     <MemoEdit Text="@svc.GenerateFile()" ReadOnly Class="monospace-fixed-textbox" />
 }
 
@@ -166,5 +172,27 @@ else
         {
             svc.ViewRecords.Remove(record);
         }
+    }
+
+    private async Task CopyFile()
+    {
+        var message = await JSRuntime.InvokeAsync<string>("copyTextToClipboard", svc.GenerateFile());
+        if (message == "Success")
+        {
+            await NotificationService.Success("Zone File Copied");
+        }
+        else
+        {
+            await NotificationService.Error(message, "Copy Failed");
+        }
+    }
+
+    private async Task DownloadFile()
+    {
+        var jsparams = new object[]
+        {
+            $"{svc.Name}.dns", "text/*", svc.GenerateFile()
+        };
+        await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
     }
 }

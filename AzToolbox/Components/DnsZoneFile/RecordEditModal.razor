@@ -9,7 +9,7 @@
     <Field>
         <FieldLabel>Type</FieldLabel>
         <SelectList TItem="RRType" TValue="RRType" TextField="@(t=>t.ToString())" ValueField="@(t=>t)"
-                    Data="DnsZoneFileService.SupportedRRTypes" SelectedValue="Record.Type" Disabled="true"/>
+                    Data="DnsZoneFileService.SupportedRRTypes" SelectedValue="Record.Type" Disabled="true" />
     </Field>
 
     <Field>
@@ -40,19 +40,27 @@
                 </Field>
                 break;
             }
+        case RRType.NS:
+            {
+                <Field>
+                    <FieldLabel>NS</FieldLabel>
+                    <TextEdit @bind-Text="@(((NS)Record).HostName)" />
+                </Field>
+                break;
+            }
         case RRType.CNAME:
             {
                 <Field>
                     <FieldLabel>CNAME</FieldLabel>
-                    <TextEdit @bind-Text="@textFieldValue" />
+                    <TextEdit @bind-Text="@(((CNAME)Record).HostName)" />
                 </Field>
                 break;
             }
         case RRType.TXT:
             {
                 <Field>
-                    <FieldLabel>CNAME</FieldLabel>
-                    <MemoEdit @bind-Text="@textFieldValue" Rows="5" />
+                    <FieldLabel>TXT</FieldLabel>
+                    <MemoEdit @bind-Text="@(((TXT)Record).Txt)" Rows="5" />
                 </Field>
                 break;
             }
@@ -80,7 +88,7 @@
 </ModalBody>
 
 <ModalFooter>
-    <Button Color="@Color.Info">OK</Button>
+    <Button Color="@Color.Info" Clicked="UpdateRecord">OK</Button>
 </ModalFooter>
 
 <Snackbar @ref="notification" Color="SnackbarColor.Danger">
@@ -99,4 +107,91 @@
     Snackbar? notification;
     string notificationMessage = "";
 
+    protected override void OnInitialized()
+    {
+        switch (Record.Type)
+        {
+            case RRType.A:
+                textFieldValue = ((A)Record).Data.ToString(); break;
+            case RRType.AAAA:
+                textFieldValue = ((AAAA)Record).Data.ToString(); break;
+            case RRType.SVCB:
+                foreach (var p in ((SVCB)Record).Params)
+                {
+                    svcbParams += p.Key;
+                    if (!string.IsNullOrEmpty(p.Value)) svcbParams += $"={p.Value}";
+                    svcbParams += ' ';
+                }
+                break;
+            case RRType.HTTPS:
+                foreach (var p in ((HTTPS)Record).Params)
+                {
+                    svcbParams += p.Key;
+                    if (!string.IsNullOrEmpty(p.Value)) svcbParams += $"={p.Value}";
+                    svcbParams += ' ';
+                }
+                break;
+        }
+        base.OnInitialized();
+    }
+
+    async Task UpdateRecord()
+    {
+        try
+        {
+            switch (Record.Type)
+            {
+                case RRType.A:
+                    ((A)Record).Data = System.Net.IPAddress.Parse(textFieldValue); break;
+                case RRType.AAAA:
+                    ((AAAA)Record).Data = System.Net.IPAddress.Parse(textFieldValue); break;
+                case RRType.SVCB:
+                    ProcessSvcbParams();
+                    break;
+                case RRType.HTTPS:
+                    ProcessHttpsParams();
+                    break;
+            }
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
+
+    void ProcessSvcbParams()
+    {
+        var paramArr = svcbParams.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        foreach (var p in paramArr)
+        {
+            var kv = p.Split('=');
+            if (kv.Length == 1)
+            {
+                ((SVCB)Record).Params.Add(kv[0], string.Empty);
+            }
+            else
+            {
+                ((SVCB)Record).Params.Add(kv[0], kv[1]);
+            }
+        }
+    }
+
+    void ProcessHttpsParams()
+    {
+        var paramArr = svcbParams.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        foreach (var p in paramArr)
+        {
+            var kv = p.Split('=');
+            if (kv.Length == 1)
+            {
+                ((HTTPS)Record).Params.Add(kv[0], string.Empty);
+            }
+            else
+            {
+                ((HTTPS)Record).Params.Add(kv[0], kv[1]);
+            }
+        }
+    }
 }
