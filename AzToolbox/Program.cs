@@ -21,7 +21,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services
     .AddBlazorise(options =>
     {
-        options.Immediate = true;
+        options.Debounce = true;
+        options.DebounceInterval = 500;
     });
 builder.Services
     .AddFluentUI2Providers()
@@ -34,6 +35,7 @@ builder.Services.AddSingleton<VpnBuildService>();
 builder.Services.AddSingleton<PacParserService>();
 builder.Services.AddScoped<WinSdService>();
 builder.Services.AddScoped<HexehService>();
+builder.Services.AddScoped<DnsZoneFileService>();
 
 builder.Services.AddFileSystemAccessService();
 

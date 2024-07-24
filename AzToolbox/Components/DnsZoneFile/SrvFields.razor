@@ -1,5 +1,24 @@
-﻿<h3>SrvFields</h3>
+﻿@using KzA.DNS.DataModel
+
+<Field>
+    <FieldLabel>Priority</FieldLabel>
+    <FieldLabel>Priority</FieldLabel>
+    <NumericEdit @bind-Value="@Data.Priority" />
+</Field>
+<Field>
+    <FieldLabel>Weight</FieldLabel>
+    <NumericEdit @bind-Value="@Data.Weight" />
+</Field>
+<Field>
+    <FieldLabel>Port</FieldLabel>
+    <NumericEdit @bind-Value="@Data.Port" />
+</Field>
+<Field>
+    <FieldLabel>Target</FieldLabel>
+    <TextEdit @bind-Text="@Data.Target.HostName" />
+</Field>
 
 @code {
-
+    [Parameter]
+    public SrvData Data { get; set; } = new();
 }

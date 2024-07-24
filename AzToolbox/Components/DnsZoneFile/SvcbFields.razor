@@ -1,5 +1,32 @@
-﻿<h3>SvcbFields</h3>
+﻿@using KzA.DNS.DataModel
+
+<Field>
+    <FieldLabel>Priority</FieldLabel>
+    <NumericEdit @bind-Value="@Data.Priority" />
+</Field>
+<Field>
+    <FieldLabel>Target</FieldLabel>
+    <TextEdit @bind-Text="@Data.Target.HostName" />
+</Field>
+<Field>
+    <FieldLabel>Params</FieldLabel>
+    <MemoEdit @ref="svcParamsEdit" TextChanged="OnSvcParamsChanged" Rows="5" />
+</Field>
 
 @code {
+    [Parameter]
+    public SvcbData Data { get; set; } = new();
 
+    [Parameter]
+    public string SvcbParamsString { get; set; } = string.Empty;
+
+    [Parameter] 
+    public EventCallback<string> SvcbParamsStringChanged { get; set; }
+
+    MemoEdit? svcParamsEdit;
+
+    async Task OnSvcParamsChanged(string newValue)
+    {
+        await SvcbParamsStringChanged.InvokeAsync(newValue);
+    }
 }

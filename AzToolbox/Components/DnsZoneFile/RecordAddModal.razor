@@ -2,111 +2,175 @@
 @using KzA.DNS.ResourceRecord
 @using KzA.DNS.DataModel
 
-<Field Horizontal>
-    <FieldLabel>Name</FieldLabel>
-    <FieldBody>
-        <TextEdit @bind-Text="@name" />
-    </FieldBody>
-</Field>
+@inject IModalService ModalService
+@inject DnsZoneFileService svc
 
-<Field Horizontal>
-    <FieldLabel>Type</FieldLabel>
-    <FieldBody>
+<ModalBody Overflow="Overflow.Auto">
+    <Field>
+        <FieldLabel>Type</FieldLabel>
         <SelectList TItem="RRType" TValue="RRType" TextField="@(t=>t.ToString())" ValueField="@(t=>t)"
-            Data="_supportedTypes" @bind-SelectedValue="type" />
-    </FieldBody>
-</Field>
+                    Data="DnsZoneFileService.SupportedRRTypes" @bind-SelectedValue="type" />
+    </Field>
 
-<Field Horizontal>
-    <FieldLabel>TTL</FieldLabel>
-    <FieldBody>
+    <Field>
+        <FieldLabel>Name</FieldLabel>
+        <TextEdit @bind-Text="@name" />
+    </Field>
+
+    <Field>
+        <FieldLabel>TTL</FieldLabel>
         <NumericEdit @bind-Value="@ttl" />
-    </FieldBody>
-</Field>
+    </Field>
 
-@switch (type)
-{
-    case RRType.A:
-        {
-            <Field Horizontal>
-                <FieldLabel>A</FieldLabel>
-                <FieldBody>
+    @switch (type)
+    {
+        case RRType.A:
+            {
+                <Field>
+                    <FieldLabel>A</FieldLabel>
                     <TextEdit @bind-Text="@textFieldValue" />
-                </FieldBody>
-            </Field>
-            break;
-        }
-    case RRType.AAAA:
-        {
-            <Field Horizontal>
-                <FieldLabel>AAAA</FieldLabel>
-                <FieldBody>
+                </Field>
+                break;
+            }
+        case RRType.AAAA:
+            {
+                <Field>
+                    <FieldLabel>AAAA</FieldLabel>
                     <TextEdit @bind-Text="@textFieldValue" />
-                </FieldBody>
-            </Field>
-            break;
-        }
-    case RRType.CNAME:
-        {
-            <Field Horizontal>
-                <FieldLabel>CNAME</FieldLabel>
-                <FieldBody>
-                    <TextEdit @bind-Text="@textFieldValue" />
-                </FieldBody>
-            </Field>
-            break;
-        }
-    case RRType.TXT:
-        {
-            <Field Horizontal>
-                <FieldLabel>CNAME</FieldLabel>
-                <FieldBody>
-                    <TextEdit @bind-Text="@textFieldValue" />
-                </FieldBody>
-            </Field>
-            break;
-        }
-    case RRType.MX:
-        {
-            <MxFields Data="@mxData" />
-            break;
-        }
-    case RRType.SRV:
-        {
-            <SrvFields Data="@srvData" />
-            break;
-        }
-    case RRType.SVCB:
-        {
-            <SvcbFields Data="@svcbData" />
-            break;
-        }
-    case RRType.HTTPS:
-        {
-            <SvcbFields Data="@svcbData" />
-            break;
-        }
-}
+                </Field>
+                break;
+            }
+        case RRType.CNAME:
+            {
+                <Field>
+                    <FieldLabel>CNAME</FieldLabel>
+                    <TextEdit @bind-Text="@hostData.HostName" />
+                </Field>
+                break;
+            }
+        case RRType.NS:
+            {
+                <Field>
+                    <FieldLabel>NS</FieldLabel>
+                    <TextEdit @bind-Text="@hostData.HostName" />
+                </Field>
+                break;
+            }
+        case RRType.TXT:
+            {
+                <Field>
+                    <FieldLabel>TXT</FieldLabel>
+                    <MemoEdit @bind-Text="@textFieldValue" Rows="5" />
+                </Field>
+                break;
+            }
+        case RRType.MX:
+            {
+                <MxFields Data="@mxData" />
+                break;
+            }
+        case RRType.SRV:
+            {
+                <SrvFields Data="@srvData" />
+                break;
+            }
+        case RRType.SVCB:
+            {
+                <SvcbFields Data="@svcbData" @bind-SvcbParamsString="@svcbParams" />
+                break;
+            }
+        case RRType.HTTPS:
+            {
+                <SvcbFields Data="@svcbData" @bind-SvcbParamsString="@svcbParams" />
+                break;
+            }
+    }
+</ModalBody>
+
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="NewRecord">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
 
 @code {
     string name = string.Empty;
     RRType type = RRType.A;
     int ttl = -1;
     string textFieldValue = string.Empty;
+    HostData hostData = new();
     MxData mxData = new();
     SrvData srvData = new();
     SvcbData svcbData = new();
+    string svcbParams = string.Empty;
 
-    static readonly RRType[] _supportedTypes =
-    [
-    RRType.A, RRType.AAAA, RRType.CNAME,
-RRType.NS, RRType.TXT,
-RRType.MX, RRType.SRV,
-RRType.SVCB, RRType.HTTPS
-    ];
+    Snackbar? notification;
+    string notificationMessage = "";
+
+    async Task NewRecord()
+    {
+        try
+        {
+            var record = CreateRecord();
+            svc.ViewRecords.Add(record);
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
 
     IRecord CreateRecord()
     {
-        return new A();
+        IRecord result;
+        switch (type)
+        {
+            case RRType.A:
+                result = new A() { Name = name, Data = System.Net.IPAddress.Parse(textFieldValue), TTL = ttl }; break;
+            case RRType.AAAA:
+                result = new AAAA() { Name = name, Data = System.Net.IPAddress.Parse(textFieldValue), TTL = ttl }; break;
+            case RRType.CNAME:
+                result = new CNAME() { Name = name, Data = hostData, TTL = ttl }; break;
+            case RRType.NS:
+                result = new NS() { Name = name, Data = hostData, TTL = ttl }; break;
+            case RRType.TXT:
+                result = new TXT() { Name = name, Txt = textFieldValue, TTL = ttl }; break;
+            case RRType.MX:
+                result = new MX() { Name = name, Data = mxData, TTL = ttl }; break;
+            case RRType.SRV:
+                result = new SRV() { Name = name, Data = srvData, TTL = ttl }; break;
+            case RRType.SVCB:
+                ProcessSvcbParams();
+                result = new SVCB() { Name = name, Data = svcbData, TTL = ttl }; break;
+            case RRType.HTTPS:
+                ProcessSvcbParams();
+                result = new HTTPS() { Name = name, Data = svcbData, TTL = ttl }; break;
+            default:
+                result = new A(); break;
+        }
+        return result;
+    }
+
+    void ProcessSvcbParams()
+    {
+        var paramArr = svcbParams.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        foreach (var p in paramArr)
+        {
+            var kv = p.Split('=');
+            if (kv.Length == 1)
+            {
+                svcbData.Params.Add(kv[0], string.Empty);
+            }
+            else
+            {
+                svcbData.Params.Add(kv[0], kv[1]);
+            }
+        }
     }
 }

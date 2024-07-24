@@ -1,0 +1,102 @@
+﻿@using AzToolbox.Components.DnsZoneFile
+@using KzA.DNS.ResourceRecord
+@using KzA.DNS.DataModel
+
+@inject IModalService ModalService
+@inject DnsZoneFileService svc
+
+<ModalBody Overflow="Overflow.Auto">
+    <Field>
+        <FieldLabel>Type</FieldLabel>
+        <SelectList TItem="RRType" TValue="RRType" TextField="@(t=>t.ToString())" ValueField="@(t=>t)"
+                    Data="DnsZoneFileService.SupportedRRTypes" SelectedValue="Record.Type" Disabled="true"/>
+    </Field>
+
+    <Field>
+        <FieldLabel>Name</FieldLabel>
+        <TextEdit @bind-Text="@Record.Name" />
+    </Field>
+
+    <Field>
+        <FieldLabel>TTL</FieldLabel>
+        <NumericEdit @bind-Value="@Record.TTL" />
+    </Field>
+
+    @switch (Record.Type)
+    {
+        case RRType.A:
+            {
+                <Field>
+                    <FieldLabel>A</FieldLabel>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </Field>
+                break;
+            }
+        case RRType.AAAA:
+            {
+                <Field>
+                    <FieldLabel>AAAA</FieldLabel>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </Field>
+                break;
+            }
+        case RRType.CNAME:
+            {
+                <Field>
+                    <FieldLabel>CNAME</FieldLabel>
+                    <TextEdit @bind-Text="@textFieldValue" />
+                </Field>
+                break;
+            }
+        case RRType.TXT:
+            {
+                <Field>
+                    <FieldLabel>CNAME</FieldLabel>
+                    <MemoEdit @bind-Text="@textFieldValue" Rows="5" />
+                </Field>
+                break;
+            }
+        case RRType.MX:
+            {
+                <MxFields Data="@(((MX)Record).Data)" />
+                break;
+            }
+        case RRType.SRV:
+            {
+                <SrvFields Data="@(((SRV)Record).Data)" />
+                break;
+            }
+        case RRType.SVCB:
+            {
+                <SvcbFields Data="@(((SVCB)Record).Data)" @bind-SvcbParamsString="@svcbParams" />
+                break;
+            }
+        case RRType.HTTPS:
+            {
+                <SvcbFields Data="@(((HTTPS)Record).Data)" @bind-SvcbParamsString="@svcbParams" />
+                break;
+            }
+    }
+</ModalBody>
+
+<ModalFooter>
+    <Button Color="@Color.Info">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    [Parameter]
+    public IRecord Record { get; set; } = default!;
+
+    string textFieldValue = string.Empty;
+    string svcbParams = string.Empty;
+
+    Snackbar? notification;
+    string notificationMessage = "";
+
+}

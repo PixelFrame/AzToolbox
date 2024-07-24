@@ -1,19 +1,15 @@
 ﻿@using KzA.DNS.DataModel
 
-<Field Horizontal>
+<Field>
     <FieldLabel>Preference</FieldLabel>
-    <FieldBody>
-        <NumericEdit @bind-Value="@Data.Preference" />
-    </FieldBody>
+    <NumericEdit @bind-Value="@Data.Preference" />
 </Field>
-<Field Horizontal>
+<Field>
     <FieldLabel>Target</FieldLabel>
-    <FieldBody>
-        <TextEdit @bind-Text="@Data.Host.HostName" />
-    </FieldBody>
+    <TextEdit @bind-Text="@Data.Host.HostName" />
 </Field>
 
 @code {
     [Parameter]
-    public MxData Data {get;set;} = new ();
+    public MxData Data { get; set; } = new();
 }
