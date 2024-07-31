@@ -1,0 +1,65 @@
+﻿@using AzToolbox.Components.DnsZoneFile
+@using KzA.DNS.ResourceRecord
+@using KzA.DNS.DataModel
+
+@inject IModalService ModalService
+@inject DnsZoneFileService svc
+
+<ModalBody Overflow="Overflow.Auto">
+    <Field>
+        <FieldLabel>Type</FieldLabel>
+        <SelectList TItem="RRType" TValue="RRType" TextField="@(t=>t.ToString())" ValueField="@(t=>t)"
+                    Data="@(Enum.GetValues<RRType>().Where(t => !t.ToString().Contains("Reserved")))" @bind-SelectedValue="type" />
+    </Field>
+
+    <Field>
+        <FieldLabel>Name</FieldLabel>
+        <TextEdit @bind-Text="@name" />
+    </Field>
+
+    <Field>
+        <FieldLabel>TTL</FieldLabel>
+        <NumericEdit @bind-Value="@ttl" />
+    </Field>
+
+    <Field>
+        <FieldLabel>Data</FieldLabel>
+        <TextEdit @bind-Text="@data" />
+    </Field>
+
+</ModalBody>
+
+<ModalFooter>
+    <Button Color="@Color.Info" Clicked="NewRecord">OK</Button>
+</ModalFooter>
+
+<Snackbar @ref="notification" Color="SnackbarColor.Danger">
+    <SnackbarBody>
+        @notificationMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    string name = string.Empty;
+    RRType type = RRType.A;
+    int ttl = -1;
+    string data = string.Empty;
+
+    Snackbar? notification;
+    string notificationMessage = "";
+
+    async Task NewRecord()
+    {
+        try
+        {
+            var record = DnsZoneFileService.CreateArbitraryRecord(name, type, data, ttl);
+            svc.ViewRecords.Add(record);
+            await ModalService.Hide();
+        }
+        catch (Exception e)
+        {
+            notificationMessage = e.Message;
+            await notification!.Show();
+        }
+    }
+}

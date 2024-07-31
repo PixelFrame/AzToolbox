@@ -63,6 +63,9 @@
     <Div Flex="Flex.Row.JustifyContent.Between">
         <Div>
             <Button Clicked="@NewRecord" Color="Color.Primary" Margin="Margin.Is1.FromEnd"><Icon Name="IconName.Add" IconSize="IconSize.Large" />Add Record</Button>
+            <Tooltip Text="Allows creation of records with any type and any data. No syntax check will be performed." Placement="TooltipPlacement.RightEnd" Display="Display.Inline">
+                <Button Clicked="@NewArbitraryRecord" Color="Color.Warning" Margin="Margin.Is1.FromEnd"><Icon Name="IconName.Add" IconSize="IconSize.Large" />Add Arbitrary Record</Button>
+            </Tooltip>
             <Button Clicked="@ClearRecords" Color="Color.Danger" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.DeleteFilled" IconSize="IconSize.Large" />Clear Records</Button>
             <Button Clicked="@ClearAll" Color="Color.Danger" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.DeleteFilled" IconSize="IconSize.Large" />Clear All</Button>
         </Div>
@@ -110,7 +113,7 @@ else
     <Div Flex="Flex.Row" Margin="Margin.Is1.FromBottom">
         <Button Clicked="()=>done = !done" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowResetFilled" IconSize="IconSize.Large" />Go Back</Button>
         <Button Clicked="@CopyFile" Color="Color.Primary" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CopyFilled" IconSize="IconSize.Large" />Copy</Button>
-        <Button Clicked="@DownloadFile" Color="Color.Primary" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowDownloadFilled" IconSize="IconSize.Large" />Copy</Button>
+        <Button Clicked="@DownloadFile" Color="Color.Primary" Margin="Margin.Is1.FromEnd"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowDownloadFilled" IconSize="IconSize.Large" />Download</Button>
     </Div>
     <MemoEdit Text="@svc.GenerateFile()" ReadOnly Class="monospace-fixed-textbox" />
 }
@@ -133,6 +136,15 @@ else
                 Size = ModalSize.ExtraLarge
             };
         var modal = await ModalService.Show<RecordAddModal>("New Record", opt);
+    }
+
+    private async Task NewArbitraryRecord()
+    {
+        var opt = new ModalInstanceOptions()
+            {
+                Size = ModalSize.ExtraLarge
+            };
+        var modal = await ModalService.Show<ArbitraryRecordAddModal>("New Arbitrary Record", opt);
     }
 
     private async Task ClearRecords()

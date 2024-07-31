@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IJSRuntime JSRuntime
+@inject IJSInProcessRuntime JSRuntime
 
 <CascadingValue Value="this" Name="MainLayout">
     <Layout>
@@ -15,7 +15,7 @@
                             <Heading Size="HeadingSize.Is5" Style="user-select: none">AzToolbox</Heading>
                         </Div>
                     </BarBrand>
-                    @if (!BarBroken || (isInit && initShow))
+                    @if (OnDesktop)
                     {
                         <Div Class="barSplitter" />
                     }
@@ -80,7 +80,7 @@
         {
             <LayoutFooter>
                 <Paragraph TextAlignment="TextAlignment.End" Margin="Margin.Is1" Style="font-size:small; user-select: none">
-                    &copy; 2023-2024 AzToolbox version 20240724.1 <br />
+                    &copy; 2023-2024 AzToolbox version 20240731.1 <br />
                     Powered by @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription (@System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier) and Blazorise with Fluent 2 design
                 </Paragraph>
             </LayoutFooter>
@@ -98,8 +98,14 @@
 
 @code {
     private Bar layoutBar = new();
-    private bool initShow = false;
-    private bool isInit = true;
+    private bool OnDesktop
+    {
+        get
+        {
+            var wid = JSRuntime.Invoke<int>("getWindowWidth");
+            return (wid >= 960) ;
+        }
+    }
 
     /*
     private void DebugClick()
@@ -127,29 +133,5 @@
             showFooter = value;
             StateHasChanged();
         }
-    }
-
-    // Ugly reflection for breakpoint changing, but still not working well with first render...
-    private bool BarBroken
-    {
-        get
-        {
-            var barType = typeof(Bar);
-            var isBrokenField = barType.GetField("isBroken", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            return (bool?)isBrokenField?.GetValue(layoutBar) ?? false;
-        }
-    }
-
-    protected async override Task OnInitializedAsync()
-    {
-        var wid = await JSRuntime.InvokeAsync<int>("getWindowWidth");
-        if (wid >= 768) initShow = true;
-        await base.OnInitializedAsync();
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (!firstRender && isInit) isInit = false;
-        base.OnAfterRender(firstRender);
     }
 }

@@ -35,6 +35,18 @@ namespace AzToolbox.Services
         public string Name { get => _zone.Name; set => _zone.Name = value; }
         public ObservableCollection<IRecord> ViewRecords { get; set; } = [];
 
+        public static ArbitraryRecord CreateArbitraryRecord(string name, RRType type, string data, int ttl = -1)
+        {
+            var record = new ArbitraryRecord
+            {
+                Name = name,
+                TTL = ttl,
+                Data = data
+            };
+            record.ModifyType(type);
+            return record;
+        }
+
         public string GenerateFile()
         {
             _zone.DefaultTTL = SOA.MINIMUM;
