@@ -42,9 +42,9 @@
         <Divider DividerType="DividerType.Solid" />
         <Div Display="Display.Flex" Margin="Margin.Is1.FromTop">
             <Button Color="Color.Primary" Clicked="() => AclTree.ExpandAll()" Size="Size.Small">Expand All</Button>
-            <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small">Copy Tree</Button>
-            <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small">Trustee List</Button>
-            <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small">Access Mask List</Button>
+            <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small" Margin="Margin.Is1.FromStart">Copy Tree</Button>
+            <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small" Margin="Margin.Is1.FromStart">Trustee List</Button>
+            <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small" Margin="Margin.Is1.FromStart">Access Mask List</Button>
         </Div>
         <TreeView @ref="@AclTree"
                   Nodes="AclTreeHead"

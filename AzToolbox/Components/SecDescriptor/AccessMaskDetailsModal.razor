@@ -1,6 +1,5 @@
 ﻿@using AzToolbox.Models;
 @using WinSdUtil.Lib.Model;
-@using System.Collections;
 @using System.Buffers.Binary;
 
 <Div Overflow="Overflow.Auto">
@@ -11,37 +10,27 @@
                         Data="Enum.GetValues<AccessMaskType>().Where(t => t!=AccessMaskType.Unknown)"
                         TextField="@(item => item.ToString())"
                         ValueField="@(item => item)"
-                        @bind-SelectedValue="@TargetAccessMaskType" />
-            <Div Flex="Flex.AlignItems.Center">
-                <Switch @bind-Checked="@HexInput" Display="Display.Inline">@(HexInput ? "HEX" : "DEC")</Switch>
-                @if (HexInput)
-                {
-                    <TextEdit @bind-Text="@MaskValueHex" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
-                }
-                else
-                {
-                    <NumericEdit @bind-Value="@MaskValue" Display="Display.Inline" Margin="Margin.Is1.FromStart" />
-                }
-            </Div>
+                        @bind-SelectedValue="@(mask.ObjectType)" />
+            <TextEdit Placeholder="Input access mask number or SDDL" Margin="Margin.Is1.FromStart" TextChanged="InputChanged" />
         </Grid>
 
-        <MemoEdit ReadOnly Text="@CastedText" Margin="Margin.Is1.FromTop" />
+        <MemoEdit ReadOnly Text="@CastedText.Item1" Placeholder="Flags" Rows="3" Style="resize:none" Margin="Margin.Is1.FromTop" />
+        <MemoEdit ReadOnly Text="@CastedText.Item2" Placeholder="SDDL" Rows="1" Style="resize:none" Margin="Margin.Is1.FromTop" />
     </Card>
 
-    <TreeView Nodes="AccessMaskTreeHead"
-              GetChildNodes="@(item => item.Children)"
-              HasChildNodes="@(item => item.HasChildren)"
-              ExpandedNodes="AccessMaskTreeHead"
-              Padding="Padding.Is3.FromBottom">
-        <NodeContent>
-            @if (context.Tag != null)
-            {
-                <Check TValue="bool" @bind-Checked="@maskBits[(int)context.Tag]" />
-            }
-            <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
-            <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
-        </NodeContent>
-    </TreeView>
+    @foreach (var bit in mask)
+    {
+        @if (bit.Item1 == 0)
+        {
+            <Blazorise.Text TextWeight="TextWeight.Bold" Class="monospace-text">Object Specific (@mask.ObjectType)</Blazorise.Text>
+        }
+        @if (bit.Item1==16)
+        {
+            <Blazorise.Text TextWeight="TextWeight.Bold" Class="monospace-text">Generic</Blazorise.Text>
+        }
+        <AccessMaskBit Margin="Margin.Is4.FromStart" BitPosition="@bit.Item1" BitValue="@bit.Item2" BitValueChanged="b=>BitChanged(b, bit.Item1)" Label="@(mask.BitNames.ElementAt(bit.Item1))" LabelPadding="@(mask.BitNames.Max(n => n.Length))" />
+    }
+    <Div Margin="Margin.Is2.OnY" />
 </Div>
 
 <style>
@@ -51,78 +40,27 @@
 </style>
 
 @code {
-    bool HexInput = false;
-    TreeViewItem[] AccessMaskTreeHead = null!;
-    AccessMaskType targetAccessMaskType = AccessMaskType.File;
-    AccessMaskType TargetAccessMaskType
-    {
-        get => targetAccessMaskType;
-        set
-        {
-            targetAccessMaskType = value;
-            GenerateTree();
-        }
-    }
-    BitArray maskBits = new(32);
-    uint MaskValue
-    {
-        get
-        {
-            var intArr = new int[1];
-            maskBits.CopyTo(intArr, 0);
-            return (uint)intArr[0];
-        }
-        set
-        {
-            maskBits = new(BitConverter.GetBytes(value));
-            GenerateTree();
-        }
-    }
-    string MaskValueHex
-    {
-        get => MaskValue.ToString("X");
-        set
-        {
-            try
-            {
-                if (value.Length > 8) value = value[0..8];
-                else { value = value.PadLeft(8, '0'); }
-                MaskValue = BinaryPrimitives.ReadUInt32BigEndian(Convert.FromHexString(value));
-            }
-            catch { }
-        }
-    }
-    string CastedText
-    {
-        get
-        {
-            AccessMask Mask = new()
-                {
-                    Full = MaskValue,
-                    ObjectType = targetAccessMaskType,
-                };
-            return string.Join(',', Mask.ToStrings());
-        }
-    }
+    AccessMask mask = new();
+
+    (string, string) CastedText =>
+        (string.Join(',', mask.ToStrings()), mask.ToSDDL());
 
     protected override void OnInitialized()
     {
-        GenerateTree();
+        mask.ObjectType = AccessMaskType.File;
     }
 
-    void GenerateTree()
+    void InputChanged(string newValue)
     {
-        AccessMaskTreeHead = new TreeViewItem[2];
-        var longest = WinSdTreeViewExtension.CalcLongestNameLen(targetAccessMaskType, out var TargetType);
-        AccessMaskTreeHead[0] = new TreeViewItem()
-            {
-                Label = $"Object Specific ({TargetAccessMaskType})",
-            };
-        AccessMaskTreeHead[0].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(MaskValue, TargetType, longest, false);
-        AccessMaskTreeHead[1] = new TreeViewItem()
-            {
-                Label = "Generic",
-            };
-        AccessMaskTreeHead[1].Children = WinSdTreeViewExtension.AccessMaskToTreeViewItems(MaskValue, typeof(AccessMask_Standard), longest, true);
+        try
+        {
+            mask.FromSDDL(newValue);
+        }
+        catch { }
+    }
+
+    void BitChanged(bool value, int index)
+    {
+        mask[index] = value;
     }
 }

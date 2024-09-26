@@ -1,0 +1,33 @@
+﻿<Div Margin="@Margin">
+    <Check Checked="BitValue" TValue="bool" CheckedChanged="@UpdateValue" />
+    <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(Label.PadRight(LabelPadding + 1) + ':')</Text>
+    <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@Description</Text>
+</Div>
+
+@code {
+    [Parameter]
+    public bool BitValue { get; set; } = false;
+
+    [Parameter]
+    public int BitPosition { get; set; } = 0;
+
+    [Parameter]
+    public string Label { get; set; } = "Undefined";
+
+    [Parameter]
+    public int LabelPadding { get; set; } = 25;
+
+    [Parameter]
+    public IFluentSpacing? Margin { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> BitValueChanged { get; set; }
+
+    private async Task UpdateValue(bool value)
+    {
+        BitValue = value;
+        await BitValueChanged.InvokeAsync(value);
+    }
+
+    string Description => $"{BitValue.ToString().PadRight(5)} {(BitValue ? "1" : "0").PadLeft(32 - BitPosition, '.').PadRight(32, '.')}";
+}
