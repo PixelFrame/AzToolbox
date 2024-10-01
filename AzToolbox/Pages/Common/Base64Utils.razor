@@ -7,6 +7,20 @@
 @inject INotificationService NotificationService
 @inject IJSRuntime JSRuntime
 
+<Div Flex="Flex.Row">
+    <RadioGroup @bind-CheckedValue="@IsUrl">
+        <Radio Value="false">Base64</Radio>
+        <Radio Value="true">Base64URL</Radio>
+    </RadioGroup>
+    <SelectList TItem="EncodingInfo"
+                TValue="int"
+                Data="@SupportedEncodings"
+                TextField="@((item)=>item.Name)"
+                ValueField="@((item)=>item.CodePage)"
+                DefaultItemValue="65001"
+                @bind-SelectedValue="selectedCodePage" />
+</Div>
+
 <Splitter Style="height:40vh">
     <SplitterSection Display="Display.Flex" Flex="Flex.Column">
         <FieldLabel>Base64</FieldLabel>
@@ -18,13 +32,6 @@
     </SplitterSection>
     <SplitterSection Display="Display.Flex" Flex="Flex.Column">
         <FieldLabel>String</FieldLabel>
-        <SelectList TItem="EncodingInfo"
-                    TValue="int"
-                    Data="@SupportedEncodings"
-                    TextField="@((item)=>item.Name)"
-                    ValueField="@((item)=>item.CodePage)"
-                    DefaultItemValue="65001"
-                    @bind-SelectedValue="selectedCodePage" />
         <MemoEdit @bind-Text="@decodedstr" spellcheck="false" Flex="Flex.Grow" Margin="Margin.Is1.FromTop"
                   Class="monospace-fixed-textbox" />
         <Button Color="Color.Primary" Clicked="FromString" Width="Width.Is33" Flex="Flex.AlignSelf.Center" Margin="Margin.Is1.OnY">
@@ -63,6 +70,16 @@
 </Card>
 
 @code {
+    bool isUrl = false;
+    bool IsUrl
+    {
+        get => isUrl;
+        set
+        {
+            isUrl = value;
+            base64str = value ? Microsoft.AspNetCore.WebUtilities.Base64UrlTextEncoder.Encode(blob) : Convert.ToBase64String(blob);
+        }
+    }
     string base64str = string.Empty;
     byte[] blob = Array.Empty<byte>();
     string decodedstr = string.Empty;
@@ -94,7 +111,7 @@
     {
         try
         {
-            blob = Convert.FromBase64String(base64str);
+            blob = isUrl ? Microsoft.AspNetCore.WebUtilities.Base64UrlTextEncoder.Decode(base64str) : Convert.FromBase64String(base64str);
             decodedstr = Encoding.GetEncoding(selectedCodePage).GetString(blob);
         }
         catch (Exception e)
@@ -106,7 +123,7 @@
     void FromString()
     {
         blob = Encoding.GetEncoding(selectedCodePage).GetBytes(decodedstr);
-        base64str = Convert.ToBase64String(blob);
+        base64str = isUrl ? Microsoft.AspNetCore.WebUtilities.Base64UrlTextEncoder.Encode(blob) : Convert.ToBase64String(blob);
     }
 
     async Task CopyHexDump()

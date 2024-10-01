@@ -1,0 +1,71 @@
+﻿@page "/Common/SubtleCrypto"
+<PageTitle>SubtleCrypto - AzToolbox</PageTitle>
+
+@inject INotificationService NotificationService
+@inject CryptoService crysvc
+
+<Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.FromBottom">
+    <AlertMessage>
+        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" />Supported Algorithm
+    </AlertMessage>
+    <AlertDescription>
+        Only AES-CBC-256 is currently implemented. <br>
+        Key is SHA256 hashed passphrase. <br>
+        IV is prepended to cipher.
+    </AlertDescription>
+</Alert>
+
+<Div Flex="Flex.Row">
+    <RadioGroup @bind-CheckedValue="mode">
+        <Radio Value="true">Encrypt</Radio>
+        <Radio Value="false">Decrypt</Radio>
+    </RadioGroup>
+    <Button Color="Color.Primary" Clicked="@(() => mode ? enc() : dec())">Go</Button>
+</Div>
+<Field>
+    <FieldLabel>Passphrase</FieldLabel>
+    <TextEdit Role="TextRole.Password" @bind-Text="pass"></TextEdit>
+</Field>
+<Field>
+    <FieldLabel>@(mode ? "Plain" : "Cipher")</FieldLabel>
+    <MemoEdit Plaintext="false" Rows="6" spellcheck="false"
+              Class="monospace-fixed-textbox" @bind-Text="input"></MemoEdit>
+</Field>
+<Field>
+    <FieldLabel>@(mode ? "Cipher" : "Plain")</FieldLabel>
+    <MemoEdit Plaintext="false" Rows="6" spellcheck="false"
+              Class="monospace-fixed-textbox" @bind-Text="output"></MemoEdit>
+</Field>
+
+@code {
+    bool mode = true;
+    string pass = string.Empty;
+    string input = string.Empty;
+    string output = string.Empty;
+
+    async Task enc()
+    {
+        if (pass.Length == 0 || input.Length == 0) return;
+        try
+        {
+            output = await crysvc.Aes256Encrypt(pass, input);
+        }
+        catch (Exception e)
+        {
+            await NotificationService.Error(e.Message);
+        }
+    }
+
+    async Task dec()
+    {
+        if (pass.Length == 0 || input.Length == 0) return;
+        try
+        {
+            output = await crysvc.Aes256Decrypt(pass, input);
+        }
+        catch (Exception e)
+        {
+            await NotificationService.Error(e.Message);
+        }
+    }
+}
