@@ -6,12 +6,11 @@
 
 <Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.FromBottom">
     <AlertMessage>
-        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" />Supported Algorithm
+        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" />Algorithm
     </AlertMessage>
     <AlertDescription>
-        Only AES-CBC-256 is currently implemented. <br>
-        Key is SHA256 hashed passphrase. <br>
-        IV is prepended to cipher.
+        Passphrase --SHA256-> BaseKey --PBKDF2(5000 iterations)--> AES Key <br>
+        AES IV/counter and PBKDF2 salt are prepended to cipher.
     </AlertDescription>
 </Alert>
 
@@ -20,6 +19,16 @@
         <Radio Value="true">Encrypt</Radio>
         <Radio Value="false">Decrypt</Radio>
     </RadioGroup>
+    <SelectList TValue="CryptoAlgorithm"
+                TItem="CryptoAlgorithm"
+                TextField="@(s=>s.ToString().Replace("_", "-"))"
+                ValueField="s=>s"
+                Data="@(Enum.GetValues<CryptoAlgorithm>())"
+                @bind-SelectedValue="algorithm" />
+    <Select @bind-SelectedValue="@length">
+        <SelectItem Value="128">128</SelectItem>
+        <SelectItem Value="256">256</SelectItem>
+    </Select>
     <Button Color="Color.Primary" Clicked="@(() => mode ? enc() : dec())">Go</Button>
 </Div>
 <Field>
@@ -33,7 +42,7 @@
 </Field>
 <Field>
     <FieldLabel>@(mode ? "Cipher" : "Plain")</FieldLabel>
-    <MemoEdit Plaintext="false" Rows="6" spellcheck="false"
+    <MemoEdit Plaintext="false" Rows="6" spellcheck="false" ReadOnly="true"
               Class="monospace-fixed-textbox" @bind-Text="output"></MemoEdit>
 </Field>
 
@@ -42,13 +51,15 @@
     string pass = string.Empty;
     string input = string.Empty;
     string output = string.Empty;
+    CryptoAlgorithm algorithm = CryptoAlgorithm.AES_CBC;
+    int length = 256;
 
     async Task enc()
     {
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            output = await crysvc.Aes256Encrypt(pass, input);
+            output = await crysvc.Aes256Encrypt(pass, input, algorithm, length);
         }
         catch (Exception e)
         {
@@ -61,7 +72,7 @@
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            output = await crysvc.Aes256Decrypt(pass, input);
+            output = await crysvc.Aes256Decrypt(pass, input, algorithm, length);
         }
         catch (Exception e)
         {
