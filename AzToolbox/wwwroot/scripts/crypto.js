@@ -33,12 +33,12 @@ ConcatBytes = function (iv, salt, data) {
     return result;
 }
 
-DeriveKey = async function (key, name, salt, len) {
+DeriveKey = async function (key, name, salt, len, iter) {
     return await window.crypto.subtle.deriveKey(
         {
             name: "PBKDF2",
             salt: salt,
-            iterations: 5000,
+            iterations: iter,
             hash: { name: "SHA-256" },
         },
         key,
@@ -51,10 +51,15 @@ DeriveKey = async function (key, name, salt, len) {
     );
 }
 
-window.AesEncrypt = async function (k, data, name, len) {
+window.AesEncrypt = async function (k, data, name, len, iter = 5000) {
     var iv = window.crypto.getRandomValues(new Uint8Array(16));
     var keySalt = window.crypto.getRandomValues(new Uint8Array(16));
-    var key = await DeriveKey(await ImportPbkdf2Key(k), name, keySalt, len);
+
+    if (iter == 0) {
+        var key = await ImportAesKey(k, name);
+    } else {
+        var key = await DeriveKey(await ImportPbkdf2Key(k), name, keySalt, len, iter);
+    }
 
     var param = (name == "AES-CTR") ?
         {
@@ -76,12 +81,16 @@ window.AesEncrypt = async function (k, data, name, len) {
     return result;
 }
 
-window.AesDecrypt = async function (k, data, name, len) {
+window.AesDecrypt = async function (k, data, name, len, iter = 5000) {
     var iv = data.slice(0, 16);
     var keySalt = data.slice(16, 32);
     var encrypted = data.slice(32, data.byteLength);
 
-    var key = await DeriveKey(await ImportPbkdf2Key(k), name, keySalt, len);
+    if (iter == 0) {
+        var key = await ImportAesKey(k, name);
+    } else {
+        var key = await DeriveKey(await ImportPbkdf2Key(k), name, keySalt, len, iter);
+    }
     var param = (name == "AES-CTR") ?
         {
             name: name,

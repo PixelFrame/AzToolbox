@@ -8,9 +8,8 @@
     <AlertMessage>
         <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" />Algorithm
     </AlertMessage>
-    <AlertDescription>
-        Passphrase --SHA256-> BaseKey --PBKDF2(5000 iterations)--> AES Key <br>
-        AES IV/counter and PBKDF2 salt are prepended to cipher.
+    <AlertDescription Class="monospace-text">
+        @MSG
     </AlertDescription>
 </Alert>
 
@@ -29,6 +28,9 @@
         <SelectItem Value="128">128</SelectItem>
         <SelectItem Value="256">256</SelectItem>
     </Select>
+    <Div Margin="Margin.Is1.OnX" Width="Width.Px(100)">
+        <NumericEdit @bind-Value="@iter" Min="0" Max="int.MaxValue" />
+    </Div>
     <Button Color="Color.Primary" Clicked="@(() => mode ? enc() : dec())">Go</Button>
 </Div>
 <Field>
@@ -53,13 +55,22 @@
     string output = string.Empty;
     CryptoAlgorithm algorithm = CryptoAlgorithm.AES_CBC;
     int length = 256;
+    int iter = 5000;
+
+    const string MSG = 
+ @"Passphrase ---SHA256--> BaseKey ---PBKDF2(Optional)--> AES Key
+Set iteration to 0 to skip PBKDF2. The result will always include PBKDF2 salt, even when it's unused.
+Result format: 
+| 16 bytes    | 16 bytes    |  ...   |
+|-------------|-------------|--------|
+| AES IV/CTR  | PBKDF2 Salt | Cipher |";
 
     async Task enc()
     {
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            output = await crysvc.Aes256Encrypt(pass, input, algorithm, length);
+            output = await crysvc.AesEncrypt(pass, input, algorithm, length, iter);
         }
         catch (Exception e)
         {
@@ -72,7 +83,7 @@
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            output = await crysvc.Aes256Decrypt(pass, input, algorithm, length);
+            output = await crysvc.AesDecrypt(pass, input, algorithm, length, iter);
         }
         catch (Exception e)
         {
