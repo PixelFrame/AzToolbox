@@ -11,10 +11,15 @@ namespace AzToolbox.Services
 
         public async Task<string> AesEncrypt(string pass, string data, CryptoAlgorithm algo, int length, int iter)
         {
+            var dataBytes = Encoding.UTF8.GetBytes(data);
+            return await AesEncrypt(pass, dataBytes, algo, length, iter);
+        }
+
+        public async Task<string> AesEncrypt(string pass, byte[] data, CryptoAlgorithm algo, int length, int iter)
+        {
             var k = SHA256.HashData(Encoding.UTF8.GetBytes(pass));
             var algoName = algo.ToString().Replace('_', '-');
-            var dataBytes = Encoding.UTF8.GetBytes(data);
-            var enc = await JsRuntime.InvokeAsync<byte[]>("AesEncrypt", [k, dataBytes, algoName, length, iter]);
+            var enc = await JsRuntime.InvokeAsync<byte[]>("AesEncrypt", [k, data, algoName, length, iter]);
             return WebEncoders.Base64UrlEncode(enc);
         }
 

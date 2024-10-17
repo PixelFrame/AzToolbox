@@ -13,10 +13,14 @@
     </AlertDescription>
 </Alert>
 
-<Div Flex="Flex.Row">
-    <RadioGroup @bind-CheckedValue="mode">
+<Div Flex="Flex.Row.AlignItems.Center">
+    <RadioGroup @bind-CheckedValue="mode" Border="Border.Rounded.Is1">
         <Radio Value="true">Encrypt</Radio>
         <Radio Value="false">Decrypt</Radio>
+    </RadioGroup>
+    <RadioGroup @bind-CheckedValue="inputType" Disabled="!mode" Border="Border.Rounded.Is1" Margin="Margin.Is1.OnX">
+        <Radio Value="true" Disabled="!mode">UTF-8</Radio>
+        <Radio Value="false" Disabled="!mode">Base64URL</Radio>
     </RadioGroup>
     <SelectList TValue="CryptoAlgorithm"
                 TItem="CryptoAlgorithm"
@@ -50,6 +54,7 @@
 
 @code {
     bool mode = true;
+    bool inputType = true;
     string pass = string.Empty;
     string input = string.Empty;
     string output = string.Empty;
@@ -70,7 +75,14 @@ Result format:
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            output = await crysvc.AesEncrypt(pass, input, algorithm, length, iter);
+            if (inputType)
+            {
+                output = await crysvc.AesEncrypt(pass, input, algorithm, length, iter);
+            }
+            else
+            {
+                output = await crysvc.AesEncrypt(pass, Microsoft.AspNetCore.WebUtilities.WebEncoders.Base64UrlDecode(input), algorithm, length, iter);
+            }
         }
         catch (Exception e)
         {
