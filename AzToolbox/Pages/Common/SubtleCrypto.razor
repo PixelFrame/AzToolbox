@@ -14,13 +14,19 @@
 </Alert>
 
 <Div Flex="Flex.Row.AlignItems.Center">
-    <RadioGroup @bind-CheckedValue="mode" Border="Border.Rounded.Is1">
-        <Radio Value="true">Encrypt</Radio>
-        <Radio Value="false">Decrypt</Radio>
+    <RadioGroup @bind-CheckedValue="mode" Border="Border.Rounded.Is1" Flex="Flex.Column">
+        <Text Class="rg-Label">Mode</Text>
+        <Div>
+            <Radio Value="true">Encrypt</Radio>
+            <Radio Value="false">Decrypt</Radio>
+        </Div>
     </RadioGroup>
-    <RadioGroup @bind-CheckedValue="inputType" Disabled="!mode" Border="Border.Rounded.Is1" Margin="Margin.Is1.OnX">
-        <Radio Value="true" Disabled="!mode">UTF-8</Radio>
-        <Radio Value="false" Disabled="!mode">Base64URL</Radio>
+    <RadioGroup @bind-CheckedValue="plainType" Border="Border.Rounded.Is1" Margin="Margin.Is1.OnX" Flex="Flex.Column">
+        <Text Class="rg-Label">@(mode ? "Input" : "Output")</Text>
+        <Div>
+            <Radio Value="true">UTF-8</Radio>
+            <Radio Value="false">Base64URL</Radio>
+        </Div>
     </RadioGroup>
     <SelectList TValue="CryptoAlgorithm"
                 TItem="CryptoAlgorithm"
@@ -54,7 +60,7 @@
 
 @code {
     bool mode = true;
-    bool inputType = true;
+    bool plainType = true;
     string pass = string.Empty;
     string input = string.Empty;
     string output = string.Empty;
@@ -62,10 +68,10 @@
     int length = 256;
     int iter = 5000;
 
-    const string MSG = 
- @"Passphrase ---SHA256--> BaseKey ---PBKDF2(Optional)--> AES Key
+    const string MSG =
+         @"Passphrase ---SHA256--> BaseKey ---PBKDF2(Optional)--> AES Key
 Set iteration to 0 to skip PBKDF2. The result will always include PBKDF2 salt, even when it's unused.
-Result format: 
+Result format:
 | 16 bytes    | 16 bytes    |  ...   |
 |-------------|-------------|--------|
 | AES IV/CTR  | PBKDF2 Salt | Cipher |";
@@ -75,14 +81,7 @@ Result format:
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            if (inputType)
-            {
-                output = await crysvc.AesEncrypt(pass, input, algorithm, length, iter);
-            }
-            else
-            {
-                output = await crysvc.AesEncrypt(pass, Microsoft.AspNetCore.WebUtilities.WebEncoders.Base64UrlDecode(input), algorithm, length, iter);
-            }
+            output = await crysvc.AesEncrypt(pass, input, algorithm, length, iter, plainType);
         }
         catch (Exception e)
         {
@@ -95,7 +94,7 @@ Result format:
         if (pass.Length == 0 || input.Length == 0) return;
         try
         {
-            output = await crysvc.AesDecrypt(pass, input, algorithm, length, iter);
+            output = await crysvc.AesDecrypt(pass, input, algorithm, length, iter, plainType);
         }
         catch (Exception e)
         {

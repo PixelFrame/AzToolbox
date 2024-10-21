@@ -128,3 +128,11 @@ code {
     font-size: small !important;
     background: transparent !important;
 }
+
+.rg-Label {
+    margin: -10px 3px;
+    padding: 0 3px;
+    background: white;
+    font-weight: 600;
+    font-size: smaller;
+}
