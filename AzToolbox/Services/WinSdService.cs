@@ -14,9 +14,9 @@ namespace AzToolbox.Services
         public async Task InitializeAsync()
         {
             var trusteeJsonData = await httpClient.GetStringAsync("/assets/WinSdTrustee.json");
-            var adSchemaGuidJsonData = await httpClient.GetStringAsync("/assets/WinSdAdSchemaGuid.json");
+            var adGuidJsonData = await httpClient.GetStringAsync("/assets/WinSdAdGuid.json");
 
-            converter = new WinSdConverter(true, trusteeJsonData, adSchemaGuidJsonData);
+            converter = new WinSdConverter(true, trusteeJsonData, adGuidJsonData);
         }
 
         public AccessControlList FromSddlToAcl(string SDDL)

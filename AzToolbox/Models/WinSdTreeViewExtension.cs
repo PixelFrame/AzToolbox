@@ -134,7 +134,7 @@ namespace AzToolbox.Models
                 children.Add(new TreeViewItem()
                 {
                     Label = "Object GUID",
-                    Description = $"{ace.AdSchemaObjectGuid.Name} ({ace.AdSchemaObjectGuid.SchemaIdGuid})",
+                    Description = $"{ace.AdObjectGuid.Type}: {ace.AdObjectGuid.DisplayName} ({ace.AdObjectGuid.Guid})",
                     Children = null,
                 });
             }
@@ -143,7 +143,7 @@ namespace AzToolbox.Models
                 children.Add(new TreeViewItem()
                 {
                     Label = "Inherited Object GUID",
-                    Description = $"{ace.AdSchemaInheritObjectGuid.Name} ({ace.AdSchemaInheritObjectGuid.SchemaIdGuid})",
+                    Description = $"{ace.AdInheritObjectGuid.Type}: {ace.AdInheritObjectGuid.DisplayName} ({ace.AdInheritObjectGuid.Guid})",
                     Children = null,
                 });
             }
