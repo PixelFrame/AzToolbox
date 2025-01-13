@@ -1,5 +1,6 @@
 ﻿using KzA.DNS.ResourceRecord;
 using KzA.DNS.Zone;
+using KzA.DNS;
 using System.Collections.ObjectModel;
 
 namespace AzToolbox.Services
