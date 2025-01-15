@@ -1,4 +1,4 @@
-﻿@using WfpXmlHelper;
+﻿@using WFPXML.Model
 
 <DataGrid TItem="Filter"
           Data="@Filters"
@@ -21,7 +21,7 @@
         <DataGridColumn Field="@nameof(Filter.EffectiveWeight)" Caption="Effective Weight" Sortable="true" />
         <DataGridColumn Field="@nameof(Filter.Name)" Caption="Name" Sortable="false" />
         <DataGridColumn Field="@nameof(Filter.LayerKey)" Caption="LayerKey" Sortable="false" Groupable="true" Grouping="true" />
-        <DataGridColumn Field="@nameof(Filter.ProviderKey)" Caption="ProviderKey" Sortable="false" />
+        <DataGridColumn Field="@nameof(Filter.SubLayerKey)" Caption="SubLayerKey" Sortable="false" Groupable="true" Grouping="true" />
         <DataGridColumn Field="@nameof(Filter.Action)" Caption="Action" Sortable="false" Groupable="true" />
     </DataGridColumns>
     <DetailRowTemplate>
@@ -41,10 +41,10 @@
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize Size="Size.Small" />
+                    <MemoEdit Text="@string.Join(Environment.NewLine,context.Flags)" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
-            @if (context.Callout != null)
+            @if (!string.IsNullOrEmpty(context.CalloutKey) && Callouts != null)
             {
                 <Field Horizontal>
                     <FieldLabel ColumnSize="ColumnSize.Is2">Callout</FieldLabel>
@@ -52,25 +52,95 @@
                         <Table Bordered Narrow Responsive>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHeaderCell ColumnSpan="2">@context.Callout.Name</TableHeaderCell>
+                                    <TableHeaderCell ColumnSpan="2">@context.CalloutKey</TableHeaderCell>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 <TableRow>
                                     <TableHeaderCell>ID</TableHeaderCell>
-                                    <TableRowCell>@context.Callout.Id</TableRowCell>
+                                    <TableRowCell>@Callouts![context.CalloutKey!].Id</TableRowCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableHeaderCell>Key</TableHeaderCell>
-                                    <TableRowCell>@context.Callout.CalloutKey</TableRowCell>
+                                    <TableHeaderCell>Name</TableHeaderCell>
+                                    <TableRowCell>@Callouts![context.CalloutKey!].Name</TableRowCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableHeaderCell>Description</TableHeaderCell>
-                                    <TableRowCell>@context.Callout.Description</TableRowCell>
+                                    <TableRowCell>@Callouts![context.CalloutKey!].Description</TableRowCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableHeaderCell>Applicable Layer</TableHeaderCell>
-                                    <TableRowCell>@context.Callout.ApplicableLayer</TableRowCell>
+                                    <TableRowCell>@Callouts![context.CalloutKey!].ApplicableLayer</TableRowCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </FieldBody>
+                </Field>
+            }
+            @if (!string.IsNullOrEmpty(context.ProviderKey) && Providers != null)
+            {
+                <Field Horizontal>
+                    <FieldLabel ColumnSize="ColumnSize.Is2">Provider</FieldLabel>
+                    <FieldBody ColumnSize="ColumnSize.Is10">
+                        <Table Bordered Narrow Responsive>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHeaderCell ColumnSpan="2">@context.ProviderKey</TableHeaderCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow>
+                                    <TableHeaderCell>Name</TableHeaderCell>
+                                    <TableRowCell>@Providers![context.ProviderKey!].Name</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Description</TableHeaderCell>
+                                    <TableRowCell>@Providers![context.ProviderKey!].Description</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Service Name</TableHeaderCell>
+                                    <TableRowCell>@Providers![context.ProviderKey!].ServiceName</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Flags</TableHeaderCell>
+                                    <TableRowCell>@string.Join(Environment.NewLine, Providers![context.ProviderKey!].Flags)</TableRowCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </FieldBody>
+                </Field>
+            }
+            @if (!string.IsNullOrEmpty(context.ProviderContextKey) && ProviderContexts != null)
+            {
+                <Field Horizontal>
+                    <FieldLabel ColumnSize="ColumnSize.Is2">Provider Context</FieldLabel>
+                    <FieldBody ColumnSize="ColumnSize.Is10">
+                        <Table Bordered Narrow Responsive>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHeaderCell ColumnSpan="2">@context.ProviderContextKey</TableHeaderCell>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow>
+                                    <TableHeaderCell>Name</TableHeaderCell>
+                                    <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Name</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Description</TableHeaderCell>
+                                    <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Description</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Type</TableHeaderCell>
+                                    <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Type</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Data</TableHeaderCell>
+                                    <TableRowCell Class="wrap_cell">@ProviderContexts![context.ProviderContextKey!].Data</TableRowCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHeaderCell>Flags</TableHeaderCell>
+                                    <TableRowCell>@string.Join(Environment.NewLine, ProviderContexts![context.ProviderContextKey!].Flags)</TableRowCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
@@ -83,9 +153,9 @@
                     <Table Bordered Narrow Responsive>
                         <TableHeader>
                             <TableRow>
-                                <TableHeaderCell>Field</TableHeaderCell>
-                                <TableHeaderCell>Match</TableHeaderCell>
-                                <TableHeaderCell>Value</TableHeaderCell>
+                                <TableRowHeader>Field</TableRowHeader>
+                                <TableRowHeader>Match</TableRowHeader>
+                                <TableRowHeader>Value</TableRowHeader>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -94,7 +164,7 @@
                                 <TableRow>
                                     <TableRowCell>@cond.Item1</TableRowCell>
                                     <TableRowCell>@cond.Item2</TableRowCell>
-                                    <TableRowCell>@cond.Item3</TableRowCell>
+                                    <TableRowCell Class="wrap_cell">@cond.Item3</TableRowCell>
                                 </TableRow>
                             }
                         </TableBody>
@@ -107,9 +177,24 @@
     <TotalItemsShortTemplate><Badge Color="Color.Primary">@context.TotalItems</Badge></TotalItemsShortTemplate>
 </DataGrid>
 
+<style>
+    .wrap_cell {
+        word-break: break-word;
+    }
+</style>
+
 @code {
     [Parameter]
     public IEnumerable<Filter> Filters { get; set; } = Array.Empty<Filter>();
+
+    [Parameter]
+    public Dictionary<string, Callout>? Callouts { get; set; }
+
+    [Parameter]
+    public Dictionary<string, Provider>? Providers { get; set; }
+
+    [Parameter]
+    public Dictionary<string, ProviderContext>? ProviderContexts { get; set; }
 
     int pageSize = 200;
 }

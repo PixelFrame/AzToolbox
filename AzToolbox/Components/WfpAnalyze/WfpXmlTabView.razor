@@ -1,0 +1,26 @@
+﻿@using WFPXML
+@using WFPXML.Model
+
+<Tabs>
+    <Items>
+        <Tab Name="netevents" Disabled="WFPXMLResult.DropEvents.Count == 0">Drop Events</Tab>
+        <Tab Name="filters" Disabled="WFPXMLResult.Filters.Count == 0">Filters</Tab>
+        <Tab Name="addedfilters" Disabled="WFPXMLResult.AddedFilters.Count == 0">Added Filters</Tab>
+    </Items>
+    <Content>
+        <TabPanel Name="netevents">
+            <NetEventClassifyDropDataGrid NetEvents="WFPXMLResult.DropEvents" />
+        </TabPanel>
+        <TabPanel Name="filters">
+            <FilterDataGrid Filters="WFPXMLResult.Filters.Values" Callouts="WFPXMLResult.Callouts" Providers="WFPXMLResult.Providers" ProviderContexts="WFPXMLResult.ProviderContexts" />
+        </TabPanel>
+        <TabPanel Name="addedfilters">
+            <FilterDataGrid Filters="WFPXMLResult.AddedFilters" Callouts="WFPXMLResult.Callouts" Providers="WFPXMLResult.Providers" ProviderContexts="WFPXMLResult.ProviderContexts" />
+        </TabPanel>
+    </Content>
+</Tabs>
+
+@code {
+    [Parameter]
+    public WFPXMLCollections WFPXMLResult { get; set; } = default!;
+}

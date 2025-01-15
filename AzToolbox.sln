@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzToolbox", "AzToolbox\AzTo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileXMLBuilder.Lib", "..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj", "{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WfpXmlHelper", "..\WfpXmlHelper\WfpXmlHelper.csproj", "{D2927C58-E349-48DB-9B25-D09E12C8FA1F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.HexDump", "..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj", "{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.Blazor.PacParser", "..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj", "{FA251D51-9E23-4522-A367-ADF68CB6C598}"
@@ -25,6 +23,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.HEXEH.Base", "..\KzA.HEXEH\KzA.HEXEH.Base\KzA.HEXEH.Base.csproj", "{F63E739D-8884-4D60-A220-7E76C04539A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KzA.DNS", "..\KzA.DNS\KzA.DNS\KzA.DNS.csproj", "{C3390B81-2C96-4557-A603-782A5828DCAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFPXML", "..\WFPXML\WFPXML\WFPXML.csproj", "{0527E728-389C-4BE4-9F31-C4C8EE537554}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,14 +50,6 @@ Global
 		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|x64.ActiveCfg = Release|Any CPU
 		{D6ED36B1-E15B-4AA5-98C3-4F8922FBC44D}.Release|x64.Build.0 = Release|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Debug|x64.Build.0 = Debug|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Release|x64.ActiveCfg = Release|Any CPU
-		{D2927C58-E349-48DB-9B25-D09E12C8FA1F}.Release|x64.Build.0 = Release|Any CPU
 		{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19075ECC-5FA9-4146-BC43-B0CCC2995EBC}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -106,6 +98,14 @@ Global
 		{C3390B81-2C96-4557-A603-782A5828DCAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3390B81-2C96-4557-A603-782A5828DCAA}.Release|x64.ActiveCfg = Release|Any CPU
 		{C3390B81-2C96-4557-A603-782A5828DCAA}.Release|x64.Build.0 = Release|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Debug|x64.Build.0 = Debug|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Release|x64.ActiveCfg = Release|Any CPU
+		{0527E728-389C-4BE4-9F31-C4C8EE537554}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,8 @@
 @page "/Windows/WfpAnalyze"
 <PageTitle>WFP Trace Analyze - AzToolbox</PageTitle>
 
-@using WfpXmlHelper;
+@using WFPXML;
+@using WFPXML.Model;
 @using AzToolbox.Components.WfpAnalyze;
 
 @inject ILoadingIndicatorService ApplicationLoadingIndicatorService
@@ -57,12 +58,6 @@
                 </AlertDescription>
             </Alert>
 
-            @if (ShowParsingProgress)
-            {
-                <Heading Size="HeadingSize.Is5">@($"Parsing XML") </Heading>
-                <Divider />
-                <Progress Value="@wfpdiag.CurrentCount" Max="@wfpdiag.CurrentMax" ShowValue /> <!-- Won't work due to WASM limitation -->
-            }
         </CardBody>
     </Card>
 }
@@ -74,12 +69,8 @@ else
 
 @code {
     bool ShowResult = false;
-    bool ShowParsingProgress = false;
     bool ShowLargeFileWarning = false;
     FilePicker filePickerCustom = new();
-    WfpDiag wfpdiag = new();
-    WfpState wfpstate = new();
-    NetEvents netevents = new();
     RenderFragment? resultFragment;
 
     void OnFileChanged(FileChangedEventArgs e)
@@ -92,41 +83,15 @@ else
         await ApplicationLoadingIndicatorService.Show();
 
         var file = e.File;
-        using var fileStream = file.OpenReadStream(104857600);
-        using var memStream = new MemoryStream();
+        var fileStream = file.OpenReadStream(104857600);
+        var memStream = new MemoryStream();
         await fileStream.CopyToAsync(memStream);
-
-        var enc = new System.Text.UTF8Encoding();
-        var xml = enc.GetString(memStream.ToArray());
-        string _byteOrderMarkUtf8 = System.Text.Encoding.UTF8.GetString(System.Text.Encoding.UTF8.GetPreamble());
-        if (xml.StartsWith(_byteOrderMarkUtf8))
-        {
-            xml = xml.Remove(0, _byteOrderMarkUtf8.Length);
-        }
-        ShowParsingProgress = true;
-        StateHasChanged();
-
+        fileStream.Dispose();
+        memStream.Position = 0;
         try
         {
-            if (xml.Contains("<wfpstate"))
-            {
-                await Task.Run(() => wfpstate.Load(xml));
-                resultFragment = @<WfpStateTabView Filters="@wfpstate.Filters" Providers="@wfpstate.Providers" />;
-            }
-            else if (xml.Contains("<wfpdiag"))
-            {
-                await Task.Run(() => wfpdiag.Load(xml));
-                resultFragment = @<WfpDiagTabView NetEvents="@wfpdiag.NetEventsClassifyDrop" InitialFilters="@wfpdiag.InitialFilters" AddedFilters="@wfpdiag.AddedFilters" Providers="@wfpdiag.Providers" />;
-            }
-            else if (xml.Contains("<netEvents"))
-            {
-                await Task.Run(() => netevents.Load(xml));
-                resultFragment = @<NetEventClassifyDropDataGrid NetEvents="@netevents.NetEventsClassifyDrop" />;
-            }
-            else
-            {
-                throw new InvalidDataException("Invalid XML file");
-            }
+            var result = await WFPXML.Reader.ReadAsync(memStream);
+            resultFragment =@<WfpXmlTabView WFPXMLResult="@result" />; 
         }
         catch (Exception ex)
         {
@@ -134,7 +99,6 @@ else
             resultFragment = @<Heading Size="HeadingSize.Is5">@ex.GetType().ToString()</Heading>;
             resultFragment += @<Paragraph>@ex.Message</Paragraph>;
         }
-        ShowParsingProgress = false;
         ShowResult = true;
 
         await ApplicationLoadingIndicatorService.Hide();

@@ -1,4 +1,4 @@
-﻿@using WfpXmlHelper;
+﻿@using WFPXML.Model
 
 <DataGrid TItem="Provider"
           Data="@Providers"
@@ -15,7 +15,7 @@
           ResizeMode="TableResizeMode.Columns"
           Style="font-size:small">
     <DataGridColumns>
-        <DataGridColumn Field="@nameof(Provider.Key)" Caption="ProviderKey" Sortable="true" />
+        <DataGridColumn Field="@nameof(Provider.ProviderKey)" Caption="ProviderKey" Sortable="true" />
         <DataGridColumn Field="@nameof(Provider.Name)" Caption="Name" Sortable="false" />
         <DataGridColumn Field="@nameof(Provider.ServiceName)" Caption="Service Name" Sortable="false" />
     </DataGridColumns>
