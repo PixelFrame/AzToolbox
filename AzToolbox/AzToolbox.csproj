@@ -8,24 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise.Animate" Version="1.6.2" />
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.6.2" />
-    <PackageReference Include="Blazorise.Components" Version="1.6.2" />
-    <PackageReference Include="Blazorise.DataGrid" Version="1.6.2" />
-    <PackageReference Include="Blazorise.FluentUI2" Version="1.6.2" />
-    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.6.2" />
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.6.2" />
-    <PackageReference Include="Blazorise.LoadingIndicator" Version="1.6.2" />
-    <PackageReference Include="Blazorise.Snackbar" Version="1.6.2" />
-    <PackageReference Include="Blazorise.SpinKit" Version="1.6.2" />
-    <PackageReference Include="Blazorise.Splitter" Version="1.6.2" />
-    <PackageReference Include="Blazorise.TreeView" Version="1.6.2" />
+    <PackageReference Include="Blazorise.Animate" Version="1.7.2" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.7.2" />
+    <PackageReference Include="Blazorise.Components" Version="1.7.2" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.7.2" />
+    <PackageReference Include="Blazorise.FluentUI2" Version="1.7.2" />
+    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.7.2" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.7.2" />
+    <PackageReference Include="Blazorise.LoadingIndicator" Version="1.7.2" />
+    <PackageReference Include="Blazorise.Snackbar" Version="1.7.2" />
+    <PackageReference Include="Blazorise.SpinKit" Version="1.7.2" />
+    <PackageReference Include="Blazorise.Splitter" Version="1.7.2" />
+    <PackageReference Include="Blazorise.TreeView" Version="1.7.2" />
     <PackageReference Include="KristofferStrube.Blazor.FileSystemAccess" Version="3.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.0" />
-    <PackageReference Include="Microsoft.NET.WebAssembly.Threading" Version="9.0.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.1" />
+    <PackageReference Include="Microsoft.NET.WebAssembly.Threading" Version="9.0.1" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
