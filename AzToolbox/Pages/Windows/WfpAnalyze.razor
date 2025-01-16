@@ -11,6 +11,10 @@
 
 @if (!ShowResult)
 {
+    @if (ResultReady)
+    {
+        <Button Clicked="@(()=>ShowResult = true)" Color="Color.Primary"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowRedoFilled" IconSize="IconSize.Large" /> Back to last result</Button>
+    }
     <Card Width="Width.Is75" Margin="Margin.IsAuto">
         <CardBody>
             <FilePicker Upload="OnFileSelected" Changed="OnFileChanged" Filter=".xml" @ref="filePickerCustom">
@@ -46,18 +50,6 @@
                     100MB
                 </AlertDescription>
             </Alert>
-
-            <Alert Color="Color.Warning" @bind-Visible="@ShowLargeFileWarning" Style="margin:5px 0 5px 0">
-                <AlertMessage>
-                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.WarningFilled" IconSize="IconSize.Large" /> Warning <br>
-                </AlertMessage>
-                <AlertDescription>
-                    File size large than 10MB, it may take a while to parse. <br>
-                    Switching to another tab or minimizing the browser may cause white screen, but the parsing will be still processing. <br>
-                    Do not refresh the page or close the browser until the parsing is completed.
-                </AlertDescription>
-            </Alert>
-
         </CardBody>
     </Card>
 }
@@ -69,13 +61,12 @@ else
 
 @code {
     bool ShowResult = false;
-    bool ShowLargeFileWarning = false;
+    bool ResultReady = false;
     FilePicker filePickerCustom = new();
     RenderFragment? resultFragment;
 
     void OnFileChanged(FileChangedEventArgs e)
     {
-        ShowLargeFileWarning = e.Files[0].Size > 10485760;
     }
 
     async Task OnFileSelected(FileUploadEventArgs e)
@@ -84,13 +75,9 @@ else
 
         var file = e.File;
         var fileStream = file.OpenReadStream(104857600);
-        var memStream = new MemoryStream();
-        await fileStream.CopyToAsync(memStream);
-        fileStream.Dispose();
-        memStream.Position = 0;
         try
         {
-            var result = await WFPXML.Reader.ReadAsync(memStream);
+            var result = await WFPXML.Reader.ReadAsync(fileStream);
             resultFragment =@<WfpXmlTabView WFPXMLResult="@result" />; 
         }
         catch (Exception ex)
@@ -99,6 +86,7 @@ else
             resultFragment = @<Heading Size="HeadingSize.Is5">@ex.GetType().ToString()</Heading>;
             resultFragment += @<Paragraph>@ex.Message</Paragraph>;
         }
+        ResultReady = true;
         ShowResult = true;
 
         await ApplicationLoadingIndicatorService.Hide();

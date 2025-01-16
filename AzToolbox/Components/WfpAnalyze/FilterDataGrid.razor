@@ -76,6 +76,41 @@
                         </Table>
                     </FieldBody>
                 </Field>
+                @if (@Callouts![context.CalloutKey!].ProviderKey != context.ProviderKey 
+                    && !string.IsNullOrEmpty(Callouts![context.CalloutKey!].ProviderKey) 
+                    && Providers != null)
+                {
+                    <Field Horizontal>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Context Provider</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <Table Bordered Narrow Responsive>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHeaderCell ColumnSpan="2">@Callouts![context.CalloutKey!].ProviderKey</TableHeaderCell>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableHeaderCell>Name</TableHeaderCell>
+                                        <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].Name</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Description</TableHeaderCell>
+                                        <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].Description</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Service Name</TableHeaderCell>
+                                        <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].ServiceName</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Flags</TableHeaderCell>
+                                        <TableRowCell>@string.Join(Environment.NewLine, Providers![Callouts![context.CalloutKey!].ProviderKey].Flags)</TableRowCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </FieldBody>
+                    </Field>
+                }
             }
             @if (!string.IsNullOrEmpty(context.ProviderKey) && Providers != null)
             {

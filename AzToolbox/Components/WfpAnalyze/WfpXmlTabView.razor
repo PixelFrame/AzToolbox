@@ -1,7 +1,7 @@
 ﻿@using WFPXML
 @using WFPXML.Model
 
-<Tabs>
+<Tabs SelectedTab="@selectedTab">
     <Items>
         <Tab Name="netevents" Disabled="WFPXMLResult.DropEvents.Count == 0">Drop Events</Tab>
         <Tab Name="filters" Disabled="WFPXMLResult.Filters.Count == 0">Filters</Tab>
@@ -23,4 +23,6 @@
 @code {
     [Parameter]
     public WFPXMLCollections WFPXMLResult { get; set; } = default!;
+
+    string selectedTab => WFPXMLResult.DropEvents.Count > 0 ? "netevents" : "filters";
 }
