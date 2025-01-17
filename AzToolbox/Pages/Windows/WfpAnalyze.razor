@@ -47,7 +47,7 @@
                     <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" /> File Size Limit <br>
                 </AlertMessage>
                 <AlertDescription>
-                    100MB
+                    1GB
                 </AlertDescription>
             </Alert>
         </CardBody>
@@ -74,7 +74,7 @@ else
         await ApplicationLoadingIndicatorService.Show();
 
         var file = e.File;
-        var fileStream = file.OpenReadStream(104857600);
+        var fileStream = file.OpenReadStream(1073741824);
         try
         {
             var result = await WFPXML.Reader.ReadAsync(fileStream);
