@@ -1,7 +1,7 @@
 ﻿@using WFPXML.Model
 
-<DataGrid TItem="Provider"
-          Data="@Providers"
+<DataGrid TItem="Layer"
+          Data="@Layers"
           DetailRowStartsVisible="false"
           Filterable="true"
           FilterMode="DataGridFilterMode.Menu"
@@ -15,17 +15,22 @@
           ResizeMode="TableResizeMode.Columns"
           Style="font-size:small">
     <DataGridColumns>
-        <DataGridColumn Field="@nameof(Provider.ProviderKey)" Caption="ProviderKey" Sortable="true" />
-        <DataGridColumn Field="@nameof(Provider.Name)" Caption="Name" Sortable="true" />
-        <DataGridColumn Field="@nameof(Provider.Description)" Caption="Description" Sortable="false" />
-        <DataGridColumn Field="@nameof(Provider.ServiceName)" Caption="Service Name" Sortable="true" />
+        <DataGridColumn Field="@nameof(Layer.Id)" Caption="ID" Sortable="true" />
+        <DataGridColumn Field="@nameof(Layer.LayerKey)" Caption="LayerKey" Sortable="true" />
+        <DataGridColumn Field="@nameof(Layer.Name)" Caption="Name" Sortable="true" />
     </DataGridColumns>
     <DetailRowTemplate>
         @{
             <Field Horizontal>
+                <FieldLabel ColumnSize="ColumnSize.Is2">Fields</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is10">
+                    <MemoEdit Text="@string.Join(Environment.NewLine, context.Field)" Disabled AutoSize Size="Size.Small" />
+                </FieldBody>
+            </Field>
+            <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize Size="Size.Small" />
+                    <MemoEdit Text="@string.Join(Environment.NewLine, context.Flags)" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
         }
@@ -36,7 +41,7 @@
 
 @code {
     [Parameter]
-    public IEnumerable<Provider> Providers { get; set; } = [];
+    public IEnumerable<Layer> Layers { get; set; } = [];
     
     int pageSize = 200;
 }

@@ -6,6 +6,8 @@
         <Tab Name="netevents" Disabled="WFPXMLResult.DropEvents.Count == 0">Drop Events</Tab>
         <Tab Name="filters" Disabled="WFPXMLResult.Filters.Count == 0">Filters</Tab>
         <Tab Name="addedfilters" Disabled="WFPXMLResult.AddedFilters.Count == 0">Added Filters</Tab>
+        <Tab Name="layers" Disabled="WFPXMLResult.Layers.Count == 0">Layers</Tab>
+        <Tab Name="providers" Disabled="WFPXMLResult.Providers.Count == 0">Providers</Tab>
     </Items>
     <Content>
         <TabPanel Name="netevents">
@@ -16,6 +18,12 @@
         </TabPanel>
         <TabPanel Name="addedfilters">
             <FilterDataGrid Filters="WFPXMLResult.AddedFilters" Callouts="WFPXMLResult.Callouts" Providers="WFPXMLResult.Providers" ProviderContexts="WFPXMLResult.ProviderContexts" />
+        </TabPanel>
+        <TabPanel Name="layers">
+            <LayerDataGrid Layers="WFPXMLResult.Layers.Values" />
+        </TabPanel>
+        <TabPanel Name="providers">
+            <ProviderDataGrid Providers="WFPXMLResult.Providers.Values" />
         </TabPanel>
     </Content>
 </Tabs>
