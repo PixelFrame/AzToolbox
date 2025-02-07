@@ -4,9 +4,13 @@
 @inject KzA.Blazor.PacParser.PacParserService pacsvc
 @inject INotificationService NotificationService
 
+@using BlazorMonaco
+@using BlazorMonaco.Editor
+@using BlazorMonaco.Languages
+
 <Row>
     <Column ColumnSize="ColumnSize.Is5.OnDesktop.Is12.OnMobile">
-        <Div Position="Position.Sticky.Top.Is0">
+        <Div Position="Blazorise.Position.Sticky.Top.Is0">
             <Alert Color="Color.Info" @bind-Visible="@showAlert" Margin="Margin.Is2.FromTop">
                 <AlertMessage>Attention!</AlertMessage>
                 <CloseButton /><br>
@@ -15,7 +19,7 @@
             </Alert>
             <Field>
                 <FieldLabel>PAC</FieldLabel>
-                <MemoEdit Rows="15" @bind-Text="paccontent" spellcheck="false" Class="monospace-fixed-textbox"></MemoEdit>
+                <StandaloneCodeEditor @ref="_editor" ConstructionOptions=" EditorConstructionOptions" Id="pac-editor" />
             </Field>
             <Field>
                 <FieldLabel>URL</FieldLabel>
@@ -39,19 +43,25 @@
         </Div>
     </Column>
     <Column ColumnSize="ColumnSize.Is7.OnDesktop.Is12.OnMobile">
-        <MemoEdit AutoSize Text="@pacsvc.DebugOutput" ReadOnly Class="monospace-fixed-textbox"></MemoEdit>
-        <MemoEdit AutoSize Text="@pacsvc.JsConsole" ReadOnly Margin="Margin.Is2.FromTop" Class="monospace-fixed-textbox"></MemoEdit>
+        <MemoEdit AutoSize Text="@pacsvc.DebugOutput" ReadOnly Class="monospace-fixed-textbox" Placeholder="Debug Info"></MemoEdit>
+        <MemoEdit AutoSize Text="@pacsvc.JsConsole" ReadOnly Margin="Margin.Is2.FromTop" Class="monospace-fixed-textbox" Placeholder="JS Console"></MemoEdit>
     </Column>
 </Row>
 
 <style>
     .fui-Textarea {
-        height: fit-content !important;
+        height: 35vh !important;
     }
+
+    #pac-editor{
+        height: 50vh;
+        min-height: 200px;
+    }
+
 </style>
 
 @code {
-    string paccontent =
+    const string paccontent =
         @"function FindProxyForURL(url, host) {
     var direct = ""DIRECT"";
     var proxy = ""PROXY myproxy.contoso.com"";
@@ -69,6 +79,21 @@
     string myip = "127.0.0.1";
     string[]? hosts;
     bool showAlert = true;
+    StandaloneCodeEditor? _editor;
+
+    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+    {
+        return new StandaloneEditorConstructionOptions
+            {
+                AutomaticLayout = true,
+                Language = "javascript",
+                Value = paccontent,
+                Minimap = new()
+                {
+                    Enabled = false
+                },
+            };
+    }
 
     async void Parse()
     {
@@ -80,7 +105,8 @@
         }
         try
         {
-            pacsvc.Parse(paccontent, url, host, myIpAddr, hosts);
+            var pac = await _editor!.GetValue();
+            pacsvc.Parse(pac, url, host, myIpAddr, hosts);
         }
         catch
         {
