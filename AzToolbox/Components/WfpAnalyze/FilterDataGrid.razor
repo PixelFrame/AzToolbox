@@ -35,7 +35,7 @@
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Weight</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <TextEdit Text="@context.Weight" Disabled Size="Size.Small" />
+                    <MemoEdit Text="@context.Weight" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
             <Field Horizontal>
@@ -50,62 +50,77 @@
                     <FieldLabel ColumnSize="ColumnSize.Is2">Callout</FieldLabel>
                     <FieldBody ColumnSize="ColumnSize.Is10">
                         <Table Bordered Narrow Responsive>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHeaderCell ColumnSpan="2">@context.CalloutKey</TableHeaderCell>
-                                </TableRow>
-                            </TableHeader>
                             <TableBody>
                                 <TableRow>
-                                    <TableHeaderCell>ID</TableHeaderCell>
-                                    <TableRowCell>@Callouts![context.CalloutKey!].Id</TableRowCell>
+                                    <TableRowCell ColumnSpan="2">@context.CalloutKey</TableRowCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Name</TableHeaderCell>
-                                    <TableRowCell>@Callouts![context.CalloutKey!].Name</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Description</TableHeaderCell>
-                                    <TableRowCell>@Callouts![context.CalloutKey!].Description</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Applicable Layer</TableHeaderCell>
-                                    <TableRowCell>@Callouts![context.CalloutKey!].ApplicableLayer</TableRowCell>
-                                </TableRow>
+                                @if (Callouts.ContainsKey(context.CalloutKey))
+                                {
+                                    <TableRow>
+                                        <TableHeaderCell>ID</TableHeaderCell>
+                                        <TableRowCell>@Callouts![context.CalloutKey!].Id</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Name</TableHeaderCell>
+                                        <TableRowCell>@Callouts![context.CalloutKey!].Name</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Description</TableHeaderCell>
+                                        <TableRowCell>@Callouts![context.CalloutKey!].Description</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Applicable Layer</TableHeaderCell>
+                                        <TableRowCell>@Callouts![context.CalloutKey!].ApplicableLayer</TableRowCell>
+                                    </TableRow>
+                                }
+                                else
+                                {
+                                    <TableRow>
+                                        <TableRowCell ColumnSpan="2">Details not available</TableRowCell>
+                                    </TableRow>
+                                }
                             </TableBody>
                         </Table>
                     </FieldBody>
                 </Field>
-                @if (@Callouts![context.CalloutKey!].ProviderKey != context.ProviderKey 
-                    && !string.IsNullOrEmpty(Callouts![context.CalloutKey!].ProviderKey) 
+                @if (Callouts.ContainsKey(context.CalloutKey)
+                    && Callouts[context.CalloutKey].ProviderKey != context.ProviderKey
+                    && !string.IsNullOrEmpty(Callouts[context.CalloutKey].ProviderKey)
                     && Providers != null)
                 {
                     <Field Horizontal>
-                        <FieldLabel ColumnSize="ColumnSize.Is2">Context Provider</FieldLabel>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Callout Provider</FieldLabel>
                         <FieldBody ColumnSize="ColumnSize.Is10">
                             <Table Bordered Narrow Responsive>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHeaderCell ColumnSpan="2">@Callouts![context.CalloutKey!].ProviderKey</TableHeaderCell>
-                                    </TableRow>
-                                </TableHeader>
                                 <TableBody>
                                     <TableRow>
-                                        <TableHeaderCell>Name</TableHeaderCell>
-                                        <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].Name</TableRowCell>
+                                        <TableRowCell ColumnSpan="2">@Callouts![context.CalloutKey!].ProviderKey</TableRowCell>
                                     </TableRow>
-                                    <TableRow>
-                                        <TableHeaderCell>Description</TableHeaderCell>
-                                        <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].Description</TableRowCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableHeaderCell>Service Name</TableHeaderCell>
-                                        <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].ServiceName</TableRowCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableHeaderCell>Flags</TableHeaderCell>
-                                        <TableRowCell>@string.Join(Environment.NewLine, Providers![Callouts![context.CalloutKey!].ProviderKey].Flags)</TableRowCell>
-                                    </TableRow>
+                                    @if (Providers.ContainsKey(Callouts![context.CalloutKey!].ProviderKey))
+                                    {
+                                        <TableRow>
+                                            <TableHeaderCell>Name</TableHeaderCell>
+                                            <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].Name</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableHeaderCell>Description</TableHeaderCell>
+                                            <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].Description</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableHeaderCell>Service Name</TableHeaderCell>
+                                            <TableRowCell>@Providers![Callouts![context.CalloutKey!].ProviderKey].ServiceName</TableRowCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableHeaderCell>Flags</TableHeaderCell>
+                                            <TableRowCell>@string.Join(Environment.NewLine, Providers![Callouts![context.CalloutKey!].ProviderKey].Flags)</TableRowCell>
+                                        </TableRow>
+                                    }
+                                    else
+                                    {
+                                        <TableRow>
+                                            <TableRowCell ColumnSpan="2">Details not available</TableRowCell>
+                                        </TableRow>
+                                    }
                                 </TableBody>
                             </Table>
                         </FieldBody>
@@ -118,28 +133,35 @@
                     <FieldLabel ColumnSize="ColumnSize.Is2">Provider</FieldLabel>
                     <FieldBody ColumnSize="ColumnSize.Is10">
                         <Table Bordered Narrow Responsive>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHeaderCell ColumnSpan="2">@context.ProviderKey</TableHeaderCell>
-                                </TableRow>
-                            </TableHeader>
                             <TableBody>
                                 <TableRow>
-                                    <TableHeaderCell>Name</TableHeaderCell>
-                                    <TableRowCell>@Providers![context.ProviderKey!].Name</TableRowCell>
+                                    <TableRowCell ColumnSpan="2">@context.ProviderKey</TableRowCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Description</TableHeaderCell>
-                                    <TableRowCell>@Providers![context.ProviderKey!].Description</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Service Name</TableHeaderCell>
-                                    <TableRowCell>@Providers![context.ProviderKey!].ServiceName</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Flags</TableHeaderCell>
-                                    <TableRowCell>@string.Join(Environment.NewLine, Providers![context.ProviderKey!].Flags)</TableRowCell>
-                                </TableRow>
+                                @if (Providers.ContainsKey(context.ProviderKey))
+                                {
+                                    <TableRow>
+                                        <TableHeaderCell>Name</TableHeaderCell>
+                                        <TableRowCell>@Providers![context.ProviderKey!].Name</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Description</TableHeaderCell>
+                                        <TableRowCell>@Providers![context.ProviderKey!].Description</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Service Name</TableHeaderCell>
+                                        <TableRowCell>@Providers![context.ProviderKey!].ServiceName</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Flags</TableHeaderCell>
+                                        <TableRowCell>@string.Join(Environment.NewLine, Providers![context.ProviderKey!].Flags)</TableRowCell>
+                                    </TableRow>
+                                }
+                                else
+                                {
+                                    <TableRow>
+                                        <TableRowCell ColumnSpan="2">Details not available</TableRowCell>
+                                    </TableRow>
+                                }
                             </TableBody>
                         </Table>
                     </FieldBody>
@@ -151,32 +173,39 @@
                     <FieldLabel ColumnSize="ColumnSize.Is2">Provider Context</FieldLabel>
                     <FieldBody ColumnSize="ColumnSize.Is10">
                         <Table Bordered Narrow Responsive>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHeaderCell ColumnSpan="2">@context.ProviderContextKey</TableHeaderCell>
-                                </TableRow>
-                            </TableHeader>
                             <TableBody>
                                 <TableRow>
-                                    <TableHeaderCell>Name</TableHeaderCell>
-                                    <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Name</TableRowCell>
+                                    <TableRowCell ColumnSpan="2">@context.ProviderContextKey</TableRowCell>
                                 </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Description</TableHeaderCell>
-                                    <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Description</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Type</TableHeaderCell>
-                                    <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Type</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Data</TableHeaderCell>
-                                    <TableRowCell Class="wrap_cell">@ProviderContexts![context.ProviderContextKey!].Data</TableRowCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHeaderCell>Flags</TableHeaderCell>
-                                    <TableRowCell>@string.Join(Environment.NewLine, ProviderContexts![context.ProviderContextKey!].Flags)</TableRowCell>
-                                </TableRow>
+                                @if (ProviderContexts.ContainsKey(context.ProviderContextKey))
+                                {
+                                    <TableRow>
+                                        <TableHeaderCell>Name</TableHeaderCell>
+                                        <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Name</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Description</TableHeaderCell>
+                                        <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Description</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Type</TableHeaderCell>
+                                        <TableRowCell>@ProviderContexts![context.ProviderContextKey!].Type</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Data</TableHeaderCell>
+                                        <TableRowCell Class="wrap_cell">@ProviderContexts![context.ProviderContextKey!].Data</TableRowCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableHeaderCell>Flags</TableHeaderCell>
+                                        <TableRowCell>@string.Join(Environment.NewLine, ProviderContexts![context.ProviderContextKey!].Flags)</TableRowCell>
+                                    </TableRow>
+                                }
+                                else
+                                {
+                                    <TableRow>
+                                        <TableRowCell ColumnSpan="2">Details not available</TableRowCell>
+                                    </TableRow>
+                                }
                             </TableBody>
                         </Table>
                     </FieldBody>

@@ -61,7 +61,7 @@
             <Field Horizontal>
                 <FieldLabel ColumnSize="ColumnSize.Is2">Flags</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is10">
-                    <MemoEdit Text="@context.Flags.Aggregate(string.Empty, (a,b) => {if(string.IsNullOrEmpty(a)) return b; return $"{a}{Environment.NewLine}{b}";})" Disabled AutoSize Size="Size.Small" />
+                    <MemoEdit Text="@string.Join(Environment.NewLine, context.Flags)" Disabled AutoSize Size="Size.Small" />
                 </FieldBody>
             </Field>
         }
