@@ -1,0 +1,2702 @@
+[
+  {
+    "DisplayName": "Microsoft Monitoring Agent Audit Forwarding",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Sends events to a collector for storage in a SQL database.",
+    "Name": "AdtAgent",
+    "SddlName": "S-1-5-80-405677949-905044045-432479423-308266062-518662322",
+    "Sid": "S-1-5-80-405677949-905044045-432479423-308266062-518662322"
+  },
+  {
+    "DisplayName": "Application Layer Gateway Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides support for 3rd party protocol plug-ins for Internet Connection Sharing",
+    "Name": "ALG",
+    "SddlName": "S-1-5-80-2387347252-3645287876-2469496166-3824418187-3586569773",
+    "Sid": "S-1-5-80-2387347252-3645287876-2469496166-3824418187-3586569773"
+  },
+  {
+    "DisplayName": "Application Host Helper Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides administrative services for IIS, for example configuration history and Application Pool account mapping. If this service is stopped, configuration history and locking down files or directories with Application Pool specific Access Control Entries will not work.",
+    "Name": "AppHostSvc",
+    "SddlName": "S-1-5-80-567506535-1419326804-775859156-1080935409-722777684",
+    "Sid": "S-1-5-80-567506535-1419326804-775859156-1080935409-722777684"
+  },
+  {
+    "DisplayName": "Application Identity",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Determines and verifies the identity of an application. Disabling this service will prevent AppLocker from being enforced.",
+    "Name": "AppIDSvc",
+    "SddlName": "S-1-5-80-2078495744-2416903469-4072184685-3943858305-976987417",
+    "Sid": "S-1-5-80-2078495744-2416903469-4072184685-3943858305-976987417"
+  },
+  {
+    "DisplayName": "Application Information",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Facilitates the running of interactive applications with additional administrative privileges.  If this service is stopped, users will be unable to launch applications with the additional administrative privileges they may require to perform desired user tasks.",
+    "Name": "Appinfo",
+    "SddlName": "S-1-5-80-1345931346-2714066941-3624776837-1617505694-3927660246",
+    "Sid": "S-1-5-80-1345931346-2714066941-3624776837-1617505694-3927660246"
+  },
+  {
+    "DisplayName": "Application Management",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Processes installation, removal, and enumeration requests for software deployed through Group Policy. If the service is disabled, users will be unable to install, remove, or enumerate software deployed through Group Policy. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "AppMgmt",
+    "SddlName": "S-1-5-80-3213379692-3546485254-1309469428-3810262102-2442199571",
+    "Sid": "S-1-5-80-3213379692-3546485254-1309469428-3810262102-2442199571"
+  },
+  {
+    "DisplayName": "App Readiness",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Gets apps ready for use the first time a user signs in to this PC and when adding new apps.",
+    "Name": "AppReadiness",
+    "SddlName": "S-1-5-80-2020831507-1298702824-3288167190-116113825-4190209",
+    "Sid": "S-1-5-80-2020831507-1298702824-3288167190-116113825-4190209"
+  },
+  {
+    "DisplayName": "Microsoft App-V Client",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages App-V users and virtual applications",
+    "Name": "AppVClient",
+    "SddlName": "S-1-5-80-3690054487-1922792274-847725564-1425669114-2396631621",
+    "Sid": "S-1-5-80-3690054487-1922792274-847725564-1425669114-2396631621"
+  },
+  {
+    "DisplayName": "AppX Deployment Service (AppXSVC)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for deploying Store applications. This service is started on demand and if disabled Store applications will not be deployed to the system, and may not function properly.",
+    "Name": "AppXSvc",
+    "SddlName": "S-1-5-80-1949724575-2387902436-65106593-1201171665-3967308604",
+    "Sid": "S-1-5-80-1949724575-2387902436-65106593-1201171665-3967308604"
+  },
+  {
+    "DisplayName": "Windows Virtual Audio Device Proxy Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages virtual audio devices for Windows-based programs.  If this service is stopped, virtual audio devices will not function properly.  If this service is disabled, any services that explicitly depend on it will fail to start",
+    "Name": "ApxSvc",
+    "SddlName": "S-1-5-80-912939802-669673608-1369533077-176217929-1365198122",
+    "Sid": "S-1-5-80-912939802-669673608-1369533077-176217929-1365198122"
+  },
+  {
+    "DisplayName": "ASP.NET State Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides support for out-of-process session states for ASP.NET. If this service is stopped, out-of-process requests will not be processed. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "aspnet_state",
+    "SddlName": "S-1-5-80-2132180438-3108490898-1075229718-3888178202-2916226535",
+    "Sid": "S-1-5-80-2132180438-3108490898-1075229718-3888178202-2916226535"
+  },
+  {
+    "DisplayName": "AssignedAccessManager Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "AssignedAccessManager Service supports kiosk experience in Windows.",
+    "Name": "AssignedAccessManagerSvc",
+    "SddlName": "S-1-5-80-689100834-1985168674-2379302174-2224748125-4125308070",
+    "Sid": "S-1-5-80-689100834-1985168674-2379302174-2224748125-4125308070"
+  },
+  {
+    "DisplayName": "Windows Audio Endpoint Builder",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages audio devices for the Windows Audio service.  If this service is stopped, audio devices and effects will not function properly.  If this service is disabled, any services that explicitly depend on it will fail to start",
+    "Name": "AudioEndpointBuilder",
+    "SddlName": "S-1-5-80-1580948945-3239616721-2529237571-3761093093-1214243633",
+    "Sid": "S-1-5-80-1580948945-3239616721-2529237571-3761093093-1214243633"
+  },
+  {
+    "DisplayName": "Windows Audio",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages audio for Windows-based programs.  If this service is stopped, audio devices and effects will not function properly.  If this service is disabled, any services that explicitly depend on it will fail to start",
+    "Name": "Audiosrv",
+    "SddlName": "S-1-5-80-2676549577-1911656217-2625096541-4178041876-1366760775",
+    "Sid": "S-1-5-80-2676549577-1911656217-2625096541-4178041876-1366760775"
+  },
+  {
+    "DisplayName": "Cellular Time",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service sets time based on NITZ messages from a Mobile Network",
+    "Name": "autotimesvc",
+    "SddlName": "S-1-5-80-3169285310-278349998-1452333686-3865143136-4212226833",
+    "Sid": "S-1-5-80-3169285310-278349998-1452333686-3865143136-4212226833"
+  },
+  {
+    "DisplayName": "ActiveX Installer (AxInstSV)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides User Account Control validation for the installation of ActiveX controls from the Internet and enables management of ActiveX control installation based on Group Policy settings. This service is started on demand and if disabled the installation of ActiveX controls will behave according to default browser settings.",
+    "Name": "AxInstSV",
+    "SddlName": "S-1-5-80-1058592404-331734164-3167594226-3910907650-1299295147",
+    "Sid": "S-1-5-80-1058592404-331734164-3167594226-3910907650-1299295147"
+  },
+  {
+    "DisplayName": "BitLocker Drive Encryption Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "BDESVC hosts the BitLocker Drive Encryption service. BitLocker Drive Encryption provides secure startup for the operating system, as well as full volume encryption for OS, fixed or removable volumes. This service allows BitLocker to prompt users for various actions related to their volumes when mounted, and unlocks volumes automatically without user interaction. Additionally, it stores recovery information to Active Directory, if available, and, if necessary, ensures the most recent recovery certificates are used.  Stopping or disabling the service would prevent users from leveraging this functionality.",
+    "Name": "BDESVC",
+    "SddlName": "S-1-5-80-2962817144-200689703-2266453665-3849882635-1986547430",
+    "Sid": "S-1-5-80-2962817144-200689703-2266453665-3849882635-1986547430"
+  },
+  {
+    "DisplayName": "Base Filtering Engine",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Base Filtering Engine (BFE) is a service that manages firewall and Internet Protocol security (IPsec) policies and implements user mode filtering. Stopping or disabling the BFE service will significantly reduce the security of the system. It will also result in unpredictable behavior in IPsec management and firewall applications.",
+    "Name": "BFE",
+    "SddlName": "S-1-5-80-1383147646-27650227-2710666058-1662982300-1023958487",
+    "Sid": "S-1-5-80-1383147646-27650227-2710666058-1662982300-1023958487"
+  },
+  {
+    "DisplayName": "Background Intelligent Transfer Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Transfers files in the background using idle network bandwidth. If the service is disabled, then any applications that depend on BITS, such as Windows Update or MSN Explorer, will be unable to automatically download programs and other information.",
+    "Name": "BITS",
+    "SddlName": "S-1-5-80-864916184-135290571-3087830041-1716922880-4237303741",
+    "Sid": "S-1-5-80-864916184-135290571-3087830041-1716922880-4237303741"
+  },
+  {
+    "DisplayName": "Background Tasks Infrastructure Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows infrastructure service that controls which background tasks can run on the system.",
+    "Name": "BrokerInfrastructure",
+    "SddlName": "S-1-5-80-1988685059-1921232356-378231328-2704142597-890457928",
+    "Sid": "S-1-5-80-1988685059-1921232356-378231328-2704142597-890457928"
+  },
+  {
+    "DisplayName": "Bluetooth Audio Gateway Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Service supporting the audio gateway role of the Bluetooth Handsfree Profile.",
+    "Name": "BTAGService",
+    "SddlName": "S-1-5-80-3316959809-2577409367-488518535-1805171532-1438653141",
+    "Sid": "S-1-5-80-3316959809-2577409367-488518535-1805171532-1438653141"
+  },
+  {
+    "DisplayName": "AVCTP service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This is Audio Video Control Transport Protocol service",
+    "Name": "BthAvctpSvc",
+    "SddlName": "S-1-5-80-1264790548-4164306546-4160824920-750804445-3452039388",
+    "Sid": "S-1-5-80-1264790548-4164306546-4160824920-750804445-3452039388"
+  },
+  {
+    "DisplayName": "Bluetooth Support Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Bluetooth service supports discovery and association of remote Bluetooth devices.  Stopping or disabling this service may cause already installed Bluetooth devices to fail to operate properly and prevent new devices from being discovered or associated.",
+    "Name": "bthserv",
+    "SddlName": "S-1-5-80-2586557155-168560303-1373426920-983201488-1499765686",
+    "Sid": "S-1-5-80-2586557155-168560303-1373426920-983201488-1499765686"
+  },
+  {
+    "DisplayName": "Capability Access Manager Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides facilities for managing UWP apps access to app capabilities as well as checking an app's access to specific app capabilities",
+    "Name": "camsvc",
+    "SddlName": "S-1-5-80-3369530244-1263555520-1552818992-544823788-1590281562",
+    "Sid": "S-1-5-80-3369530244-1263555520-1552818992-544823788-1590281562"
+  },
+  {
+    "DisplayName": "Connected Devices Platform Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service is used for Connected Devices Platform scenarios",
+    "Name": "CDPSvc",
+    "SddlName": "S-1-5-80-3433512109-503559027-1389316256-1766580070-2256751264",
+    "Sid": "S-1-5-80-3433512109-503559027-1389316256-1766580070-2256751264"
+  },
+  {
+    "DisplayName": "Certificate Propagation",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Copies user certificates and root certificates from smart cards into the current user's certificate store, detects when a smart card is inserted into a smart card reader, and, if needed, installs the smart card Plug and Play minidriver.",
+    "Name": "CertPropSvc",
+    "SddlName": "S-1-5-80-3256172449-2363790065-3617575471-4144056108-756904704",
+    "Sid": "S-1-5-80-3256172449-2363790065-3617575471-4144056108-756904704"
+  },
+  {
+    "DisplayName": "Microsoft Office Click-to-Run Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "â€ªManages resource coordination, background streaming, and system integration of Microsoft 365 and Office products and their related updates. This service is required to run during the use of any Microsoft 365 and Office program, during initial streaming installation and all subsequent updates.â€¬",
+    "Name": "ClickToRunSvc",
+    "SddlName": "S-1-5-80-2910295675-2903645229-1491228341-1379829127-1113878868",
+    "Sid": "S-1-5-80-2910295675-2903645229-1491228341-1379829127-1113878868"
+  },
+  {
+    "DisplayName": "Client License Service (ClipSVC)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for the Microsoft Store. This service is started on demand and if disabled applications bought using the Microsoft Store will not behave correctly.",
+    "Name": "ClipSVC",
+    "SddlName": "S-1-5-80-65843127-2189646064-2697706863-2125155322-3141006483",
+    "Sid": "S-1-5-80-65843127-2189646064-2697706863-2125155322-3141006483"
+  },
+  {
+    "DisplayName": "Microsoft Cloud Identity Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Supports integrations with Microsoft cloud identity services.  If disabled, tenant restrictions will not be enforced properly.",
+    "Name": "cloudidsvc",
+    "SddlName": "S-1-5-80-2119957892-4152124429-3625998117-4006912763-1737903618",
+    "Sid": "S-1-5-80-2119957892-4152124429-3625998117-4006912763-1737903618"
+  },
+  {
+    "DisplayName": "COM+ System Application",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages the configuration and tracking of Component Object Model (COM)+-based components. If the service is stopped, most COM+-based components will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "COMSysApp",
+    "SddlName": "S-1-5-80-593875016-1044814911-1112741138-2143646632-2690613739",
+    "Sid": "S-1-5-80-593875016-1044814911-1112741138-2143646632-2690613739"
+  },
+  {
+    "DisplayName": "CoreMessaging",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages communication between system components.",
+    "Name": "CoreMessagingRegistrar",
+    "SddlName": "S-1-5-80-1021139062-1866602279-1255292388-1008060685-2498416891",
+    "Sid": "S-1-5-80-1021139062-1866602279-1255292388-1008060685-2498416891"
+  },
+  {
+    "DisplayName": "Cryptographic Services",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides three management services: Catalog Database Service, which confirms the signatures of Windows files and allows new programs to be installed; Protected Root Service, which adds and removes Trusted Root Certification Authority certificates from this computer; and Automatic Root Certificate Update Service, which retrieves root certificates from Windows Update and enable scenarios such as SSL. If this service is stopped, these management services will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "CryptSvc",
+    "SddlName": "S-1-5-80-242729624-280608522-2219052887-3187409060-2225943459",
+    "Sid": "S-1-5-80-242729624-280608522-2219052887-3187409060-2225943459"
+  },
+  {
+    "DisplayName": "Offline Files",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Offline Files service performs maintenance activities on the Offline Files cache, responds to user logon and logoff events, implements the internals of the public API, and dispatches interesting events to those interested in Offline Files activities and changes in cache state.",
+    "Name": "CscService",
+    "SddlName": "S-1-5-80-1987853863-1639573247-1110726908-1137832616-3599624523",
+    "Sid": "S-1-5-80-1987853863-1639573247-1110726908-1137832616-3599624523"
+  },
+  {
+    "DisplayName": "DCOM Server Process Launcher",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The DCOMLAUNCH service launches COM and DCOM servers in response to object activation requests. If this service is stopped or disabled, programs using COM or DCOM will not function properly. It is strongly recommended that you have the DCOMLAUNCH service running.",
+    "Name": "DcomLaunch",
+    "SddlName": "S-1-5-80-1601830629-990752416-3372939810-977361409-3075122917",
+    "Sid": "S-1-5-80-1601830629-990752416-3372939810-977361409-3075122917"
+  },
+  {
+    "DisplayName": "Declared Configuration(DC) service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Process Declared Configuration documents recevied from MDM and other channels and perform configurations on device",
+    "Name": "dcsvc",
+    "SddlName": "S-1-5-80-2667170245-2239725068-1742831399-533342241-2651120191",
+    "Sid": "S-1-5-80-2667170245-2239725068-1742831399-533342241-2651120191"
+  },
+  {
+    "DisplayName": "Optimize drives",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Helps the computer run more efficiently by optimizing files on storage drives.",
+    "Name": "defragsvc",
+    "SddlName": "S-1-5-80-654447679-1163530548-981569129-3608673666-3128964045",
+    "Sid": "S-1-5-80-654447679-1163530548-981569129-3608673666-3128964045"
+  },
+  {
+    "DisplayName": "Device Association Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables pairing between the system and wired or wireless devices.",
+    "Name": "DeviceAssociationService",
+    "SddlName": "S-1-5-80-2536636004-4072673470-1048721469-2703517266-1433793019",
+    "Sid": "S-1-5-80-2536636004-4072673470-1048721469-2703517266-1433793019"
+  },
+  {
+    "DisplayName": "Device Install Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables a computer to recognize and adapt to hardware changes with little or no user input. Stopping or disabling this service will result in system instability.",
+    "Name": "DeviceInstall",
+    "SddlName": "S-1-5-80-2659457741-469498900-3203170401-3149177360-3048467625",
+    "Sid": "S-1-5-80-2659457741-469498900-3203170401-3149177360-3048467625"
+  },
+  {
+    "DisplayName": "DevQuery Background Discovery Broker",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables apps to discover devices with a backgroud task",
+    "Name": "DevQueryBroker",
+    "SddlName": "S-1-5-80-1646229720-1474186231-1049421145-3719583575-3014288788",
+    "Sid": "S-1-5-80-1646229720-1474186231-1049421145-3719583575-3014288788"
+  },
+  {
+    "DisplayName": "DHCP Client",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Registers and updates IP addresses and DNS records for this computer. If this service is stopped, this computer will not receive dynamic IP addresses and DNS updates. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "Dhcp",
+    "SddlName": "S-1-5-80-2940520708-3855866260-481812779-327648279-1710889582",
+    "Sid": "S-1-5-80-2940520708-3855866260-481812779-327648279-1710889582"
+  },
+  {
+    "DisplayName": "Diagnostic Execution Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Executes diagnostic actions for troubleshooting support",
+    "Name": "diagsvc",
+    "SddlName": "S-1-5-80-2291377395-3838044599-2142290114-2473825573-3813973113",
+    "Sid": "S-1-5-80-2291377395-3838044599-2142290114-2473825573-3813973113"
+  },
+  {
+    "DisplayName": "Connected User Experiences and Telemetry",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Connected User Experiences and Telemetry service enables features that support in-application and connected user experiences. Additionally, this service manages the event driven collection and transmission of diagnostic and usage information (used to improve the experience and quality of the Windows Platform) when the diagnostics and usage privacy option settings are enabled under Feedback and Diagnostics.",
+    "Name": "DiagTrack",
+    "SddlName": "S-1-5-80-2620808479-2171380039-3191355562-2070425692-3097948119",
+    "Sid": "S-1-5-80-2620808479-2171380039-3191355562-2070425692-3097948119"
+  },
+  {
+    "DisplayName": "DialogBlockingService",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Dialog Blocking Service",
+    "Name": "DialogBlockingService",
+    "SddlName": "S-1-5-80-2947989659-52033649-2604989816-125447294-1386081903",
+    "Sid": "S-1-5-80-2947989659-52033649-2604989816-125447294-1386081903"
+  },
+  {
+    "DisplayName": "Display Policy Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages the connection and configuration of local and remote displays",
+    "Name": "DispBrokerDesktopSvc",
+    "SddlName": "S-1-5-80-4171086659-1617898341-2870161492-1466607281-2109097600",
+    "Sid": "S-1-5-80-4171086659-1617898341-2870161492-1466607281-2109097600"
+  },
+  {
+    "DisplayName": "Display Enhancement Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "A service for managing display enhancement such as brightness control.",
+    "Name": "DisplayEnhancementService",
+    "SddlName": "S-1-5-80-3914275374-678031271-1603343729-3906112567-2888048264",
+    "Sid": "S-1-5-80-3914275374-678031271-1603343729-3906112567-2888048264"
+  },
+  {
+    "DisplayName": "Device Management Enrollment Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Performs Device Enrollment Activities for Device Management",
+    "Name": "DmEnrollmentSvc",
+    "SddlName": "S-1-5-80-538170410-2190149038-799223143-2506663053-4165713448",
+    "Sid": "S-1-5-80-538170410-2190149038-799223143-2506663053-4165713448"
+  },
+  {
+    "DisplayName": "Device Management Wireless Application Protocol (WAP) Push message Routing Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Routes Wireless Application Protocol (WAP) Push messages received by the device and synchronizes Device Management sessions",
+    "Name": "dmwappushservice",
+    "SddlName": "S-1-5-80-3841379657-834162867-3056945855-2577476187-70241904",
+    "Sid": "S-1-5-80-3841379657-834162867-3056945855-2577476187-70241904"
+  },
+  {
+    "DisplayName": "DNS Client",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The DNS Client service (dnscache) sends Domain Name System (DNS) queries, caches query results, and registers the computer's full name on the network. This service is not stoppable.",
+    "Name": "Dnscache",
+    "SddlName": "S-1-5-80-859482183-879914841-863379149-1145462774-2388618682",
+    "Sid": "S-1-5-80-859482183-879914841-863379149-1145462774-2388618682"
+  },
+  {
+    "DisplayName": "Delivery Optimization",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Performs content delivery optimization tasks",
+    "Name": "DoSvc",
+    "SddlName": "S-1-5-80-3055155277-3816794035-3994065555-2874236192-2193176987",
+    "Sid": "S-1-5-80-3055155277-3816794035-3994065555-2874236192-2193176987"
+  },
+  {
+    "DisplayName": "Wired AutoConfig",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Wired AutoConfig (DOT3SVC) service is responsible for performing IEEE 802.1X authentication on Ethernet interfaces. If your current wired network deployment enforces 802.1X authentication, the DOT3SVC service should be configured to run for establishing Layer 2 connectivity and/or providing access to network resources. Wired networks that do not enforce 802.1X authentication are unaffected by the DOT3SVC service.",
+    "Name": "dot3svc",
+    "SddlName": "S-1-5-80-3787436395-2174616005-3003730137-1094982900-1570567328",
+    "Sid": "S-1-5-80-3787436395-2174616005-3003730137-1094982900-1570567328"
+  },
+  {
+    "DisplayName": "Diagnostic Policy Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Diagnostic Policy Service enables problem detection, troubleshooting and resolution for Windows components.  If this service is stopped, diagnostics will no longer function.",
+    "Name": "DPS",
+    "SddlName": "S-1-5-80-2970612574-78537857-698502321-558674196-1451644582",
+    "Sid": "S-1-5-80-2970612574-78537857-698502321-558674196-1451644582"
+  },
+  {
+    "DisplayName": "Device Setup Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables the detection, download and installation of device-related software. If this service is disabled, devices may be configured with outdated software, and may not work correctly.",
+    "Name": "DsmSvc",
+    "SddlName": "S-1-5-80-286057374-2594772386-1471686342-3682429118-820474675",
+    "Sid": "S-1-5-80-286057374-2594772386-1471686342-3682429118-820474675"
+  },
+  {
+    "DisplayName": "Data Sharing Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides data brokering between applications.",
+    "Name": "DsSvc",
+    "SddlName": "S-1-5-80-1551822644-3134808374-1042292604-2865742758-3851661496",
+    "Sid": "S-1-5-80-1551822644-3134808374-1042292604-2865742758-3851661496"
+  },
+  {
+    "DisplayName": "Data Usage",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Network data usage, data limit, restrict background data, metered networks.",
+    "Name": "DusmSvc",
+    "SddlName": "S-1-5-80-4071458001-3563271761-1846288968-3700919931-3809667977",
+    "Sid": "S-1-5-80-4071458001-3563271761-1846288968-3700919931-3809667977"
+  },
+  {
+    "DisplayName": "Extensible Authentication Protocol",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Extensible Authentication Protocol (EAP) service provides network authentication in such scenarios as 802.1x wired and wireless, VPN, and Network Access Protection (NAP).  EAP also provides application programming interfaces (APIs) that are used by network access clients, including wireless and VPN clients, during the authentication process.  If you disable this service, this computer is prevented from accessing networks that require EAP authentication.",
+    "Name": "EapHost",
+    "SddlName": "S-1-5-80-3578261754-285310837-913589462-2834155770-667502746",
+    "Sid": "S-1-5-80-3578261754-285310837-913589462-2834155770-667502746"
+  },
+  {
+    "DisplayName": "Microsoft Edge Update Service (edgeupdate)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Keeps your Microsoft software up to date. If this service is disabled or stopped, your Microsoft software will not be kept up to date, meaning security vulnerabilities that may arise cannot be fixed and features may not work. This service uninstalls itself when there is no Microsoft software using it.",
+    "Name": "edgeupdate",
+    "SddlName": "S-1-5-80-263376457-2115425240-177348680-1339839713-3837480443",
+    "Sid": "S-1-5-80-263376457-2115425240-177348680-1339839713-3837480443"
+  },
+  {
+    "DisplayName": "Microsoft Edge Update Service (edgeupdatem)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Keeps your Microsoft software up to date. If this service is disabled or stopped, your Microsoft software will not be kept up to date, meaning security vulnerabilities that may arise cannot be fixed and features may not work. This service uninstalls itself when there is no Microsoft software using it.",
+    "Name": "edgeupdatem",
+    "SddlName": "S-1-5-80-605514040-344704999-4120406818-2499438505-150840210",
+    "Sid": "S-1-5-80-605514040-344704999-4120406818-2499438505-150840210"
+  },
+  {
+    "DisplayName": "Encrypting File System (EFS)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides the core file encryption technology used to store encrypted files on NTFS file system volumes. If this service is stopped or disabled, applications will be unable to access encrypted files.",
+    "Name": "EFS",
+    "SddlName": "S-1-5-80-730263862-4055390735-403826019-1175694336-1277635259",
+    "Sid": "S-1-5-80-730263862-4055390735-403826019-1175694336-1277635259"
+  },
+  {
+    "DisplayName": "Embedded Mode",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Embedded Mode service enables scenarios related to Background Applications.  Disabling this service will prevent Background Applications from being activated.",
+    "Name": "embeddedmode",
+    "SddlName": "S-1-5-80-197064213-1107091946-1970926662-1288706631-716503202",
+    "Sid": "S-1-5-80-197064213-1107091946-1970926662-1288706631-716503202"
+  },
+  {
+    "DisplayName": "Enterprise App Management Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables enterprise application management.",
+    "Name": "EntAppSvc",
+    "SddlName": "S-1-5-80-2744483880-3889877944-846434063-3461941807-3140553215",
+    "Sid": "S-1-5-80-2744483880-3889877944-846434063-3461941807-3140553215"
+  },
+  {
+    "DisplayName": "Windows Event Log",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service manages events and event logs. It supports logging events, querying events, subscribing to events, archiving event logs, and managing event metadata. It can display events in both XML and plain text format. Stopping this service may compromise security and reliability of the system.",
+    "Name": "EventLog",
+    "SddlName": "S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122",
+    "Sid": "S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122"
+  },
+  {
+    "DisplayName": "COM+ Event System",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Supports System Event Notification Service (SENS), which provides automatic distribution of events to subscribing Component Object Model (COM) components. If the service is stopped, SENS will close and will not be able to provide logon and logoff notifications. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "EventSystem",
+    "SddlName": "S-1-5-80-1772571935-1555666882-3369284645-1675012128-2386634627",
+    "Sid": "S-1-5-80-1772571935-1555666882-3369284645-1675012128-2386634627"
+  },
+  {
+    "DisplayName": "Function Discovery Provider Host",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The FDPHOST service hosts the Function Discovery (FD) network discovery providers. These FD providers supply network discovery services for the Simple Services Discovery Protocol (SSDP) and Web Services â€“ Discovery (WS-D) protocol. Stopping or disabling the FDPHOST service will disable network discovery for these protocols when using FD. When this service is unavailable, network services using FD and relying on these discovery protocols will be unable to find network devices or resources.",
+    "Name": "fdPHost",
+    "SddlName": "S-1-5-80-364023826-931424190-487969545-1024119571-74567675",
+    "Sid": "S-1-5-80-364023826-931424190-487969545-1024119571-74567675"
+  },
+  {
+    "DisplayName": "Function Discovery Resource Publication",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Publishes this computer and resources attached to this computer so they can be discovered over the network.  If this service is stopped, network resources will no longer be published and they will not be discovered by other computers on the network.",
+    "Name": "FDResPub",
+    "SddlName": "S-1-5-80-3215268152-2863950836-530904203-4246843131-2183915461",
+    "Sid": "S-1-5-80-3215268152-2863950836-530904203-4246843131-2183915461"
+  },
+  {
+    "DisplayName": "File History Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Protects user files from accidental loss by copying them to a backup location",
+    "Name": "fhsvc",
+    "SddlName": "S-1-5-80-2617507558-3328795327-711547822-311560295-1636921165",
+    "Sid": "S-1-5-80-2617507558-3328795327-711547822-311560295-1636921165"
+  },
+  {
+    "DisplayName": "FileSyncHelper",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Helper service for OneDrive",
+    "Name": "FileSyncHelper",
+    "SddlName": "S-1-5-80-1575980020-3156068802-2805437853-2566931932-472506884",
+    "Sid": "S-1-5-80-1575980020-3156068802-2805437853-2566931932-472506884"
+  },
+  {
+    "DisplayName": "Windows Font Cache Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Optimizes performance of applications by caching commonly used font data. Applications will start this service if it is not already running. It can be disabled, though doing so will degrade application performance.",
+    "Name": "FontCache",
+    "SddlName": "S-1-5-80-3655275221-2954682349-3644260495-855223267-1438849333",
+    "Sid": "S-1-5-80-3655275221-2954682349-3644260495-855223267-1438849333"
+  },
+  {
+    "DisplayName": "Windows Presentation Foundation Font Cache 3.0.0.0",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Optimizes performance of Windows Presentation Foundation (WPF) applications by caching commonly used font data. WPF applications will start this service if it is not already running. It can be disabled, though doing so will degrade the performance of WPF applications.",
+    "Name": "FontCache3.0.0.0",
+    "SddlName": "S-1-5-80-3782458156-2098404076-3767342964-3617937256-1389734963",
+    "Sid": "S-1-5-80-3782458156-2098404076-3767342964-3617937256-1389734963"
+  },
+  {
+    "DisplayName": "Windows Camera Frame Server",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables multiple clients to access video frames from camera devices.",
+    "Name": "FrameServer",
+    "SddlName": "S-1-5-80-3915894004-2104103821-3047269622-1811662266-774708259",
+    "Sid": "S-1-5-80-3915894004-2104103821-3047269622-1811662266-774708259"
+  },
+  {
+    "DisplayName": "Windows Camera Frame Server Monitor",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Monitors the health and state for the Windows Camera Frame Server service.",
+    "Name": "FrameServerMonitor",
+    "SddlName": "S-1-5-80-2736834059-149274525-2748960781-3866326010-3340841336",
+    "Sid": "S-1-5-80-2736834059-149274525-2748960781-3866326010-3340841336"
+  },
+  {
+    "DisplayName": "GameInput Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables keyboards, mice, gamepads, and other input devices to be used with the GameInput API.",
+    "Name": "GameInputSvc",
+    "SddlName": "S-1-5-80-446883375-573201280-1678141377-2534825700-3239647478",
+    "Sid": "S-1-5-80-446883375-573201280-1678141377-2534825700-3239647478"
+  },
+  {
+    "DisplayName": "Google Chrome Elevation Service (GoogleChromeElevationService)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides encryption services and a secure way for recovering Google Chrome if it gets out of date. If this service is disabled, Google Chrome may lose access to encrypted data, and Google Chrome may not be able recover itself.",
+    "Name": "GoogleChromeElevationService",
+    "SddlName": "S-1-5-80-75387917-508843547-2432396020-3132913102-4137377952",
+    "Sid": "S-1-5-80-75387917-508843547-2432396020-3132913102-4137377952"
+  },
+  {
+    "DisplayName": "Google Updater Internal Service (GoogleUpdaterInternalService134.0.6985.0)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Keeps your Google software up to date. If this service is disabled or stopped, your Google software will not be kept up to date, meaning security vulnerabilities that may arise cannot be fixed and features may not work. This service uninstalls itself when there is no Google software using it.",
+    "Name": "GoogleUpdaterInternalService134.0.6985.0",
+    "SddlName": "S-1-5-80-2232465618-3880312518-1052065227-605117090-1386974853",
+    "Sid": "S-1-5-80-2232465618-3880312518-1052065227-605117090-1386974853"
+  },
+  {
+    "DisplayName": "Google Updater Service (GoogleUpdaterService134.0.6985.0)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Keeps your Google software up to date. If this service is disabled or stopped, your Google software will not be kept up to date, meaning security vulnerabilities that may arise cannot be fixed and features may not work. This service uninstalls itself when there is no Google software using it.",
+    "Name": "GoogleUpdaterService134.0.6985.0",
+    "SddlName": "S-1-5-80-3407305057-1477882219-653670819-4045628761-2460065015",
+    "Sid": "S-1-5-80-3407305057-1477882219-653670819-4045628761-2460065015"
+  },
+  {
+    "DisplayName": "Group Policy Client",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The service is responsible for applying settings configured by administrators for the computer and users through the Group Policy component. If the service is disabled, the settings will not be applied and applications and components will not be manageable through Group Policy. Any components or applications that depend on the Group Policy component might not be functional if the service is disabled.",
+    "Name": "gpsvc",
+    "SddlName": "S-1-5-80-2024188204-2445810227-898691311-2942020084-762398166",
+    "Sid": "S-1-5-80-2024188204-2445810227-898691311-2942020084-762398166"
+  },
+  {
+    "DisplayName": "GraphicsPerfSvc",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Graphics performance monitor service",
+    "Name": "GraphicsPerfSvc",
+    "SddlName": "S-1-5-80-1517824832-3405227061-4234718464-3265367437-2784406453",
+    "Sid": "S-1-5-80-1517824832-3405227061-4234718464-3265367437-2784406453"
+  },
+  {
+    "DisplayName": "Microsoft Monitoring Agent",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Monitoring Agent service monitors the health of the computer. The service may be configured to monitor the health of other computers in addition to this computer. If this service is stopped, detection of failures may not occur. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "HealthService",
+    "SddlName": "S-1-5-80-3696737894-3623014651-202832235-645492566-13622391",
+    "Sid": "S-1-5-80-3696737894-3623014651-202832235-645492566-13622391"
+  },
+  {
+    "DisplayName": "Human Interface Device Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Activates and maintains the use of hot buttons on keyboards, remote controls, and other multimedia devices. It is recommended that you keep this service running.",
+    "Name": "hidserv",
+    "SddlName": "S-1-5-80-89818136-74175777-88572358-3912780041-2421659406",
+    "Sid": "S-1-5-80-89818136-74175777-88572358-3912780041-2421659406"
+  },
+  {
+    "DisplayName": "HV Host Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides an interface for the Hyper-V hypervisor to provide per-partition performance counters to the host operating system.",
+    "Name": "HvHost",
+    "SddlName": "S-1-5-80-44780642-2200031541-2427509763-915290973-996987375",
+    "Sid": "S-1-5-80-44780642-2200031541-2427509763-915290973-996987375"
+  },
+  {
+    "DisplayName": "Windows Mobile Hotspot Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides the ability to share a cellular data connection with another device.",
+    "Name": "icssvc",
+    "SddlName": "S-1-5-80-3935728946-315639613-922904133-3250794525-491832002",
+    "Sid": "S-1-5-80-3935728946-315639613-922904133-3250794525-491832002"
+  },
+  {
+    "DisplayName": "IKE and AuthIP IPsec Keying Modules",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The IKEEXT service hosts the Internet Key Exchange (IKE) and Authenticated Internet Protocol (AuthIP) keying modules. These keying modules are used for authentication and key exchange in Internet Protocol security (IPsec). Stopping or disabling the IKEEXT service will disable IKE and AuthIP key exchange with peer computers. IPsec is typically configured to use IKE or AuthIP; therefore, stopping or disabling the IKEEXT service might result in an IPsec failure and might compromise the security of the system. It is strongly recommended that you have the IKEEXT service running.",
+    "Name": "IKEEXT",
+    "SddlName": "S-1-5-80-698886940-375981264-2691324669-2937073286-3841916615",
+    "Sid": "S-1-5-80-698886940-375981264-2691324669-2937073286-3841916615"
+  },
+  {
+    "DisplayName": "Microsoft Store Install Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for the Microsoft Store.  This service is started on demand and if disabled then installations will not function properly.",
+    "Name": "InstallService",
+    "SddlName": "S-1-5-80-2284069148-621670086-2606570695-3321162879-2563206788",
+    "Sid": "S-1-5-80-2284069148-621670086-2606570695-3321162879-2563206788"
+  },
+  {
+    "DisplayName": "Inventory and Compatibility Appraisal service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service performs background system inventory, compatibility appraisal, and maintenance used by numerous system components.",
+    "Name": "InventorySvc",
+    "SddlName": "S-1-5-80-1241842065-2402679847-3773104286-3604378132-2248288982",
+    "Sid": "S-1-5-80-1241842065-2402679847-3773104286-3604378132-2248288982"
+  },
+  {
+    "DisplayName": "IP Helper",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides tunnel connectivity using IPv6 transition technologies (6to4, ISATAP, Port Proxy, and Teredo), and IP-HTTPS. If this service is stopped, the computer will not have the enhanced connectivity benefits that these technologies offer.",
+    "Name": "iphlpsvc",
+    "SddlName": "S-1-5-80-62724632-2456781206-3863850748-1496050881-1042387526",
+    "Sid": "S-1-5-80-62724632-2456781206-3863850748-1496050881-1042387526"
+  },
+  {
+    "DisplayName": "IP Translation Configuration Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Configures and enables translation from v4 to v6 and vice versa",
+    "Name": "IpxlatCfgSvc",
+    "SddlName": "S-1-5-80-2355113075-3359631449-3346493237-3667020425-1655874352",
+    "Sid": "S-1-5-80-2355113075-3359631449-3346493237-3667020425-1655874352"
+  },
+  {
+    "DisplayName": "CNG Key Isolation",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The CNG key isolation service is hosted in the LSA process. The service provides key process isolation to private keys and associated cryptographic operations as required by the Common Criteria. The service stores and uses long-lived keys in a secure process complying with Common Criteria requirements.",
+    "Name": "KeyIso",
+    "SddlName": "S-1-5-80-1206118541-1677721718-2423781911-3372378849-3903984073",
+    "Sid": "S-1-5-80-1206118541-1677721718-2423781911-3372378849-3903984073"
+  },
+  {
+    "DisplayName": "KtmRm for Distributed Transaction Coordinator",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Coordinates transactions between the Distributed Transaction Coordinator (MSDTC) and the Kernel Transaction Manager (KTM). If it is not needed, it is recommended that this service remain stopped. If it is needed, both MSDTC and KTM will start this service automatically. If this service is disabled, any MSDTC transaction interacting with a Kernel Resource Manager will fail and any services that explicitly depend on it will fail to start.",
+    "Name": "KtmRm",
+    "SddlName": "S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443",
+    "Sid": "S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443"
+  },
+  {
+    "DisplayName": "Server",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Supports file, print, and named-pipe sharing over the network for this computer. If this service is stopped, these functions will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "LanmanServer",
+    "SddlName": "S-1-5-80-879696042-2351668846-370232824-2524288904-4023536711",
+    "Sid": "S-1-5-80-879696042-2351668846-370232824-2524288904-4023536711"
+  },
+  {
+    "DisplayName": "Workstation",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Creates and maintains client network connections to remote servers using the SMB protocol. If this service is stopped, these connections will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "LanmanWorkstation",
+    "SddlName": "S-1-5-80-719998295-2833700043-1566817583-4093942769-1414026312",
+    "Sid": "S-1-5-80-719998295-2833700043-1566817583-4093942769-1414026312"
+  },
+  {
+    "DisplayName": "Geolocation Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service monitors the current location of the system and manages geofences (a geographical location with associated events).  If you turn off this service, applications will be unable to use or receive notifications for geolocation or geofences.",
+    "Name": "lfsvc",
+    "SddlName": "S-1-5-80-3704025948-1094794811-1175534343-2088422159-783153058",
+    "Sid": "S-1-5-80-3704025948-1094794811-1175534343-2088422159-783153058"
+  },
+  {
+    "DisplayName": "Windows License Manager Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for the Microsoft Store.  This service is started on demand and if disabled then content acquired through the Microsoft Store will not function properly.",
+    "Name": "LicenseManager",
+    "SddlName": "S-1-5-80-2168654060-3115992504-1782388893-2584760693-2634250426",
+    "Sid": "S-1-5-80-2168654060-3115992504-1782388893-2584760693-2634250426"
+  },
+  {
+    "DisplayName": "Link-Layer Topology Discovery Mapper",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Creates a Network Map, consisting of PC and device topology (connectivity) information, and metadata describing each PC and device.  If this service is disabled, the Network Map will not function properly.",
+    "Name": "lltdsvc",
+    "SddlName": "S-1-5-80-940647296-341435850-43817331-158078607-2483727905",
+    "Sid": "S-1-5-80-940647296-341435850-43817331-158078607-2483727905"
+  },
+  {
+    "DisplayName": "TCP/IP NetBIOS Helper",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides support for the NetBIOS over TCP/IP (NetBT) service and NetBIOS name resolution for clients on the network, therefore enabling users to share files, print, and log on to the network. If this service is stopped, these functions might be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "lmhosts",
+    "SddlName": "S-1-5-80-172094073-716411664-54255058-185476446-2329512179",
+    "Sid": "S-1-5-80-172094073-716411664-54255058-185476446-2329512179"
+  },
+  {
+    "DisplayName": "Kerberos Local Key Distribution Center",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service enables users to log on to the local machine using the Kerberos authentication protocol. If this service is stopped, users will be unable to log on to the local machine. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "LocalKdc",
+    "SddlName": "S-1-5-80-4131786239-1557697886-3119164568-2767020144-3788930382",
+    "Sid": "S-1-5-80-4131786239-1557697886-3119164568-2767020144-3788930382"
+  },
+  {
+    "DisplayName": "Local Session Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Core Windows Service that manages local user sessions. Stopping or disabling this service will result in system instability.",
+    "Name": "LSM",
+    "SddlName": "S-1-5-80-1230977110-1477712667-2747199032-477530733-939374687",
+    "Sid": "S-1-5-80-1230977110-1477712667-2747199032-477530733-939374687"
+  },
+  {
+    "DisplayName": "Language Experience Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for deploying and configuring localized Windows resources. This service is started on demand and, if disabled, additional Windows languages will not be deployed to the system, and Windows may not function properly.",
+    "Name": "LxpSvc",
+    "SddlName": "S-1-5-80-1594061079-2000966165-462148798-751814865-2644087104",
+    "Sid": "S-1-5-80-1594061079-2000966165-462148798-751814865-2644087104"
+  },
+  {
+    "DisplayName": "Downloaded Maps Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows service for application access to downloaded maps. This service is started on-demand by application accessing downloaded maps. Disabling this service will prevent apps from accessing maps.",
+    "Name": "MapsBroker",
+    "SddlName": "S-1-5-80-3028837079-3186095147-955107200-3701964851-1150726376",
+    "Sid": "S-1-5-80-3028837079-3186095147-955107200-3701964851-1150726376"
+  },
+  {
+    "DisplayName": "McpManagementService",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Universal Print Management Service",
+    "Name": "McpManagementService",
+    "SddlName": "S-1-5-80-1346060813-323363712-587550660-3142329655-742851739",
+    "Sid": "S-1-5-80-1346060813-323363712-587550660-3142329655-742851739"
+  },
+  {
+    "DisplayName": "Microsoft Defender Core Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Monitors the availability, health, and performance of various security components",
+    "Name": "MDCoreSvc",
+    "SddlName": "S-1-5-80-30551196-2029750602-3680353947-2336859763-523537544",
+    "Sid": "S-1-5-80-30551196-2029750602-3680353947-2336859763-523537544"
+  },
+  {
+    "DisplayName": "Microsoft Edge Elevation Service (MicrosoftEdgeElevationService)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Keeps Microsoft Edge up to update. If this service is disabled, the application will not be kept up to date.",
+    "Name": "MicrosoftEdgeElevationService",
+    "SddlName": "S-1-5-80-450487634-32044177-1119026171-1009345945-1629791242",
+    "Sid": "S-1-5-80-450487634-32044177-1119026171-1009345945-1629791242"
+  },
+  {
+    "DisplayName": "Microsoft Monitoring Agent Azure VM Extension Heartbeat Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Report status of Microsoft Monitoring Agent to Azure.",
+    "Name": "MMAExtensionHeartbeatService",
+    "SddlName": "S-1-5-80-709209843-1696302203-723228295-845138187-2576138632",
+    "Sid": "S-1-5-80-709209843-1696302203-723228295-845138187-2576138632"
+  },
+  {
+    "DisplayName": "Windows Defender Firewall",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows Defender Firewall helps protect your computer by preventing unauthorized users from gaining access to your computer through the Internet or a network.",
+    "Name": "mpssvc",
+    "SddlName": "S-1-5-80-3088073201-1464728630-1879813800-1107566885-823218052",
+    "Sid": "S-1-5-80-3088073201-1464728630-1879813800-1107566885-823218052"
+  },
+  {
+    "DisplayName": "Distributed Transaction Coordinator",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Coordinates transactions that span multiple resource managers, such as databases, message queues, and file systems. If this service is stopped, these transactions will fail. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "MSDTC",
+    "SddlName": "S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426",
+    "Sid": "S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426"
+  },
+  {
+    "DisplayName": "Microsoft iSCSI Initiator Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages Internet SCSI (iSCSI) sessions from this computer to remote iSCSI target devices. If this service is stopped, this computer will not be able to login or access iSCSI targets. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "MSiSCSI",
+    "SddlName": "S-1-5-80-917953661-2020045820-2727011118-2260243830-4032185929",
+    "Sid": "S-1-5-80-917953661-2020045820-2727011118-2260243830-4032185929"
+  },
+  {
+    "DisplayName": "Windows Installer",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Adds, modifies, and removes applications provided as a Windows Installer (*.msi, *.msp) package. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "msiserver",
+    "SddlName": "S-1-5-80-685333868-2237257676-1431965530-1907094206-2438021966",
+    "Sid": "S-1-5-80-685333868-2237257676-1431965530-1907094206-2438021966"
+  },
+  {
+    "DisplayName": "Microsoft Keyboard Filter",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Controls keystroke filtering and mapping",
+    "Name": "MsKeyboardFilter",
+    "SddlName": "S-1-5-80-3719317199-3405270365-2794832041-2304024896-2914089004",
+    "Sid": "S-1-5-80-3719317199-3405270365-2794832041-2304024896-2914089004"
+  },
+  {
+    "DisplayName": "Natural Authentication",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Signal aggregator service, that evaluates signals based on time, network, geolocation, bluetooth and cdf factors. Supported features are Device Unlock, Dynamic Lock and Dynamo MDM policies",
+    "Name": "NaturalAuthentication",
+    "SddlName": "S-1-5-80-1693791390-661026542-4284378996-1616250691-2477593537",
+    "Sid": "S-1-5-80-1693791390-661026542-4284378996-1616250691-2477593537"
+  },
+  {
+    "DisplayName": "Network Connectivity Assistant",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides DirectAccess status notification for UI components",
+    "Name": "NcaSvc",
+    "SddlName": "S-1-5-80-154974075-1852685594-3179713959-2755908004-3936262621",
+    "Sid": "S-1-5-80-154974075-1852685594-3179713959-2755908004-3936262621"
+  },
+  {
+    "DisplayName": "Network Connection Broker",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Brokers connections that allow packaged Microsoft Store apps to receive notifications from the internet.",
+    "Name": "NcbService",
+    "SddlName": "S-1-5-80-3169048008-2586333165-76651690-3609634147-4147641610",
+    "Sid": "S-1-5-80-3169048008-2586333165-76651690-3609634147-4147641610"
+  },
+  {
+    "DisplayName": "Network Connected Devices Auto-Setup",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Network Connected Devices Auto-Setup service monitors and installs qualified devices that connect to a qualified network. Stopping or disabling this service will prevent Windows from discovering and installing qualified network connected devices automatically. Users can still manually add network connected devices to a PC through the user interface.",
+    "Name": "NcdAutoSetup",
+    "SddlName": "S-1-5-80-639065985-1709096039-2702309040-2770678766-2981280942",
+    "Sid": "S-1-5-80-639065985-1709096039-2702309040-2770678766-2981280942"
+  },
+  {
+    "DisplayName": "Netlogon",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Maintains a secure channel between this computer and the domain controller for authenticating users and services. If this service is stopped, the computer may not authenticate users and services and the domain controller cannot register DNS records. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "Netlogon",
+    "SddlName": "S-1-5-80-1589317753-1926951874-3424712441-2302911845-2572860984",
+    "Sid": "S-1-5-80-1589317753-1926951874-3424712441-2302911845-2572860984"
+  },
+  {
+    "DisplayName": "Network Connections",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages objects in the Network and Dial-Up Connections folder, in which you can view both local area network and remote connections.",
+    "Name": "Netman",
+    "SddlName": "S-1-5-80-2898649604-2335086160-1904548223-3761738420-3855444835",
+    "Sid": "S-1-5-80-2898649604-2335086160-1904548223-3761738420-3855444835"
+  },
+  {
+    "DisplayName": "Network List Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Identifies the networks to which the computer has connected, collects and stores properties for these networks, and notifies applications when these properties change.",
+    "Name": "netprofm",
+    "SddlName": "S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304",
+    "Sid": "S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304"
+  },
+  {
+    "DisplayName": "Network Setup Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Network Setup Service manages the installation of network drivers and permits the configuration of low-level network settings.  If this service is stopped, any driver installations that are in-progress may be cancelled.",
+    "Name": "NetSetupSvc",
+    "SddlName": "S-1-5-80-3290392786-819420393-1694314755-3737624005-3552167228",
+    "Sid": "S-1-5-80-3290392786-819420393-1694314755-3737624005-3552167228"
+  },
+  {
+    "DisplayName": "Net.Tcp Port Sharing Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides ability to share TCP ports over the net.tcp protocol.",
+    "Name": "NetTcpPortSharing",
+    "SddlName": "S-1-5-80-1773860938-1487242074-882566118-4272343956-2175834232",
+    "Sid": "S-1-5-80-1773860938-1487242074-882566118-4272343956-2175834232"
+  },
+  {
+    "DisplayName": "Microsoft Passport Container",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages local user identity keys used to authenticate user to identity providers as well as TPM virtual smart cards. If this service is disabled, local user identity keys and TPM virtual smart cards will not be accessible. It is recommended that you do not reconfigure this service.",
+    "Name": "NgcCtnrSvc",
+    "SddlName": "S-1-5-80-2381253463-2694003897-3435975801-3559003598-683041300",
+    "Sid": "S-1-5-80-2381253463-2694003897-3435975801-3559003598-683041300"
+  },
+  {
+    "DisplayName": "Microsoft Passport",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides process isolation for cryptographic keys used to authenticate to a userâ€™s associated identity providers. If this service is disabled, all uses and management of these keys will not be available, which includes machine logon and single-sign on for apps and websites. This service starts and stops automatically. It is recommended that you do not reconfigure this service.",
+    "Name": "NgcSvc",
+    "SddlName": "S-1-5-80-1999281942-4196217620-51267815-1628483199-606183737",
+    "Sid": "S-1-5-80-1999281942-4196217620-51267815-1628483199-606183737"
+  },
+  {
+    "DisplayName": "Network Location Awareness",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Collects and stores configuration information for the network and notifies programs when this information is modified. If this service is stopped, configuration information might be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "NlaSvc",
+    "SddlName": "S-1-5-80-3141615172-2057878085-1754447212-2405740020-3916490453",
+    "Sid": "S-1-5-80-3141615172-2057878085-1754447212-2405740020-3916490453"
+  },
+  {
+    "DisplayName": "Network Store Interface Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service delivers network notifications (e.g. interface addition/deleting etc) to user mode clients. Stopping this service will cause loss of network connectivity. If this service is disabled, any other services that explicitly depend on this service will fail to start.",
+    "Name": "nsi",
+    "SddlName": "S-1-5-80-2310782386-4237065203-3688974353-390202159-3511571085",
+    "Sid": "S-1-5-80-2310782386-4237065203-3688974353-390202159-3511571085"
+  },
+  {
+    "DisplayName": "OneDrive Updater Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Keeps your OneDrive up to date.",
+    "Name": "OneDrive Updater Service",
+    "SddlName": "S-1-5-80-3479585868-3788481186-3954793685-1341793008-1455161543",
+    "Sid": "S-1-5-80-3479585868-3788481186-3954793685-1341793008-1455161543"
+  },
+  {
+    "DisplayName": "Program Compatibility Assistant Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service provides support for the Program Compatibility Assistant (PCA).  PCA monitors programs installed and run by the user and detects known compatibility problems. If this service is stopped, PCA will not function properly.",
+    "Name": "PcaSvc",
+    "SddlName": "S-1-5-80-1948712186-1330865447-943413596-1669284603-1648638051",
+    "Sid": "S-1-5-80-1948712186-1330865447-943413596-1669284603-1648638051"
+  },
+  {
+    "DisplayName": "BranchCache",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service caches network content from peers on the local subnet.",
+    "Name": "PeerDistSvc",
+    "SddlName": "S-1-5-80-3124040864-3101396827-3094488734-3028845762-1939139329",
+    "Sid": "S-1-5-80-3124040864-3101396827-3094488734-3028845762-1939139329"
+  },
+  {
+    "DisplayName": "Windows Perception Simulation Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables spatial perception simulation, virtual camera management and spatial input simulation.",
+    "Name": "perceptionsimulation",
+    "SddlName": "S-1-5-80-4215928932-1248355774-1205732377-1093571376-2379325634",
+    "Sid": "S-1-5-80-4215928932-1248355774-1205732377-1093571376-2379325634"
+  },
+  {
+    "DisplayName": "Performance Counter DLL Host",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables remote users and 64-bit processes to query performance counters provided by 32-bit DLLs. If this service is stopped, only local users and 32-bit processes will be able to query performance counters provided by 32-bit DLLs.",
+    "Name": "PerfHost",
+    "SddlName": "S-1-5-80-3596911058-2952229928-1888671852-1743692427-614402820",
+    "Sid": "S-1-5-80-3596911058-2952229928-1888671852-1743692427-614402820"
+  },
+  {
+    "DisplayName": "Phone Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages the telephony state on the device",
+    "Name": "PhoneSvc",
+    "SddlName": "S-1-5-80-2636612206-2079418197-1004231589-1812192203-4197254245",
+    "Sid": "S-1-5-80-2636612206-2079418197-1004231589-1812192203-4197254245"
+  },
+  {
+    "DisplayName": "Performance Logs & Alerts",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Performance Logs and Alerts Collects performance data from local or remote computers based on preconfigured schedule parameters, then writes the data to a log or triggers an alert. If this service is stopped, performance information will not be collected. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "pla",
+    "SddlName": "S-1-5-80-2661322625-712705077-2999183737-3043590567-590698655",
+    "Sid": "S-1-5-80-2661322625-712705077-2999183737-3043590567-590698655"
+  },
+  {
+    "DisplayName": "Plug and Play",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables a computer to recognize and adapt to hardware changes with little or no user input. Stopping or disabling this service will result in system instability.",
+    "Name": "PlugPlay",
+    "SddlName": "S-1-5-80-1981970923-922788642-3535304421-2999920573-318732269",
+    "Sid": "S-1-5-80-1981970923-922788642-3535304421-2999920573-318732269"
+  },
+  {
+    "DisplayName": "IPsec Policy Agent",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Internet Protocol security (IPsec) supports network-level peer authentication, data origin authentication, data integrity, data confidentiality (encryption), and replay protection.  This service enforces IPsec policies created through the IP Security Policies snap-in or the command-line tool \"netsh ipsec\".  If you stop this service, you may experience network connectivity issues if your policy requires that connections use IPsec.  Also,remote management of Windows Defender Firewall is not available when this service is stopped.",
+    "Name": "PolicyAgent",
+    "SddlName": "S-1-5-80-3044542841-3639452079-4096941652-1606687743-1256249853",
+    "Sid": "S-1-5-80-3044542841-3639452079-4096941652-1606687743-1256249853"
+  },
+  {
+    "DisplayName": "Power",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages power policy and power policy notification delivery.",
+    "Name": "Power",
+    "SddlName": "S-1-5-80-2343416411-2961288913-598565901-392633850-2111459193",
+    "Sid": "S-1-5-80-2343416411-2961288913-598565901-392633850-2111459193"
+  },
+  {
+    "DisplayName": "Print Device Configuration Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Print Device Configuration Service manages the installation of IPP and UP printers. If this service is stopped, any printer installations that are in-progress may be canceled.",
+    "Name": "PrintDeviceConfigurationService",
+    "SddlName": "S-1-5-80-1731509570-144043191-2315882053-2922809193-107932000",
+    "Sid": "S-1-5-80-1731509570-144043191-2315882053-2922809193-107932000"
+  },
+  {
+    "DisplayName": "Printer Extensions and Notifications",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service opens custom printer dialog boxes and handles notifications from a remote print server or a printer. If you turn off this service, you wonâ€™t be able to see printer extensions or notifications.",
+    "Name": "PrintNotify",
+    "SddlName": "S-1-5-80-1250897762-2760119941-576021590-2872322938-624617480",
+    "Sid": "S-1-5-80-1250897762-2760119941-576021590-2872322938-624617480"
+  },
+  {
+    "DisplayName": "PrintScanBrokerService",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides support for secure privileged operations needed by low priv spooler.",
+    "Name": "PrintScanBrokerService",
+    "SddlName": "S-1-5-80-270032205-1613087894-155073033-530763271-3507396063",
+    "Sid": "S-1-5-80-270032205-1613087894-155073033-530763271-3507396063"
+  },
+  {
+    "DisplayName": "User Profile Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service is responsible for loading and unloading user profiles. If this service is stopped or disabled, users will no longer be able to successfully sign in or sign out, apps might have problems getting to users' data, and components registered to receive profile event notifications won't receive them.",
+    "Name": "ProfSvc",
+    "SddlName": "S-1-5-80-3816717743-33564931-1112267079-3548917561-928358339",
+    "Sid": "S-1-5-80-3816717743-33564931-1112267079-3548917561-928358339"
+  },
+  {
+    "DisplayName": "Windows PushToInstall Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for the Microsoft Store.  This service is started automatically and if disabled then remote installations will not function properly.",
+    "Name": "PushToInstall",
+    "SddlName": "S-1-5-80-2949785411-1458004381-4011503523-1439849274-3428788682",
+    "Sid": "S-1-5-80-2949785411-1458004381-4011503523-1439849274-3428788682"
+  },
+  {
+    "DisplayName": "Quality Windows Audio Video Experience",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Quality Windows Audio Video Experience (qWave) is a networking platform for Audio Video (AV) streaming applications on IP home networks. qWave enhances AV streaming performance and reliability by ensuring network quality-of-service (QoS) for AV applications. It provides mechanisms for admission control, run time monitoring and enforcement, application feedback, and traffic prioritization.",
+    "Name": "QWAVE",
+    "SddlName": "S-1-5-80-1659118645-3148100556-861291880-3953320898-4045657812",
+    "Sid": "S-1-5-80-1659118645-3148100556-861291880-3953320898-4045657812"
+  },
+  {
+    "DisplayName": "Remote Access Auto Connection Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Creates a connection to a remote network whenever a program references a remote DNS or NetBIOS name or address.",
+    "Name": "RasAuto",
+    "SddlName": "S-1-5-80-1802467488-1541022566-2033325545-854566965-652742428",
+    "Sid": "S-1-5-80-1802467488-1541022566-2033325545-854566965-652742428"
+  },
+  {
+    "DisplayName": "Remote Access Connection Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages dial-up and virtual private network (VPN) connections from this computer to the Internet or other remote networks. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "RasMan",
+    "SddlName": "S-1-5-80-4176366874-305252471-2256717057-2714189771-3552532790",
+    "Sid": "S-1-5-80-4176366874-305252471-2256717057-2714189771-3552532790"
+  },
+  {
+    "DisplayName": "RdAgent",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": null,
+    "Name": "RdAgent",
+    "SddlName": "S-1-5-80-3026366886-1471802612-2052337812-253613265-195142103",
+    "Sid": "S-1-5-80-3026366886-1471802612-2052337812-253613265-195142103"
+  },
+  {
+    "DisplayName": "ReFS Dedup Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "ReFS data deduplication and compression service to track file changes and run scheduled optimization jobs.",
+    "Name": "refsdedupsvc",
+    "SddlName": "S-1-5-80-1666611137-476942365-42367729-3433453966-185531669",
+    "Sid": "S-1-5-80-1666611137-476942365-42367729-3433453966-185531669"
+  },
+  {
+    "DisplayName": "Routing and Remote Access",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Offers routing services to businesses in local area and wide area network environments.",
+    "Name": "RemoteAccess",
+    "SddlName": "S-1-5-80-1954729425-4294152082-187165618-318331177-3831297489",
+    "Sid": "S-1-5-80-1954729425-4294152082-187165618-318331177-3831297489"
+  },
+  {
+    "DisplayName": "Remote Registry",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables remote users to modify registry settings on this computer. If this service is stopped, the registry can be modified only by users on this computer. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "RemoteRegistry",
+    "SddlName": "S-1-5-80-2822507136-3601578665-1013168651-121944544-1825232178",
+    "Sid": "S-1-5-80-2822507136-3601578665-1013168651-121944544-1825232178"
+  },
+  {
+    "DisplayName": "Retail Demo Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Retail Demo service controls device activity while the device is in retail demo mode.",
+    "Name": "RetailDemo",
+    "SddlName": "S-1-5-80-457603595-166122335-4119162879-888033224-3685571132",
+    "Sid": "S-1-5-80-457603595-166122335-4119162879-888033224-3685571132"
+  },
+  {
+    "DisplayName": "Radio Management Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Radio Management and Airplane Mode Service",
+    "Name": "RmSvc",
+    "SddlName": "S-1-5-80-3765985997-1043742756-2756022526-3497566756-2081646175",
+    "Sid": "S-1-5-80-3765985997-1043742756-2756022526-3497566756-2081646175"
+  },
+  {
+    "DisplayName": "Remote Packet Capture Protocol v.0 (experimental)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows to capture traffic on this machine from a remote machine.",
+    "Name": "rpcapd",
+    "SddlName": "S-1-5-80-101050168-3297899073-3189151850-3440475463-1500491256",
+    "Sid": "S-1-5-80-101050168-3297899073-3189151850-3440475463-1500491256"
+  },
+  {
+    "DisplayName": "RPC Endpoint Mapper",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Resolves RPC interfaces identifiers to transport endpoints. If this service is stopped or disabled, programs using Remote Procedure Call (RPC) services will not function properly.",
+    "Name": "RpcEptMapper",
+    "SddlName": "S-1-5-80-521322694-906040134-3864710659-1525148216-3451224162",
+    "Sid": "S-1-5-80-521322694-906040134-3864710659-1525148216-3451224162"
+  },
+  {
+    "DisplayName": "Remote Procedure Call (RPC) Locator",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "In Windows 2003 and earlier versions of Windows, the Remote Procedure Call (RPC) Locator service manages the RPC name service database. In Windows Vista and later versions of Windows, this service does not provide any functionality and is present for application compatibility.",
+    "Name": "RpcLocator",
+    "SddlName": "S-1-5-80-4056015446-1496461683-1723632270-3351149576-1119802320",
+    "Sid": "S-1-5-80-4056015446-1496461683-1723632270-3351149576-1119802320"
+  },
+  {
+    "DisplayName": "Remote Procedure Call (RPC)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The RPCSS service is the Service Control Manager for COM and DCOM servers. It performs object activations requests, object exporter resolutions and distributed garbage collection for COM and DCOM servers. If this service is stopped or disabled, programs using COM or DCOM will not function properly. It is strongly recommended that you have the RPCSS service running.",
+    "Name": "RpcSs",
+    "SddlName": "S-1-5-80-979556362-403687129-3954533659-2335141334-1547273080",
+    "Sid": "S-1-5-80-979556362-403687129-3954533659-2335141334-1547273080"
+  },
+  {
+    "DisplayName": "Special Administration Console Helper",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows administrators to remotely access a command prompt using Emergency Management Services.",
+    "Name": "sacsvr",
+    "SddlName": "S-1-5-80-3041771755-2235917685-2465578085-1516391248-364017017",
+    "Sid": "S-1-5-80-3041771755-2235917685-2465578085-1516391248-364017017"
+  },
+  {
+    "DisplayName": "Security Accounts Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The startup of this service signals other services that the Security Accounts Manager (SAM) is ready to accept requests.  Disabling this service will prevent other services in the system from being notified when the SAM is ready, which may in turn cause those services to fail to start correctly. This service should not be disabled.",
+    "Name": "SamSs",
+    "SddlName": "S-1-5-80-3453257571-682267348-3447719424-2810041157-893746920",
+    "Sid": "S-1-5-80-3453257571-682267348-3447719424-2810041157-893746920"
+  },
+  {
+    "DisplayName": "Smart Card",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages access to smart cards read by this computer. If this service is stopped, this computer will be unable to read smart cards. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "SCardSvr",
+    "SddlName": "S-1-5-80-1209419826-1829913269-3824447628-1153237837-3789837839",
+    "Sid": "S-1-5-80-1209419826-1829913269-3824447628-1153237837-3789837839"
+  },
+  {
+    "DisplayName": "Smart Card Device Enumeration Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Creates software device nodes for all smart card readers accessible to a given session. If this service is disabled, WinRT APIs will not be able to enumerate smart card readers.",
+    "Name": "ScDeviceEnum",
+    "SddlName": "S-1-5-80-3993802144-2555107232-3516638766-2735499450-3275915967",
+    "Sid": "S-1-5-80-3993802144-2555107232-3516638766-2735499450-3275915967"
+  },
+  {
+    "DisplayName": "Task Scheduler",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables a user to configure and schedule automated tasks on this computer. The service also hosts multiple Windows system-critical tasks. If this service is stopped or disabled, these tasks will not be run at their scheduled times. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "Schedule",
+    "SddlName": "S-1-5-80-4125092361-1567024937-842823819-2091237918-836075745",
+    "Sid": "S-1-5-80-4125092361-1567024937-842823819-2091237918-836075745"
+  },
+  {
+    "DisplayName": "Smart Card Removal Policy",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows the system to be configured to lock the user desktop upon smart card removal.",
+    "Name": "SCPolicySvc",
+    "SddlName": "S-1-5-80-1691538513-4084330536-1620899472-1113280783-3554754292",
+    "Sid": "S-1-5-80-1691538513-4084330536-1620899472-1113280783-3554754292"
+  },
+  {
+    "DisplayName": "Windows Backup",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides Windows Backup and Restore capabilities.",
+    "Name": "SDRSVC",
+    "SddlName": "S-1-5-80-2983134835-1185273323-1712700529-1489848661-2325612824",
+    "Sid": "S-1-5-80-2983134835-1185273323-1712700529-1489848661-2325612824"
+  },
+  {
+    "DisplayName": "Secondary Logon",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables starting processes under alternate credentials. If this service is stopped, this type of logon access will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "seclogon",
+    "SddlName": "S-1-5-80-1399994486-219206332-302438500-304602034-1537790326",
+    "Sid": "S-1-5-80-1399994486-219206332-302438500-304602034-1537790326"
+  },
+  {
+    "DisplayName": "Windows Security Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows Security Service handles unified device protection and health information",
+    "Name": "SecurityHealthService",
+    "SddlName": "S-1-5-80-259296475-4084429506-1152984619-38739575-565535606",
+    "Sid": "S-1-5-80-259296475-4084429506-1152984619-38739575-565535606"
+  },
+  {
+    "DisplayName": "Payments and NFC/SE Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages payments and Near Field Communication (NFC) based secure elements.",
+    "Name": "SEMgrSvc",
+    "SddlName": "S-1-5-80-2226967063-754826275-1661302337-2802353169-2369347280",
+    "Sid": "S-1-5-80-2226967063-754826275-1661302337-2802353169-2369347280"
+  },
+  {
+    "DisplayName": "System Event Notification Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Monitors system events and notifies subscribers to COM+ Event System of these events.",
+    "Name": "SENS",
+    "SddlName": "S-1-5-80-4259241309-1822918763-1176128033-1339750638-3428293995",
+    "Sid": "S-1-5-80-4259241309-1822918763-1176128033-1339750638-3428293995"
+  },
+  {
+    "DisplayName": "Windows Defender Advanced Threat Protection Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows Defender Advanced Threat Protection service helps protect against advanced threats by monitoring and reporting security events that happen on the computer.",
+    "Name": "Sense",
+    "SddlName": "S-1-5-80-1523878533-411328482-2798077809-3098663872-2604013308",
+    "Sid": "S-1-5-80-1523878533-411328482-2798077809-3098663872-2604013308"
+  },
+  {
+    "DisplayName": "Sensor Data Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Delivers data from a variety of sensors",
+    "Name": "SensorDataService",
+    "SddlName": "S-1-5-80-3835358604-2805616403-1686431098-2148037164-3679743528",
+    "Sid": "S-1-5-80-3835358604-2805616403-1686431098-2148037164-3679743528"
+  },
+  {
+    "DisplayName": "Sensor Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "A service for sensors that manages different sensors' functionality. Manages Simple Device Orientation (SDO) and History for sensors. Loads the SDO sensor that reports device orientation changes.  If this service is stopped or disabled, the SDO sensor will not be loaded and so auto-rotation will not occur. History collection from Sensors will also be stopped.",
+    "Name": "SensorService",
+    "SddlName": "S-1-5-80-869152694-422618349-3448047118-1397179936-2828741493",
+    "Sid": "S-1-5-80-869152694-422618349-3448047118-1397179936-2828741493"
+  },
+  {
+    "DisplayName": "Sensor Monitoring Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Monitors various sensors in order to expose data and adapt to system and user state.  If this service is stopped or disabled, the display brightness will not adapt to lighting conditions. Stopping this service may affect other system functionality and features as well.",
+    "Name": "SensrSvc",
+    "SddlName": "S-1-5-80-3168472476-176724102-2968832672-2340942973-2241613192",
+    "Sid": "S-1-5-80-3168472476-176724102-2968832672-2340942973-2241613192"
+  },
+  {
+    "DisplayName": "Remote Desktop Configuration",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Remote Desktop Configuration service (RDCS) is responsible for all Remote Desktop Services and Remote Desktop related configuration and session maintenance activities that require SYSTEM context. These include per-session temporary folders, RD themes, and RD certificates.",
+    "Name": "SessionEnv",
+    "SddlName": "S-1-5-80-4022436659-1090538466-1613889075-870485073-3428993833",
+    "Sid": "S-1-5-80-4022436659-1090538466-1613889075-870485073-3428993833"
+  },
+  {
+    "DisplayName": "System Guard Runtime Monitor Broker",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Monitors and attests to the integrity of the Windows platform.",
+    "Name": "SgrmBroker",
+    "SddlName": "S-1-5-80-3706850399-3459138796-2835936764-562029542-397710147",
+    "Sid": "S-1-5-80-3706850399-3459138796-2835936764-562029542-397710147"
+  },
+  {
+    "DisplayName": "Internet Connection Sharing (ICS)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides network address translation, addressing, name resolution and/or intrusion prevention services for a home or small office network.",
+    "Name": "SharedAccess",
+    "SddlName": "S-1-5-80-2009329905-444645132-2728249442-922493431-93864177",
+    "Sid": "S-1-5-80-2009329905-444645132-2728249442-922493431-93864177"
+  },
+  {
+    "DisplayName": "Shell Hardware Detection",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides notifications for AutoPlay hardware events.",
+    "Name": "ShellHWDetection",
+    "SddlName": "S-1-5-80-1690854464-3758363787-3981977099-3843555589-1401248062",
+    "Sid": "S-1-5-80-1690854464-3758363787-3981977099-3843555589-1401248062"
+  },
+  {
+    "DisplayName": "Shared PC Account Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages profiles and accounts on a SharedPC configured device",
+    "Name": "shpamsvc",
+    "SddlName": "S-1-5-80-4106268995-3617844033-680706512-3896918354-2380077472",
+    "Sid": "S-1-5-80-4106268995-3617844033-680706512-3896918354-2380077472"
+  },
+  {
+    "DisplayName": "Microsoft Storage Spaces SMP",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Host service for the Microsoft Storage Spaces management provider. If this service is stopped or disabled, Storage Spaces cannot be managed.",
+    "Name": "smphost",
+    "SddlName": "S-1-5-80-230328282-2568015442-686465752-3474446193-2137307224",
+    "Sid": "S-1-5-80-230328282-2568015442-686465752-3474446193-2137307224"
+  },
+  {
+    "DisplayName": "Microsoft Windows SMS Router Service.",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Routes messages based on rules to appropriate clients.",
+    "Name": "SmsRouter",
+    "SddlName": "S-1-5-80-2950457502-2299174248-3328245479-1326271200-3113355612",
+    "Sid": "S-1-5-80-2950457502-2299174248-3328245479-1326271200-3113355612"
+  },
+  {
+    "DisplayName": "SNMP Trap",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Receives trap messages generated by local or remote Simple Network Management Protocol (SNMP) agents and forwards the messages to SNMP management programs running on this computer. If this service is stopped, SNMP-based programs on this computer will not receive SNMP trap messages. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "SNMPTrap",
+    "SddlName": "S-1-5-80-3964583643-2633443559-2834438935-3739664028-1580655619",
+    "Sid": "S-1-5-80-3964583643-2633443559-2834438935-3739664028-1580655619"
+  },
+  {
+    "DisplayName": "Print Spooler",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service spools print jobs and handles interaction with the printer.  If you turn off this service, you won't be able to print or see your printers.",
+    "Name": "Spooler",
+    "SddlName": "S-1-5-80-3951239711-1671533544-1416304335-3763227691-3930497994",
+    "Sid": "S-1-5-80-3951239711-1671533544-1416304335-3763227691-3930497994"
+  },
+  {
+    "DisplayName": "Software Protection",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables the download, installation and enforcement of digital licenses for Windows and Windows applications. If the service is disabled, the operating system and licensed applications may run in a notification mode. It is strongly recommended that you not disable the Software Protection service.",
+    "Name": "sppsvc",
+    "SddlName": "S-1-5-80-123231216-2592883651-3715271367-3753151631-4175906628",
+    "Sid": "S-1-5-80-123231216-2592883651-3715271367-3753151631-4175906628"
+  },
+  {
+    "DisplayName": "SQL Server VSS Writer",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides the interface to backup/restore Microsoft SQL server through the Windows VSS infrastructure.",
+    "Name": "SQLWriter",
+    "SddlName": "S-1-5-80-1402415987-66678372-3059512406-1823130485-2345841878",
+    "Sid": "S-1-5-80-1402415987-66678372-3059512406-1823130485-2345841878"
+  },
+  {
+    "DisplayName": "SSDP Discovery",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Discovers networked devices and services that use the SSDP discovery protocol, such as UPnP devices. Also announces SSDP devices and services running on the local computer. If this service is stopped, SSDP-based devices will not be discovered. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "SSDPSRV",
+    "SddlName": "S-1-5-80-486568272-975562994-1883531608-2732234258-332540751",
+    "Sid": "S-1-5-80-486568272-975562994-1883531608-2732234258-332540751"
+  },
+  {
+    "DisplayName": "OpenSSH Authentication Agent",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Agent to hold private keys used for public key authentication.",
+    "Name": "ssh-agent",
+    "SddlName": "S-1-5-80-2277354432-2697620045-1656008878-1855416240-261295475",
+    "Sid": "S-1-5-80-2277354432-2697620045-1656008878-1855416240-261295475"
+  },
+  {
+    "DisplayName": "OpenSSH SSH Server",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "SSH protocol based service to provide secure encrypted communications between two untrusted hosts over an insecure network.",
+    "Name": "sshd",
+    "SddlName": "S-1-5-80-3847866527-469524349-687026318-516638107-1125189541",
+    "Sid": "S-1-5-80-3847866527-469524349-687026318-516638107-1125189541"
+  },
+  {
+    "DisplayName": "Secure Socket Tunneling Protocol Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides support for the Secure Socket Tunneling Protocol (SSTP) to connect to remote computers using VPN. If this service is disabled, users will not be able to use SSTP to access remote servers.",
+    "Name": "SstpSvc",
+    "SddlName": "S-1-5-80-3435701886-799518250-3791383489-3228296122-2938884314",
+    "Sid": "S-1-5-80-3435701886-799518250-3791383489-3228296122-2938884314"
+  },
+  {
+    "DisplayName": "State Repository Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides required infrastructure support for the application model.",
+    "Name": "StateRepository",
+    "SddlName": "S-1-5-80-4118144674-975173503-976751360-2062754009-4288402176",
+    "Sid": "S-1-5-80-4118144674-975173503-976751360-2062754009-4288402176"
+  },
+  {
+    "DisplayName": "Windows Image Acquisition (WIA)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides image acquisition services for scanners and cameras",
+    "Name": "StiSvc",
+    "SddlName": "S-1-5-80-3182985763-1431228038-2757062859-428472846-3914011746",
+    "Sid": "S-1-5-80-3182985763-1431228038-2757062859-428472846-3914011746"
+  },
+  {
+    "DisplayName": "Storage Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides enabling services for storage settings and external storage expansion",
+    "Name": "StorSvc",
+    "SddlName": "S-1-5-80-3355894222-2288616474-3163838539-1515771758-43395969",
+    "Sid": "S-1-5-80-3355894222-2288616474-3163838539-1515771758-43395969"
+  },
+  {
+    "DisplayName": "Spot Verifier",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Verifies potential file system corruptions.",
+    "Name": "svsvc",
+    "SddlName": "S-1-5-80-2483706823-3321877870-553300257-593996131-450212729",
+    "Sid": "S-1-5-80-2483706823-3321877870-553300257-593996131-450212729"
+  },
+  {
+    "DisplayName": "Microsoft Software Shadow Copy Provider",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages software-based volume shadow copies taken by the Volume Shadow Copy service. If this service is stopped, software-based volume shadow copies cannot be managed. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "swprv",
+    "SddlName": "S-1-5-80-1614360071-3471039648-1078047007-3707138327-1664821506",
+    "Sid": "S-1-5-80-1614360071-3471039648-1078047007-3707138327-1664821506"
+  },
+  {
+    "DisplayName": "SysMain",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Maintains and improves system performance over time.",
+    "Name": "SysMain",
+    "SddlName": "S-1-5-80-2590341223-3996088049-3993122417-23640849-324535191",
+    "Sid": "S-1-5-80-2590341223-3996088049-3993122417-23640849-324535191"
+  },
+  {
+    "DisplayName": "System Events Broker",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Coordinates execution of background work for WinRT application. If this service is stopped or disabled, then background work might not be triggered.",
+    "Name": "SystemEventsBroker",
+    "SddlName": "S-1-5-80-1662832393-3268938575-4001313665-1200257238-783911988",
+    "Sid": "S-1-5-80-1662832393-3268938575-4001313665-1200257238-783911988"
+  },
+  {
+    "DisplayName": "Telephony",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides Telephony API (TAPI) support for programs that control telephony devices on the local computer and, through the LAN, on servers that are also running the service.",
+    "Name": "TapiSrv",
+    "SddlName": "S-1-5-80-4230913304-2206818457-801678004-120036174-1892434133",
+    "Sid": "S-1-5-80-4230913304-2206818457-801678004-120036174-1892434133"
+  },
+  {
+    "DisplayName": "Remote Desktop Services",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows users to connect interactively to a remote computer. Remote Desktop and Remote Desktop Session Host Server depend on this service.  To prevent remote use of this computer, clear the checkboxes on the Remote tab of the System properties control panel item.",
+    "Name": "TermService",
+    "SddlName": "S-1-5-80-446051430-1559341753-4161941529-1950928533-810483104",
+    "Sid": "S-1-5-80-446051430-1559341753-4161941529-1950928533-810483104"
+  },
+  {
+    "DisplayName": "Text Input Management Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables text input, expressive input, touch keyboard, handwriting, and IMEs.",
+    "Name": "TextInputManagementService",
+    "SddlName": "S-1-5-80-1569767499-1044542396-1260780493-218930462-4138269783",
+    "Sid": "S-1-5-80-1569767499-1044542396-1260780493-218930462-4138269783"
+  },
+  {
+    "DisplayName": "Themes",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides user experience theme management.",
+    "Name": "Themes",
+    "SddlName": "S-1-5-80-1189432293-2777010110-2640223427-1344437502-1956879817",
+    "Sid": "S-1-5-80-1189432293-2777010110-2640223427-1344437502-1956879817"
+  },
+  {
+    "DisplayName": "Storage Tiers Management",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Optimizes the placement of data in storage tiers on all tiered storage spaces in the system.",
+    "Name": "TieringEngineService",
+    "SddlName": "S-1-5-80-427241336-4111990062-2791250970-2845566439-1217505164",
+    "Sid": "S-1-5-80-427241336-4111990062-2791250970-2845566439-1217505164"
+  },
+  {
+    "DisplayName": "Time Broker",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Coordinates execution of background work for WinRT application. If this service is stopped or disabled, then background work might not be triggered.",
+    "Name": "TimeBrokerSvc",
+    "SddlName": "S-1-5-80-410965207-2550896871-1717734767-2321332215-3755966139",
+    "Sid": "S-1-5-80-410965207-2550896871-1717734767-2321332215-3755966139"
+  },
+  {
+    "DisplayName": "Web Account Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service is used by Web Account Manager to provide single-sign-on to apps and services.",
+    "Name": "TokenBroker",
+    "SddlName": "S-1-5-80-4077216321-3151206942-641340059-4241647091-1300899357",
+    "Sid": "S-1-5-80-4077216321-3151206942-641340059-4241647091-1300899357"
+  },
+  {
+    "DisplayName": "Distributed Link Tracking Client",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Maintains links between NTFS files within a computer or across computers in a network.",
+    "Name": "TrkWks",
+    "SddlName": "S-1-5-80-768763963-4214222998-2156221936-2953597973-713500239",
+    "Sid": "S-1-5-80-768763963-4214222998-2156221936-2953597973-713500239"
+  },
+  {
+    "DisplayName": "Recommended Troubleshooting Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables automatic mitigation for known problems by applying recommended troubleshooting. If stopped, your device will not get recommended troubleshooting for problems on your device.",
+    "Name": "TroubleshootingSvc",
+    "SddlName": "S-1-5-80-1139522462-2689595747-457373284-4037083511-4201549542",
+    "Sid": "S-1-5-80-1139522462-2689595747-457373284-4037083511-4201549542"
+  },
+  {
+    "DisplayName": "Windows Modules Installer",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables installation, modification, and removal of Windows updates and optional components. If this service is disabled, install or uninstall of Windows updates might fail for this computer.",
+    "Name": "TrustedInstaller",
+    "SddlName": "S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464",
+    "Sid": "S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464"
+  },
+  {
+    "DisplayName": "Auto Time Zone Updater",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Automatically sets the system time zone.",
+    "Name": "tzautoupdate",
+    "SddlName": "S-1-5-80-3641914668-2724251012-1186334157-2460844255-322272688",
+    "Sid": "S-1-5-80-3641914668-2724251012-1186334157-2460844255-322272688"
+  },
+  {
+    "DisplayName": "User Experience Virtualization Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides support for application and OS settings roaming",
+    "Name": "UevAgentService",
+    "SddlName": "S-1-5-80-1639943639-1314739636-372181295-777240325-3530900257",
+    "Sid": "S-1-5-80-1639943639-1314739636-372181295-777240325-3530900257"
+  },
+  {
+    "DisplayName": "Remote Desktop Services UserMode Port Redirector",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows the redirection of Printers/Drives/Ports for RDP connections",
+    "Name": "UmRdpService",
+    "SddlName": "S-1-5-80-2014626298-1656748749-3847481816-918933055-2469338456",
+    "Sid": "S-1-5-80-2014626298-1656748749-3847481816-918933055-2469338456"
+  },
+  {
+    "DisplayName": "UPnP Device Host",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows UPnP devices to be hosted on this computer. If this service is stopped, any hosted UPnP devices will stop functioning and no additional hosted devices can be added. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "upnphost",
+    "SddlName": "S-1-5-80-448846144-1414373772-1578130625-718576682-2306699751",
+    "Sid": "S-1-5-80-448846144-1414373772-1578130625-718576682-2306699751"
+  },
+  {
+    "DisplayName": "User Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "User Manager provides the runtime components required for multi-user interaction.  If this service is stopped, some applications may not operate correctly.",
+    "Name": "UserManager",
+    "SddlName": "S-1-5-80-2008603874-3981339663-2468433650-2111681540-3858834245",
+    "Sid": "S-1-5-80-2008603874-3981339663-2468433650-2111681540-3858834245"
+  },
+  {
+    "DisplayName": "Update Orchestrator Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages Windows Updates. If stopped, your devices will not be able to download and install the latest updates.",
+    "Name": "UsoSvc",
+    "SddlName": "S-1-5-80-223807737-1693445485-119162242-1977420160-1403034029",
+    "Sid": "S-1-5-80-223807737-1693445485-119162242-1977420160-1403034029"
+  },
+  {
+    "DisplayName": "Credential Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides secure storage and retrieval of credentials to users, applications and security service packages.",
+    "Name": "VaultSvc",
+    "SddlName": "S-1-5-80-2901324718-895851292-2096622302-170690027-1637913602",
+    "Sid": "S-1-5-80-2901324718-895851292-2096622302-170690027-1637913602"
+  },
+  {
+    "DisplayName": "Virtual Disk",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides management services for disks, volumes, file systems, and storage arrays.",
+    "Name": "vds",
+    "SddlName": "S-1-5-80-2196396108-1448510645-203779624-3888580976-3789157697",
+    "Sid": "S-1-5-80-2196396108-1448510645-203779624-3888580976-3789157697"
+  },
+  {
+    "DisplayName": "Hyper-V Guest Service Interface",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides an interface for the Hyper-V host to interact with specific services running inside the virtual machine.",
+    "Name": "vmicguestinterface",
+    "SddlName": "S-1-5-80-3074984378-4122987768-2130325677-2031866499-3405430279",
+    "Sid": "S-1-5-80-3074984378-4122987768-2130325677-2031866499-3405430279"
+  },
+  {
+    "DisplayName": "Hyper-V Heartbeat Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Monitors the state of this virtual machine by reporting a heartbeat at regular intervals. This service helps you identify running virtual machines that have stopped responding.",
+    "Name": "vmicheartbeat",
+    "SddlName": "S-1-5-80-534935901-3437432317-481271085-1710633381-983106267",
+    "Sid": "S-1-5-80-534935901-3437432317-481271085-1710633381-983106267"
+  },
+  {
+    "DisplayName": "Hyper-V Data Exchange Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides a mechanism to exchange data between the virtual machine and the operating system running on the physical computer.",
+    "Name": "vmickvpexchange",
+    "SddlName": "S-1-5-80-1877308096-3090306141-3032871208-3115266146-1400827410",
+    "Sid": "S-1-5-80-1877308096-3090306141-3032871208-3115266146-1400827410"
+  },
+  {
+    "DisplayName": "Hyper-V Remote Desktop Virtualization Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides a platform for communication between the virtual machine and the operating system running on the physical computer.",
+    "Name": "vmicrdv",
+    "SddlName": "S-1-5-80-3076811988-2254870394-2658297454-3934945422-2393138642",
+    "Sid": "S-1-5-80-3076811988-2254870394-2658297454-3934945422-2393138642"
+  },
+  {
+    "DisplayName": "Hyper-V Guest Shutdown Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides a mechanism to shut down the operating system of this virtual machine from the management interfaces on the physical computer.",
+    "Name": "vmicshutdown",
+    "SddlName": "S-1-5-80-3110303136-3426481729-3186938678-1087894076-2178433439",
+    "Sid": "S-1-5-80-3110303136-3426481729-3186938678-1087894076-2178433439"
+  },
+  {
+    "DisplayName": "Hyper-V Time Synchronization Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Synchronizes the system time of this virtual machine with the system time of the physical computer.",
+    "Name": "vmictimesync",
+    "SddlName": "S-1-5-80-3098585136-2538892366-1097114017-2832417424-2016953023",
+    "Sid": "S-1-5-80-3098585136-2538892366-1097114017-2832417424-2016953023"
+  },
+  {
+    "DisplayName": "Hyper-V PowerShell Direct Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides a mechanism to manage virtual machine with PowerShell via VM session without a virtual network.",
+    "Name": "vmicvmsession",
+    "SddlName": "S-1-5-80-235582178-102246843-358262472-4132936818-1867412993",
+    "Sid": "S-1-5-80-235582178-102246843-358262472-4132936818-1867412993"
+  },
+  {
+    "DisplayName": "Hyper-V Volume Shadow Copy Requestor",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Coordinates the communications that are required to use Volume Shadow Copy Service to back up applications and data on this virtual machine from the operating system on the physical computer.",
+    "Name": "vmicvss",
+    "SddlName": "S-1-5-80-1752088424-1054500994-3489791022-3310831482-3926524968",
+    "Sid": "S-1-5-80-1752088424-1054500994-3489791022-3310831482-3926524968"
+  },
+  {
+    "DisplayName": "Visual Studio Installer Elevation Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service is responsible for elevating the Visual Studio Installer.",
+    "Name": "VSInstallerElevationService",
+    "SddlName": "S-1-5-80-903006128-524678433-1829772112-3730150277-932180176",
+    "Sid": "S-1-5-80-903006128-524678433-1829772112-3730150277-932180176"
+  },
+  {
+    "DisplayName": "Volume Shadow Copy",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages and implements Volume Shadow Copies used for backup and other purposes. If this service is stopped, shadow copies will be unavailable for backup and the backup may fail. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "VSS",
+    "SddlName": "S-1-5-80-3195062495-2862850656-3724129271-1847284719-4038691091",
+    "Sid": "S-1-5-80-3195062495-2862850656-3724129271-1847284719-4038691091"
+  },
+  {
+    "DisplayName": "Visual Studio Standard Collector Service 150",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Visual Studio Data Collection Service. When running, this service collects real-time ETW events and processes them.",
+    "Name": "VSStandardCollectorService150",
+    "SddlName": "S-1-5-80-1571810350-2985918031-3130140512-66778194-2070191363",
+    "Sid": "S-1-5-80-1571810350-2985918031-3130140512-66778194-2070191363"
+  },
+  {
+    "DisplayName": "Windows Time",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Maintains date and time synchronization on all clients and servers in the network. If this service is stopped, date and time synchronization will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "W32Time",
+    "SddlName": "S-1-5-80-4267341169-2882910712-659946508-2704364837-2204554466",
+    "Sid": "S-1-5-80-4267341169-2882910712-659946508-2704364837-2204554466"
+  },
+  {
+    "DisplayName": "W3C Logging Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides W3C logging for Internet Information Services (IIS). If this service is stopped, W3C logging configured by IIS will not work.",
+    "Name": "w3logsvc",
+    "SddlName": "S-1-5-80-2220703377-1442249992-1434007903-1670459581-3694757191",
+    "Sid": "S-1-5-80-2220703377-1442249992-1434007903-1670459581-3694757191"
+  },
+  {
+    "DisplayName": "World Wide Web Publishing Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides Web connectivity and administration through the Internet Information Services Manager",
+    "Name": "W3SVC",
+    "SddlName": "S-1-5-80-989796750-4090848350-2040919084-978865222-2182970707",
+    "Sid": "S-1-5-80-989796750-4090848350-2040919084-978865222-2182970707"
+  },
+  {
+    "DisplayName": "WaaSMedicSvc",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": null,
+    "Name": "WaaSMedicSvc",
+    "SddlName": "S-1-5-80-2169053098-454685327-3448947123-3791923320-414336915",
+    "Sid": "S-1-5-80-2169053098-454685327-3448947123-3791923320-414336915"
+  },
+  {
+    "DisplayName": "WalletService",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Hosts objects used by clients of the wallet",
+    "Name": "WalletService",
+    "SddlName": "S-1-5-80-1874328037-1620432936-4113708365-722077214-3851787529",
+    "Sid": "S-1-5-80-1874328037-1620432936-4113708365-722077214-3851787529"
+  },
+  {
+    "DisplayName": "Warp JIT Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables JIT compilation support in d3d10warp.dll for processes in which code generation is disabled.",
+    "Name": "WarpJITSvc",
+    "SddlName": "S-1-5-80-2145785123-2886438689-3072542501-3020378507-1504386134",
+    "Sid": "S-1-5-80-2145785123-2886438689-3072542501-3020378507-1504386134"
+  },
+  {
+    "DisplayName": "Windows Process Activation Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Windows Process Activation Service (WAS) provides process activation, resource management and health management services for message-activated applications.",
+    "Name": "WAS",
+    "SddlName": "S-1-5-80-1061825232-167646333-2456899247-4014030508-1274102580",
+    "Sid": "S-1-5-80-1061825232-167646333-2456899247-4014030508-1274102580"
+  },
+  {
+    "DisplayName": "Block Level Backup Engine Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The WBENGINE service is used by Windows Backup to perform backup and recovery operations. If this service is stopped by a user, it may cause the currently running backup or recovery operation to fail. Disabling this service may disable backup and recovery operations using Windows Backup on this computer.",
+    "Name": "wbengine",
+    "SddlName": "S-1-5-80-1549550529-11381693-4027442525-4081535042-2424139505",
+    "Sid": "S-1-5-80-1549550529-11381693-4027442525-4081535042-2424139505"
+  },
+  {
+    "DisplayName": "Windows Biometric Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Windows biometric service gives client applications the ability to capture, compare, manipulate, and store biometric data without gaining direct access to any biometric hardware or samples. The service is hosted in a privileged SVCHOST process.",
+    "Name": "WbioSrvc",
+    "SddlName": "S-1-5-80-1577343513-2244782562-3500840712-2807016722-4230555396",
+    "Sid": "S-1-5-80-1577343513-2244782562-3500840712-2807016722-4230555396"
+  },
+  {
+    "DisplayName": "Windows Connection Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Makes automatic connect and disconnect decisions based on the network connectivity options currently available to the PC and enables management of network connectivity based on Group Policy settings.",
+    "Name": "Wcmsvc",
+    "SddlName": "S-1-5-80-4155767994-3874329934-3800885181-2130851812-726865888",
+    "Sid": "S-1-5-80-4155767994-3874329934-3800885181-2130851812-726865888"
+  },
+  {
+    "DisplayName": "Windows Connect Now - Config Registrar",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "WCNCSVC hosts the Windows Connect Now Configuration which is Microsoft's Implementation of Wireless Protected Setup (WPS) protocol. This is used to configure Wireless LAN settings for an Access Point (AP) or a Wireless Device. The service is started programmatically as needed.",
+    "Name": "wcncsvc",
+    "SddlName": "S-1-5-80-1555863574-1012459212-3842453055-37978308-1142448422",
+    "Sid": "S-1-5-80-1555863574-1012459212-3842453055-37978308-1142448422"
+  },
+  {
+    "DisplayName": "Diagnostic Service Host",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Diagnostic Service Host is used by the Diagnostic Policy Service to host diagnostics that need to run in a Local Service context.  If this service is stopped, any diagnostics that depend on it will no longer function.",
+    "Name": "WdiServiceHost",
+    "SddlName": "S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420",
+    "Sid": "S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420"
+  },
+  {
+    "DisplayName": "Diagnostic System Host",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The Diagnostic System Host is used by the Diagnostic Policy Service to host diagnostics that need to run in a Local System context.  If this service is stopped, any diagnostics that depend on it will no longer function.",
+    "Name": "WdiSystemHost",
+    "SddlName": "S-1-5-80-3524758515-3090971750-345616940-2322499744-3530715838",
+    "Sid": "S-1-5-80-3524758515-3090971750-345616940-2322499744-3530715838"
+  },
+  {
+    "DisplayName": "Microsoft Defender Antivirus Network Inspection Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Helps guard against intrusion attempts targeting known and newly discovered vulnerabilities in network protocols",
+    "Name": "WdNisSvc",
+    "SddlName": "S-1-5-80-3668810961-2468724468-4084584310-3029221373-430494444",
+    "Sid": "S-1-5-80-3668810961-2468724468-4084584310-3029221373-430494444"
+  },
+  {
+    "DisplayName": "WebClient",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables Windows-based programs to create, access, and modify Internet-based files. If this service is stopped, these functions will not be available. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "WebClient",
+    "SddlName": "S-1-5-80-324959683-3395802011-921526492-919036580-1730255754",
+    "Sid": "S-1-5-80-324959683-3395802011-921526492-919036580-1730255754"
+  },
+  {
+    "DisplayName": "Web Threat Defense Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Web Threat Defense Endpoint Service helps protect your computer by identifying unauthorized entities attempting to gain access to user credentials",
+    "Name": "webthreatdefsvc",
+    "SddlName": "S-1-5-80-2776957860-1097445026-538298369-1343338959-476919943",
+    "Sid": "S-1-5-80-2776957860-1097445026-538298369-1343338959-476919943"
+  },
+  {
+    "DisplayName": "Windows Event Collector",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service manages persistent subscriptions to events from remote sources that support WS-Management protocol. This includes Windows Vista event logs, hardware and IPMI-enabled event sources. The service stores forwarded events in a local Event Log. If this service is stopped or disabled event subscriptions cannot be created and forwarded events cannot be accepted.",
+    "Name": "Wecsvc",
+    "SddlName": "S-1-5-80-4059739203-877974739-1245631912-527174227-2996563517",
+    "Sid": "S-1-5-80-4059739203-877974739-1245631912-527174227-2996563517"
+  },
+  {
+    "DisplayName": "Windows Encryption Provider Host Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows Encryption Provider Host Service brokers encryption related functionalities from 3rd Party Encryption Providers to processes that need to evaluate and apply EAS policies. Stopping this will compromise EAS compliancy checks that have been established by the connected Mail Accounts",
+    "Name": "WEPHOSTSVC",
+    "SddlName": "S-1-5-80-1282825935-788281630-359899028-1878232204-2860951615",
+    "Sid": "S-1-5-80-1282825935-788281630-359899028-1878232204-2860951615"
+  },
+  {
+    "DisplayName": "Problem Reports Control Panel Support",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service provides support for viewing, sending and deletion of system-level problem reports for the Problem Reports control panel.",
+    "Name": "wercplsupport",
+    "SddlName": "S-1-5-80-3594706986-2537596223-181334840-1741483385-1351671666",
+    "Sid": "S-1-5-80-3594706986-2537596223-181334840-1741483385-1351671666"
+  },
+  {
+    "DisplayName": "Windows Error Reporting Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Allows errors to be reported when programs stop working or responding and allows existing solutions to be delivered. Also allows logs to be generated for diagnostic and repair services. If this service is stopped, error reporting might not work correctly and results of diagnostic services and repairs might not be displayed.",
+    "Name": "WerSvc",
+    "SddlName": "S-1-5-80-3299868208-4286319593-1091140620-3583751967-1732444380",
+    "Sid": "S-1-5-80-3299868208-4286319593-1091140620-3583751967-1732444380"
+  },
+  {
+    "DisplayName": "Wi-Fi Direct Services Connection Manager Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Manages connections to wireless services, including wireless display and docking.",
+    "Name": "WFDSConMgrSvc",
+    "SddlName": "S-1-5-80-1495648203-2503502111-1597754693-3445174711-1316708627",
+    "Sid": "S-1-5-80-1495648203-2503502111-1597754693-3445174711-1316708627"
+  },
+  {
+    "DisplayName": "Still Image Acquisition Events",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Launches applications associated with still image acquisition events.",
+    "Name": "WiaRpc",
+    "SddlName": "S-1-5-80-533360197-2630880149-807505739-2151714924-2570839994",
+    "Sid": "S-1-5-80-533360197-2630880149-807505739-2151714924-2570839994"
+  },
+  {
+    "DisplayName": "Microsoft Defender Antivirus Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Helps protect users from malware and other potentially unwanted software",
+    "Name": "WinDefend",
+    "SddlName": "S-1-5-80-1913148863-3492339771-4165695881-2087618961-4109116736",
+    "Sid": "S-1-5-80-1913148863-3492339771-4165695881-2087618961-4109116736"
+  },
+  {
+    "DisplayName": "Windhawk",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": null,
+    "Name": "Windhawk",
+    "SddlName": "S-1-5-80-856278179-3414641972-3439519273-1641104301-1543142227",
+    "Sid": "S-1-5-80-856278179-3414641972-3439519273-1641104301-1543142227"
+  },
+  {
+    "DisplayName": "Windows Azure Guest Agent",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": null,
+    "Name": "WindowsAzureGuestAgent",
+    "SddlName": "S-1-5-80-2194186666-2156028978-1707134037-3630967597-593928526",
+    "Sid": "S-1-5-80-2194186666-2156028978-1707134037-3630967597-593928526"
+  },
+  {
+    "DisplayName": "WinHTTP Web Proxy Auto-Discovery Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "WinHTTP implements the client HTTP stack and provides developers with a Win32 API and COM Automation component for sending HTTP requests and receiving responses. In addition, WinHTTP provides support for auto-discovering a proxy configuration via its implementation of the Web Proxy Auto-Discovery (WPAD) protocol.",
+    "Name": "WinHttpAutoProxySvc",
+    "SddlName": "S-1-5-80-2455429942-3131183193-3617688776-595395669-3772047725",
+    "Sid": "S-1-5-80-2455429942-3131183193-3617688776-595395669-3772047725"
+  },
+  {
+    "DisplayName": "Windows Management Instrumentation",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides a common interface and object model to access management information about operating system, devices, applications and services. If this service is stopped, most Windows-based software will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Name": "Winmgmt",
+    "SddlName": "S-1-5-80-3750560858-172214265-3889451188-1914796615-4100997547",
+    "Sid": "S-1-5-80-3750560858-172214265-3889451188-1914796615-4100997547"
+  },
+  {
+    "DisplayName": "Windows Remote Management (WS-Management)",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows Remote Management (WinRM) service implements the WS-Management protocol for remote management. WS-Management is a standard web services protocol used for remote software and hardware management. The WinRM service listens on the network for WS-Management requests and processes them. The WinRM Service needs to be configured with a listener using winrm.cmd command line tool or through Group Policy in order for it to listen over the network. The WinRM service provides access to WMI data and enables event collection. Event collection and subscription to events require that the service is running. WinRM messages use HTTP and HTTPS as transports. The WinRM service does not depend on IIS but is preconfigured to share a port with IIS on the same machine.  The WinRM service reserves the /wsman URL prefix. To prevent conflicts with IIS, administrators should ensure that any websites hosted on IIS do not use the /wsman URL prefix.",
+    "Name": "WinRM",
+    "SddlName": "S-1-5-80-569256582-2953403351-2909559716-1301513147-412116970",
+    "Sid": "S-1-5-80-569256582-2953403351-2909559716-1301513147-412116970"
+  },
+  {
+    "DisplayName": "Windows Insider Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides infrastructure support for the Windows Insider Program. This service must remain enabled for the Windows Insider Program to work.",
+    "Name": "wisvc",
+    "SddlName": "S-1-5-80-2429767553-128593128-2427591838-1778256749-2155598187",
+    "Sid": "S-1-5-80-2429767553-128593128-2427591838-1778256749-2155598187"
+  },
+  {
+    "DisplayName": "WLAN AutoConfig",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The WLANSVC service provides the logic required to configure, discover, connect to, and disconnect from a wireless local area network (WLAN) as defined by IEEE 802.11 standards. It also contains the logic to turn your computer into a software access point so that other devices or computers can connect to your computer wirelessly using a WLAN adapter that can support this. Stopping or disabling the WLANSVC service will make all WLAN adapters on your computer inaccessible from the Windows networking UI. It is strongly recommended that you have the WLANSVC service running if your computer has a WLAN adapter.",
+    "Name": "WlanSvc",
+    "SddlName": "S-1-5-80-1428027539-3309602793-2678353003-1498846795-3763184142",
+    "Sid": "S-1-5-80-1428027539-3309602793-2678353003-1498846795-3763184142"
+  },
+  {
+    "DisplayName": "Microsoft Account Sign-in Assistant",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables user sign-in through Microsoft account identity services. If this service is stopped, users will not be able to logon to the computer with their Microsoft account.",
+    "Name": "wlidsvc",
+    "SddlName": "S-1-5-80-2952724807-2252311773-3412998076-2712868122-780978283",
+    "Sid": "S-1-5-80-2952724807-2252311773-3412998076-2712868122-780978283"
+  },
+  {
+    "DisplayName": "Local Profile Assistant Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service provides profile management for subscriber identity modules",
+    "Name": "wlpasvc",
+    "SddlName": "S-1-5-80-3916113136-2435487254-2535488001-4050622930-2364918814",
+    "Sid": "S-1-5-80-3916113136-2435487254-2535488001-4050622930-2364918814"
+  },
+  {
+    "DisplayName": "Windows Management Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Performs management including Provisioning and Enrollment activities",
+    "Name": "WManSvc",
+    "SddlName": "S-1-5-80-3577588319-513283748-931039988-2701962192-2148388740",
+    "Sid": "S-1-5-80-3577588319-513283748-931039988-2701962192-2148388740"
+  },
+  {
+    "DisplayName": "WMI Performance Adapter",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides performance library information from Windows Management Instrumentation (WMI) providers to clients on the network. This service only runs when Performance Data Helper is activated.",
+    "Name": "wmiApSrv",
+    "SddlName": "S-1-5-80-1851371743-411767070-3743290205-1090512353-603110601",
+    "Sid": "S-1-5-80-1851371743-411767070-3743290205-1090512353-603110601"
+  },
+  {
+    "DisplayName": "Windows Media Player Network Sharing Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Shares Windows Media Player libraries to other networked players and media devices using Universal Plug and Play",
+    "Name": "WMPNetworkSvc",
+    "SddlName": "S-1-5-80-2375682873-768044350-3534595160-1005545032-2873800392",
+    "Sid": "S-1-5-80-2375682873-768044350-3534595160-1005545032-2873800392"
+  },
+  {
+    "DisplayName": "Work Folders",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service syncs files with the Work Folders server, enabling you to use the files on any of the PCs and devices on which you've set up Work Folders.",
+    "Name": "workfolderssvc",
+    "SddlName": "S-1-5-80-3006764832-2469330069-4024865495-2754276538-3243839463",
+    "Sid": "S-1-5-80-3006764832-2469330069-4024865495-2754276538-3243839463"
+  },
+  {
+    "DisplayName": "Parental Controls",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enforces parental controls for child accounts in Windows. If this service is stopped or disabled, parental controls may not be enforced.",
+    "Name": "WpcMonSvc",
+    "SddlName": "S-1-5-80-2657955583-569354589-921901904-1883788092-850583853",
+    "Sid": "S-1-5-80-2657955583-569354589-921901904-1883788092-850583853"
+  },
+  {
+    "DisplayName": "Portable Device Enumerator Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enforces group policy for removable mass-storage devices. Enables applications such as Windows Media Player and Image Import Wizard to transfer and synchronize content using removable mass-storage devices.",
+    "Name": "WPDBusEnum",
+    "SddlName": "S-1-5-80-113310567-2163499630-2787090463-221477905-209227094",
+    "Sid": "S-1-5-80-113310567-2163499630-2787090463-221477905-209227094"
+  },
+  {
+    "DisplayName": "Windows Push Notifications System Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service runs in session 0 and hosts the notification platform and connection provider which handles the connection between the device and WNS server.",
+    "Name": "WpnService",
+    "SddlName": "S-1-5-80-1938892561-4120931771-3580170924-3403102300-2651602529",
+    "Sid": "S-1-5-80-1938892561-4120931771-3580170924-3403102300-2651602529"
+  },
+  {
+    "DisplayName": "Security Center",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "The WSCSVC (Windows Security Center) service monitors and reports security health settings on the computer.  The health settings include firewall (on/off), antivirus (on/off/out of date), antispyware (on/off/out of date), Windows Update (automatically/manually download and install updates), User Account Control (on/off), and Internet settings (recommended/not recommended). The service provides COM APIs for independent software vendors to register and record the state of their products to the Security Center service.  The Security and Maintenance UI uses the service to provide systray alerts and a graphical view of the security health states in the Security and Maintenance control panel.  Network Access Protection (NAP) uses the service to report the security health states of clients to the NAP Network Policy Server to make network quarantine decisions.  The service also has a public API that allows external consumers to programmatically retrieve the aggregated security health state of the system.",
+    "Name": "wscsvc",
+    "SddlName": "S-1-5-80-3232712927-1625117661-2590453128-1738570065-3637376297",
+    "Sid": "S-1-5-80-3232712927-1625117661-2590453128-1738570065-3637376297"
+  },
+  {
+    "DisplayName": "Windows Search",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides content indexing, property caching, and search results for files, e-mail, and other content.",
+    "Name": "WSearch",
+    "SddlName": "S-1-5-80-117416528-2204451360-1913602512-1355018040-1234992034",
+    "Sid": "S-1-5-80-117416528-2204451360-1913602512-1355018040-1234992034"
+  },
+  {
+    "DisplayName": "Windows Subsystem for Linux",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Windows Subsystem for Linux lets developers run a GNU/Linux environment -- including most command-line tools, utilities, and applications -- directly on Windows, unmodified, without the overhead of a traditional virtual machine or dualboot setup.",
+    "Name": "WslInstaller",
+    "SddlName": "S-1-5-80-4084036034-3085801315-2450741967-840315450-3713222565",
+    "Sid": "S-1-5-80-4084036034-3085801315-2450741967-840315450-3713222565"
+  },
+  {
+    "DisplayName": "WSL Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "WSL Service",
+    "Name": "WSLService",
+    "SddlName": "S-1-5-80-2089194294-1236748179-480082893-3533475803-3637446226",
+    "Sid": "S-1-5-80-2089194294-1236748179-480082893-3533475803-3637446226"
+  },
+  {
+    "DisplayName": "Windows Update",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Enables the detection, download, and installation of updates for Windows and other programs. If this service is disabled, users of this computer will not be able to use Windows Update or its automatic updating feature, and programs will not be able to use the Windows Update Agent (WUA) API.",
+    "Name": "wuauserv",
+    "SddlName": "S-1-5-80-1014140700-3308905587-3330345912-272242898-93311788",
+    "Sid": "S-1-5-80-1014140700-3308905587-3330345912-272242898-93311788"
+  },
+  {
+    "DisplayName": "WWAN AutoConfig",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service manages mobile broadband (GSM & CDMA) data card/embedded module adapters and connections by auto-configuring the networks. It is strongly recommended that this service be kept running for best user experience of mobile broadband devices.",
+    "Name": "WwanSvc",
+    "SddlName": "S-1-5-80-3981856537-581775623-1136376035-2066872258-409572886",
+    "Sid": "S-1-5-80-3981856537-581775623-1136376035-2066872258-409572886"
+  },
+  {
+    "DisplayName": "Xbox Live Auth Manager",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "Provides authentication and authorization services for interacting with Xbox Live. If this service is stopped, some applications may not operate correctly.",
+    "Name": "XblAuthManager",
+    "SddlName": "S-1-5-80-472864980-3821642676-709327584-2321888604-4243627364",
+    "Sid": "S-1-5-80-472864980-3821642676-709327584-2321888604-4243627364"
+  },
+  {
+    "DisplayName": "Xbox Live Game Save",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service syncs save data for Xbox Live save enabled games.  If this service is stopped, game save data will not upload to or download from Xbox Live.",
+    "Name": "XblGameSave",
+    "SddlName": "S-1-5-80-2649222292-2060825207-2866066902-505902355-282187514",
+    "Sid": "S-1-5-80-2649222292-2060825207-2866066902-505902355-282187514"
+  },
+  {
+    "DisplayName": "Xbox Accessory Management Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service manages connected Xbox Accessories.",
+    "Name": "XboxGipSvc",
+    "SddlName": "S-1-5-80-3605394182-687838168-1441221562-1662690741-4241567093",
+    "Sid": "S-1-5-80-3605394182-687838168-1441221562-1662690741-4241567093"
+  },
+  {
+    "DisplayName": "Xbox Live Networking Service",
+    "IsLocal": 1,
+    "Domain": null,
+    "Description": "This service supports the Windows.Networking.XboxLive application programming interface.",
+    "Name": "XboxNetApiSvc",
+    "SddlName": "S-1-5-80-1352715831-1104254428-97934242-2131353953-1898040052",
+    "Sid": "S-1-5-80-1352715831-1104254428-97934242-2131353953-1898040052"
+  },
+  {
+    "Name": "ADWS",
+    "Description": "This service provides a Web Service interface to instances of the directory service (AD DS and AD LDS) that are running locally on this server. If this service is stopped or disabled, client applications, such as Active Directory PowerShell, will not be able to access or manage any directory service instances that are running locally on this server.",
+    "Domain": null,
+    "Sid": "S-1-5-80-660584071-4121121593-1437107511-3148243646-2105555040",
+    "IsLocal": 1,
+    "DisplayName": "Active Directory Web Services",
+    "SddlName": "S-1-5-80-660584071-4121121593-1437107511-3148243646-2105555040"
+  },
+  {
+    "Name": "Browser",
+    "Description": "Maintains an updated list of computers on the network and supplies this list to computers designated as browsers. If this service is stopped, this list will not be updated or maintained. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-764937145-223273921-1726433829-265908364-3948077829",
+    "IsLocal": 1,
+    "DisplayName": "Computer Browser",
+    "SddlName": "S-1-5-80-764937145-223273921-1726433829-265908364-3948077829"
+  },
+  {
+    "Name": "CertSvc",
+    "Description": "Creates, manages, and removes X.509 certificates for applications such as S/MIME and SSL. If this service is stopped, certificates will not be created. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-3422467805-2927146326-436472433-507205459-1353412743",
+    "IsLocal": 1,
+    "DisplayName": "Active Directory Certificate Services",
+    "SddlName": "S-1-5-80-3422467805-2927146326-436472433-507205459-1353412743"
+  },
+  {
+    "Name": "Dfs",
+    "Description": "Enables you to group shared folders located on different servers into one or more logically structured namespaces. Each namespace appears to users as a single shared folder with a series of subfolders.",
+    "Domain": null,
+    "Sid": "S-1-5-80-3588172797-86763527-1375198215-2167056557-2705436887",
+    "IsLocal": 1,
+    "DisplayName": "DFS Namespace",
+    "SddlName": "S-1-5-80-3588172797-86763527-1375198215-2167056557-2705436887"
+  },
+  {
+    "Name": "DFSR",
+    "Description": "Enables you to synchronize folders on multiple servers across local or wide area network (WAN) network connections. This service uses the Remote Differential Compression (RDC) protocol to update only the portions of files that have changed since the last replication.",
+    "Domain": null,
+    "Sid": "S-1-5-80-1267473060-1890374259-1137250836-544356534-2546457154",
+    "IsLocal": 1,
+    "DisplayName": "DFS Replication",
+    "SddlName": "S-1-5-80-1267473060-1890374259-1137250836-544356534-2546457154"
+  },
+  {
+    "Name": "DNS",
+    "Description": "Enables DNS clients to resolve DNS names by answering DNS queries and dynamic DNS update requests. If this service is stopped, DNS updates will not occur. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-3615928406-775414823-3337150244-1678472394-1165027386",
+    "IsLocal": 1,
+    "DisplayName": "DNS Server",
+    "SddlName": "S-1-5-80-3615928406-775414823-3337150244-1678472394-1165027386"
+  },
+  {
+    "Name": "DsRoleSvc",
+    "Description": "This service hosts the DS Role Server used for DC promotion, demotion, and cloning. If this service is disabled, these operations will fail.",
+    "Domain": null,
+    "Sid": "S-1-5-80-50340015-362613918-3713023770-3061229818-1942978566",
+    "IsLocal": 1,
+    "DisplayName": "DS Role Server",
+    "SddlName": "S-1-5-80-50340015-362613918-3713023770-3061229818-1942978566"
+  },
+  {
+    "Name": "IISADMIN",
+    "Description": "Enables this server to administer the IIS metabase. The IIS metabase stores configuration for the SMTP and FTP services. If this service is stopped, the server will be unable to configure SMTP or FTP. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-3750972948-3855859956-2310450033-3264673181-3580465044",
+    "IsLocal": 1,
+    "DisplayName": "IIS Admin Service",
+    "SddlName": "S-1-5-80-3750972948-3855859956-2310450033-3264673181-3580465044"
+  },
+  {
+    "Name": "IsmServ",
+    "Description": "Enables messages to be exchanged between computers running Windows Server sites. If this service is stopped, messages will not be exchanged, nor will site routing information be calculated for other services.  If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-933469486-2214615798-607467685-3218432706-2082869768",
+    "IsLocal": 1,
+    "DisplayName": "Intersite Messaging",
+    "SddlName": "S-1-5-80-933469486-2214615798-607467685-3218432706-2082869768"
+  },
+  {
+    "Name": "Kdc",
+    "Description": "This service, running on domain controllers, enables users to log on to the network using the Kerberos authentication protocol. If this service is stopped, users will be unable to log on to the network. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-4212896935-1635400992-3882166516-2094594404-3031452930",
+    "IsLocal": 1,
+    "DisplayName": "Kerberos Key Distribution Center",
+    "SddlName": "S-1-5-80-4212896935-1635400992-3882166516-2094594404-3031452930"
+  },
+  {
+    "Name": "KdsSvc",
+    "Description": "This service is used to protect data through the Group Data Protection API. It is also used to support a number of system features including BitLocker on clustered volumes, Managed Service Accounts, and secure DNS. If this service is stopped, those features will no longer work.",
+    "Domain": null,
+    "Sid": "S-1-5-80-3738793398-3342501721-4270328731-2499361277-1976766126",
+    "IsLocal": 1,
+    "DisplayName": "Microsoft Key Distribution Service",
+    "SddlName": "S-1-5-80-3738793398-3342501721-4270328731-2499361277-1976766126"
+  },
+  {
+    "Name": "KPSSVC",
+    "Description": "KDC Proxy Server service runs on edge servers to proxy Kerberos protocol messages to domain controllers on the corporate network.",
+    "Domain": null,
+    "Sid": "S-1-5-80-2251494273-104013570-864825310-3133670442-2017388150",
+    "IsLocal": 1,
+    "DisplayName": "KDC Proxy Server service (KPS)",
+    "SddlName": "S-1-5-80-2251494273-104013570-864825310-3133670442-2017388150"
+  },
+  {
+    "Name": "NTDS",
+    "Description": "AD DS Domain Controller service. If this service is stopped, users will be unable to log on to the network. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Domain": null,
+    "Sid": "S-1-5-80-1664281202-2302623734-631624840-3461998672-2259661997",
+    "IsLocal": 1,
+    "DisplayName": "Active Directory Domain Services",
+    "SddlName": "S-1-5-80-1664281202-2302623734-631624840-3461998672-2259661997"
+  },
+  {
+    "Name": "NtFrs",
+    "Description": "Synchronizes folders with file servers that use File Replication Service (FRS) instead of the newer DFS Replication technology.",
+    "Domain": null,
+    "Sid": "S-1-5-80-3611654699-2349176770-3378390443-3095813276-863317841",
+    "IsLocal": 1,
+    "DisplayName": "File Replication",
+    "SddlName": "S-1-5-80-3611654699-2349176770-3378390443-3095813276-863317841"
+  },
+  {
+    "Name": "RSoPProv",
+    "Description": "Provides a network service that processes requests to simulate application of Group Policy settings for a target user or computer in various situations and computes the Resultant Set of Policy settings.",
+    "Domain": null,
+    "Sid": "S-1-5-80-4090326829-50595666-2076687139-2701514702-1957965923",
+    "IsLocal": 1,
+    "DisplayName": "Resultant Set of Policy Provider",
+    "SddlName": "S-1-5-80-4090326829-50595666-2076687139-2701514702-1957965923"
+  },
+  {
+    "Name": "UALSVC",
+    "Description": "This service logs unique client access requests, in the form of IP addresses and user names, of installed products and roles on the local server. This information can be queried, via Powershell, by administrators needing to quantify client demand of server software for offline Client Access License (CAL) management. If the service is disabled, client requests will not be logged and will not be retrievable via Powershell queries. Stopping the service will not affect query of historical data (see supporting documentation for steps to delete historical data). The local system administrator must consult his, or her, Windows Server license terms to determine the number of CALs that are required for the server software to be appropriately licensed; use of the UAL service and data does not alter this obligation.",
+    "Domain": null,
+    "Sid": "S-1-5-80-2146256777-2355218328-3648154233-392108262-407986445",
+    "IsLocal": 1,
+    "DisplayName": "User Access Logging Service",
+    "SddlName": "S-1-5-80-2146256777-2355218328-3648154233-392108262-407986445"
+  },
+  {
+    "Name": "WINS",
+    "Description": "Manages the Windows Internet Name Service (WINS), which translates NetBIOS computer names to IP addresses",
+    "Domain": null,
+    "Sid": "S-1-5-80-4208767847-1830032176-2943147871-722853643-2848342300",
+    "IsLocal": 1,
+    "DisplayName": "WINS",
+    "SddlName": "S-1-5-80-4208767847-1830032176-2943147871-722853643-2848342300"
+  },
+  {
+    "Description": "Enables servers to work together as a cluster to keep server-based applications highly available, regardless of individual component failures. If this service is stopped, clustering will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Sid": "S-1-5-80-3686368352-2818529501-1460576502-2564618696-351529990",
+    "Domain": null,
+    "Name": "ClusSvc",
+    "IsLocal": 1,
+    "DisplayName": "Cluster Service",
+    "SddlName": "S-1-5-80-3686368352-2818529501-1460576502-2564618696-351529990"
+  },
+  {
+    "Description": "CPrepSrv",
+    "Sid": "S-1-5-80-299189402-3078632061-101891940-3620728357-113910284",
+    "Domain": null,
+    "Name": "CPrepSrv",
+    "IsLocal": 1,
+    "DisplayName": "CPrepSrv",
+    "SddlName": "S-1-5-80-299189402-3078632061-101891940-3620728357-113910284"
+  },
+  {
+    "Description": "Diagnostics Hub Standard Collector Service. When running, this service collects real time ETW events and processes them.",
+    "Sid": "S-1-5-80-3427281794-3208260282-895156161-4152208786-3156774898",
+    "Domain": null,
+    "Name": "diagnosticshub.standardcollector.service",
+    "IsLocal": 1,
+    "DisplayName": "Microsoft (R) Diagnostics Hub Standard Collector Service",
+    "SddlName": "S-1-5-80-3427281794-3208260282-895156161-4152208786-3156774898"
+  },
+  {
+    "Description": "FcSrv",
+    "Sid": "S-1-5-80-2588339700-752439808-134535840-2198881347-2635274264",
+    "Domain": null,
+    "Name": "FcSrv",
+    "IsLocal": 1,
+    "DisplayName": "FcSrv",
+    "SddlName": "S-1-5-80-2588339700-752439808-134535840-2198881347-2635274264"
+  },
+  {
+    "Description": "SMB Witness accelerates SMB clients reconnecting to a clustered SMB file share in the event of an unplanned failure",
+    "Sid": "S-1-5-80-3179251864-2747800774-331118465-958316624-2583324838",
+    "Domain": null,
+    "Name": "SmbWitness",
+    "IsLocal": 1,
+    "DisplayName": "SMB Witness",
+    "SddlName": "S-1-5-80-3179251864-2747800774-331118465-958316624-2583324838"
+  },
+  {
+    "Description": "Allows Failover Cluster service to manage Storage Spaces Direct storage",
+    "Sid": "S-1-5-80-2911761918-990727938-39455067-588916678-2382458281",
+    "Domain": null,
+    "Name": "TargetMgr",
+    "IsLocal": 1,
+    "DisplayName": "Target Manager",
+    "SddlName": "S-1-5-80-2911761918-990727938-39455067-588916678-2382458281"
+  },
+  {
+    "Description": "Manages requests made by Pre-Boot eXecution Environment (PXE) - enabled client computers. If this service is stopped, PXE-enabled client computers will be unable to install Windows remotely or use other Windows Deployment Services -based tools. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "Sid": "S-1-5-80-1688844526-3235337491-1375791646-891369040-3692469510",
+    "Name": "WDSServer",
+    "IsLocal": 1,
+    "Domain": null,
+    "DisplayName": "Windows Deployment Services Server",
+    "SddlName": "S-1-5-80-1688844526-3235337491-1375791646-891369040-3692469510"
+  },
+  {
+    "Description": "Routes AllJoyn messages for the local AllJoyn clients. If this service is stopped the AllJoyn clients that do not have their own bundled routers will be unable to run.",
+    "IsLocal": 1,
+    "Name": "AJRouter",
+    "SddlName": "S-1-5-80-3532809085-2652327567-2620918877-1058261733-582902671",
+    "DisplayName": "AllJoyn Router Service",
+    "Domain": null,
+    "Sid": "S-1-5-80-3532809085-2652327567-2620918877-1058261733-582902671"
+  },
+  {
+    "Description": "Provides site-to-site connectivity using IKEv2 protocol.",
+    "IsLocal": 1,
+    "Name": "GatewayService",
+    "SddlName": "S-1-5-80-1510742542-3632397484-604094731-3920060944-1272132581",
+    "DisplayName": "Azure Gateway Service",
+    "Domain": null,
+    "Sid": "S-1-5-80-1510742542-3632397484-604094731-3920060944-1272132581"
+  },
+  {
+    "Description": "Offers monitoring for the gateway health.",
+    "IsLocal": 1,
+    "Name": "GwHMSvc",
+    "SddlName": "S-1-5-80-371454913-1703995130-330856583-2677645976-557206979",
+    "DisplayName": "Gateway Health Monitoring Service",
+    "Domain": null,
+    "Sid": "S-1-5-80-371454913-1703995130-330856583-2677645976-557206979"
+  },
+  {
+    "Description": "Provides internal relational database services for use by Windows Server features and roles",
+    "IsLocal": 1,
+    "Name": "MSSQL$MICROSOFT##WID",
+    "SddlName": "S-1-5-80-1184457765-4068085190-3456807688-2200952327-3769537534",
+    "DisplayName": "Windows Internal Database",
+    "Domain": null,
+    "Sid": "S-1-5-80-1184457765-4068085190-3456807688-2200952327-3769537534"
+  },
+  {
+    "Description": "Logs, monitors, and manages DirectAccess and VPN connections to the server.",
+    "IsLocal": 1,
+    "Name": "RaMgmtSvc",
+    "SddlName": "S-1-5-80-611605672-2879557022-2206624263-4029342278-3129212340",
+    "DisplayName": "Remote Access Management service",
+    "Domain": null,
+    "Sid": "S-1-5-80-611605672-2879557022-2206624263-4029342278-3129212340"
+  },
+  {
+    "Description": "Removes validated remote access clients from the quarantine network.",
+    "IsLocal": 1,
+    "Name": "rqs",
+    "SddlName": "S-1-5-80-6924576-598676285-3528829976-1458831571-971033904",
+    "DisplayName": "Remote Access Quarantine Agent",
+    "Domain": null,
+    "Sid": "S-1-5-80-6924576-598676285-3528829976-1458831571-971033904"
+  },
+  {
+    "Description": "Enables Touch Keyboard and Handwriting Panel pen and ink functionality",
+    "IsLocal": 1,
+    "Name": "TabletInputService",
+    "SddlName": "S-1-5-80-949921180-3923668869-394927020-528789358-3592448931",
+    "DisplayName": "Touch Keyboard and Handwriting Panel Service",
+    "Domain": null,
+    "Sid": "S-1-5-80-949921180-3923668869-394927020-528789358-3592448931"
+  },
+  {
+    "Description": "Provides the interface to backup and restore Windows Internal Database through the Windows VSS infrastructure.",
+    "IsLocal": 1,
+    "Name": "WIDWriter",
+    "SddlName": "S-1-5-80-2694148620-1221235392-1607504643-1047644892-2059959428",
+    "DisplayName": "Windows Internal Database VSS Writer",
+    "Domain": null,
+    "Sid": "S-1-5-80-2694148620-1221235392-1607504643-1047644892-2059959428"
+  },
+  {
+    "SddlName": "S-1-5-80-3273805168-4048181553-3172130058-210131473-390205191",
+    "Name": "DHCPServer",
+    "Domain": null,
+    "Description": "Performs TCP/IP configuration for DHCP clients, including dynamic assignments of IP addresses, specification of the WINS and DNS servers, and connection-specific DNS names. If this service is stopped, the DHCP server will not perform TCP/IP configuration for clients. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "DisplayName": "DHCP Server",
+    "IsLocal": 1,
+    "Sid": "S-1-5-80-3273805168-4048181553-3172130058-210131473-390205191"
+  },
+  {
+    "SddlName": "S-1-5-80-1742929452-363087606-4062475001-1529410099-2278924282",
+    "Name": "ftpsvc",
+    "Domain": null,
+    "Description": "Enables this server to be a File Transfer Protocol (FTP) server. If this service is stopped, the server cannot function as an FTP server. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "DisplayName": "Microsoft FTP Service",
+    "IsLocal": 1,
+    "Sid": "S-1-5-80-1742929452-363087606-4062475001-1529410099-2278924282"
+  },
+  {
+    "SddlName": "S-1-5-80-2239383551-753077414-4140844485-4088697883-3486118564",
+    "Name": "IAS",
+    "Domain": null,
+    "Description": "Manages authentication, authorization, auditing and accounting for virtual private network (VPN), dial-up, 802.1x wireless or Ethernet switch connection attempts sent by access servers that are compatible with the IETF RADIUS protocol. If this service is stopped, users might be unable to obtain a VPN, dial-up, wireless, or Ethernet connection to the network. If this service is disabled, any services that explicitly depend on it will fail to start.",
+    "DisplayName": "Network Policy Server",
+    "IsLocal": 1,
+    "Sid": "S-1-5-80-2239383551-753077414-4140844485-4088697883-3486118564"
+  },
+  {
+    "SddlName": "S-1-5-80-1071656157-3689046577-4105049408-574495319-1522408424",
+    "Name": "NfsService",
+    "Domain": null,
+    "Description": "Enables a Windows based computer to act as an NFS Server",
+    "DisplayName": "Server for NFS",
+    "IsLocal": 1,
+    "Sid": "S-1-5-80-1071656157-3689046577-4105049408-574495319-1522408424"
+  },
+  {
+    "SddlName": "S-1-5-80-3804348527-3718992918-2141599610-3686422417-2726379419",
+    "Name": "OcspSvc",
+    "Domain": null,
+    "Description": "Enables identity revocation services for PKI (certificate) based services such as secure e-mail smartcard logon, secure web servers, etc as an online request and response query process.  If this service is stopped or disabled, revocation services may not be available for PKI (certificate) applications thereby generating authentication or application failures.",
+    "DisplayName": "Online Responder Service",
+    "IsLocal": 1,
+    "Sid": "S-1-5-80-3804348527-3718992918-2141599610-3686422417-2726379419"
+  },
+  {
+    "SddlName": "S-1-5-80-257763619-1023834443-750927789-3464696139-1457670516",
+    "Name": "WMSVC",
+    "Domain": null,
+    "Description": "The Web Management Service enables remote and delegated management capabilities for administrators to manage for the Web server, sites and applications present on this machine.",
+    "DisplayName": "Web Management Service",
+    "IsLocal": 1,
+    "Sid": "S-1-5-80-257763619-1023834443-750927789-3464696139-1457670516"
+  }
+]

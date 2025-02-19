@@ -1,7 +1,7 @@
 ﻿using Blazorise;
 using System.Reflection;
 using System.Text;
-using WinSdUtil.Lib.Model;
+using WinSdUtil.Model;
 
 namespace AzToolbox.Models
 {

@@ -1,7 +1,7 @@
 ﻿using AzToolbox.Models;
 using System.Text.RegularExpressions;
-using WinSdUtil.Lib;
-using WinSdUtil.Lib.Model;
+using WinSdUtil;
+using WinSdUtil.Model;
 
 namespace AzToolbox.Services
 {
@@ -14,9 +14,10 @@ namespace AzToolbox.Services
         public async Task InitializeAsync()
         {
             var trusteeJsonData = await httpClient.GetStringAsync("/assets/WinSdTrustee.json");
+            var svcTrusteeJsonData = await httpClient.GetStringAsync("/assets/ServiceTrustee.json");
             var adGuidJsonData = await httpClient.GetStringAsync("/assets/WinSdAdGuid.json");
 
-            converter = new WinSdConverter(true, trusteeJsonData, adGuidJsonData);
+            converter = new WinSdConverter([trusteeJsonData, svcTrusteeJsonData], adGuidJsonData);
         }
 
         public AccessControlList FromSddlToAcl(string SDDL)

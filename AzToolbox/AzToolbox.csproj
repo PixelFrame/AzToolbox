@@ -41,7 +41,7 @@
     <ProjectReference Include="..\..\KzA.HEXEH\KzA.HEXEH.Core\KzA.HEXEH.Core.csproj" />
     <ProjectReference Include="..\..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj" />
     <ProjectReference Include="..\..\WFPXML\WFPXML\WFPXML.csproj" />
-    <ProjectReference Include="..\..\WinSdUtil\WinSdUtil.Lib\WinSdUtil.Lib.csproj" />
+    <ProjectReference Include="..\..\WinSdUtil\WinSdUtil\WinSdUtil.csproj" />
   </ItemGroup>
 
 </Project>

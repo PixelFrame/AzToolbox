@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using WinSdUtil.Lib.Model;
+using WinSdUtil.Model;
 
 namespace AzToolbox.Models
 {
@@ -161,7 +161,7 @@ namespace AzToolbox.Models
 
         public static int CalcLongestNameLen(AccessMaskType maskType, out Type targetType)
         {
-            var maskTypeName = $"WinSdUtil.Lib.Model.AccessMask_{maskType}";
+            var maskTypeName = $"WinSdUtil.Model.AccessMask_{maskType}";
             Assembly asm = typeof(AccessMaskType).Assembly;
             targetType = asm.GetType(maskTypeName)!;
             var isStandard = targetType == typeof(AccessMask_Standard);
