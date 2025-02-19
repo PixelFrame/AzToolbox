@@ -955,10 +955,10 @@
     },
     {
         "Description": "An NT Service account.",
-        "DisplayName": "NT Service",
+        "DisplayName": "NT Service: Unknown",
         "DomainId": null,
         "IsLocal": 1,
-        "Name": "NT_SERVICE",
+        "Name": "NT SERVICE",
         "SddlName": "S-1-5-80-<SERVICE>",
         "Sid": "S-1-5-80-<SERVICE>"
     },

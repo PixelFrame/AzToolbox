@@ -54,7 +54,7 @@
             <NodeContent>
                 <Text TextWeight="TextWeight.Bold" Class="monospace-text">@(context.Label):</Text>
                 <Text Padding="Padding.Is1.FromStart" Class="monospace-text">@context.Description</Text>
-                @if (context.Label == "Trustee")
+                @if (context.Label == "SID")
                 {
                     <Button Size="Size.Small" Style="padding: 0; border:none" Clicked="()=>ShowTrusteeDetails((Trustee)context.Tag!)"><Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" /></Button>
                 }

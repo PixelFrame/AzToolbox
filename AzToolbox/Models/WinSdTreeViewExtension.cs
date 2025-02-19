@@ -20,15 +20,7 @@ namespace AzToolbox.Models
                 {
                     Label = "Owner",
                     Description = acl.Owner.DisplayName,
-                    Children =
-                    [
-                        new() {
-                            Label = "Trustee",
-                            Description = acl.Owner.Sid,
-                            Tag = acl.Owner,
-                            Children = null,
-                        }
-                    ],
+                    Children = acl.Owner.ToTreeView(),
                 });
             }
             if (acl.Group != null)
@@ -37,15 +29,7 @@ namespace AzToolbox.Models
                 {
                     Label = "Group",
                     Description = acl.Group.DisplayName,
-                    Children =
-                    [
-                        new() {
-                            Label = "Trustee",
-                            Description = acl.Group.Sid,
-                            Tag = acl.Group,
-                            Children = null,
-                        }
-                    ],
+                    Children = acl.Group.ToTreeView(),
                 });
             }
             if (acl.DAclAces != null)
@@ -94,13 +78,7 @@ namespace AzToolbox.Models
                 Description = ace.Trustee.DisplayName.PadRight(trusteeNamePadding) + ace.Mask.ToSDDL(),
                 Children = children,
             };
-            children.Add(new TreeViewItem()
-            {
-                Label = "Trustee",
-                Description = ace.Trustee.Sid,
-                Tag = ace.Trustee,
-                Children = null,
-            });
+            children.AddRange(ace.Trustee.ToTreeView());
             children.Add(new TreeViewItem()
             {
                 Label = "Flags",
@@ -157,6 +135,26 @@ namespace AzToolbox.Models
                 });
             }
             return root;
+        }
+
+        public static TreeViewItem[] ToTreeView(this Trustee trustee)
+        {
+            return
+            [
+                new()
+                {
+                    Label = "SID",
+                    Description = trustee.Sid,
+                    Tag = trustee,
+                    Children = null,
+                },new()
+                {
+                    Label = "Name",
+                    Description = trustee.Name,
+                    Tag = trustee,
+                    Children = null,
+                },
+            ];
         }
 
         public static int CalcLongestNameLen(AccessMaskType maskType, out Type targetType)
