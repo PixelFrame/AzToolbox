@@ -5,6 +5,10 @@
 @using ProfileXMLBuilder.Lib
 @using AzToolbox.Components.VpnBuild
 
+@using BlazorMonaco
+@using BlazorMonaco.Editor
+@using BlazorMonaco.Languages
+
 @inject NavigationManager NavMan
 @inject INotificationService NotificationService
 @inject IModalService ModalService
@@ -199,26 +203,19 @@
                 <AlertDescription>This profile contains settings that are only valid for Windows 11 21H2+. Check <a target="_blank" style="display: contents" href="https://learn.microsoft.com/en-us/windows/client-management/mdm/vpnv2-csp">VPNv2 CSP</a> for more info.</AlertDescription>
             </Alert>
         }
-        <Div Margin="Margin.Is1.OnY" Flex="Flex.Grow.Is1" Border="Border.Is1.Rounded.White">
-            @if (built)
-            {
-                <pre class="language-xml" style="margin:0">
-                    <code>@highlightedProfileXml</code>
-                </pre>
-            }
-        </Div>
-        <!--<MemoEdit @bind-Text="@svc.ProfileXml"
-                  Class="monospace-fixed-textbox"
-                  Style="text-wrap:nowrap"
-                  Margin="Margin.Is1.OnY"
-                  ReadOnly
-                  Flex="Flex.Grow.Is1" />-->
+        <StandaloneCodeEditor @ref="_editor" ConstructionOptions=" EditorConstructionOptions" Id="profile-editor" />
     </SplitterSection>
 </Splitter>
 
 <style>
     .fui-Field {
         margin-bottom: var(--spacingHorizontalXS);
+    }
+
+    #profile-editor {
+        margin-top: var(--spacingHorizontalXS);
+        flex-grow: 1;
+        flex-shrink: 1;
     }
 </style>
 
@@ -228,7 +225,21 @@
 
     bool built = false;
     VpnBuildService.PreSets set = VpnBuildService.PreSets.User_Split_PEAP__TLS;
-    MarkupString highlightedProfileXml;
+    StandaloneCodeEditor _editor = default!;
+
+    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+    {
+        return new StandaloneEditorConstructionOptions
+            {
+                AutomaticLayout = true,
+                Language = "xml",
+                ReadOnly = true,
+                Minimap = new()
+                {
+                    Enabled = false
+                },
+            };
+    }
 
     protected override void OnInitialized()
     {
@@ -242,7 +253,7 @@
         {
             svc.Build();
             built = true;
-            await PrismHighlight();
+            await _editor.SetValue(svc.ProfileXml);
             await InvokeAsync(StateHasChanged);
         }
         catch (Exception e)
@@ -354,11 +365,6 @@
             filename, "text/plain", script
         };
         await JSRuntime.InvokeVoidAsync("blazorFileDownload", jsparams);
-    }
-
-    private async Task PrismHighlight()
-    {
-        highlightedProfileXml = new MarkupString(await JSRuntime.InvokeAsync<string>("prismHighlightXml", svc.ProfileXml));
     }
 
     private void LoadPreSet()
