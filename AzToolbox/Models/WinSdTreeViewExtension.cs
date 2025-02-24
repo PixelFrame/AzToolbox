@@ -130,7 +130,7 @@ namespace AzToolbox.Models
                 children.Add(new TreeViewItem()
                 {
                     Label = "Application Data",
-                    Description = Convert.ToHexString(ace.ApplicationData),
+                    Description = ace.ApplicationData,
                     Children = null,
                 });
             }

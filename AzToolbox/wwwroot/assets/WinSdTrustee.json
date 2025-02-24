@@ -491,7 +491,7 @@
         "DomainId": null,
         "IsLocal": 1,
         "Name": "BUILTIN_USERS",
-        "SddlName": "BG",
+        "SddlName": "BU",
         "Sid": "S-1-5-32-545"
     },
     {
@@ -500,7 +500,7 @@
         "DomainId": null,
         "IsLocal": 1,
         "Name": "BUILTIN_GUESTS",
-        "SddlName": "BU",
+        "SddlName": "BG",
         "Sid": "S-1-5-32-546"
     },
     {
