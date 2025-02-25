@@ -2,6 +2,7 @@
 <PageTitle>Security Descriptor Tool - AzToolbox</PageTitle>
 
 @using AzToolbox.Models
+@using AzToolbox.Models.SecDescriptor
 @using AzToolbox.Components.SecDescriptor
 @using WinSdUtil.Model
 
@@ -35,7 +36,7 @@
                         Data="Enum.GetValues<AccessMaskType>()"
                         TextField="@(item => item.ToString())"
                         ValueField="@(item => item)"
-                        @bind-SelectedValue="@selectedAccessMaskType" />
+                        @bind-SelectedValue="@SelectedAccessMaskType" />
         </Field>
         <Divider DividerType="DividerType.Solid" />
         <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
@@ -45,6 +46,11 @@
             <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small" Margin="Margin.Is1.FromStart">Copy Tree</Button>
             <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small" Margin="Margin.Is1.FromStart">Trustee List</Button>
             <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small" Margin="Margin.Is1.FromStart">Access Mask List</Button>
+            <Button Color="@(matchedAccessMaskOnly ? Color.Success : Color.Info)"
+                    Clicked="() => {matchedAccessMaskOnly = !matchedAccessMaskOnly; AclTree.UpdateTreeView(matchedAccessMaskOnly);}"
+                    Size="Size.Small" Margin="Margin.Is1.FromStart">
+                @(matchedAccessMaskOnly ? "Show All" : "Show Matched Only")
+            </Button>
         </Div>
         <TreeView @ref="@AclTree"
                   Nodes="AclTreeHead"
@@ -69,10 +75,20 @@
     List<TreeViewItem> ExpandedNodes = new();
 
     bool SddlOrBinary = true;
+    bool matchedAccessMaskOnly = false;
     string sddl = string.Empty;
     string binarystr = string.Empty;
     string currentType => SddlOrBinary ? "SDDL" : "Binary";
     AccessMaskType selectedAccessMaskType = AccessMaskType.File;
+    AccessMaskType SelectedAccessMaskType
+    {
+        get => selectedAccessMaskType;
+        set
+        {
+            selectedAccessMaskType = value;
+            AclTree.UpdateTreeView(selectedAccessMaskType);
+        }
+    }
     AccessControlList aclResult = default!;
 
     protected override async Task OnInitializedAsync()
@@ -94,7 +110,7 @@
                 aclResult = wsdsvc.FromBinaryToAcl(binarystr);
             }
             ExpandedNodes.Clear();
-            AclTreeHead = new TreeViewItem[] { aclResult.ToTreeView(selectedAccessMaskType) };
+            AclTreeHead = new TreeViewItem[] { aclResult.ToTreeView(SelectedAccessMaskType, matchedAccessMaskOnly) };
             ExpandedNodes.Add(AclTreeHead.First());
         }
         catch (Exception ex)

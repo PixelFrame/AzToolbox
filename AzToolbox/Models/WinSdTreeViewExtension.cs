@@ -1,11 +1,13 @@
-﻿using System.Reflection;
+﻿using Blazorise.TreeView;
+using System.Collections.ObjectModel;
+using System.Reflection;
 using WinSdUtil.Model;
 
-namespace AzToolbox.Models
+namespace AzToolbox.Models.SecDescriptor
 {
     public static class WinSdTreeViewExtension
     {
-        public static TreeViewItem ToTreeView(this AccessControlList acl, AccessMaskType maskType)
+        public static TreeViewItem ToTreeView(this AccessControlList acl, AccessMaskType maskType, bool matchedOnly)
         {
             var children = new List<TreeViewItem>();
             var root = new TreeViewItem()
@@ -13,6 +15,7 @@ namespace AzToolbox.Models
                 Label = "ACL",
                 Description = "Access Control List",
                 Children = children,
+                Tag = maskType,
             };
             if (acl.Owner != null)
             {
@@ -45,7 +48,7 @@ namespace AzToolbox.Models
                 int trusteeNamePadding = acl.DAclAces.Select(acl => acl.Trustee.DisplayName.Length).Max() + 1;
                 foreach (var dace in acl.DAclAces)
                 {
-                    daceItems.Add(dace.ToTreeView(maskType, trusteeNamePadding));
+                    daceItems.Add(dace.ToTreeView(maskType, trusteeNamePadding, matchedOnly));
                 }
                 daclItem.Children = daceItems;
             }
@@ -62,14 +65,14 @@ namespace AzToolbox.Models
                 int trusteeNamePadding = acl.SAclAces.Select(acl => acl.Trustee.DisplayName.Length).Max() + 1;
                 foreach (var sace in acl.SAclAces)
                 {
-                    saceItems.Add(sace.ToTreeView(maskType, trusteeNamePadding));
+                    saceItems.Add(sace.ToTreeView(maskType, trusteeNamePadding, matchedOnly));
                 }
                 saclItem.Children = saceItems;
             }
             return root;
         }
 
-        public static TreeViewItem ToTreeView(this AccessControlEntry ace, AccessMaskType maskType, int trusteeNamePadding)
+        public static TreeViewItem ToTreeView(this AccessControlEntry ace, AccessMaskType maskType, int trusteeNamePadding, bool matchedOnly)
         {
             var children = new List<TreeViewItem>();
             var root = new TreeViewItem()
@@ -97,15 +100,16 @@ namespace AzToolbox.Models
                     {
                         Label = objspecLabel,
                         Description = "...." + ace.Mask.ObjectSpecific.ToString("X8")[4..],
-                        Children = AccessMaskToTreeViewItems(ace.Mask.ObjectSpecific, targetType, longestNameLen, false),
+                        Children = new ObservableCollection<TreeViewItem>(AccessMaskToTreeViewItems(ace.Mask.ObjectSpecific, targetType, longestNameLen, false, matchedOnly)),
                     },
                     new()
                     {
                         Label = "Generic".PadRight(objspecLabel.Length),
                         Description = ace.Mask.Standard.ToString("X8")[..4] + "....",
-                        Children = AccessMaskToTreeViewItems(ace.Mask.Standard, typeof(AccessMask_Standard), longestNameLen, true),
+                        Children = new ObservableCollection<TreeViewItem>(AccessMaskToTreeViewItems(ace.Mask.Standard, typeof(AccessMask_Standard), longestNameLen, true, matchedOnly)),
                     },
                 ],
+                Tag = ace.Mask.Full,
             });
             if (ace.ObjectGuid != Guid.Empty)
             {
@@ -170,10 +174,8 @@ namespace AzToolbox.Models
             return longestNameLen;
         }
 
-        public static TreeViewItem[] AccessMaskToTreeViewItems(uint Value, Type targetType, int longestNameLen, bool isStandard)
+        public static IEnumerable<TreeViewItem> AccessMaskToTreeViewItems(uint value, Type targetType, int longestNameLen, bool isStandard, bool matchedOnly)
         {
-            var currentValue = Convert.ToUInt32(Value);
-            var treeViewItems = new TreeViewItem[16];
 
             var start = isStandard ? 16 : 0;
             var end = isStandard ? 32 : 16;
@@ -181,29 +183,159 @@ namespace AzToolbox.Models
 
             for (var i = start; i < end; ++i)
             {
-                var idx = isStandard ? i - 16 : i;
                 var label = "Undefined".PadRight(longestNameLen);
                 if (Enum.IsDefined(targetType, mask))
                 {
                     label = Enum.GetName(targetType, mask)!.PadRight(longestNameLen);
                 }
-                var hit = (mask & currentValue) == mask;
+                var hit = (mask & value) == mask;
+                if (!hit && matchedOnly)
+                {
+                    mask <<= 1;
+                    continue;
+                }
                 var desc = hit ? "True  " : "False ";
                 desc += new string('.', 32 - i - 1);
                 if (hit) desc += "1";
                 else desc += "0";
                 desc += new string('.', i);
-                treeViewItems[idx] = new TreeViewItem()
+                mask <<= 1;
+                yield return new()
                 {
                     Label = label,
                     Description = desc,
                     Tag = i,
                     Children = null,
                 };
-                mask <<= 1;
             }
+        }
 
-            return treeViewItems;
+        public static void UpdateTreeView(this TreeView<TreeViewItem> tree, AccessMaskType maskType)
+        {
+            var root = tree.Nodes.FirstOrDefault();
+            if (root == null) return;
+            root.Tag = maskType;
+            var daceNodes = root.Children?.Where(x => x.Label == "DACL").FirstOrDefault()?.Children;
+            if (daceNodes != null)
+            {
+                foreach (var daceNode in daceNodes)
+                {
+                    var accessMaskNode = daceNode.Children?.Where(x => x.Label == "Access Mask").FirstOrDefault();
+                    if (accessMaskNode != null)
+                    {
+                        var objspecNode = accessMaskNode.Children?.Where(x => x.Label.StartsWith("Object Specific")).FirstOrDefault();
+                        if (objspecNode != null)
+                        {
+                            var objspecLabel = $"Object Specific ({maskType})";
+                            objspecNode.Label = objspecLabel;
+                            var objspecItems = objspecNode.Children;
+                            if (objspecItems != null)
+                            {
+                                var longestNameLen = CalcLongestNameLen(maskType, out var targetType);
+                                foreach (var item in objspecItems)
+                                {
+                                    var idx = (int)item.Tag!;
+                                    var label = "Undefined".PadRight(longestNameLen);
+                                    if (Enum.IsDefined(targetType, 1u << idx))
+                                    {
+                                        label = Enum.GetName(targetType, 1u << idx)!.PadRight(longestNameLen);
+                                    }
+                                    item.Label = label;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            var saceNodes = root.Children?.Where(x => x.Label == "SACL").FirstOrDefault()?.Children;
+            if (saceNodes != null)
+            {
+                foreach (var saceNode in saceNodes)
+                {
+                    var accessMaskNode = saceNode.Children?.Where(x => x.Label == "Access Mask").FirstOrDefault();
+                    if (accessMaskNode != null)
+                    {
+                        var objspecNode = accessMaskNode.Children?.Where(x => x.Label.StartsWith("Object Specific")).FirstOrDefault();
+                        if (objspecNode != null)
+                        {
+                            var objspecLabel = $"Object Specific ({maskType})";
+                            objspecNode.Label = objspecLabel;
+                            var objspecItems = objspecNode.Children;
+                            if (objspecItems != null)
+                            {
+                                var longestNameLen = CalcLongestNameLen(maskType, out var targetType);
+                                foreach (var item in objspecItems)
+                                {
+                                    var idx = (int)item.Tag!;
+                                    var label = "Undefined".PadRight(longestNameLen);
+                                    if (Enum.IsDefined(targetType, 1u << idx))
+                                    {
+                                        label = Enum.GetName(targetType, 1u << idx)!.PadRight(longestNameLen);
+                                    }
+                                    item.Label = label;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void UpdateTreeView(this TreeView<TreeViewItem> tree, bool matchedOnly)
+        {
+            var root = tree.Nodes.FirstOrDefault();
+            if (root == null) return;
+            var maskType = (AccessMaskType)root.Tag!;
+            var daceNodes = root.Children?.Where(x => x.Label == "DACL").FirstOrDefault()?.Children;
+            if (daceNodes != null)
+            {
+                var longestNameLen = CalcLongestNameLen(maskType, out var targetType);
+                foreach (var daceNode in daceNodes)
+                {
+                    var accessMaskNode = daceNode.Children?.Where(x => x.Label == "Access Mask").FirstOrDefault();
+                    if (accessMaskNode != null)
+                    {
+                        var maskValue = (uint)accessMaskNode.Tag!;
+                        var objspecMaskNodes = (ObservableCollection<TreeViewItem>)accessMaskNode.Children!.ElementAt(0).Children!;
+                        objspecMaskNodes.Clear();
+                        foreach (var item in (AccessMaskToTreeViewItems(maskValue & 0x0000FFFF, targetType, longestNameLen, false, matchedOnly)))
+                        {
+                            objspecMaskNodes.Add(item);
+                        };
+                        var stdMaskNodes = (ObservableCollection<TreeViewItem>)accessMaskNode.Children!.ElementAt(1).Children!;
+                        stdMaskNodes.Clear();
+                        foreach (var item in AccessMaskToTreeViewItems(maskValue & 0xFFFF0000, typeof(AccessMask_Standard), longestNameLen, true, matchedOnly))
+                        {
+                            stdMaskNodes.Add(item);
+                        }
+                    }
+                }
+            }
+            var saceNodes = root.Children?.Where(x => x.Label == "DACL").FirstOrDefault()?.Children;
+            if (saceNodes != null)
+            {
+                var longestNameLen = CalcLongestNameLen(maskType, out var targetType);
+                foreach (var saceNode in saceNodes)
+                {
+                    var accessMaskNode = saceNode.Children?.Where(x => x.Label == "Access Mask").FirstOrDefault();
+                    if (accessMaskNode != null)
+                    {
+                        var maskValue = (uint)accessMaskNode.Tag!;
+                        var objspecMaskNodes = (ObservableCollection<TreeViewItem>)accessMaskNode.Children!.ElementAt(0).Children!;
+                        objspecMaskNodes.Clear();
+                        foreach (var item in (AccessMaskToTreeViewItems(maskValue & 0x0000FFFF, targetType, longestNameLen, false, matchedOnly)))
+                        {
+                            objspecMaskNodes.Add(item);
+                        };
+                        var stdMaskNodes = (ObservableCollection<TreeViewItem>)accessMaskNode.Children!.ElementAt(1).Children!;
+                        stdMaskNodes.Clear();
+                        foreach (var item in AccessMaskToTreeViewItems(maskValue & 0xFFFF0000, typeof(AccessMask_Standard), longestNameLen, true, matchedOnly))
+                        {
+                            stdMaskNodes.Add(item);
+                        }
+                    }
+                }
+            }
         }
     }
 }
