@@ -21,12 +21,12 @@
             @if (SddlOrBinary)
             {
                 <FieldLabel>SDDL</FieldLabel>
-                <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="sddl" />
+                <MemoEdit Rows="5" spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="sddl" />
             }
             else
             {
                 <FieldLabel>HEX String of Binary SD</FieldLabel>
-                <MemoEdit Rows="5" AutoSize spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="binarystr" />
+                <MemoEdit Rows="5" spellcheck="false" Class="monospace-fixed-textbox" @bind-Text="binarystr" />
             }
         </Field>
         <Field Margin="Margin.Is1.OnY">
@@ -41,17 +41,15 @@
         <Divider DividerType="DividerType.Solid" />
         <Button Color="Color.Primary" Clicked="Parse" Block>Parse</Button>
         <Divider DividerType="DividerType.Solid" />
-        <Div Display="Display.Flex" Margin="Margin.Is1.FromTop">
-            <Button Color="Color.Primary" Clicked="() => AclTree.ExpandAll()" Size="Size.Small">Expand All</Button>
-            <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small" Margin="Margin.Is1.FromStart">Copy Tree</Button>
-            <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small" Margin="Margin.Is1.FromStart">Trustee List</Button>
-            <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small" Margin="Margin.Is1.FromStart">Access Mask List</Button>
-            <Button Color="@(matchedAccessMaskOnly ? Color.Success : Color.Info)"
-                    Clicked="() => {matchedAccessMaskOnly = !matchedAccessMaskOnly; AclTree.UpdateTreeView(matchedAccessMaskOnly);}"
-                    Size="Size.Small" Margin="Margin.Is1.FromStart">
-                @(matchedAccessMaskOnly ? "Show All" : "Show Matched Only")
-            </Button>
+        <Div Display="Display.Flex" Margin="Margin.Is1.FromTop" Flex="Flex.JustifyContent.End">
+            <Button Color="Color.Primary" Clicked="() => AclTree.ExpandAll()" Size="Size.Small" Width="Width.Px(240)">Expand All</Button>
+            <Button Color="Color.Primary" Clicked="CopyTreeView" Size="Size.Small" Margin="Margin.Is1.FromStart" Width="Width.Px(240)">Copy Tree Text</Button>
         </Div>
+        <Div Display="Display.Flex" Margin="Margin.Is1.FromTop" Flex="Flex.JustifyContent.End">
+            <Button Color="Color.Info" Clicked="ShowTrusteeOverview" Size="Size.Small" Margin="Margin.Is1.FromStart" Width="Width.Px(240)">Trustee Lookup</Button>
+            <Button Color="Color.Info" Clicked="ShowAccessMaskDetails" Size="Size.Small" Margin="Margin.Is1.FromStart" Width="Width.Px(240)">Access Mask Lookup</Button>
+        </Div>
+        <Check @bind-Checked="@MatchedAccessMaskOnly" Size="Size.Small">Show Matched Access Masks Only</Check>
         <TreeView @ref="@AclTree"
                   Nodes="AclTreeHead"
                   ExpandedNodes="ExpandedNodes"
@@ -69,6 +67,12 @@
     </CardBody>
 </Card>
 
+<style>
+    .fui-Checkbox.fui-Checkbox-sm {
+        float: right
+    }
+</style>
+
 @code {
     TreeView<TreeViewItem> AclTree = null!;
     IEnumerable<TreeViewItem> AclTreeHead = null!;
@@ -76,6 +80,18 @@
 
     bool SddlOrBinary = true;
     bool matchedAccessMaskOnly = false;
+    bool MatchedAccessMaskOnly
+    {
+        get => matchedAccessMaskOnly;
+        set
+        {
+            matchedAccessMaskOnly = value;
+            if (aclResult != null)
+            {
+                AclTree.UpdateTreeView(matchedAccessMaskOnly);
+            }
+        }
+    }
     string sddl = string.Empty;
     string binarystr = string.Empty;
     string currentType => SddlOrBinary ? "SDDL" : "Binary";
