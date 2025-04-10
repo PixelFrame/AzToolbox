@@ -59,7 +59,8 @@
                 <Fields>
                     <Field ColumnSize="ColumnSize.Is6">
                         <FieldLabel>Digits</FieldLabel>
-                        <NumericEdit @bind-Value="@digits" Min="0" Max="9" />
+                        <!--The size of shuffle array significantly increases when decimal digits increases... we need a better algo maybe-->
+                        <NumericEdit @bind-Value="@digits" Min="0" Max="@(nonrepeat ? 4 : 9)" />
                     </Field>
                 </Fields>
             }
@@ -449,7 +450,8 @@
                 for (Int64 i = int64Min; i <= int64Max; i++)
                 {
                     nums.Add(i);
-                };
+                }
+                ;
                 Shuffle(nums, rnd);
                 if (cnt < nums.Count)
                 {
@@ -462,8 +464,9 @@
                 nums.Clear();
                 for (Int64 i = int64Min; i <= int64Max; i++)
                 {
-                    nums.Add(i);
-                };
+                    nums.Add(i / Math.Pow(10, digits));
+                }
+                ;
                 Shuffle(nums, rnd);
                 if (cnt < nums.Count)
                 {
