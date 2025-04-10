@@ -21,12 +21,12 @@
     <PackageReference Include="Blazorise.Splitter" Version="1.7.5" />
     <PackageReference Include="Blazorise.TreeView" Version="1.7.5" />
     <PackageReference Include="BlazorMonaco" Version="3.3.0" />
-    <PackageReference Include="KristofferStrube.Blazor.FileSystemAccess" Version="3.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.3" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.3" />
-    <PackageReference Include="Microsoft.NET.WebAssembly.Threading" Version="9.0.3" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.3" />
+    <PackageReference Include="KristofferStrube.Blazor.FileSystemAccess" Version="3.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.4" />
+    <PackageReference Include="Microsoft.NET.WebAssembly.Threading" Version="9.0.4" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
