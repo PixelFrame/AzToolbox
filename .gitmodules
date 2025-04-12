@@ -1,0 +1,21 @@
+[submodule "KzA.Blazor.HexDump"]
+	path = KzA.Blazor.HexDump
+	url = https://github.com/PixelFrame/KzA.Blazor.HexDump
+[submodule "KzA.Blazor.PacParser"]
+	path = KzA.Blazor.PacParser
+	url = https://github.com/PixelFrame/KzA.Blazor.PacParser
+[submodule "KzA.DNS"]
+	path = KzA.DNS
+	url = https://github.com/PixelFrame/KzA.DNS
+[submodule "KzA.HEXEH"]
+	path = KzA.HEXEH
+	url = https://github.com/PixelFrame/KzA.HEXEH
+[submodule "ProfileXMLBuilder"]
+	path = ProfileXMLBuilder
+	url = https://github.com/PixelFrame/ProfileXMLBuilder
+[submodule "WFPXML"]
+	path = WFPXML
+	url = https://github.com/PixelFrame/WFPXML
+[submodule "WinSdUtil"]
+	path = WinSdUtil
+	url = https://github.com/PixelFrame/WinSdUtil

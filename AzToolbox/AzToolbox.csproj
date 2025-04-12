@@ -34,14 +34,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj" />
-    <ProjectReference Include="..\..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj" />
-    <ProjectReference Include="..\..\KzA.DNS\KzA.DNS\KzA.DNS.csproj" />
-    <ProjectReference Include="..\..\KzA.HEXEH\KzA.HEXEH.Base\KzA.HEXEH.Base.csproj" />
-    <ProjectReference Include="..\..\KzA.HEXEH\KzA.HEXEH.Core\KzA.HEXEH.Core.csproj" />
-    <ProjectReference Include="..\..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj" />
-    <ProjectReference Include="..\..\WFPXML\WFPXML\WFPXML.csproj" />
-    <ProjectReference Include="..\..\WinSdUtil\WinSdUtil\WinSdUtil.csproj" />
+    <ProjectReference Include="..\KzA.Blazor.HexDump\KzA.Blazor.HexDump.csproj" />
+    <ProjectReference Include="..\KzA.Blazor.PacParser\KzA.Blazor.PacParser.csproj" />
+    <ProjectReference Include="..\KzA.DNS\KzA.DNS\KzA.DNS.csproj" />
+    <ProjectReference Include="..\KzA.HEXEH\KzA.HEXEH.Base\KzA.HEXEH.Base.csproj" />
+    <ProjectReference Include="..\KzA.HEXEH\KzA.HEXEH.Core\KzA.HEXEH.Core.csproj" />
+    <ProjectReference Include="..\ProfileXMLBuilder\ProfileXMLBuilder.Lib\ProfileXMLBuilder.Lib.csproj" />
+    <ProjectReference Include="..\WFPXML\WFPXML\WFPXML.csproj" />
+    <ProjectReference Include="..\WinSdUtil\WinSdUtil\WinSdUtil.csproj" />
   </ItemGroup>
 
 </Project>
