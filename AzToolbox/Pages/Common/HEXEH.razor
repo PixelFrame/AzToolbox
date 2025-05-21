@@ -13,76 +13,80 @@
 @inject HexehService HexehService
 
 <Splitter Direction="SplitterDirection.Vertical" Style="height:calc(100vh - 74px - 1rem)">
-    <SplitterSection MinSize="400" Overflow="Overflow.Hidden">
-        <Splitter Style="min-height:400px">
-            <SplitterSection Display="Display.Flex" Flex="Flex.Column" Overflow="Overflow.Auto">
+    <SplitterSection MinSize="200" Overflow="Overflow.Hidden">
+        <Splitter Style="min-height:200px">
+            <SplitterSection Display="Display.Flex" Flex="Flex.Row" Overflow="Overflow.Hidden">
                 <MemoEdit @bind-Text="@hexstring" Rows="12" spellcheck="false"
-                          Class="monospace-fixed-textbox" Margin="Margin.Is1.FromBottom" />
-                <Field Margin="Margin.Is1.OnY" Horizontal Flex="Flex.AlignItems.Center">
-                    <FieldLabel>
-                        Type
-                    </FieldLabel>
-                    <FieldBody Flex="Flex.Grow.Is1" Margin="Margin.Is1.FromStart">
-                        <Select TValue="string" @bind-SelectedValue="@TargetParserName" Margin="Margin.Is1.FromBottom">
-                            @foreach (var group in groupedParsers)
-                            {
-                                <SelectGroup Label="@group.Key[(group.Key.LastIndexOf(".Parser.") + 8)..]">
-                                    @foreach (var parser in group)
-                                    {
-                                        <SelectItem Value="@parser.FullName">@parser.Name[..(parser.Name.Length - 6)]</SelectItem>
-                                    }
-                                </SelectGroup>
-                            }
-                        </Select>
-                    </FieldBody>
-                </Field>
-                <Field Margin="Margin.Is1.FromBottom" Horizontal Flex="Flex.AlignItems.Center">
-                    <FieldLabel>
-                        Big Endian
-                        <Tooltip Text="Some parsers will ignore this option" Display="Display.Inline">
-                            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" />
-                        </Tooltip>
-                    </FieldLabel>
-                    <FieldBody Flex="Flex.Grow.Is1" Margin="Margin.Is1.FromStart">
-                        <Select TValue="string" @bind-SelectedValue="@bigEndian">
-                            <SelectItem Value="@("True")">True</SelectItem>
-                            <SelectItem Value="@("False")">False</SelectItem>
-                        </Select>
-                    </FieldBody>
-                </Field>
-                @foreach (var option in ParserOptionsDef)
-                {
-                    <Field Margin="Margin.Is1.FromBottom" Horizontal Flex="Flex.AlignItems.Center">
+                          Class="monospace-fixed-textbox"/>
+                <Div Display="Display.Flex" Flex="Flex.Column" Margin="Margin.Is1.OnX">
+                    <Button Color="Color.Primary" Clicked="Parse" Block="true" Disabled="!ready">
+                        @(ready ? "Go" : "Initializing")
+                    </Button>
+                    <Div Display="Display.Flex" Flex="Flex.Column" Overflow="Overflow.Auto">
+                    <Field>
                         <FieldLabel>
-                            @option.Key
+                            Type
                         </FieldLabel>
-                        <FieldBody Flex="Flex.Grow.Is1" Margin="Margin.Is1.FromStart">
-                            @switch (option.Value.Name)
-                            {
-                                case "Encoding":
-                                    <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
-                                        @foreach (var encoding in System.Text.Encoding.GetEncodings())
+                        <FieldBody Flex="Flex.Grow.Is1">
+                            <Select TValue="string" @bind-SelectedValue="@TargetParserName">
+                                @foreach (var group in groupedParsers)
+                                {
+                                    <SelectGroup Label="@group.Key[(group.Key.LastIndexOf(".Parser.") + 8)..]">
+                                        @foreach (var parser in group)
                                         {
-                                            <SelectItem Value="@encoding.Name">@encoding.Name</SelectItem>
+                                            <SelectItem Value="@parser.FullName">@parser.Name[..(parser.Name.Length - 6)]</SelectItem>
                                         }
-                                    </Select>
-                                    break;
-                                case "Boolean":
-                                    <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
-                                        <SelectItem Value="@("True")">True</SelectItem>
-                                        <SelectItem Value="@("False")">False</SelectItem>
-                                    </Select>
-                                    break;
-                                default:
-                                    <TextEdit @bind-Text="@ParserOptions[option.Key]" />
-                                    break;
-                            }
+                                    </SelectGroup>
+                                }
+                            </Select>
                         </FieldBody>
                     </Field>
-                }
-                <Button Color="Color.Primary" Margin="Margin.Is1.FromBottom" Clicked="Parse" Block="true" Disabled="!ready">
-                    @(ready ? "Go" : "Initializing")
-                </Button>
+                    <Field>
+                        <FieldLabel>
+                            Big Endian
+                            <Tooltip Text="Some parsers will ignore this option" Display="Display.Inline">
+                                <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" />
+                            </Tooltip>
+                        </FieldLabel>
+                        <FieldBody Flex="Flex.Grow.Is1">
+                            <Select TValue="string" @bind-SelectedValue="@bigEndian">
+                                <SelectItem Value="@("True")">True</SelectItem>
+                                <SelectItem Value="@("False")">False</SelectItem>
+                            </Select>
+                        </FieldBody>
+                    </Field>
+                    @foreach (var option in ParserOptionsDef)
+                    {
+                        <Field>
+                            <FieldLabel>
+                                @option.Key
+                            </FieldLabel>
+                            <FieldBody Flex="Flex.Grow.Is1">
+                                @switch (option.Value.Name)
+                                {
+                                    case "Encoding":
+                                        <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
+                                            @foreach (var encoding in System.Text.Encoding.GetEncodings())
+                                            {
+                                                <SelectItem Value="@encoding.Name">@encoding.Name</SelectItem>
+                                            }
+                                        </Select>
+                                        break;
+                                    case "Boolean":
+                                        <Select TValue="string" @bind-SelectedValue="@ParserOptions[option.Key]">
+                                            <SelectItem Value="@("True")">True</SelectItem>
+                                            <SelectItem Value="@("False")">False</SelectItem>
+                                        </Select>
+                                        break;
+                                    default:
+                                        <TextEdit @bind-Text="@ParserOptions[option.Key]" />
+                                        break;
+                                }
+                            </FieldBody>
+                        </Field>
+                    }
+                    </Div>
+                </Div>
             </SplitterSection>
             <SplitterSection Display="Display.Flex" Flex="Flex.Column">
                 <Div>
@@ -196,6 +200,7 @@
         try
         {
             var escaped = System.Text.RegularExpressions.Regex.Replace(hexstring, @"[\\\r\n\s,-]|0x", string.Empty);
+            if (escaped.Length % 2 != 0) escaped = '0' + escaped;
             blob = Convert.FromHexString(escaped);
             var parser = ParserManager.InstantiateParserByFullName(targetParserName);
             var opts = new Dictionary<string, string>();
