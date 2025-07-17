@@ -1,0 +1,73 @@
+@page "/Common/FileCombine"
+<PageTitle>FileCombine - AzToolbox</PageTitle>
+
+@inject IFileSystemAccessService FileSystemAccessService
+@inject INotificationService NotificationService
+@using System.Collections.ObjectModel
+@using KristofferStrube.Blazor.FileSystem
+
+<ListView Data="_inputFiles" TextField="file => file.Item1"></ListView>
+
+<Check @bind-Checked="_insertNewline">Insert New Line Between Files</Check>
+<Button Clicked="OnAddFiles">Add File</Button>
+<Button Clicked="OnCombine">Combine</Button>
+
+@code {
+    private readonly ObservableCollection<(string, FileSystemFileHandle)> _inputFiles = [];
+    private bool _insertNewline = true;
+
+    async Task OnAddFiles()
+    {
+        try
+        {
+            OpenFilePickerOptionsStartInWellKnownDirectory options = new()
+            {
+                StartIn = WellKnownDirectory.Downloads,
+                Multiple = true,
+            };
+            var fileHandles = await FileSystemAccessService.ShowOpenFilePickerAsync(options);
+            foreach (var fileHandle in fileHandles)
+            {
+                var filename = await fileHandle.GetNameAsync();
+                _inputFiles.Add((filename, fileHandle));
+            }
+        }
+        catch (JSException ex)
+        {
+            await NotificationService.Error(ex.Message);
+        }
+    }
+
+    async Task OnCombine()
+    {
+        try
+        {
+            SaveFilePickerOptionsStartInWellKnownDirectory options = new()
+            {
+                StartIn = WellKnownDirectory.Downloads
+            };
+            var fileHandle = await FileSystemAccessService.ShowSaveFilePickerAsync(options);
+            var file = await fileHandle.GetFileAsync();
+            var writable = await fileHandle.CreateWritableAsync();
+
+            foreach (var inputFile in _inputFiles)
+            {
+                var readable = await (await inputFile.Item2.GetFileAsync()).StreamAsync();
+                await readable.CopyToAsync(writable);
+
+                if (!_insertNewline || inputFile == _inputFiles.Last()) continue;
+                var newline = new byte[] { 10 }; // ASCII code for newline
+                await writable.WriteAsync(newline);
+            }
+
+            await writable.CloseAsync();
+            _inputFiles.Clear();
+            await NotificationService.Success("Text files combined successfully");
+        }
+        catch (JSException ex)
+        {
+            await NotificationService.Error(ex.Message);
+        }
+    }
+
+}
