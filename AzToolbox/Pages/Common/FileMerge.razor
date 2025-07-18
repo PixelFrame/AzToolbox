@@ -1,0 +1,159 @@
+@page "/Common/FileMerge"
+<PageTitle>File Merge - AzToolbox</PageTitle>
+
+@inject IFileSystemAccessService FileSystemAccessService
+@inject INotificationService NotificationService
+@using System.Collections.ObjectModel
+@using System.Text
+@using KristofferStrube.Blazor.FileSystem
+
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+        <Button Clicked="OnAddFiles" Color="Color.Primary" Margin="Margin.Is1.OnY">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.AddFilled" IconSize="IconSize.Large"/>
+            Add File
+        </Button>
+        <Button Clicked="@(() => _inputFiles.Clear())" Color="Color.Danger" Margin="Margin.Is1.OnY">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.DeleteFilled" IconSize="IconSize.Large"/>
+            Clear
+        </Button>
+        <ListView Data="_inputFiles" MaxHeight="75vh">
+            <ItemTemplate>
+                <Div Flex="Flex._">
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowCircleUp"
+                          TextColor="TextColor.Primary" IconSize="IconSize.Large"
+                          Clicked="() => {var index = _inputFiles.IndexOf(context.Item); if(index>0)_inputFiles.Move(index, index-1); }"/>
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.ArrowCircleDown"
+                          TextColor="TextColor.Primary" IconSize="IconSize.Large"
+                          Clicked="() => {var index = _inputFiles.IndexOf(context.Item); if(index<_inputFiles.Count-1)_inputFiles.Move(index, index+1); }"/>
+                    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.DismissCircle"
+                          TextColor="TextColor.Danger" IconSize="IconSize.Large"
+                          Clicked="() => { _inputFiles.Remove(context.Item); }"/>
+                    <Div Flex="Flex.InlineFlex.JustifyContent.Between" Width="Width.Is100"
+                         Margin="Margin.Is1.FromStart">
+                        <Text TextWeight="TextWeight.Bold">@context.Item.Item2</Text>
+                        <Text>@(Math.Round(context.Item.Item3 / 1024.0, 2)) KB</Text>
+                        <Text>@context.Item.Item4</Text>
+                    </Div>
+                </Div>
+            </ItemTemplate>
+        </ListView>
+        <Divider DividerType="DividerType.Solid" Margin="Margin.Is1.OnY"/>
+        <Check @bind-Checked="_insertSplitter" Margin="Margin.Is1.OnY">Insert Splitter Between Files</Check>
+        @if (_insertSplitter)
+        {
+            <Row Margin="@(Margin.Is5.OnX)">
+                <Column>
+                    <Field Margin="Margin.Is1.OnY">
+                        <FieldLabel>Splitter</FieldLabel>
+                        <Select @bind-SelectedValue="@_splitterCode">
+                            <SelectItem Value="-2">Custom (HEX bytes)</SelectItem>
+                            <SelectItem Value="-1">Custom (UTF-8 string)</SelectItem>
+                            <SelectItem Value="1">New Line (\r\n)</SelectItem>
+                            <SelectItem Value="2">New Line (\n)</SelectItem>
+                            <SelectItem Value="3">Null (\0)</SelectItem>
+                            <SelectItem Value="4">Tab (\t)</SelectItem>
+                        </Select>
+                    </Field>
+                </Column>
+                <Column>
+                    <Field Margin="Margin.Is1.OnY">
+                        <FieldLabel>Num of Splitter</FieldLabel>
+                        <NumericPicker @bind-Value="@_splitterCount" Min="1" Max="int.MaxValue"/>
+                    </Field>
+                </Column>
+                <Column>
+                    <Field Margin="Margin.Is1.OnY">
+                        <FieldLabel>Splitter Content</FieldLabel>
+                        <TextEdit @bind-Text="_splitterContent" Disabled="@(_splitterCode > 0)"></TextEdit>
+                    </Field>
+                </Column>
+            </Row>
+        }
+        <Divider DividerType="DividerType.Solid" Margin="Margin.Is1.OnY"/>
+        <Button Clicked="OnMerge" Color="Color.Primary">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.Merge" IconSize="IconSize.Large"/>
+            Merge
+        </Button>
+
+    </CardBody>
+</Card>
+
+@code {
+    private readonly ObservableCollection<(FileSystemFileHandle, string, ulong, DateTime)> _inputFiles = [];
+    private bool _insertSplitter = true;
+    private int _splitterCode = 1;
+    private int _splitterCount = 1;
+    private string _splitterContent = "\r\n";
+
+    async Task OnAddFiles()
+    {
+        try
+        {
+            OpenFilePickerOptionsStartInWellKnownDirectory options = new()
+            {
+                Multiple = true,
+            };
+            var fileHandles = await FileSystemAccessService.ShowOpenFilePickerAsync(options);
+            foreach (var fileHandle in fileHandles)
+            {
+                var file = await fileHandle.GetFileAsync();
+                var filename = await file.GetNameAsync();
+                var fileSize = await file.GetSizeAsync();
+                var lastModified = await file.GetLastModifiedAsync();
+                _inputFiles.Add((fileHandle, filename, fileSize, lastModified));
+            }
+        }
+        catch (JSException ex)
+        {
+            await NotificationService.Error(ex.Message);
+        }
+    }
+
+    async Task OnMerge()
+    {
+        try
+        {
+            SaveFilePickerOptionsStartInWellKnownDirectory options = new()
+            {
+                StartIn = WellKnownDirectory.Downloads
+            };
+            var fileHandle = await FileSystemAccessService.ShowSaveFilePickerAsync(options);
+            var writable = await fileHandle.CreateWritableAsync();
+
+            foreach (var inputFile in _inputFiles)
+            {
+                var readable = await (await inputFile.Item1.GetFileAsync()).StreamAsync();
+                await readable.CopyToAsync(writable);
+
+                if (!_insertSplitter || inputFile == _inputFiles.Last()) continue;
+                var splitter = _splitterCode switch
+                {
+                    1 => [0x0d, 0x0a],
+                    2 => [0x0a],
+                    3 => [0x00],
+                    4 => [0x09],
+                    -1 => Encoding.UTF8.GetBytes(_splitterContent),
+                    -2 => Convert.FromHexString(System.Text.RegularExpressions.Regex.Replace(_splitterContent, @"[\\\r\n\s,-]|0x", string.Empty)),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+                for (var i = 0; i < _splitterCount; i++)
+                {
+                    await writable.WriteAsync(splitter);
+                }
+
+                readable.Close();
+                await inputFile.Item1.DisposeAsync();
+            }
+
+            await writable.CloseAsync();
+            _inputFiles.Clear();
+            await NotificationService.Success("Text files combined successfully");
+        }
+        catch (JSException ex)
+        {
+            await NotificationService.Error(ex.Message);
+        }
+    }
+
+}
