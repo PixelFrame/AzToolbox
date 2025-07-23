@@ -114,18 +114,17 @@
     {
         try
         {
-            SaveFilePickerOptionsStartInWellKnownDirectory options = new()
-            {
-                StartIn = WellKnownDirectory.Downloads
-            };
-            var fileHandle = await FileSystemAccessService.ShowSaveFilePickerAsync(options);
+            var fileHandle = await FileSystemAccessService.ShowSaveFilePickerAsync();
             var writable = await fileHandle.CreateWritableAsync();
-
+            
             foreach (var inputFile in _inputFiles)
             {
                 var readable = await (await inputFile.Item1.GetFileAsync()).StreamAsync();
-                await readable.CopyToAsync(writable);
-
+                // Without bufferSize, the issue can be triggered consistently
+                // After adding bufferSize, it is not triggered anymore even with files larger than bufferSize...
+                // https://github.com/KristofferStrube/Blazor.Streams/issues/3
+                await readable.CopyToAsync(writable, 10*1024*1024); 
+                
                 if (!_insertSplitter || inputFile == _inputFiles.Last()) continue;
                 var splitter = _splitterCode switch
                 {
@@ -148,7 +147,7 @@
 
             await writable.CloseAsync();
             _inputFiles.Clear();
-            await NotificationService.Success("Text files combined successfully");
+            await NotificationService.Success("Files merged successfully");
         }
         catch (JSException ex)
         {
