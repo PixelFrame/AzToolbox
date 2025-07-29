@@ -2,28 +2,32 @@
 
 <PageTitle>AzToolbox</PageTitle>
 
-<Jumbotron Background="Background.Light">
-    <JumbotronTitle Size="JumbotronTitleSize.Is4">Welcome</JumbotronTitle>
-    <JumbotronSubtitle>
-        Tools built with Blazor WebAssembly. <br>
-    </JumbotronSubtitle>
-    <Divider />
-    <pre>
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+        <Jumbotron Background="Background.Light">
+            <JumbotronTitle Size="JumbotronTitleSize.Is2">Welcome</JumbotronTitle>
+            <JumbotronSubtitle>
+                Tools built with Blazor WebAssembly. <br>
+            </JumbotronSubtitle>
+            <Divider/>
+            <pre>
     <Code>
             @ToolTree
     </Code>
     </pre>
-    <Divider />
-    <Link To="https://github.com/PixelFrame/AzToolbox" Target="Target.Blank" TextColor="TextColor.Body">
-    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CodeCircleFilled" IconSize="IconSize.Large" />
-    </Link>
-    <Link To="mailto:pm421@live.com" Target="Target.Blank" TextColor="TextColor.Body">
-    <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.MailReadFilled" IconSize="IconSize.Large" />
-    </Link>
-</Jumbotron>
+            <Divider/>
+            <Link To="https://github.com/PixelFrame/AzToolbox" Target="Target.Blank" TextColor="TextColor.Body">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.CodeCircleFilled" IconSize="IconSize.Large"/>
+            </Link>
+            <Link To="mailto:pm421@live.com" Target="Target.Blank" TextColor="TextColor.Body">
+            <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.MailReadFilled" IconSize="IconSize.Large"/>
+            </Link>
+        </Jumbotron>
+    </CardBody>
+</Card>
 
 @code {
-    string ToolTree =
+    const string ToolTree =
         @"AzToolbox
 |
 +---Networking
@@ -34,7 +38,7 @@
 |   +---DnsZoneFile      : DNS Zone File Builder
 |
 +---Windows
-|   +---VpnBuild          : VPN Profile XML Builder
+|   +---VpnBuild         : VPN Profile XML Builder
 |   +---WfpAnalyze       : WFP Log Analyze Helper
 |   +---SecDescriptor    : Security Descriptor Tool
 |
@@ -50,4 +54,5 @@
 +---Experimental
     +---ArchiveReader    : Display images from a zip archive
 ";
+
 }

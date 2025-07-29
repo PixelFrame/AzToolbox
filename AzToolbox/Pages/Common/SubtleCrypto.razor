@@ -4,59 +4,67 @@
 @inject INotificationService NotificationService
 @inject CryptoService crysvc
 
-<Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.FromBottom">
-    <AlertMessage>
-        <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large" />Algorithm
-    </AlertMessage>
-    <AlertDescription Class="monospace-text">
-        @MSG
-    </AlertDescription>
-</Alert>
 
-<Div Flex="Flex.Row.AlignItems.Center">
-    <RadioGroup @bind-CheckedValue="mode" Border="Border.Rounded.Is1" Flex="Flex.Column">
-        <Text Class="rg-Label">Mode</Text>
-        <Div>
-            <Radio Value="true">Encrypt</Radio>
-            <Radio Value="false">Decrypt</Radio>
+<Card Width="Width.Is75" Margin="Margin.IsAuto">
+    <CardBody>
+        <Alert Color="Color.Primary" Visible="true" Margin="Margin.Is1.FromBottom">
+            <AlertMessage>
+                <Icon Name="Blazorise.Icons.FluentUI.FluentUIIcons.InfoFilled" IconSize="IconSize.Large"/>
+                Algorithm
+            </AlertMessage>
+            <AlertDescription Class="monospace-text">
+                @MSG
+            </AlertDescription>
+        </Alert>
+
+        <Div Flex="Flex.Row.AlignItems.Center">
+            <RadioGroup @bind-CheckedValue="mode" Border="Border.Rounded.Is1" Flex="Flex.Column">
+                <Text Class="rg-Label">Mode</Text>
+                <Div>
+                    <Radio Value="true">Encrypt</Radio>
+                    <Radio Value="false">Decrypt</Radio>
+                </Div>
+            </RadioGroup>
+            <RadioGroup @bind-CheckedValue="plainType" Border="Border.Rounded.Is1" Margin="Margin.Is1.OnX"
+                        Flex="Flex.Column">
+                <Text Class="rg-Label">@(mode ? "Input" : "Output")</Text>
+                <Div>
+                    <Radio Value="true">UTF-8</Radio>
+                    <Radio Value="false">Base64URL</Radio>
+                </Div>
+            </RadioGroup>
+            <SelectList TValue="CryptoAlgorithm"
+                        TItem="CryptoAlgorithm"
+                        TextField="@(s => s.ToString().Replace("_", "-"))"
+                        ValueField="s=>s"
+                        Data="@(Enum.GetValues<CryptoAlgorithm>())"
+                        @bind-SelectedValue="algorithm"/>
+            <Select @bind-SelectedValue="@length">
+                <SelectItem Value="128">128</SelectItem>
+                <SelectItem Value="256">256</SelectItem>
+            </Select>
+            <Div Margin="Margin.Is1.OnX" Width="Width.Px(100)">
+                <NumericEdit @bind-Value="@iter" Min="0" Max="int.MaxValue"/>
+            </Div>
+            <Button Color="Color.Primary" Clicked="@(() => mode ? enc() : dec())">Go</Button>
         </Div>
-    </RadioGroup>
-    <RadioGroup @bind-CheckedValue="plainType" Border="Border.Rounded.Is1" Margin="Margin.Is1.OnX" Flex="Flex.Column">
-        <Text Class="rg-Label">@(mode ? "Input" : "Output")</Text>
-        <Div>
-            <Radio Value="true">UTF-8</Radio>
-            <Radio Value="false">Base64URL</Radio>
-        </Div>
-    </RadioGroup>
-    <SelectList TValue="CryptoAlgorithm"
-                TItem="CryptoAlgorithm"
-                TextField="@(s=>s.ToString().Replace("_", "-"))"
-                ValueField="s=>s"
-                Data="@(Enum.GetValues<CryptoAlgorithm>())"
-                @bind-SelectedValue="algorithm" />
-    <Select @bind-SelectedValue="@length">
-        <SelectItem Value="128">128</SelectItem>
-        <SelectItem Value="256">256</SelectItem>
-    </Select>
-    <Div Margin="Margin.Is1.OnX" Width="Width.Px(100)">
-        <NumericEdit @bind-Value="@iter" Min="0" Max="int.MaxValue" />
-    </Div>
-    <Button Color="Color.Primary" Clicked="@(() => mode ? enc() : dec())">Go</Button>
-</Div>
-<Field>
-    <FieldLabel>Passphrase</FieldLabel>
-    <TextEdit Role="TextRole.Password" @bind-Text="pass"></TextEdit>
-</Field>
-<Field>
-    <FieldLabel>@(mode ? "Plain" : "Cipher")</FieldLabel>
-    <MemoEdit Plaintext="false" Rows="6" spellcheck="false"
-              Class="monospace-fixed-textbox" @bind-Text="input"></MemoEdit>
-</Field>
-<Field>
-    <FieldLabel>@(mode ? "Cipher" : "Plain")</FieldLabel>
-    <MemoEdit Plaintext="false" Rows="6" spellcheck="false" ReadOnly="true"
-              Class="monospace-fixed-textbox" @bind-Text="output"></MemoEdit>
-</Field>
+        <Field>
+            <FieldLabel>Passphrase</FieldLabel>
+            <TextEdit Role="TextRole.Password" @bind-Text="pass"></TextEdit>
+        </Field>
+        <Field>
+            <FieldLabel>@(mode ? "Plain" : "Cipher")</FieldLabel>
+            <MemoEdit Plaintext="false" Rows="6" spellcheck="false"
+                      Class="monospace-fixed-textbox" @bind-Text="input"></MemoEdit>
+        </Field>
+        <Field>
+            <FieldLabel>@(mode ? "Cipher" : "Plain")</FieldLabel>
+            <MemoEdit Plaintext="false" Rows="6" spellcheck="false" ReadOnly="true"
+                      Class="monospace-fixed-textbox" @bind-Text="output"></MemoEdit>
+        </Field>
+
+    </CardBody>
+</Card>
 
 @code {
     bool mode = true;
@@ -69,7 +77,7 @@
     int iter = 5000;
 
     const string MSG =
-         @"Passphrase ---SHA256--> BaseKey ---PBKDF2(Optional)--> AES Key
+        @"Passphrase ---SHA256--> BaseKey ---PBKDF2(Optional)--> AES Key
 Set iteration to 0 to skip PBKDF2. The result will always include PBKDF2 salt, even when it's unused.
 Result format:
 | 16 bytes    | 16 bytes    |  ...   |
@@ -101,4 +109,5 @@ Result format:
             await NotificationService.Error(e.Message);
         }
     }
+
 }
